@@ -7,12 +7,13 @@ import (
 
 templ SidebarLink(name string, active bool) {
 	<li>
-		<a
-			href={ templ.SafeURL(fmt.Sprintf("/?component=%s", name)) }
-			class={ "doc-sidebar__link", templ.KV("doc-sidebar__link--active", active) }
-		>
+		@ui.Link(ui.LinkProp{
+			Href:    fmt.Sprintf("/?component=%s", name),
+			Variant: ui.ButtonGhost,
+			Class:   "doc-sidebar__link " + map[bool]string{true: "doc-sidebar__link--active", false: ""}[active],
+		}) {
 			{ name }
-		</a>
+		}
 	</li>
 }
 
@@ -33,13 +34,17 @@ templ Showcase(activeComponent string) {
 			<div class="doc-layout">
 				<!-- Sidebar -->
 				<aside class="doc-sidebar">
-					<a href="/" class="doc-sidebar__logo">
+					@ui.Link(ui.LinkProp{
+						Href:    "/",
+						Variant: ui.ButtonGhost,
+						Class:   "doc-sidebar__logo",
+					}) {
 						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect width="32" height="32" rx="8" fill="var(--color-primary)"></rect>
 							<path d="M10 10V22M10 22H22M10 16H18" stroke="white" stroke-width="3" stroke-linecap="round"></path>
 						</svg>
 						ui
-					</a>
+					}
 					<nav class="doc-sidebar__nav">
 						<div>
 							<h3 class="doc-sidebar__group-title">Introduction</h3>
@@ -80,6 +85,8 @@ templ Showcase(activeComponent string) {
 						@AlertDemo()
 					} else if activeComponent == "accordion" {
 						@AccordionDemo()
+					} else if activeComponent == "card" {
+						@CardDemo()
 					} else if activeComponent == "dropdown" {
 						@DropdownDemo()
 					} else {

@@ -1,37 +1,86 @@
 /* Card Component Styles */
 
 .card {
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
     border-radius: var(--radius-lg);
     overflow: hidden;
-
     display: flex;
     flex-direction: column;
+    height: 100%;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
+/* Variants */
+
+.card--elevated {
+    border: none;
+    box-shadow: var(--shadow-md);
+}
+
+.card--elevated:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card--outlined {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+}
+
+.card--flat {
+    background-color: var(--color-bg-secondary);
+    border: none;
+}
+
+/* Media/Image Section */
+.card__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-bg-tertiary);
+}
+
+.card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .card__media img {
+    transform: scale(1.05);
+}
+
+/* Header Section */
 .card__header {
-    padding: var(--spacing-4) var(--spacing-6);
-    border-bottom: 1px solid var(--color-border);
-    background-color: rgba(255, 255, 255, 0.02);
+    padding: var(--spacing-6) var(--spacing-6) var(--spacing-2) var(--spacing-6);
 }
 
 .card__title {
     margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-tight);
 }
 
+/* Content Section */
 .card__content {
     padding: var(--spacing-6);
     flex: 1;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
 }
 
+/* Footer Section */
 .card__footer {
     padding: var(--spacing-4) var(--spacing-6);
-    border-top: 1px solid var(--color-border);
-    background-color: var(--color-bg-tertiary);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border-light);
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
