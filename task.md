@@ -1,10 +1,3 @@
-# UI Component Library Expansion Plan
-
-This document outlines the tasks required to add advanced components to our existing UI component library.
-
-## Goal
-Expand our core building blocks with high-priority form essentials, advanced interactions, and rich layout components. Keep styling consistent with existing components, using CSS variables and adhering to the "premium" aesthetic.
-
 ## Task Breakdown
 
 ### 4. Stepper
@@ -15,15 +8,4 @@ Expand our core building blocks with high-priority form essentials, advanced int
   * Visually distinguish between "Completed" (e.g., checkmarks), "Current" (highlighted), and "Upcoming" (muted) states.
   * Style connecting lines between step items.
   * Add a demo showcase at `showcase/demo_stepper.templ`.
-  * Update `css/main.css` and `showcase/page.templ` to register it.
-
-### 5. File Upload Dropzone
-* **Task:** Implement a styled `Dropzone` for file uploads, improving upon native `<input type="file">`.
-* **Requirements:**
-  * Create `go/dropzone.templ` and `css/components/dropzone.css`.
-  * Design a large, dashed-border drop area.
-  * Hide native file input inside a `<label>`.
-  * Use Alpine.js to handle visual states (`@dragover` to highlight, `@dragleave`/`@drop` to revert).
-  * Provide feedback states (e.g., indicating a file was selected).
-  * Add demo showcase at `showcase/demo_dropzone.templ`.
   * Update `css/main.css` and `showcase/page.templ` to register it.

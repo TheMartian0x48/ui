@@ -1,0 +1,97 @@
+package ui
+
+import "fmt"
+
+type DropzoneProp struct {
+	Id       string
+	Name     string
+	Label    string // e.g. "Click to upload or drag and drop"
+	HelpText string // e.g. "SVG, PNG, JPG or GIF (max. 800x400px)"
+	Multiple bool
+	Accept   string // e.g. "image/*", ".pdf"
+	Disabled bool
+	Error    bool
+	Class    string
+}
+
+// Dropzone renders a file upload area with drag-and-drop support.
+// It leverages Alpine.js to handle the drag-over visual state and file selection display.
+templ Dropzone(prop DropzoneProp) {
+	<div
+		class={ dropzoneClass(prop) }
+		x-data="{ isDragging: false, files: null }"
+		@dragover.prevent={ fmt.Sprintf("if (!%v) isDragging = true", prop.Disabled) }
+		@dragleave.prevent="isDragging = false"
+		@drop.prevent={ fmt.Sprintf("if (!%v) { isDragging = false; files = $event.dataTransfer.files; $refs.fileInput.files = files }", prop.Disabled) }
+		:class="{ 'dropzone--dragging': isDragging }"
+	>
+		<input
+			type="file"
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			x-ref="fileInput"
+			class="dropzone__input visually-hidden"
+			if prop.Name != "" {
+				name={ prop.Name }
+			}
+			if prop.Multiple {
+				multiple
+			}
+			if prop.Accept != "" {
+				accept={ prop.Accept }
+			}
+			if prop.Disabled {
+				disabled
+			}
+			@change="files = $event.target.files"
+		/>
+		<label class="dropzone__label" for={ prop.Id }>
+			<div class="dropzone__content" x-show="!files || files.length === 0">
+				<div class="dropzone__icon-wrapper">
+					@Icon(IconProp{Icon: IconUploadCloud(), Size: IconSizeLG})
+				</div>
+				<p class="dropzone__text">
+					if prop.Label != "" {
+						<span class="font-semibold">{ prop.Label }</span>
+					} else {
+						<span class="font-semibold">Click to upload</span> or drag and drop
+					}
+				</p>
+				if prop.HelpText != "" {
+					<p class="dropzone__help-text">{ prop.HelpText }</p>
+				}
+			</div>
+			<div class="dropzone__preview" x-show="files && files.length > 0" x-cloak>
+				<div class="dropzone__icon-wrapper">
+					@Icon(IconProp{Icon: IconFileText(), Size: IconSizeLG})
+				</div>
+				<div class="dropzone__file-list">
+					<template x-for="file in files">
+						<div class="dropzone__file-item">
+							<span class="dropzone__file-name" x-text="file.name"></span>
+							<span class="dropzone__file-size" x-text="(file.size / 1024).toFixed(1) + ' KB'"></span>
+						</div>
+					</template>
+				</div>
+			</div>
+		</label>
+	</div>
+}
+
+func dropzoneClass(prop DropzoneProp) string {
+	base := "dropzone"
+
+	if prop.Error {
+		base += " dropzone--error"
+	}
+
+	if prop.Disabled {
+		base += " dropzone--disabled"
+	}
+
+	if prop.Class != "" {
+		base += " " + prop.Class
+	}
+	return base
+}

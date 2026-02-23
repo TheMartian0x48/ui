@@ -1,0 +1,78 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ DropzoneDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Dropzone</h1>
+			<p class="doc-section__description">
+				A drag-and-drop file upload area allowing users to securely select single or multiple files.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Standard Usage -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Standard Usage</h3>
+					<div class="doc-demo__list" style="max-width: 500px;">
+						@ui.Dropzone(ui.DropzoneProp{
+							Id:       "standard-dropzone",
+							Name:     "files",
+							HelpText: "SVG, PNG, JPG or GIF (max. 800x400px)",
+						})
+					</div>
+				</div>
+				<!-- Multiple Files -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Multiple Uploads</h3>
+					<div class="doc-demo__list" style="max-width: 500px;">
+						@ui.Dropzone(ui.DropzoneProp{
+							Id:       "multi-dropzone",
+							Name:     "documents",
+							Label:    "Upload project files",
+							Multiple: true,
+							HelpText: "Images, PDF or Word files up to 10MB.",
+							Accept:   "image/*,.pdf,.doc,.docx",
+						})
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 500px;">
+						@ui.Dropzone(ui.DropzoneProp{
+							Id:       "error-dropzone",
+							Label:    "File exceeds limit",
+							HelpText: "Please upload a file smaller than 2MB.",
+							Error:    true,
+						})
+						@ui.Dropzone(ui.DropzoneProp{
+							Id:       "disabled-dropzone",
+							Label:    "Upload temporarily disabled",
+							Disabled: true,
+						})
+					</div>
+				</div>
+				<!-- In context of FormField -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Within Form Field</h3>
+					<div class="doc-demo__list" style="max-width: 500px;">
+						@ui.FormField(ui.FormFieldProp{
+							LabelFor: "profile-image",
+							Label:    "Profile Image",
+							Required: true,
+						}) {
+							@ui.Dropzone(ui.DropzoneProp{
+								Id:       "profile-image",
+								Name:     "avatar",
+								HelpText: "1:1 ratio. Max 5MB.",
+								Accept:   "image/png, image/jpeg, image/gif",
+							})
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}
