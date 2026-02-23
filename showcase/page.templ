@@ -69,6 +69,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("select", activeComponent == "select")
 								@SidebarLink("slider", activeComponent == "slider")
 								@SidebarLink("switch", activeComponent == "switch")
+								@SidebarLink("table", activeComponent == "table")
 								@SidebarLink("progress", activeComponent == "progress")
 								@SidebarLink("tabs", activeComponent == "tabs")
 								@SidebarLink("toast", activeComponent == "toast")
@@ -101,6 +102,8 @@ templ Showcase(activeComponent string) {
 						@SliderDemo()
 					} else if activeComponent == "switch" {
 						@SwitchDemo()
+					} else if activeComponent == "table" {
+						@TableDemo()
 					} else {
 						<section class="doc-section">
 							<header class="doc-section__header">
