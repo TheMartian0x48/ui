@@ -67,7 +67,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("input", activeComponent == "input")
 								@SidebarLink("label", activeComponent == "label")
 								@SidebarLink("select", activeComponent == "select")
-								@SidebarLink("spinner", activeComponent == "spinner")
+								@SidebarLink("progress", activeComponent == "progress")
 								@SidebarLink("tabs", activeComponent == "tabs")
 								@SidebarLink("toast", activeComponent == "toast")
 								@SidebarLink("tooltip", activeComponent == "tooltip")
@@ -93,6 +93,8 @@ templ Showcase(activeComponent string) {
 						@DropdownDemo()
 					} else if activeComponent == "icon" {
 						@IconDemo()
+					} else if activeComponent == "progress" {
+						@ProgressDemo()
 					} else {
 						<section class="doc-section">
 							<header class="doc-section__header">

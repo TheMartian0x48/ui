@@ -1,0 +1,170 @@
+package ui
+
+import "fmt"
+
+type ProgressSize int
+
+const (
+	ProgressSizeSM ProgressSize = iota
+	ProgressSizeMD
+	ProgressSizeLG
+)
+
+type ProgressProp struct {
+	Value         float64 // 0 to 100
+	Max           float64 // default 100
+	Label         string
+	ShowValue     bool
+	Size          ProgressSize
+	Indeterminate bool
+	Class         string
+}
+
+// Progress renders a linear progress bar.
+templ Progress(prop ProgressProp) {
+	{{
+		max := prop.Max
+		if max == 0 {
+			max = 100
+		}
+		percent := (prop.Value / max) * 100
+		if percent > 100 {
+			percent = 100
+		}
+	}}
+	<div class="progress-container">
+		if prop.Label != "" || prop.ShowValue {
+			<div class="progress-header">
+				if prop.Label != "" {
+					<span class="progress-label">{ prop.Label }</span>
+				}
+				if prop.ShowValue && !prop.Indeterminate {
+					<span class="progress-value">{ fmt.Sprintf("%.0f%%", percent) }</span>
+				}
+			</div>
+		}
+		<div class={ progressClass(prop) }>
+			<div
+				class="progress__bar"
+				if !prop.Indeterminate {
+					style={ fmt.Sprintf("width: %.2f%%", percent) }
+				}
+			></div>
+		</div>
+	</div>
+}
+
+func progressClass(prop ProgressProp) string {
+	base := "progress"
+
+	var sizeClass string
+	switch prop.Size {
+	case ProgressSizeSM:
+		sizeClass = "progress--sm"
+	case ProgressSizeLG:
+		sizeClass = "progress--lg"
+	default:
+		sizeClass = "progress--md"
+	}
+
+	classes := base + " " + sizeClass
+	if prop.Indeterminate {
+		classes += " progress--indeterminate"
+	}
+	if prop.Class != "" {
+		classes += " " + prop.Class
+	}
+	return classes
+}
+
+type CircularProgressProp struct {
+	Value         float64 // 0 to 100. If 0 and Indeterminate is false, it stays empty.
+	Max           float64 // default 100
+	Size          int     // pixels
+	Thickness     int     // pixels
+	ShowValue     bool
+	Indeterminate bool // Default is true if no value is provided? User said "keep Indeterminate as default"
+	Class         string
+	Id            string
+}
+
+// CircularProgress renders a circular progress indicator (merged with Spinner functionality).
+// By default, it is indeterminate (spinning). Pass a Value to make it determinate.
+templ CircularProgress(prop CircularProgressProp) {
+	{{
+		// Indeterminate by default if value is 0 and not explicitly set to determinate
+		isIndeterminate := prop.Indeterminate || (prop.Value == 0 && !prop.ShowValue)
+
+		size := prop.Size
+		if size == 0 {
+			size = 24 // Default to a standard spinner size
+		}
+		thickness := prop.Thickness
+		if thickness == 0 {
+			thickness = 3
+		}
+		max := prop.Max
+		if max == 0 {
+			max = 100
+		}
+
+		center := size / 2
+		radius := (size - thickness) / 2
+		circumference := 2 * 3.14159 * float64(radius)
+
+		percent := (prop.Value / max) * 100
+		if percent > 100 {
+			percent = 100
+		}
+		offset := circumference - (percent / 100 * circumference)
+
+		classes := "circular-progress"
+		if isIndeterminate {
+			classes += " circular-progress--indeterminate"
+		} else {
+			classes += " circular-progress--determinate"
+		}
+		if prop.Class != "" {
+			classes += " " + prop.Class
+		}
+	}}
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ classes }
+		style={ fmt.Sprintf("width: %dpx; height: %dpx;", size, size) }
+		role="progressbar"
+		if !isIndeterminate {
+			aria-valuenow={ fmt.Sprintf("%.0f", prop.Value) }
+			aria-valuemin="0"
+			aria-valuemax={ fmt.Sprintf("%.0f", max) }
+		}
+	>
+		<svg width={ fmt.Sprintf("%d", size) } height={ fmt.Sprintf("%d", size) } viewBox={ fmt.Sprintf("0 0 %d %d", size, size) }>
+			<circle
+				class="circular-progress__background"
+				cx={ fmt.Sprintf("%d", center) }
+				cy={ fmt.Sprintf("%d", center) }
+				r={ fmt.Sprintf("%d", radius) }
+				stroke-width={ fmt.Sprintf("%d", thickness) }
+			></circle>
+			<circle
+				class="circular-progress__bar"
+				cx={ fmt.Sprintf("%d", center) }
+				cy={ fmt.Sprintf("%d", center) }
+				r={ fmt.Sprintf("%d", radius) }
+				stroke-width={ fmt.Sprintf("%d", thickness) }
+				stroke-dasharray={ fmt.Sprintf("%.2f %.2f", circumference, circumference) }
+				if !isIndeterminate {
+					style={ fmt.Sprintf("stroke-dashoffset: %.2f", offset) }
+				}
+			></circle>
+		</svg>
+		if prop.ShowValue && !isIndeterminate {
+			<div class="circular-progress__content">
+				{ fmt.Sprintf("%.0f%%", percent) }
+			</div>
+		}
+	</div>
+}
