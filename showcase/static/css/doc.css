@@ -104,7 +104,7 @@
 /* Component Demo Container */
 .doc-demo {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     overflow: hidden;
     background-color: var(--color-bg);
 }
