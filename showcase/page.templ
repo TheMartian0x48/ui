@@ -1,0 +1,100 @@
+package main
+
+import (
+	"fmt"
+	ui "github.com/themartian0x48/ui/go"
+)
+
+templ SidebarLink(name string, active bool) {
+	<li>
+		<a
+			href={ templ.SafeURL(fmt.Sprintf("/?component=%s", name)) }
+			class={ "doc-sidebar__link", templ.KV("doc-sidebar__link--active", active) }
+		>
+			{ name }
+		</a>
+	</li>
+}
+
+templ Showcase(activeComponent string) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>{ activeComponent } - ui library</title>
+			<!-- Framework CSS -->
+			<link rel="stylesheet" href="/css/main.css"/>
+			<!-- Showcase specific CSS -->
+			<link rel="stylesheet" href="/showcase-static/css/doc.css"/>
+		</head>
+		<body>
+			<div class="doc-layout">
+				<!-- Sidebar -->
+				<aside class="doc-sidebar">
+					<a href="/" class="doc-sidebar__logo">
+						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<rect width="32" height="32" rx="8" fill="var(--color-primary)"></rect>
+							<path d="M10 10V22M10 22H22M10 16H18" stroke="white" stroke-width="3" stroke-linecap="round"></path>
+						</svg>
+						ui
+					</a>
+					<nav class="doc-sidebar__nav">
+						<div>
+							<h3 class="doc-sidebar__group-title">Introduction</h3>
+							<ul class="doc-sidebar__links">
+								@SidebarLink("getting-started", activeComponent == "getting-started")
+							</ul>
+						</div>
+						<div>
+							<h3 class="doc-sidebar__group-title">Components</h3>
+							<ul class="doc-sidebar__links">
+								@SidebarLink("accordion", activeComponent == "accordion")
+								@SidebarLink("alert", activeComponent == "alert")
+								@SidebarLink("badge", activeComponent == "badge")
+								@SidebarLink("button", activeComponent == "button")
+								@SidebarLink("card", activeComponent == "card")
+								@SidebarLink("dialog", activeComponent == "dialog")
+								@SidebarLink("dropdown", activeComponent == "dropdown")
+								@SidebarLink("form-field", activeComponent == "form-field")
+								@SidebarLink("icon", activeComponent == "icon")
+								@SidebarLink("input", activeComponent == "input")
+								@SidebarLink("label", activeComponent == "label")
+								@SidebarLink("select", activeComponent == "select")
+								@SidebarLink("spinner", activeComponent == "spinner")
+								@SidebarLink("tabs", activeComponent == "tabs")
+								@SidebarLink("toast", activeComponent == "toast")
+								@SidebarLink("tooltip", activeComponent == "tooltip")
+							</ul>
+						</div>
+					</nav>
+				</aside>
+				<!-- Main Content Area -->
+				<main class="doc-main">
+					if activeComponent == "button" {
+						@ButtonDemo()
+					} else if activeComponent == "badge" {
+						@BadgeDemo()
+					} else if activeComponent == "alert" {
+						@AlertDemo()
+					} else if activeComponent == "accordion" {
+						@AccordionDemo()
+					} else if activeComponent == "dropdown" {
+						@DropdownDemo()
+					} else {
+						<section class="doc-section">
+							<header class="doc-section__header">
+								<h1 class="doc-section__title">{ activeComponent }</h1>
+								<p class="doc-section__description">
+									Demo for { activeComponent } coming soon.
+								</p>
+							</header>
+						</section>
+					}
+				</main>
+			</div>
+			<!-- Global components -->
+			@ui.ToastContainer()
+		</body>
+	</html>
+}

@@ -1,0 +1,149 @@
+package ui
+
+type TabsProp struct {
+	Id           string // Unique ID for the tabs container (required for JS logic)
+	DefaultValue string // Value of the tab that should be active by default
+	Class        string // Additional CSS classes
+}
+
+// Tabs is the root component for a tab interface.
+templ Tabs(prop TabsProp) {
+	<div
+		id={ prop.Id }
+		class={ tabsClass(prop) }
+		data-value={ prop.DefaultValue }
+	>
+		{ children... }
+	</div>
+	if prop.Id != "" {
+		@initTabs(prop.Id, prop.DefaultValue)
+	}
+}
+
+type TabsListProp struct {
+	Class string
+}
+
+// TabsList contains the triggers for the tabs.
+templ TabsList(prop TabsListProp) {
+	<div class={ "tabs__list " + prop.Class } role="tablist">
+		{ children... }
+	</div>
+}
+
+type TabsTriggerProp struct {
+	Value    string // The value this trigger activates
+	Class    string
+	Disabled bool
+}
+
+// TabsTrigger is the button that activates a tab content.
+templ TabsTrigger(prop TabsTriggerProp) {
+	<button
+		type="button"
+		role="tab"
+		class={ tabsTriggerClass(prop) }
+		data-value={ prop.Value }
+		if prop.Disabled {
+			disabled
+		}
+	>
+		{ children... }
+	</button>
+}
+
+type TabsContentProp struct {
+	Value string // The value that activates this content
+	Class string
+}
+
+// TabsContent contains the content for a specific tab.
+templ TabsContent(prop TabsContentProp) {
+	<div
+		role="tabpanel"
+		class={ tabsContentClass(prop) }
+		data-value={ prop.Value }
+	>
+		{ children... }
+	</div>
+}
+
+// Helper functions for classes
+
+func tabsClass(prop TabsProp) string {
+	base := "tabs"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+func tabsTriggerClass(prop TabsTriggerProp) string {
+	base := "tabs__trigger"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+func tabsContentClass(prop TabsContentProp) string {
+	base := "tabs__content"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+// Script to initialize tabs logic (event delegation + default state)
+
+script initTabs(id string, defaultValue string) {
+	(function() {
+		const tabs = document.getElementById(id);
+		if (!tabs) return;
+		
+		// Event Delegation: Add click listener to the container
+		tabs.addEventListener('click', function(e) {
+			const trigger = e.target.closest('.tabs__trigger');
+			if (!trigger) return;
+			if (trigger.disabled) return;
+			
+			// Deactivate all within this container
+			const allTriggers = tabs.querySelectorAll('.tabs__trigger');
+			const allContents = tabs.querySelectorAll('.tabs__content');
+			
+			allTriggers.forEach(t => t.removeAttribute('data-state'));
+			allContents.forEach(c => c.removeAttribute('data-state'));
+			
+			// Activate the clicked trigger
+			trigger.setAttribute('data-state', 'active');
+			
+			// Activate the corresponding content
+			const value = trigger.getAttribute('data-value');
+			const content = tabs.querySelector(`.tabs__content[data-value="${value}"]`);
+			if (content) {
+				content.setAttribute('data-state', 'active');
+			}
+		});
+		
+		// Initial State
+		// Only distinct if nothing is active yet
+		if (tabs.querySelector('.tabs__trigger[data-state="active"]')) return;
+
+		let activeValue = defaultValue;
+		
+		// Fallback to first tab if no default provided
+		if (!activeValue) {
+			const firstTrigger = tabs.querySelector('.tabs__trigger');
+			if (firstTrigger) {
+				activeValue = firstTrigger.getAttribute('data-value');
+			}
+		}
+		
+		if (activeValue) {
+			const trigger = tabs.querySelector(`.tabs__trigger[data-value="${activeValue}"]`);
+			const content = tabs.querySelector(`.tabs__content[data-value="${activeValue}"]`);
+			if (trigger) trigger.setAttribute('data-state', 'active');
+			if (content) content.setAttribute('data-state', 'active');
+		}
+	})();
+}

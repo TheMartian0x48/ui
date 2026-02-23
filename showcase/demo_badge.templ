@@ -1,0 +1,60 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ BadgeDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Badge</h1>
+			<p class="doc-section__description">
+				Small count and labeling component used to highlight status or categories.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Variants</h3>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary}) {
+							Primary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary}) {
+							Secondary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess}) {
+							Success 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeWarning}) {
+							Warning 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger}) {
+							Danger 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeInfo}) {
+							Info 
+						}
+					</div>
+				</div>
+				<!-- Usage Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Usage Examples</h3>
+					<div class="doc-demo__list">
+						<div class="doc-demo__item-label">
+							<span>Notifications</span>
+							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Class: "badge--pill"}) {
+								12 
+							}
+						</div>
+						<div class="doc-demo__item-label">
+							<span>Status:</span>
+							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess}) {
+								Active 
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

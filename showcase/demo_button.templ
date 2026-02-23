@@ -1,0 +1,106 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ ButtonDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Button</h1>
+			<p class="doc-section__description">
+				Interactive button component with multiple variants, sizes, and states.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Variants</h3>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							Primary 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
+							Secondary 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+							Outline 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost}) {
+							Ghost 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger}) {
+							Danger 
+						}
+					</div>
+				</div>
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeSM}) {
+							Small 
+						}
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeMD}) {
+							Medium 
+						}
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeLG}) {
+							Large 
+						}
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							Default 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Disabled: true}) {
+							Disabled 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Disabled: true}) {
+							Disabled Outline 
+						}
+					</div>
+				</div>
+				<!-- With Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Icons</h3>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconEdit, Size: ui.IconSizeSM})
+							Edit Profile
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconDownload, Size: ui.IconSizeSM})
+							Download
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeSM})
+							Delete
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+							Settings
+							@ui.Icon(ui.IconProp{Type: ui.IconSettings, Size: ui.IconSizeSM})
+						}
+					</div>
+				</div>
+				<!-- Icon Only -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Icon Only</h3>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--icon"}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconMenu, Size: ui.IconSizeMD})
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon"}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconCamera, Size: ui.IconSizeMD})
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger, Class: "btn--icon"}) {
+							@ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeMD})
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

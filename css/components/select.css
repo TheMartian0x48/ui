@@ -1,0 +1,76 @@
+/* Select Component Styles */
+
+.select-container {
+    position: relative;
+    width: 100%;
+}
+
+.select {
+    /* Base styles matching .input */
+    display: block;
+    width: 100%;
+
+    padding: var(--spacing-2) var(--spacing-4);
+    padding-right: var(--spacing-8);
+    /* Make simplified space for the arrow */
+
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+
+    background-color: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    transition: all var(--transition-fast);
+
+    /* Remove default browser styles */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Custom Arrow */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+}
+
+/* Placeholder styling (simulated with first option) */
+.select:invalid {
+    color: var(--color-text-muted);
+}
+
+/* Focus state */
+.select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Hover state */
+.select:hover:not(:disabled):not(.select--error) {
+    border-color: var(--color-border-dark);
+}
+
+/* Error state */
+.select--error {
+    border-color: var(--color-danger);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.select--error:focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Disabled state */
+.select:disabled,
+.select--disabled {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-disabled);
+    border-color: var(--color-border-light);
+    cursor: not-allowed;
+    opacity: 0.6;
+}

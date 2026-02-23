@@ -1,0 +1,103 @@
+package ui
+
+type InputType int
+
+const (
+	InputText InputType = iota
+	InputEmail
+	InputTel
+	InputNumber
+	InputPassword
+	InputURL
+	InputSearch
+	InputDate
+	InputDateTimeLocal
+)
+
+type InputProp struct {
+	Type        InputType // Input type enum
+	Name        string    // Input name attribute
+	Id          string    // Input ID
+	Value       string    // Input value
+	Placeholder string    // Placeholder text
+	Required    bool      // Whether the input is required
+	Disabled    bool      // Whether the input is disabled
+	Error       bool      // Whether to show error state
+	Class       string    // Additional CSS classes
+	Step        string    // Step attribute for number/date inputs
+}
+
+// Input renders a form input element with configurable type and states.
+templ Input(prop InputProp) {
+	<input
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		if prop.Name != "" {
+			name={ prop.Name }
+		}
+		type={ inputTypeString(prop.Type) }
+		if prop.Value != "" {
+			value={ prop.Value }
+		}
+		if prop.Placeholder != "" {
+			placeholder={ prop.Placeholder }
+		}
+		if prop.Step != "" {
+			step={ prop.Step }
+		}
+		class={ inputClass(prop) }
+		if prop.Required {
+			required
+		}
+		if prop.Disabled {
+			disabled
+		}
+		if prop.Error {
+			aria-invalid="true"
+		}
+	/>
+}
+
+// inputTypeString converts InputType enum to HTML input type string.
+func inputTypeString(t InputType) string {
+	switch t {
+	case InputEmail:
+		return "email"
+	case InputTel:
+		return "tel"
+	case InputNumber:
+		return "number"
+	case InputPassword:
+		return "password"
+	case InputURL:
+		return "url"
+	case InputSearch:
+		return "search"
+	case InputDate:
+		return "date"
+	case InputDateTimeLocal:
+		return "datetime-local"
+	default:
+		return "text"
+	}
+}
+
+// inputClass generates the CSS class for the input based on state.
+func inputClass(prop InputProp) string {
+	base := "input"
+
+	var stateClass string
+	if prop.Error {
+		stateClass = base + " input--error"
+	} else if prop.Disabled {
+		stateClass = base + " input--disabled"
+	} else {
+		stateClass = base
+	}
+
+	if prop.Class != "" {
+		return stateClass + " " + prop.Class
+	}
+	return stateClass
+}

@@ -1,0 +1,63 @@
+package ui
+
+type DialogProp struct {
+	Id          string // ID required for triggering
+	Title       string // Dialog title
+	TriggerText string // Text for the button that opens the dialog (optional helper)
+	Class       string // Additional CSS classes
+}
+
+// Dialog renders a modal dialog using the native HTML dialog element.
+// It includes a built-in close button and optional header/body structure.
+templ Dialog(prop DialogProp) {
+	<dialog
+		id={ prop.Id }
+		class={ dialogClass(prop) }
+	>
+		<div class="dialog__content">
+			<div class="dialog__header">
+				<h3 class="dialog__title">{ prop.Title }</h3>
+				<div class="dialog__close-wrapper">
+					@Button(ButtonProp{
+						Variant: ButtonGhost,
+						Size:    ButtonSizeSM,
+						Class:   "dialog__close",
+						Attributes: templ.Attributes{
+							"onclick":    "document.getElementById('" + prop.Id + "').close()",
+							"aria-label": "Close dialog",
+						},
+						Type: ButtonTypeButton,
+					}) {
+						@Icon(IconProp{Type: IconX, Size: IconSizeMD})
+					}
+				</div>
+			</div>
+			<div class="dialog__body">
+				{ children... }
+			</div>
+		</div>
+	</dialog>
+}
+
+// dialogClass generates the CSS class for the dialog.
+func dialogClass(prop DialogProp) string {
+	base := "dialog"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+// DialogTrigger renders a button that opens the specified dialog.
+templ DialogTrigger(dialogId string) {
+	@Button(ButtonProp{
+		Variant: ButtonPrimary,
+		Size:    ButtonSizeMD,
+		Attributes: templ.Attributes{
+			"onclick": "document.getElementById('" + dialogId + "').showModal()",
+		},
+		Type: ButtonTypeButton,
+	}) {
+		{ children... }
+	}
+}

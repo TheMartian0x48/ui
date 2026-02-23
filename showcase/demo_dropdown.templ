@@ -1,0 +1,23 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ DropdownDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Dropdown</h1>
+			<p class="doc-section__description">
+				Collapsible menu for actions.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
+					@ui.DropdownItem(ui.DropdownItemProp{Label: "Settings"})
+					@ui.DropdownItem(ui.DropdownItemProp{Label: "Profile"})
+					@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Danger: true})
+				}
+			</div>
+		</div>
+	</section>
+}

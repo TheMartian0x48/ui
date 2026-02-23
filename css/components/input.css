@@ -1,0 +1,91 @@
+/* Input Component Styles */
+
+.input {
+    /* Base styles */
+    display: block;
+    width: 100%;
+
+    padding: var(--spacing-2) var(--spacing-4);
+
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+
+    background-color: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    transition: all var(--transition-fast);
+
+    /* Remove default browser styles */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Placeholder styling */
+.input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}
+
+/* Focus state */
+.input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Hover state */
+.input:hover:not(:disabled):not(.input--error) {
+    border-color: var(--color-border-dark);
+}
+
+/* Error state */
+.input--error {
+    border-color: var(--color-danger);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.input--error:focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Disabled state */
+.input:disabled,
+.input--disabled {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-disabled);
+    border-color: var(--color-border-light);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.input:disabled::placeholder,
+.input--disabled::placeholder {
+    color: var(--color-text-disabled);
+}
+
+/* Number input - remove spinners in WebKit browsers */
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Number input - remove spinners in Firefox */
+.input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* Autofill styling */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-bg) inset;
+    -webkit-text-fill-color: var(--color-text-primary);
+    border-color: var(--color-primary);
+}

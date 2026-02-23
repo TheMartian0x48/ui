@@ -1,0 +1,75 @@
+package ui
+
+type LinkProp struct {
+	Variant    ButtonVariant
+	Size       ButtonSize
+	Href       string
+	Target     string // _blank, _self, etc.
+	Class      string
+	Attributes templ.Attributes
+	Disabled   bool
+}
+
+templ Link(props LinkProp) {
+	<a
+		href={ templ.SafeURL(props.Href) }
+		if props.Target != "" {
+			target={ props.Target }
+		}
+		class={ linkClass(props) }
+		if props.Disabled {
+			aria-disabled="true"
+			tabindex="-1"
+		}
+		{ props.Attributes... }
+	>
+		{ children... }
+	</a>
+}
+
+func linkClass(prop LinkProp) string {
+	base := "btn"
+
+	// Determine variant class
+	var variantClass string
+	switch prop.Variant {
+	case ButtonPrimary:
+		variantClass = base + " btn--primary"
+	case ButtonSecondary:
+		variantClass = base + " btn--secondary"
+	case ButtonOutline:
+		variantClass = base + " btn--outline"
+	case ButtonGhost:
+		variantClass = base + " btn--ghost"
+	case ButtonDanger:
+		variantClass = base + " btn--danger"
+	default:
+		variantClass = base + " btn--primary"
+	}
+
+	// Determine size class
+	var sizeClass string
+	switch prop.Size {
+	case ButtonSizeSM:
+		sizeClass = "btn--sm"
+	case ButtonSizeLG:
+		sizeClass = "btn--lg"
+	default:
+		sizeClass = "btn--md"
+	}
+
+	// Combine classes
+	result := variantClass + " " + sizeClass
+
+	// Add custom class if provided
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+
+	// Add disabled class if disabled
+	if prop.Disabled {
+		result += " btn--disabled"
+	}
+
+	return result
+}

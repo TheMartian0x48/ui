@@ -1,0 +1,56 @@
+package ui
+
+type BadgeVariant int
+
+const (
+	BadgePrimary BadgeVariant = iota
+	BadgeSuccess
+	BadgeWarning
+	BadgeDanger
+	BadgeInfo
+	BadgeSecondary
+)
+
+type BadgeProp struct {
+	Variant BadgeVariant
+	Class   string
+	Id      string
+}
+
+// Badge renders a small label/badge component.
+templ Badge(prop BadgeProp) {
+	<span
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ badgeClass(prop) }
+	>
+		{ children... }
+	</span>
+}
+
+// badgeClass generates the CSS class for the badge based on variant.
+func badgeClass(prop BadgeProp) string {
+	base := "badge"
+
+	var variantClass string
+	switch prop.Variant {
+	case BadgeSuccess:
+		variantClass = base + " badge--success"
+	case BadgeWarning:
+		variantClass = base + " badge--warning"
+	case BadgeDanger:
+		variantClass = base + " badge--danger"
+	case BadgeInfo:
+		variantClass = base + " badge--info"
+	case BadgeSecondary:
+		variantClass = base + " badge--secondary"
+	default:
+		variantClass = base + " badge--primary"
+	}
+
+	if prop.Class != "" {
+		return variantClass + " " + prop.Class
+	}
+	return variantClass
+}

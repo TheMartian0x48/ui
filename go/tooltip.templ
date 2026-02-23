@@ -1,0 +1,41 @@
+package ui
+
+type TooltipPosition string
+
+const (
+	TooltipTop    TooltipPosition = "top"
+	TooltipBottom TooltipPosition = "bottom"
+	TooltipLeft   TooltipPosition = "left"
+	TooltipRight  TooltipPosition = "right"
+)
+
+type TooltipProp struct {
+	Content  string // The text or simple content for the tooltip
+	Position TooltipPosition
+	Class    string
+}
+
+// Tooltip wraps any child element and displays a tooltip on hover.
+// It uses CSS positioning relative to the wrapper.
+templ Tooltip(prop TooltipProp) {
+	<div class={ tooltipWrapperClass(prop) } data-tooltip={ prop.Content }>
+		{ children... }
+		<span class="tooltip__content" role="tooltip">{ prop.Content }</span>
+	</div>
+}
+
+func tooltipWrapperClass(prop TooltipProp) string {
+	base := "tooltip-wrapper"
+	pos := "tooltip--" + string(prop.Position)
+
+	// Default to top if not specified
+	if prop.Position == "" {
+		pos = "tooltip--top"
+	}
+
+	classes := base + " " + pos
+	if prop.Class != "" {
+		classes += " " + prop.Class
+	}
+	return classes
+}

@@ -1,0 +1,49 @@
+package ui
+
+type SpinnerSize int
+
+const (
+	SpinnerSizeSM SpinnerSize = iota
+	SpinnerSizeMD
+	SpinnerSizeLG
+)
+
+type SpinnerProp struct {
+	Size  SpinnerSize
+	Class string
+	Id    string
+}
+
+// Spinner renders an animated loading spinner.
+templ Spinner(prop SpinnerProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ spinnerClass(prop) }
+		role="status"
+		aria-label="Loading"
+	>
+		<span class="visually-hidden">Loading...</span>
+	</div>
+}
+
+// spinnerClass generates the CSS class for the spinner based on size.
+func spinnerClass(prop SpinnerProp) string {
+	base := "spinner"
+
+	var sizeClass string
+	switch prop.Size {
+	case SpinnerSizeSM:
+		sizeClass = base + " spinner--sm"
+	case SpinnerSizeLG:
+		sizeClass = base + " spinner--lg"
+	default:
+		sizeClass = base + " spinner--md"
+	}
+
+	if prop.Class != "" {
+		return sizeClass + " " + prop.Class
+	}
+	return sizeClass
+}

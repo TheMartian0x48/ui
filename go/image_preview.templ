@@ -1,0 +1,41 @@
+package ui
+
+type ImagePreviewProp struct {
+	Src         string // Image source URL
+	Alt         string // Alt text
+	AspectRatio string // Aspect ratio (e.g., "16/9", "1/1", "4/3")
+	Class       string // Additional CSS classes
+	Id          string // Optional ID
+}
+
+// ImagePreview renders an image with a specific aspect ratio and styling.
+templ ImagePreview(prop ImagePreviewProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ imagePreviewClass(prop) }
+		if prop.AspectRatio != "" {
+			style={ "aspect-ratio: " + prop.AspectRatio + ";" }
+		}
+	>
+		if prop.Src != "" {
+			<img src={ prop.Src } alt={ prop.Alt } loading="lazy"/>
+		} else {
+			<div class="image-preview__placeholder">
+				@Icon(IconProp{Type: IconCamera, Size: IconSizeLG})
+				<span class="text-sm text-muted">No image selected</span>
+			</div>
+		}
+	</div>
+}
+
+// imagePreviewClass generates the CSS class for the image preview container.
+func imagePreviewClass(prop ImagePreviewProp) string {
+	base := "image-preview"
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

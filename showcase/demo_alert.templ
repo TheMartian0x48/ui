@@ -1,0 +1,43 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ AlertDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Alert</h1>
+			<p class="doc-section__description">
+				Provide contextual feedback messages for typical user actions.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<div class="doc-demo__group">
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Information"}) {
+							A new software update is available. See what’s new in version 2.0.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Success"}) {
+							Your profile has been updated successfully.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "Warning"}) {
+							Your subscription will expire in 3 days. Please renew to avoid service interruption.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Title: "Error"}) {
+							There was a problem with your submission. Please try again.
+						}
+					</div>
+				</div>
+				<!-- Without Title -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Without Title</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo}) {
+							This alert has no title, just the message content.
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

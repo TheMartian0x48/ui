@@ -1,0 +1,165 @@
+/* Documentation Layout Styles */
+
+.doc-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.doc-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    padding: var(--spacing-6);
+    overflow-y: auto;
+}
+
+.doc-sidebar__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-8);
+    text-decoration: none;
+}
+
+.doc-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.doc-sidebar__group-title {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-2);
+}
+
+.doc-sidebar__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.doc-sidebar__link {
+    display: block;
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.doc-sidebar__link:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.doc-sidebar__link--active {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Main Content */
+.doc-main {
+    padding: var(--spacing-12);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.doc-section {
+    margin-bottom: var(--spacing-16);
+}
+
+.doc-section__header {
+    margin-bottom: var(--spacing-8);
+}
+
+.doc-section__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+}
+
+.doc-section__description {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Component Demo Container */
+.doc-demo {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-bg);
+}
+
+.doc-demo__preview {
+    padding: var(--spacing-8);
+}
+
+.doc-demo__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.doc-demo__group:not(:last-child) {
+    margin-bottom: var(--spacing-8);
+}
+
+.doc-demo__group-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.doc-demo__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    align-items: center;
+}
+
+.doc-demo__list--column {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.doc-demo__list--center {
+    justify-content: center;
+}
+
+.doc-demo__item-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .doc-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .doc-sidebar {
+        display: none;
+        /* In a real app we'd add a mobil drawer */
+    }
+}

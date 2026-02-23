@@ -1,0 +1,35 @@
+/* Label Component Styles */
+
+.label {
+    /* Base styles */
+    display: inline-block;
+    margin-bottom: var(--spacing-1);
+
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Required indicator */
+.label__required {
+    margin-left: 0.25rem;
+    color: var(--color-danger);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Disabled state (when associated with disabled input) */
+.label--disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+}
+
+/* Focus/hover enhancement for accessibility */
+.label:hover {
+    color: var(--color-text);
+}

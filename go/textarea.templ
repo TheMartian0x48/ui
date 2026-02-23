@@ -1,0 +1,63 @@
+package ui
+
+import "strconv"
+
+type TextareaProp struct {
+	Name        string
+	Id          string
+	Value       string
+	Placeholder string
+	Required    bool
+	Disabled    bool
+	Error       bool
+	Class       string
+	Rows        int
+	MaxLength   int
+}
+
+templ Textarea(prop TextareaProp) {
+	<textarea
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		if prop.Name != "" {
+			name={ prop.Name }
+		}
+		if prop.Placeholder != "" {
+			placeholder={ prop.Placeholder }
+		}
+		if prop.Rows > 0 {
+			rows={ strconv.Itoa(prop.Rows) }
+		}
+		if prop.MaxLength > 0 {
+			maxlength={ strconv.Itoa(prop.MaxLength) }
+		}
+		class={ textareaClass(prop) }
+		if prop.Required {
+			required
+		}
+		if prop.Disabled {
+			disabled
+		}
+		if prop.Error {
+			aria-invalid="true"
+		}
+	>{ prop.Value }</textarea>
+}
+
+func textareaClass(prop TextareaProp) string {
+	base := "input textarea" // Reusing input styles but adding textarea class for height modification
+	var stateClass string
+	if prop.Error {
+		stateClass = base + " input--error"
+	} else if prop.Disabled {
+		stateClass = base + " input--disabled"
+	} else {
+		stateClass = base
+	}
+
+	if prop.Class != "" {
+		return stateClass + " " + prop.Class
+	}
+	return stateClass
+}

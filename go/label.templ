@@ -1,0 +1,36 @@
+package ui
+
+type LabelProp struct {
+	For      string // HTML for attribute - ID of the associated input
+	Required bool   // Whether to show required indicator (*)
+	Class    string // Additional CSS classes
+	Id       string // Optional ID for the label itself
+}
+
+// Label renders a form label element with optional required indicator.
+templ Label(prop LabelProp) {
+	<label
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		if prop.For != "" {
+			for={ prop.For }
+		}
+		class={ labelClass(prop) }
+	>
+		{ children... }
+		if prop.Required {
+			<span class="label__required" aria-label="required">*</span>
+		}
+	</label>
+}
+
+// labelClass generates the CSS class for the label.
+func labelClass(prop LabelProp) string {
+	base := "label"
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

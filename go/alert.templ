@@ -1,0 +1,80 @@
+package ui
+
+type AlertVariant int
+
+const (
+	AlertSuccess AlertVariant = iota
+	AlertWarning
+	AlertDanger
+	AlertInfo
+)
+
+type AlertProp struct {
+	Variant AlertVariant
+	Title   string
+	Class   string
+	Id      string
+}
+
+// Alert renders a feedback message with an appropriate icon and styling.
+templ Alert(prop AlertProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ alertClass(prop) }
+		role="alert"
+	>
+		<div class="alert__icon">
+			@Icon(IconProp{Type: alertIcon(prop.Variant), Size: IconSizeMD})
+		</div>
+		<div class="alert__content">
+			if prop.Title != "" {
+				<h4 class="alert__title">{ prop.Title }</h4>
+			}
+			<div class="alert__body">
+				{ children... }
+			</div>
+		</div>
+	</div>
+}
+
+// alertClass generates the CSS class for the alert based on variant.
+func alertClass(prop AlertProp) string {
+	base := "alert"
+
+	var variantClass string
+	switch prop.Variant {
+	case AlertSuccess:
+		variantClass = base + " alert--success"
+	case AlertWarning:
+		variantClass = base + " alert--warning"
+	case AlertDanger:
+		variantClass = base + " alert--danger"
+	case AlertInfo:
+		variantClass = base + " alert--info"
+	default:
+		variantClass = base + " alert--info"
+	}
+
+	if prop.Class != "" {
+		return variantClass + " " + prop.Class
+	}
+	return variantClass
+}
+
+// alertIcon returns the appropriate icon type for the variant.
+func alertIcon(variant AlertVariant) IconKind {
+	switch variant {
+	case AlertSuccess:
+		return IconCheck
+	case AlertWarning:
+		return IconWarning
+	case AlertDanger:
+		return IconX
+	case AlertInfo:
+		return IconInfo
+	default:
+		return IconInfo
+	}
+}

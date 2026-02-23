@@ -1,0 +1,100 @@
+/* Tooltip Component Styles */
+
+.tooltip-wrapper {
+    position: relative;
+    display: inline-flex;
+    /* Shrink to fit content */
+}
+
+.tooltip__content {
+    position: absolute;
+    z-index: 100;
+
+    visibility: hidden;
+    opacity: 0;
+
+    background-color: var(--color-bg-tertiary);
+    /* Dark background usually */
+    color: var(--color-text);
+    /* Invert colors for tooltip contrast if desired, or stick to theme */
+    background-color: var(--color-text);
+    /* Black/White contrast usually */
+    color: var(--color-bg);
+
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    pointer-events: none;
+    /* Let clicks pass through */
+
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    /* Box shadow */
+    box-shadow: var(--shadow-md);
+}
+
+/* Show on hover or focus-within */
+.tooltip-wrapper:hover .tooltip__content,
+.tooltip-wrapper:focus-within .tooltip__content {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Positioning */
+
+/* Top (default) */
+.tooltip--top .tooltip__content {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    /* Start slightly down */
+    margin-bottom: var(--spacing-2);
+}
+
+.tooltip--top:hover .tooltip__content,
+.tooltip--top:focus-within .tooltip__content {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Bottom */
+.tooltip--bottom .tooltip__content {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    margin-top: var(--spacing-2);
+}
+
+.tooltip--bottom:hover .tooltip__content,
+.tooltip--bottom:focus-within .tooltip__content {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Left */
+.tooltip--left .tooltip__content {
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%) translateX(5px);
+    margin-right: var(--spacing-2);
+}
+
+.tooltip--left:hover .tooltip__content,
+.tooltip--left:focus-within .tooltip__content {
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Right */
+.tooltip--right .tooltip__content {
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%) translateX(-5px);
+    margin-left: var(--spacing-2);
+}
+
+.tooltip--right:hover .tooltip__content,
+.tooltip--right:focus-within .tooltip__content {
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Optional arrow using ::after on tooltip__content if desired, 
+   but simplistic box is usually clean enough */

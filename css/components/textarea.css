@@ -1,0 +1,7 @@
+/* Textarea Component Styles */
+
+textarea.input {
+    min-height: 100px;
+    resize: vertical;
+    font-family: var(--font-primary);
+}

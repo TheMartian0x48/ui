@@ -1,0 +1,109 @@
+package ui
+
+type ButtonType int
+
+const (
+	ButtonTypeButton ButtonType = iota
+	ButtonTypeSubmit
+	ButtonTypeReset
+)
+
+type ButtonVariant int
+
+const (
+	ButtonPrimary ButtonVariant = iota
+	ButtonSecondary
+	ButtonOutline
+	ButtonGhost
+	ButtonDanger
+)
+
+type ButtonSize int
+
+const (
+	ButtonSizeSM ButtonSize = iota
+	ButtonSizeMD
+	ButtonSizeLG
+)
+
+type ButtonProp struct {
+	Variant    ButtonVariant
+	Size       ButtonSize
+	Disabled   bool
+	Type       ButtonType
+	Class      string
+	Id         string
+	Attributes templ.Attributes
+}
+
+// Button renders a button element with configurable variants and sizes.
+templ Button(prop ButtonProp) {
+	<button
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		type={ buttonType(prop) }
+		class={ buttonClass(prop) }
+		if prop.Disabled {
+			disabled
+		}
+		{ prop.Attributes... }
+	>
+		{ children... }
+	</button>
+}
+
+// buttonType converts ButtonType enum to HTML type attribute string.
+func buttonType(prop ButtonProp) string {
+	switch prop.Type {
+	case ButtonTypeSubmit:
+		return "submit"
+	case ButtonTypeReset:
+		return "reset"
+	default:
+		return "button"
+	}
+}
+
+// buttonClass generates the CSS class for the button based on variant and size.
+func buttonClass(prop ButtonProp) string {
+	base := "btn"
+
+	// Determine variant class
+	var variantClass string
+	switch prop.Variant {
+	case ButtonPrimary:
+		variantClass = base + " btn--primary"
+	case ButtonSecondary:
+		variantClass = base + " btn--secondary"
+	case ButtonOutline:
+		variantClass = base + " btn--outline"
+	case ButtonGhost:
+		variantClass = base + " btn--ghost"
+	case ButtonDanger:
+		variantClass = base + " btn--danger"
+	default:
+		variantClass = base + " btn--primary"
+	}
+
+	// Determine size class
+	var sizeClass string
+	switch prop.Size {
+	case ButtonSizeSM:
+		sizeClass = "btn--sm"
+	case ButtonSizeLG:
+		sizeClass = "btn--lg"
+	default:
+		sizeClass = "btn--md"
+	}
+
+	// Combine classes
+	result := variantClass + " " + sizeClass
+
+	// Add custom class if provided
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+
+	return result
+}

@@ -1,0 +1,26 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ AccordionDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Accordion</h1>
+			<p class="doc-section__description">
+				Collapsible content sections.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<div style="width: 100%;">
+					@ui.Accordion(ui.AccordionProp{
+						Items: []ui.AccordionItem{
+							{Title: "What is ui?", Content: "ui is a modern component library."},
+							{Title: "How do I use it?", Content: "Just import the components."},
+						},
+					})
+				</div>
+			</div>
+		</div>
+	</section>
+}

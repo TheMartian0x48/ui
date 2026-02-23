@@ -1,0 +1,81 @@
+package ui
+
+type DropdownProp struct {
+	Label  string   // Text for the trigger button
+	Icon   IconKind // Optional icon for the trigger
+	Class  string   // Additional classes
+	Right  bool     // Align menu to the right
+	Id     string   // Optional ID
+	Values []string // Optional values if selectable (simple case)
+}
+
+// Dropdown renders a collapsible menu using the native details/summary pattern.
+templ Dropdown(prop DropdownProp) {
+	<details
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ dropdownClass(prop) }
+	>
+		<summary class="btn btn--secondary btn--md dropdown__trigger">
+			<span>{ prop.Label }</span>
+			@Icon(IconProp{Type: IconChevronDown, Size: IconSizeSM, Class: "dropdown__arrow"})
+		</summary>
+		<div class="dropdown__menu">
+			{ children... }
+		</div>
+	</details>
+}
+
+// DropdownItem renders a single item within the dropdown menu.
+// It can be a link or a button action.
+type DropdownItemProp struct {
+	Href       string // If provided, renders as <a>, else <button>
+	Label      string
+	Icon       IconKind
+	Attributes templ.Attributes // Helper for arbitrary attributes (onclick etc)
+	Danger     bool             // Apply danger styling
+}
+
+templ DropdownItem(prop DropdownItemProp) {
+	if prop.Href != "" {
+		<a href={ templ.SafeURL(prop.Href) } class={ dropdownItemClass(prop) }>
+			if prop.Icon != 0 {
+				@Icon(IconProp{Type: prop.Icon, Size: IconSizeSM})
+			}
+			{ prop.Label }
+		</a>
+	} else {
+		<button
+			class={ dropdownItemClass(prop) }
+			{ prop.Attributes... }
+			type="button"
+		>
+			if prop.Icon != 0 {
+				@Icon(IconProp{Type: prop.Icon, Size: IconSizeSM})
+			}
+			{ prop.Label }
+		</button>
+	}
+}
+
+// Helper functions for CSS classes
+
+func dropdownClass(prop DropdownProp) string {
+	classes := "dropdown"
+	if prop.Right {
+		classes += " dropdown--right"
+	}
+	if prop.Class != "" {
+		classes += " " + prop.Class
+	}
+	return classes
+}
+
+func dropdownItemClass(prop DropdownItemProp) string {
+	classes := "dropdown__item"
+	if prop.Danger {
+		classes += " dropdown__item--danger"
+	}
+	return classes
+}

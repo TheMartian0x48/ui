@@ -1,0 +1,42 @@
+package ui
+
+type CardProp struct {
+	Class  string // Additional CSS classes
+	Id     string // Optional ID
+	Header string // Optional header text
+	Footer string // Optional footer text
+}
+
+// Card renders a container with optional header and footer.
+templ Card(prop CardProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ cardClass(prop) }
+	>
+		if prop.Header != "" {
+			<div class="card__header">
+				<h3 class="card__title">{ prop.Header }</h3>
+			</div>
+		}
+		<div class="card__content">
+			{ children... }
+		</div>
+		if prop.Footer != "" {
+			<div class="card__footer">
+				{ prop.Footer }
+			</div>
+		}
+	</div>
+}
+
+// cardClass generates the CSS class for the card.
+func cardClass(prop CardProp) string {
+	base := "card"
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

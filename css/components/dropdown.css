@@ -1,0 +1,118 @@
+/* Dropdown Component Styles */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown__trigger {
+    /* Inherits btn styles but we need to remove the default marker */
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+    cursor: pointer;
+}
+
+/* Remove default marker in Webkit/Chrome */
+.dropdown__trigger::-webkit-details-marker {
+    display: none;
+}
+
+.dropdown__arrow {
+    transition: transform 0.2s ease;
+}
+
+.dropdown[open] .dropdown__arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown__menu {
+    position: absolute;
+    top: calc(100% + var(--spacing-1));
+    left: 0;
+    z-index: 50;
+
+    min-width: 12rem;
+    padding: var(--spacing-1);
+
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    /* Animation hooks */
+    animation: dropdown-fade-in 0.15s ease-out forwards;
+    transform-origin: top left;
+}
+
+.dropdown--right .dropdown__menu {
+    left: auto;
+    right: 0;
+    transform-origin: top right;
+}
+
+.dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: 0.5rem 0.75rem;
+
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    text-decoration: none;
+    text-align: left;
+
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    width: 100%;
+
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.dropdown__item:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-primary);
+}
+
+/* Danger variant */
+.dropdown__item--danger {
+    color: var(--color-danger);
+}
+
+.dropdown__item--danger:hover {
+    background-color: var(--color-danger-bg, rgba(239, 68, 68, 0.1));
+    color: var(--color-danger);
+}
+
+.dropdown__item .icon {
+    color: var(--color-text-tertiary);
+}
+
+.dropdown__item:hover .icon {
+    color: currentColor;
+}
+
+/* Overlay to help close on click outside (optional pure CSS trick, 
+   but for robust closing JS is usually better. 
+   We will rely on simple native usage for now or add a global click listener in main.js later if needed)
+*/
+
+@keyframes dropdown-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
