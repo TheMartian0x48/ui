@@ -1,0 +1,80 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ LinkDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Link</h1>
+			<p class="doc-section__description">
+				Anchor element styled as an interactive button component, perfect for navigation within the UI.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Link Variants vs Buttons</h3>
+					<p class="text-sm text-secondary" style="margin-bottom: 1rem;">Links share identical visual variant styling with buttons since they are essentially navigational buttons.</p>
+					<div class="doc-demo__list">
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#"}) {
+							Primary Link 
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonSecondary, Href: "#"}) {
+							Secondary Link 
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonOutline, Href: "#"}) {
+							Outline Link 
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonGhost, Href: "#"}) {
+							Ghost Link 
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonDanger, Href: "#"}) {
+							Danger Link 
+						}
+					</div>
+				</div>
+				<!-- Target -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Targets & Icons</h3>
+					<div class="doc-demo__list">
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonOutline, Href: "https://example.com", Target: "_blank"}) {
+							External Link
+							@ui.IconExternalLink()
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "/", Target: "_self"}) {
+							@ui.IconHome()
+							Go Home
+						}
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list">
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#", Disabled: true}) {
+							Disabled Link 
+						}
+					</div>
+				</div>
+				<!-- Comparison Text -->
+				<div class="doc-demo__group">
+					<div style="background-color: var(--color-bg-secondary); padding: 1rem; border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+						<strong>When to use Link vs Button:</strong>
+						<br/>
+						Use 
+						<code>
+							{ "@ui.Link" }
+						</code> when the action takes the user to a new URL, route, or external page (relies on an <code>&lt;a href="..."&gt;</code> tag).
+						<br/>
+						<br/>
+						Use 
+						<code>
+							{ "@ui.Button" }
+						</code> when the action triggers a script, form submission, or state change on the current page (relies on a <code>&lt;button type="..."&gt;</code> tag).
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

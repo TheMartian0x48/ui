@@ -64,14 +64,17 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("dropdown", activeComponent == "dropdown")
 								@SidebarLink("form-field", activeComponent == "form-field")
 								@SidebarLink("icon", activeComponent == "icon")
+								@SidebarLink("image-preview", activeComponent == "image-preview")
 								@SidebarLink("input", activeComponent == "input")
 								@SidebarLink("label", activeComponent == "label")
+								@SidebarLink("link", activeComponent == "link")
+								@SidebarLink("progress", activeComponent == "progress")
 								@SidebarLink("select", activeComponent == "select")
 								@SidebarLink("slider", activeComponent == "slider")
 								@SidebarLink("switch", activeComponent == "switch")
 								@SidebarLink("table", activeComponent == "table")
-								@SidebarLink("progress", activeComponent == "progress")
 								@SidebarLink("tabs", activeComponent == "tabs")
+								@SidebarLink("textarea", activeComponent == "textarea")
 								@SidebarLink("toast", activeComponent == "toast")
 								@SidebarLink("tooltip", activeComponent == "tooltip")
 							</ul>
@@ -98,10 +101,14 @@ templ Showcase(activeComponent string) {
 						@FormFieldDemo()
 					} else if activeComponent == "icon" {
 						@IconDemo()
+					} else if activeComponent == "image-preview" {
+						@ImagePreviewDemo()
 					} else if activeComponent == "input" {
 						@InputDemo()
 					} else if activeComponent == "label" {
 						@LabelDemo()
+					} else if activeComponent == "link" {
+						@LinkDemo()
 					} else if activeComponent == "progress" {
 						@ProgressDemo()
 					} else if activeComponent == "select" {
@@ -114,6 +121,8 @@ templ Showcase(activeComponent string) {
 						@TableDemo()
 					} else if activeComponent == "tabs" {
 						@TabsDemo()
+					} else if activeComponent == "textarea" {
+						@TextareaDemo()
 					} else if activeComponent == "tooltip" {
 						@TooltipDemo()
 					} else if activeComponent == "toast" {
