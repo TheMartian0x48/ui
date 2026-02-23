@@ -4,17 +4,36 @@ type BadgeVariant int
 
 const (
 	BadgePrimary BadgeVariant = iota
+	BadgeSecondary
 	BadgeSuccess
 	BadgeWarning
 	BadgeDanger
 	BadgeInfo
-	BadgeSecondary
+)
+
+type BadgeShape int
+
+const (
+	BadgeFilled BadgeShape = iota
+	BadgeOutlined
+	BadgeSubtle
+)
+
+type BadgeSize int
+
+const (
+	BadgeSizeSM BadgeSize = iota
+	BadgeSizeMD
+	BadgeSizeLG
 )
 
 type BadgeProp struct {
-	Variant BadgeVariant
-	Class   string
-	Id      string
+	Variant    BadgeVariant
+	Shape      BadgeShape
+	Size       BadgeSize
+	Class      string
+	Id         string
+	Attributes templ.Attributes
 }
 
 // Badge renders a small label/badge component.
@@ -24,33 +43,58 @@ templ Badge(prop BadgeProp) {
 			id={ prop.Id }
 		}
 		class={ badgeClass(prop) }
+		{ prop.Attributes... }
 	>
 		{ children... }
 	</span>
 }
 
-// badgeClass generates the CSS class for the badge based on variant.
+// badgeClass generates the CSS class for the badge based on variant, shape, and size.
 func badgeClass(prop BadgeProp) string {
 	base := "badge"
 
+	// Variant class
 	var variantClass string
 	switch prop.Variant {
-	case BadgeSuccess:
-		variantClass = base + " badge--success"
-	case BadgeWarning:
-		variantClass = base + " badge--warning"
-	case BadgeDanger:
-		variantClass = base + " badge--danger"
-	case BadgeInfo:
-		variantClass = base + " badge--info"
 	case BadgeSecondary:
-		variantClass = base + " badge--secondary"
+		variantClass = "badge--secondary"
+	case BadgeSuccess:
+		variantClass = "badge--success"
+	case BadgeWarning:
+		variantClass = "badge--warning"
+	case BadgeDanger:
+		variantClass = "badge--danger"
+	case BadgeInfo:
+		variantClass = "badge--info"
 	default:
-		variantClass = base + " badge--primary"
+		variantClass = "badge--primary"
 	}
 
-	if prop.Class != "" {
-		return variantClass + " " + prop.Class
+	// Shape class
+	var shapeClass string
+	switch prop.Shape {
+	case BadgeOutlined:
+		shapeClass = "badge--outlined"
+	case BadgeSubtle:
+		shapeClass = "badge--subtle"
+	default:
+		shapeClass = "badge--filled"
 	}
-	return variantClass
+
+	// Size class
+	var sizeClass string
+	switch prop.Size {
+	case BadgeSizeSM:
+		sizeClass = "badge--sm"
+	case BadgeSizeLG:
+		sizeClass = "badge--lg"
+	default:
+		sizeClass = "badge--md"
+	}
+
+	result := base + " " + variantClass + " " + shapeClass + " " + sizeClass
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+	return result
 }
