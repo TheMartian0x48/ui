@@ -1,0 +1,71 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ ToastDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Toast</h1>
+			<p class="doc-section__description">
+				Push notifications that appear temporarily to provide feedback about an operation.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Types -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Notification Types</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Attributes: templ.Attributes{"onclick": "showToast('Information message', 'info', 'Info')"}}) {
+							Info 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--success", Attributes: templ.Attributes{"onclick": "showToast('Operation successful!', 'success', 'Success')"}}) {
+							Success 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--warning", Attributes: templ.Attributes{"onclick": "showToast('There might be an issue.', 'warning', 'Warning')"}}) {
+							Warning 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--danger", Attributes: templ.Attributes{"onclick": "showToast('An error occurred.', 'error', 'Error')"}}) {
+							Error 
+						}
+					</div>
+				</div>
+				<!-- Positions -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Positions</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Left', 'info', '', window.ToastPosition.TopLeft)"}}) {
+							Top Left 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Center', 'info', '', window.ToastPosition.TopCenter)"}}) {
+							Top Center 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Right', 'info', '', window.ToastPosition.TopRight)"}}) {
+							Top Right 
+						}
+					</div>
+					<div class="doc-demo__list" style="margin-top: 1rem;">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Left', 'info', '', window.ToastPosition.BottomLeft)"}}) {
+							Bottom Left 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Center', 'info', '', window.ToastPosition.BottomCenter)"}}) {
+							Bottom Center 
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Right', 'info', '', window.ToastPosition.BottomRight)"}}) {
+							Bottom Right 
+						}
+					</div>
+				</div>
+				<!-- SSR / Static Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Visual Anatomy (Static)</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px; gap: 1rem;">
+						@ui.Toast(ui.ToastProp{Type: ui.ToastInfo, Title: "Update Available", Message: "A new version of the software is ready."})
+						@ui.Toast(ui.ToastProp{Type: ui.ToastSuccess, Message: "Project saved successfully."})
+						@ui.Toast(ui.ToastProp{Type: ui.ToastError, Title: "Network Error", Message: "Unable to connect to the server."})
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}
