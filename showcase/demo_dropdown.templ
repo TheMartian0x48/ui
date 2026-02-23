@@ -12,11 +12,19 @@ templ DropdownDemo() {
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
-				@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Settings"})
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Profile"})
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Danger: true})
-				}
+				<div class="doc-demo__list">
+					@ui.Dropdown(ui.DropdownProp{Label: "User Actions"}) {
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Profile", Icon: ui.IconUser()})
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Settings", Icon: ui.IconSettings()})
+						<hr class="dropdown__divider"/>
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Icon: ui.IconLogOut(), Danger: true})
+					}
+					@ui.Dropdown(ui.DropdownProp{Label: "Actions", Right: true}) {
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Edit", Icon: ui.IconEdit()})
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Download", Icon: ui.IconDownload()})
+						@ui.DropdownItem(ui.DropdownItemProp{Label: "Delete", Icon: ui.IconTrash(), Danger: true})
+					}
+				</div>
 			</div>
 		</div>
 	</section>

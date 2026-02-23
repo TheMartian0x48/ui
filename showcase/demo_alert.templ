@@ -7,77 +7,77 @@ templ AlertDemo() {
 		<header class="doc-section__header">
 			<h1 class="doc-section__title">Alert</h1>
 			<p class="doc-section__description">
-				Provide contextual feedback messages for typical user actions.
+				Feedback messages which are displayed after specific actions or to provide system-level notifications.
 			</p>
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
-				<!-- Standard Shapes -->
+				<!-- Standard Shapes (Standard) -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Standard Shapes (Default)</h3>
+					<h3 class="doc-demo__group-title">Shapes: Standard</h3>
 					<div class="doc-demo__list doc-demo__list--grid">
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Info"}) {
-							This is an info alert — check it out!
+							A new software update is available.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Success"}) {
-							This is a success alert — check it out!
+							Your profile has been updated successfully.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "Warning"}) {
-							This is a warning alert — check it out!
+							Your subscription will expire in 3 days.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Title: "Error"}) {
-							This is an error alert — check it out!
+							There was a problem connecting to the server.
 						}
 					</div>
 				</div>
-				<!-- Outlined Shapes -->
+				<!-- Outlined Shape -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Outlined Shapes</h3>
+					<h3 class="doc-demo__group-title">Shapes: Outlined</h3>
 					<div class="doc-demo__list doc-demo__list--grid">
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertOutlined, Title: "Info"}) {
-							This is an outlined info alert.
+							Outlined alerts offer a more subtle emphasis.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertOutlined, Title: "Success"}) {
-							This is an outlined success alert.
+							The changes were saved without issues.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertOutlined, Title: "Warning"}) {
-							This is an outlined warning alert.
+							Please review the security settings.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertOutlined, Title: "Error"}) {
-							This is an outlined error alert.
+							Validation failed for the input fields.
 						}
 					</div>
 				</div>
-				<!-- Filled Shapes -->
+				<!-- Filled Shape -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Filled Shapes</h3>
+					<h3 class="doc-demo__group-title">Shapes: Filled</h3>
 					<div class="doc-demo__list doc-demo__list--grid">
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertFilled, Title: "Info"}) {
-							This is a filled info alert.
+							Filled alerts are high-priority notifications.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertFilled, Title: "Success", Dismissible: true}) {
-							This is a filled success alert with a dismiss button.
+							Operation completed successfully. You can dismiss this.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertFilled, Title: "Warning"}) {
-							This is a filled warning alert.
+							This action cannot be undone.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertFilled, Title: "Error"}) {
-							This is a filled error alert.
+							Critical system error encountered.
 						}
 					</div>
 				</div>
-				<!-- Features -->
+				<!-- Customization -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Features</h3>
+					<h3 class="doc-demo__group-title">Customization</h3>
 					<div class="doc-demo__list doc-demo__list--grid">
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Dismissible", Dismissible: true}) {
-							You can close this alert.
+							You can close this alert manually.
 						}
-						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Custom Icon", Icon: ui.IconCamera}) {
-							This success alert uses a camera icon.
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Custom Icon", Icon: ui.IconCamera()}) {
+							You can override the default variant icon.
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "No Icon", HideIcon: true}) {
-							This alert has no icon.
+							The icon can be hidden entirely.
 						}
 					</div>
 				</div>

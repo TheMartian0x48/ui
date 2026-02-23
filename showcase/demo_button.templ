@@ -68,20 +68,20 @@ templ ButtonDemo() {
 					<h3 class="doc-demo__group-title">With Icons</h3>
 					<div class="doc-demo__list doc-demo__list--center">
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconEdit, Size: ui.IconSizeSM})
+							@ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeSM})
 							Edit Profile
 						}
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconDownload, Size: ui.IconSizeSM})
+							@ui.Icon(ui.IconProp{Icon: ui.IconDownload(), Size: ui.IconSizeSM})
 							Download
 						}
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeSM})
+							@ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeSM})
 							Delete
 						}
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
 							Settings
-							@ui.Icon(ui.IconProp{Type: ui.IconSettings, Size: ui.IconSizeSM})
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
 						}
 					</div>
 				</div>
@@ -90,13 +90,13 @@ templ ButtonDemo() {
 					<h3 class="doc-demo__group-title">Icon Only</h3>
 					<div class="doc-demo__list doc-demo__list--center">
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--icon"}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconMenu, Size: ui.IconSizeMD})
+							@ui.Icon(ui.IconProp{Icon: ui.IconMenu(), Size: ui.IconSizeMD})
 						}
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon"}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconCamera, Size: ui.IconSizeMD})
+							@ui.Icon(ui.IconProp{Icon: ui.IconCamera(), Size: ui.IconSizeMD})
 						}
 						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger, Class: "btn--icon"}) {
-							@ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeMD})
+							@ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeMD})
 						}
 					</div>
 				</div>

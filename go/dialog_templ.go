@@ -98,7 +98,7 @@ func Dialog(prop DialogProp) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconX, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconX(), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

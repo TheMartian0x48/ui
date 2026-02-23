@@ -76,7 +76,7 @@ func AccordionDemo() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = ui.Accordion(ui.AccordionProp{
-			Icon: ui.IconEdit,
+			Icon: ui.IconEdit(),
 			Items: []ui.AccordionItem{
 				{Title: "Settings", Content: "Change your account settings and preferences here."},
 				{Title: "Privacy", Content: "Manage your data and privacy settings."},

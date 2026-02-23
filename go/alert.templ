@@ -23,10 +23,10 @@ type AlertProp struct {
 	Title       string
 	Class       string
 	Id          string
-	Icon        IconKind         // Optional: Override default variant icon
-	HideIcon    bool             // Optional: Hide the icon entirely
-	Dismissible bool             // Optional: Show a close button
-	Attributes  templ.Attributes // HTML attributes for the alert container
+	Icon        templ.Component // Changed from enum to component
+	HideIcon    bool
+	Dismissible bool
+	Attributes  templ.Attributes
 }
 
 // Alert renders a feedback message with an appropriate icon and styling.
@@ -46,10 +46,10 @@ templ Alert(prop AlertProp) {
 	>
 		if !prop.HideIcon {
 			<div class="alert__icon">
-				if prop.Icon != 0 {
-					@Icon(IconProp{Type: prop.Icon, Size: IconSizeMD})
+				if prop.Icon != nil {
+					@Icon(IconProp{Icon: prop.Icon, Size: IconSizeMD})
 				} else {
-					@Icon(IconProp{Type: alertIcon(prop.Variant), Size: IconSizeMD})
+					@Icon(IconProp{Icon: alertIcon(prop.Variant), Size: IconSizeMD})
 				}
 			</div>
 		}
@@ -68,7 +68,7 @@ templ Alert(prop AlertProp) {
 				@click="show = false"
 				aria-label="Close alert"
 			>
-				@Icon(IconProp{Type: IconX, Size: IconSizeSM})
+				@Icon(IconProp{Icon: IconX(), Size: IconSizeSM})
 			</button>
 		}
 	</div>
@@ -111,18 +111,18 @@ func alertClass(prop AlertProp) string {
 	return result
 }
 
-// alertIcon returns the appropriate icon type for the variant.
-func alertIcon(variant AlertVariant) IconKind {
+// alertIcon returns the appropriate icon component for the variant.
+func alertIcon(variant AlertVariant) templ.Component {
 	switch variant {
 	case AlertSuccess:
-		return IconCheck
+		return IconCheck()
 	case AlertWarning:
-		return IconWarning
+		return IconWarning()
 	case AlertDanger:
-		return IconX
+		return IconX()
 	case AlertInfo:
-		return IconInfo
+		return IconInfo()
 	default:
-		return IconInfo
+		return IconInfo()
 	}
 }

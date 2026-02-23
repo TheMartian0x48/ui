@@ -23,7 +23,7 @@ templ ImagePreview(prop ImagePreviewProp) {
 			<img src={ prop.Src } alt={ prop.Alt } loading="lazy"/>
 		} else {
 			<div class="image-preview__placeholder">
-				@Icon(IconProp{Type: IconCamera, Size: IconSizeLG})
+				@Icon(IconProp{Icon: IconCamera(), Size: IconSizeLG})
 				<span class="text-sm text-muted">No image selected</span>
 			</div>
 		}

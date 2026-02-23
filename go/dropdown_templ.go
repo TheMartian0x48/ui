@@ -9,12 +9,12 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 type DropdownProp struct {
-	Label  string   // Text for the trigger button
-	Icon   IconKind // Optional icon for the trigger
-	Class  string   // Additional classes
-	Right  bool     // Align menu to the right
-	Id     string   // Optional ID
-	Values []string // Optional values if selectable (simple case)
+	Label  string          // Text for the trigger button
+	Icon   templ.Component // Changed from enum to component
+	Class  string          // Additional classes
+	Right  bool            // Align menu to the right
+	Id     string          // Optional ID
+	Values []string        // Optional values if selectable (simple case)
 }
 
 // Dropdown renders a collapsible menu using the native details/summary pattern.
@@ -97,7 +97,7 @@ func Dropdown(prop DropdownProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Icon(IconProp{Type: IconChevronDown, Size: IconSizeSM, Class: "dropdown__arrow"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Icon(IconProp{Icon: IconChevronDown(), Size: IconSizeSM, Class: "dropdown__arrow"}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -122,7 +122,7 @@ func Dropdown(prop DropdownProp) templ.Component {
 type DropdownItemProp struct {
 	Href       string // If provided, renders as <a>, else <button>
 	Label      string
-	Icon       IconKind
+	Icon       templ.Component  // Changed from enum to component
 	Attributes templ.Attributes // Helper for arbitrary attributes (onclick etc)
 	Danger     bool             // Apply danger styling
 }
@@ -184,8 +184,8 @@ func DropdownItem(prop DropdownItemProp) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if prop.Icon != 0 {
-				templ_7745c5c3_Err = Icon(IconProp{Type: prop.Icon, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			if prop.Icon != nil {
+				templ_7745c5c3_Err = Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -234,8 +234,8 @@ func DropdownItem(prop DropdownItemProp) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if prop.Icon != 0 {
-				templ_7745c5c3_Err = Icon(IconProp{Type: prop.Icon, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			if prop.Icon != nil {
+				templ_7745c5c3_Err = Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

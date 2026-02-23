@@ -31,10 +31,10 @@ type AlertProp struct {
 	Title       string
 	Class       string
 	Id          string
-	Icon        IconKind         // Optional: Override default variant icon
-	HideIcon    bool             // Optional: Hide the icon entirely
-	Dismissible bool             // Optional: Show a close button
-	Attributes  templ.Attributes // HTML attributes for the alert container
+	Icon        templ.Component // Changed from enum to component
+	HideIcon    bool
+	Dismissible bool
+	Attributes  templ.Attributes
 }
 
 // Alert renders a feedback message with an appropriate icon and styling.
@@ -123,13 +123,13 @@ func Alert(prop AlertProp) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if prop.Icon != 0 {
-				templ_7745c5c3_Err = Icon(IconProp{Type: prop.Icon, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			if prop.Icon != nil {
+				templ_7745c5c3_Err = Icon(IconProp{Icon: prop.Icon, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = Icon(IconProp{Type: alertIcon(prop.Variant), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = Icon(IconProp{Icon: alertIcon(prop.Variant), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -179,7 +179,7 @@ func Alert(prop AlertProp) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconX, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconX(), Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -233,19 +233,19 @@ func alertClass(prop AlertProp) string {
 	return result
 }
 
-// alertIcon returns the appropriate icon type for the variant.
-func alertIcon(variant AlertVariant) IconKind {
+// alertIcon returns the appropriate icon component for the variant.
+func alertIcon(variant AlertVariant) templ.Component {
 	switch variant {
 	case AlertSuccess:
-		return IconCheck
+		return IconCheck()
 	case AlertWarning:
-		return IconWarning
+		return IconWarning()
 	case AlertDanger:
-		return IconX
+		return IconX()
 	case AlertInfo:
-		return IconInfo
+		return IconInfo()
 	default:
-		return IconInfo
+		return IconInfo()
 	}
 }
 
