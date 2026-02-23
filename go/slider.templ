@@ -1,0 +1,69 @@
+package ui
+
+import "fmt"
+
+type SliderProp struct {
+	Name       string
+	Label      string
+	Value      float64
+	Min        float64
+	Max        float64
+	Step       float64
+	ShowValue  bool
+	Disabled   bool
+	Class      string
+	Id         string
+	Attributes templ.Attributes
+}
+
+// Slider renders a customized range input.
+// It uses Alpine.js for real-time value updates if ShowValue is true.
+templ Slider(prop SliderProp) {
+	{{
+		min := prop.Min
+		max := prop.Max
+		if max == 0 {
+			max = 100
+		}
+		step := prop.Step
+		if step == 0 {
+			step = 1
+		}
+
+		id := prop.Id
+		if id == "" && prop.Name != "" {
+			id = "slider-" + prop.Name
+		}
+	}}
+	<div
+		class="slider-container"
+		x-data={ fmt.Sprintf("{ val: %v, min: %v, max: %v }", prop.Value, min, max) }
+	>
+		if prop.Label != "" || prop.ShowValue {
+			<div class="slider-header">
+				if prop.Label != "" {
+					<label for={ id } class="slider-label">{ prop.Label }</label>
+				}
+				if prop.ShowValue {
+					<span class="slider-value" x-text="val"></span>
+				}
+			</div>
+		}
+		<input
+			type="range"
+			id={ id }
+			name={ prop.Name }
+			class={ "slider " + prop.Class }
+			min={ fmt.Sprintf("%v", min) }
+			max={ fmt.Sprintf("%v", max) }
+			step={ fmt.Sprintf("%v", step) }
+			value={ fmt.Sprintf("%v", prop.Value) }
+			if prop.Disabled {
+				disabled
+			}
+			x-model="val"
+			:style="`--slider-pct: ${((val - min) / (max - min)) * 100}%`"
+			{ prop.Attributes... }
+		/>
+	</div>
+}

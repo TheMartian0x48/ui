@@ -1,0 +1,110 @@
+/* Slider Component Styles */
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    width: 100%;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.slider-label {
+    font-weight: var(--font-weight-medium);
+}
+
+.slider-value {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Base Input Styling */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) var(--slider-pct, 0%), var(--color-bg-secondary) var(--slider-pct, 0%), var(--color-bg-secondary) 100%);
+    border-radius: var(--radius-full);
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Webkit (Chrome, Safari, Edge, Opera) */
+.slider::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: var(--radius-full);
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--color-primary);
+    border: 2px solid var(--color-bg);
+    border-radius: 50%;
+    margin-top: -6px;
+    /* Center thumb on track */
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.slider:hover::-webkit-slider-thumb {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+}
+
+.slider:active::-webkit-slider-thumb {
+    transform: scale(0.95);
+    background: var(--color-primary-dark);
+}
+
+/* Firefox */
+.slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--color-primary);
+    border: 2px solid var(--color-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.slider:hover::-moz-range-thumb {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+}
+
+.slider::-moz-range-progress {
+    background-color: var(--color-primary);
+    height: 6px;
+    border-radius: var(--radius-full);
+}
+
+/* Firefox Track */
+.slider::-moz-range-track {
+    background-color: var(--color-bg-secondary);
+    height: 6px;
+    border-radius: var(--radius-full);
+}
+
+/* Disabled State */
+.slider:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.slider:disabled::-webkit-slider-thumb {
+    background: var(--color-text-muted);
+}
