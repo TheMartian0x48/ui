@@ -77,6 +77,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("radio", activeComponent == "radio")
 								@SidebarLink("select", activeComponent == "select")
 								@SidebarLink("slider", activeComponent == "slider")
+								@SidebarLink("stepper", activeComponent == "stepper")
 								@SidebarLink("switch", activeComponent == "switch")
 								@SidebarLink("table", activeComponent == "table")
 								@SidebarLink("tabs", activeComponent == "tabs")
@@ -133,6 +134,8 @@ templ Showcase(activeComponent string) {
 						@SelectDemo()
 					} else if activeComponent == "slider" {
 						@SliderDemo()
+					} else if activeComponent == "stepper" {
+						@StepperDemo()
 					} else if activeComponent == "switch" {
 						@SwitchDemo()
 					} else if activeComponent == "table" {
