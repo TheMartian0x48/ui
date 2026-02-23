@@ -64,6 +64,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("checkbox", activeComponent == "checkbox")
 								@SidebarLink("dialog", activeComponent == "dialog")
 								@SidebarLink("divider", activeComponent == "divider")
+								@SidebarLink("drawer", activeComponent == "drawer")
 								@SidebarLink("dropdown", activeComponent == "dropdown")
 								@SidebarLink("form-field", activeComponent == "form-field")
 								@SidebarLink("icon", activeComponent == "icon")
@@ -105,6 +106,8 @@ templ Showcase(activeComponent string) {
 						@DialogDemo()
 					} else if activeComponent == "divider" {
 						@DividerDemo()
+					} else if activeComponent == "drawer" {
+						@DrawerDemo()
 					} else if activeComponent == "dropdown" {
 						@DropdownDemo()
 					} else if activeComponent == "form-field" {

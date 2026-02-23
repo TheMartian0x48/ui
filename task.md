@@ -7,17 +7,6 @@ Expand our core building blocks with high-priority form essentials, advanced int
 
 ## Task Breakdown
 
-### 2. Drawer (Slide-over)
-* **Task:** Implement a `Drawer` component that slides in from the edge of the screen, useful for contextual actions or settings without losing page context.
-* **Requirements:**
-  * Create `go/drawer.templ` and `css/components/drawer.css`.
-  * Utilize Alpine.js (`x-data`, `x-show`, `x-transition`) for open/close states and animations.
-  * Implement a Backdrop/Overlay that closes the drawer on click.
-  * Support positioning: `DrawerLeft`, `DrawerRight`.
-  * Support sizing (e.g., width boundaries).
-  * Add a comprehensive demo at `showcase/demo_drawer.templ` tying the drawer trigger to a button.
-  * Update `css/main.css` and `showcase/page.templ` to register it.
-
 ### 4. Stepper
 * **Task:** Implement a `Stepper` component to indicate progress through a multi-step workflow.
 * **Requirements:**
@@ -37,14 +26,4 @@ Expand our core building blocks with high-priority form essentials, advanced int
   * Use Alpine.js to handle visual states (`@dragover` to highlight, `@dragleave`/`@drop` to revert).
   * Provide feedback states (e.g., indicating a file was selected).
   * Add demo showcase at `showcase/demo_dropzone.templ`.
-  * Update `css/main.css` and `showcase/page.templ` to register it.
-
-### 6. Autocomplete (Combobox)
-* **Task:** Implement an `Autocomplete` combobox combining the features of a text input and a searchable dropdown.
-* **Requirements:**
-  * Create `go/autocomplete.templ` and `css/components/autocomplete.css`.
-  * Integrate tightly with Alpine.js to manage search queries (`x-model`) and dropdown visibility.
-  * Filter dropdown options dynamically based on text input.
-  * Ensure keyboard navigation accessibility (arrows to navigate options, enter to select).
-  * Add demo showcase at `showcase/demo_autocomplete.templ`.
   * Update `css/main.css` and `showcase/page.templ` to register it.

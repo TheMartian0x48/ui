@@ -1,0 +1,134 @@
+/* Drawer Component Styles */
+
+.drawer__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.drawer__panel {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 24rem;
+    /* 384px default width */
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-xl);
+    font-family: var(--font-primary);
+}
+
+.drawer__panel--right {
+    right: 0;
+}
+
+.drawer__panel--left {
+    left: 0;
+}
+
+.drawer__panel--top {
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    bottom: auto;
+    height: auto;
+    max-height: 50vh;
+}
+
+.drawer__panel--bottom {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    top: auto;
+    height: auto;
+    max-height: 50vh;
+}
+
+/* Header */
+.drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.drawer__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.drawer__close-wrapper {
+    margin-left: auto;
+}
+
+/* Body */
+.drawer__body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacing-6);
+}
+
+/* Alpine.js transition classes */
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+.translate-x-full {
+    transform: translateX(100%);
+}
+
+.-translate-x-full {
+    transform: translateX(-100%);
+}
+
+.translate-x-0 {
+    transform: translateX(0);
+}
+
+.translate-y-full {
+    transform: translateY(100%);
+}
+
+.-translate-y-full {
+    transform: translateY(-100%);
+}
+
+.translate-y-0 {
+    transform: translateY(0);
+}
+
+.transition {
+    transition-property: opacity, transform;
+}
+
+.duration-300 {
+    transition-duration: 300ms;
+}
+
+.duration-200 {
+    transition-duration: 200ms;
+}
+
+.ease-out {
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in {
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
