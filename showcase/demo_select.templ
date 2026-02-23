@@ -1,0 +1,91 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ SelectDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Select</h1>
+			<p class="doc-section__description">
+				A component that allows users to pick a single option from a dropdown list.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Select -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Select(ui.SelectProp{
+							Name: "theme",
+							Options: []ui.SelectOption{
+								{Label: "System Default", Value: "system"},
+								{Label: "Light Mode", Value: "light"},
+								{Label: "Dark Mode", Value: "dark"},
+							},
+						})
+					</div>
+				</div>
+				<!-- With Placeholder and Preselected -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Placeholder and Pre-selected</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="select-demo-row">
+							<span class="text-xs text-muted">With Placeholder</span>
+							@ui.Select(ui.SelectProp{
+								Placeholder: "Choose a fruit...",
+								Options: []ui.SelectOption{
+									{Label: "Apple", Value: "apple"},
+									{Label: "Banana", Value: "banana"},
+									{Label: "Orange", Value: "orange"},
+								},
+							})
+						</div>
+						<div class="select-demo-row">
+							<span class="text-xs text-muted">Pre-selected Value</span>
+							@ui.Select(ui.SelectProp{
+								Value: "banana",
+								Options: []ui.SelectOption{
+									{Label: "Apple", Value: "apple"},
+									{Label: "Banana", Value: "banana"},
+									{Label: "Orange", Value: "orange"},
+								},
+							})
+						</div>
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="select-demo-row">
+							<span class="text-xs text-muted">Disabled State</span>
+							@ui.Select(ui.SelectProp{
+								Disabled: true,
+								Options: []ui.SelectOption{
+									{Label: "Locked Option", Value: "locked"},
+								},
+							})
+						</div>
+						<div class="select-demo-row">
+							<span class="text-xs text-muted">Error State</span>
+							@ui.Select(ui.SelectProp{
+								Error: true,
+								Options: []ui.SelectOption{
+									{Label: "Invalid Selection", Value: "invalid"},
+								},
+							})
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.select-demo-row {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	</style>
+}

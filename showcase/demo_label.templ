@@ -1,0 +1,38 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ LabelDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Label</h1>
+			<p class="doc-section__description">
+				A simple label component used to describe form inputs.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Label -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Label(ui.LabelProp{For: "input-1"}) {
+							Standard Label 
+						}
+						@ui.Input(ui.InputProp{Id: "input-1", Placeholder: "Click the label above..."})
+					</div>
+				</div>
+				<!-- Required State -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Required State</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Label(ui.LabelProp{For: "input-2", Required: true}) {
+							Mandatory Field 
+						}
+						@ui.Input(ui.InputProp{Id: "input-2", Required: true})
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

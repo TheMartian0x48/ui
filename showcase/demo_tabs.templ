@@ -1,0 +1,124 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ TabsDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Tabs</h1>
+			<p class="doc-section__description">
+				A set of layered sections of content, known as tab panels, that are displayed one at a time.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Tabs -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					@ui.Tabs(ui.TabsProp{Id: "basic-tabs", DefaultValue: "account"}) {
+						@ui.TabsList(ui.TabsListProp{}) {
+							@ui.TabsTrigger(ui.TabsTriggerProp{Value: "account"}) {
+								Account 
+							}
+							@ui.TabsTrigger(ui.TabsTriggerProp{Value: "password"}) {
+								Password 
+							}
+							@ui.TabsTrigger(ui.TabsTriggerProp{Value: "settings"}) {
+								Settings 
+							}
+						}
+						@ui.TabsContent(ui.TabsContentProp{Value: "account"}) {
+							<div class="demo-tab-panel">
+								Make changes to your account here. Click save when you're done.
+							</div>
+						}
+						@ui.TabsContent(ui.TabsContentProp{Value: "password"}) {
+							<div class="demo-tab-panel">
+								Change your password here. After saving, you'll be logged out.
+							</div>
+						}
+						@ui.TabsContent(ui.TabsContentProp{Value: "settings"}) {
+							<div class="demo-tab-panel">
+								Manage your notification settings and email preferences.
+							</div>
+						}
+					}
+				</div>
+				<!-- Real-world Form Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">In-Platform Example</h3>
+					<div style="max-width: 500px;">
+						@ui.Card(ui.CardProp{Header: "User Profile"}) {
+							@ui.Tabs(ui.TabsProp{Id: "profile-tabs", DefaultValue: "general"}) {
+								@ui.TabsList(ui.TabsListProp{Class: "tabs__list--stretched"}) {
+									@ui.TabsTrigger(ui.TabsTriggerProp{Value: "general"}) {
+										@ui.IconSettings()
+										General 
+									}
+									@ui.TabsTrigger(ui.TabsTriggerProp{Value: "billing"}) {
+										@ui.IconFileText()
+										Billing 
+									}
+									@ui.TabsTrigger(ui.TabsTriggerProp{Value: "team", Disabled: true}) {
+										@ui.IconUser()
+										Team 
+									}
+								}
+								@ui.TabsContent(ui.TabsContentProp{Value: "general"}) {
+									<div style="padding: 1.5rem 0 0; display: flex; flex-direction: column; gap: 1rem;">
+										@ui.FormField(ui.FormFieldProp{Label: "Display Name"}) {
+											@ui.Input(ui.InputProp{Value: "Jane Doe"})
+										}
+										@ui.FormField(ui.FormFieldProp{Label: "Email"}) {
+											@ui.Input(ui.InputProp{Type: ui.InputEmail, Value: "jane@example.com"})
+										}
+										<div style="display: flex; justify-content: flex-end;">
+											@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Size: ui.ButtonSizeSM}) {
+												Update General 
+											}
+										</div>
+									</div>
+								}
+								@ui.TabsContent(ui.TabsContentProp{Value: "billing"}) {
+									<div style="padding: 1.5rem 0 0; display: flex; flex-direction: column; gap: 1rem;">
+										<div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--color-bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--color-border-light);">
+											<div>
+												<div style="font-weight: 600; font-size: var(--font-size-sm);">Pro Plan</div>
+												<div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Renews on March 15, 2026</div>
+											</div>
+											@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Size: ui.BadgeSizeSM}) {
+												Active 
+											}
+										</div>
+										<div style="display: flex; justify-content: flex-end;">
+											@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM}) {
+												Manage Billing 
+											}
+										</div>
+									</div>
+								}
+							}
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.demo-tab-panel {
+			padding: 1.5rem 0;
+			font-size: var(--font-size-sm);
+			color: var(--color-text-secondary);
+		}
+		.tabs__list--stretched {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+		.tabs__list--stretched .tabs__trigger {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+		}
+	</style>
+}
