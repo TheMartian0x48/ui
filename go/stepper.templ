@@ -1,0 +1,83 @@
+package ui
+
+import "fmt"
+
+type StepState int
+
+const (
+	StepInactive StepState = iota
+	StepActive
+	StepCompleted
+)
+
+type StepItemProp struct {
+	Title       string
+	Description string // Optional
+	State       StepState
+}
+
+type StepperProp struct {
+	Id       string
+	Steps    []StepItemProp
+	Vertical bool   // If true, renders vertically. Defaults to horizontal.
+	Class    string // Additional custom classes
+}
+
+// Stepper renders a progress indicator through a sequence of steps.
+templ Stepper(prop StepperProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ stepperClass(prop) }
+	>
+		<ol class="stepper__list">
+			for i, step := range prop.Steps {
+				<li class={ stepItemClass(step) }>
+					<div class="stepper__indicator">
+						if step.State == StepCompleted {
+							@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM})
+						} else {
+							<span>{ fmt.Sprintf("%d", i+1) }</span>
+						}
+					</div>
+					<div class="stepper__content">
+						<h4 class="stepper__title">{ step.Title }</h4>
+						if step.Description != "" {
+							<p class="stepper__description">{ step.Description }</p>
+						}
+					</div>
+					if i < len(prop.Steps)-1 {
+						<div class="stepper__connector"></div>
+					}
+				</li>
+			}
+		</ol>
+	</div>
+}
+
+func stepperClass(prop StepperProp) string {
+	base := "stepper"
+	if prop.Vertical {
+		base += " stepper--vertical"
+	} else {
+		base += " stepper--horizontal"
+	}
+	if prop.Class != "" {
+		base += " " + prop.Class
+	}
+	return base
+}
+
+func stepItemClass(step StepItemProp) string {
+	base := "stepper__item"
+	switch step.State {
+	case StepActive:
+		base += " stepper__item--active"
+	case StepCompleted:
+		base += " stepper__item--completed"
+	default:
+		base += " stepper__item--inactive"
+	}
+	return base
+}

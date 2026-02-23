@@ -1,0 +1,94 @@
+/* Radio Component Styles */
+
+.radio {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    position: relative;
+    cursor: pointer;
+    font-family: var(--font-primary);
+}
+
+.radio--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Visually hide native input */
+.radio__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom radio outer circle */
+.radio__control {
+    flex-shrink: 0;
+    width: 1.25rem;
+    /* ~20px */
+    height: 1.25rem;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    /* Make it circular */
+    background-color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    margin-top: 0.125rem;
+    /* Optical alignment with text */
+}
+
+/* Custom radio inner filled circle (hidden by default via transform scaling) */
+.radio__circle {
+    display: block;
+    width: 0.625rem;
+    /* ~10px */
+    height: 0.625rem;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    transform: scale(0);
+    transition: transform var(--transition-fast);
+}
+
+/* Checked state */
+.radio__input:checked+.radio__control {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.radio__input:checked+.radio__control .radio__circle {
+    transform: scale(1);
+}
+
+/* Focus State */
+.radio__input:focus-visible+.radio__control {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    /* Match primary focus ring */
+    border-color: var(--color-primary);
+}
+
+/* Error State */
+.radio--error .radio__control {
+    border-color: var(--color-danger);
+}
+
+.radio--error .radio__input:focus-visible+.radio__control {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+    /* Danger focus ring */
+}
+
+/* Label styling */
+.radio__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-relaxed);
+}
+
+.radio--disabled .radio__label {
+    color: var(--color-text-muted);
+}

@@ -85,22 +85,22 @@ func Toast(prop ToastProp) templ.Component {
 		}
 		switch prop.Type {
 		case ToastSuccess:
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconCheck, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconCheck(), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		case ToastWarning:
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconWarning, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconWarning(), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		case ToastError:
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconX, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconX(), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		default:
-			templ_7745c5c3_Err = Icon(IconProp{Type: IconInfo, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Icon(IconProp{Icon: IconInfo(), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -145,7 +145,7 @@ func Toast(prop ToastProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Icon(IconProp{Type: IconX, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Icon(IconProp{Icon: IconX(), Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

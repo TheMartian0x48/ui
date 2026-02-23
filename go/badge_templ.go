@@ -12,17 +12,36 @@ type BadgeVariant int
 
 const (
 	BadgePrimary BadgeVariant = iota
+	BadgeSecondary
 	BadgeSuccess
 	BadgeWarning
 	BadgeDanger
 	BadgeInfo
-	BadgeSecondary
+)
+
+type BadgeShape int
+
+const (
+	BadgeFilled BadgeShape = iota
+	BadgeOutlined
+	BadgeSubtle
+)
+
+type BadgeSize int
+
+const (
+	BadgeSizeSM BadgeSize = iota
+	BadgeSizeMD
+	BadgeSizeLG
 )
 
 type BadgeProp struct {
-	Variant BadgeVariant
-	Class   string
-	Id      string
+	Variant    BadgeVariant
+	Shape      BadgeShape
+	Size       BadgeSize
+	Class      string
+	Id         string
+	Attributes templ.Attributes
 }
 
 // Badge renders a small label/badge component.
@@ -64,7 +83,7 @@ func Badge(prop BadgeProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 24, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 43, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -88,7 +107,15 @@ func Badge(prop BadgeProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, prop.Attributes)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, ">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,7 +123,7 @@ func Badge(prop BadgeProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -104,30 +131,54 @@ func Badge(prop BadgeProp) templ.Component {
 	})
 }
 
-// badgeClass generates the CSS class for the badge based on variant.
+// badgeClass generates the CSS class for the badge based on variant, shape, and size.
 func badgeClass(prop BadgeProp) string {
 	base := "badge"
 
+	// Variant class
 	var variantClass string
 	switch prop.Variant {
-	case BadgeSuccess:
-		variantClass = base + " badge--success"
-	case BadgeWarning:
-		variantClass = base + " badge--warning"
-	case BadgeDanger:
-		variantClass = base + " badge--danger"
-	case BadgeInfo:
-		variantClass = base + " badge--info"
 	case BadgeSecondary:
-		variantClass = base + " badge--secondary"
+		variantClass = "badge--secondary"
+	case BadgeSuccess:
+		variantClass = "badge--success"
+	case BadgeWarning:
+		variantClass = "badge--warning"
+	case BadgeDanger:
+		variantClass = "badge--danger"
+	case BadgeInfo:
+		variantClass = "badge--info"
 	default:
-		variantClass = base + " badge--primary"
+		variantClass = "badge--primary"
 	}
 
-	if prop.Class != "" {
-		return variantClass + " " + prop.Class
+	// Shape class
+	var shapeClass string
+	switch prop.Shape {
+	case BadgeOutlined:
+		shapeClass = "badge--outlined"
+	case BadgeSubtle:
+		shapeClass = "badge--subtle"
+	default:
+		shapeClass = "badge--filled"
 	}
-	return variantClass
+
+	// Size class
+	var sizeClass string
+	switch prop.Size {
+	case BadgeSizeSM:
+		sizeClass = "badge--sm"
+	case BadgeSizeLG:
+		sizeClass = "badge--lg"
+	default:
+		sizeClass = "badge--md"
+	}
+
+	result := base + " " + variantClass + " " + shapeClass + " " + sizeClass
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+	return result
 }
 
 var _ = templruntime.GeneratedTemplate

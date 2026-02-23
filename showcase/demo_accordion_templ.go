@@ -31,20 +31,61 @@ func AccordionDemo() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Accordion</h1><p class=\"doc-section__description\">Collapsible content sections.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><div style=\"width: 100%;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Accordion</h1><p class=\"doc-section__description\">A vertically stacked list of items that can each be expanded or collapsed to reveal content.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><!-- Basic Variant --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Basic Variant (Default)</h3><div class=\"doc-demo__list doc-demo__list--column\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = ui.Accordion(ui.AccordionProp{
 			Items: []ui.AccordionItem{
-				{Title: "What is ui?", Content: "ui is a modern component library."},
-				{Title: "How do I use it?", Content: "Just import the components."},
+				{Title: "Is it accessible?", Content: "Yes. It uses native details and summary elements for maximum compatibility."},
+				{Title: "Does it support icons?", Content: "Absolutely. You can override the default chevron with any icon from the library."},
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div><!-- Bordered Variant --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Bordered Variant</h3><div class=\"doc-demo__list doc-demo__list--column\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Accordion(ui.AccordionProp{
+			Variant: ui.AccordionBordered,
+			Items: []ui.AccordionItem{
+				{Title: "Why use bordered?", Content: "Bordered accordions work great when you need to contain a group of related items within a card-like structure."},
+				{Title: "Can one be open by default?", Content: "Yes, just set the Open property to true on any AccordionItem.", Open: true},
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div><!-- Flush Variant --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Flush Variant</h3><div class=\"doc-demo__list doc-demo__list--column\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Accordion(ui.AccordionProp{
+			Variant: ui.AccordionFlush,
+			Items: []ui.AccordionItem{
+				{Title: "What is flush?", Content: "Flush accordions remove margins and outer borders, allowing them to blend seamlessly into their parent container."},
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div><!-- Custom Icon --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Custom Icon</h3><div class=\"doc-demo__list doc-demo__list--column\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Accordion(ui.AccordionProp{
+			Icon: ui.IconEdit(),
+			Items: []ui.AccordionItem{
+				{Title: "Settings", Content: "Change your account settings and preferences here."},
+				{Title: "Privacy", Content: "Manage your data and privacy settings."},
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

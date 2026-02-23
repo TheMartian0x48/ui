@@ -1,0 +1,93 @@
+/* Checkbox Component Styles */
+
+.checkbox {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    position: relative;
+    cursor: pointer;
+    font-family: var(--font-primary);
+}
+
+.checkbox--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Visually hide the native input */
+.checkbox__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom checkbox box */
+.checkbox__control {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    margin-top: 0.125rem;
+    /* Optical alignment with text */
+}
+
+/* Checkmark Icon inside the control */
+.checkbox__icon {
+    color: var(--color-white);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all var(--transition-fast);
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+/* Checked State */
+.checkbox__input:checked+.checkbox__control {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.checkbox__input:checked+.checkbox__control .checkbox__icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Focus State */
+.checkbox__input:focus-visible+.checkbox__control {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    /* Match primary focus ring */
+    border-color: var(--color-primary);
+}
+
+/* Error State */
+.checkbox--error .checkbox__control {
+    border-color: var(--color-danger);
+}
+
+.checkbox--error .checkbox__input:focus-visible+.checkbox__control {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+    /* Danger focus ring */
+}
+
+/* Label styling */
+.checkbox__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-relaxed);
+    cursor: pointer;
+    /* Allows clicking text to trigger */
+}
+
+.checkbox--disabled .checkbox__label {
+    cursor: not-allowed;
+}

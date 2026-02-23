@@ -1,20 +1,37 @@
 package ui
 
+type CardVariant int
+
+const (
+	CardElevated CardVariant = iota
+	CardOutlined
+	CardFlat
+)
+
 type CardProp struct {
-	Class  string // Additional CSS classes
-	Id     string // Optional ID
-	Header string // Optional header text
-	Footer string // Optional footer text
+	Variant    CardVariant
+	Image      string // URL for a top-aligned image
+	Header     string // Optional header text
+	Footer     string // Optional footer text
+	Class      string // Additional CSS classes
+	Id         string // Optional ID
+	Attributes templ.Attributes
 }
 
-// Card renders a container with optional header and footer.
+// Card renders a container with optional header, image, and footer.
 templ Card(prop CardProp) {
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ cardClass(prop) }
+		{ prop.Attributes... }
 	>
+		if prop.Image != "" {
+			<div class="card__media">
+				<img src={ prop.Image } alt={ prop.Header } loading="lazy"/>
+			</div>
+		}
 		if prop.Header != "" {
 			<div class="card__header">
 				<h3 class="card__title">{ prop.Header }</h3>
@@ -35,8 +52,19 @@ templ Card(prop CardProp) {
 func cardClass(prop CardProp) string {
 	base := "card"
 
-	if prop.Class != "" {
-		return base + " " + prop.Class
+	var variantClass string
+	switch prop.Variant {
+	case CardOutlined:
+		variantClass = "card--outlined"
+	case CardFlat:
+		variantClass = "card--flat"
+	default:
+		variantClass = "card--elevated"
 	}
-	return base
+
+	result := base + " " + variantClass
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+	return result
 }

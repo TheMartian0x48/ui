@@ -301,7 +301,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconEdit, Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -327,7 +327,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconDownload, Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconDownload(), Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -353,7 +353,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -383,7 +383,7 @@ func ButtonDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconSettings, Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -409,7 +409,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconMenu, Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconMenu(), Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -431,7 +431,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconCamera, Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconCamera(), Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -453,7 +453,7 @@ func ButtonDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Type: ui.IconTrash, Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

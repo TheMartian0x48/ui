@@ -1,0 +1,70 @@
+package ui
+
+type TableProp struct {
+	Striped    bool
+	Hover      bool
+	Compact    bool
+	Header     templ.Component // Optional: if using standard table structure
+	Class      string
+	Id         string
+	Attributes templ.Attributes
+}
+
+// Table renders a responsive data table.
+// It wraps the content in a responsive container with a border.
+templ Table(prop TableProp) {
+	<div class="table-container">
+		<table
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			class={ tableClass(prop) }
+			{ prop.Attributes... }
+		>
+			if prop.Header != nil {
+				<thead>
+					@prop.Header
+				</thead>
+			}
+			{ children... }
+		</table>
+	</div>
+}
+
+func tableClass(prop TableProp) string {
+	classes := "table"
+	if prop.Striped {
+		classes += " table--striped"
+	}
+	if prop.Hover {
+		classes += " table--hover"
+	}
+	if prop.Compact {
+		classes += " table--compact"
+	}
+	if prop.Class != "" {
+		classes += " " + prop.Class
+	}
+	return classes
+}
+
+// TableHeader is a helper for table headers
+templ TableHeader() {
+	<tr>
+		{ children... }
+	</tr>
+}
+
+// TableBody is a helper for table body
+templ TableBody() {
+	<tbody>
+		{ children... }
+	</tbody>
+}
+
+// TableRow is a helper for table rows
+templ TableRow(class string, attributes templ.Attributes) {
+	<tr class={ class } { attributes... }>
+		{ children... }
+	</tr>
+}

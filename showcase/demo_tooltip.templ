@@ -1,0 +1,107 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ TooltipDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Tooltip</h1>
+			<p class="doc-section__description">
+				A brief, informative message that appears when a user hovers over, focuses on, or taps an element.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Positions -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Positions</h3>
+					<div class="doc-demo__list" style="gap: 2rem; padding: 2rem 0;">
+						@ui.Tooltip(ui.TooltipProp{Content: "Tooltip on Top", Position: ui.TooltipTop}) {
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+								Top 
+							}
+						}
+						@ui.Tooltip(ui.TooltipProp{Content: "Tooltip on Bottom", Position: ui.TooltipBottom}) {
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+								Bottom 
+							}
+						}
+						@ui.Tooltip(ui.TooltipProp{Content: "Tooltip on Left", Position: ui.TooltipLeft}) {
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+								Left 
+							}
+						}
+						@ui.Tooltip(ui.TooltipProp{Content: "Tooltip on Right", Position: ui.TooltipRight}) {
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+								Right 
+							}
+						}
+					</div>
+				</div>
+				<!-- Usage Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Usage Examples</h3>
+					<div class="doc-demo__list" style="gap: 1.5rem; align-items: center;">
+						<!-- Icon Button with Tooltip -->
+						@ui.Tooltip(ui.TooltipProp{Content: "Delete Item", Position: ui.TooltipTop}) {
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Delete"}}) {
+								@ui.IconTrash()
+							}
+						}
+						<!-- Info Icon with Tooltip -->
+						<div style="display: flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+							Maximum file size: 10MB
+							@ui.Tooltip(ui.TooltipProp{Content: "Supported formats: JPG, PNG, PDF", Position: ui.TooltipRight}) {
+								<span style="display: inline-flex; color: var(--color-text-muted); cursor: help;">
+									@ui.IconInfo()
+								</span>
+							}
+						</div>
+						<!-- Link with Tooltip -->
+						<p style="font-size: var(--font-size-sm); margin: 0;">
+							Check out our 
+							@ui.Tooltip(ui.TooltipProp{Content: "Read about our data usage", Position: ui.TooltipTop}) {
+								<a href="#" style="color: var(--color-primary); font-weight: 500; text-decoration: underline;">privacy policy</a>
+							}
+							{ "for" } more details.
+						</p>
+					</div>
+				</div>
+				<!-- Interactive Card Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">In-Context Example</h3>
+					<div style="max-width: 400px;">
+						@ui.Card(ui.CardProp{Header: "Project Settings"}) {
+							<div style="display: flex; flex-direction: column; gap: 1.5rem;">
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div>
+										<h4 style="margin: 0; font-size: var(--font-size-sm);">Advanced Analytics</h4>
+										<p style="margin: 0.25rem 0 0; font-size: var(--font-size-xs); color: var(--color-text-muted);">Enable deep tracking metrics.</p>
+									</div>
+									<div style="display: flex; align-items: center; gap: 0.5rem;">
+										@ui.Tooltip(ui.TooltipProp{Content: "This feature requires a Pro plan", Position: ui.TooltipLeft}) {
+											<span style="color: var(--color-warning);">
+												@ui.IconWarning()
+											</span>
+										}
+										@ui.Switch(ui.SwitchProp{Disabled: true})
+									</div>
+								</div>
+								<div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--color-border-light); padding-top: 1rem;">
+									@ui.Tooltip(ui.TooltipProp{Content: "Discard all unsaved changes"}) {
+										@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Size: ui.ButtonSizeSM}) {
+											Reset 
+										}
+									}
+									@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Size: ui.ButtonSizeSM}) {
+										Save Changes 
+									}
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

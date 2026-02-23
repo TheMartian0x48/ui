@@ -1,0 +1,94 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ TableDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Table</h1>
+			<p class="doc-section__description">
+				Renders data in a tabular format with support for stripes, hover states, and responsive layouts.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Table -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Table</h3>
+					@ui.Table(ui.TableProp{
+						Header: tableDemoHeader(),
+					}) {
+						@ui.TableBody() {
+							@tableDemoRow("Jane Doe", "jane@example.com", "Admin", "Active")
+							@tableDemoRow("John Smith", "john@example.com", "Editor", "Inactive")
+							@tableDemoRow("Robert Brown", "robert@example.com", "Viewer", "Active")
+						}
+					}
+				</div>
+				<!-- Striped and Hover -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Striped and Hoverable</h3>
+					@ui.Table(ui.TableProp{
+						Striped: true,
+						Hover:   true,
+						Header:  tableDemoHeader(),
+					}) {
+						@ui.TableBody() {
+							@tableDemoRow("Jane Doe", "jane@example.com", "Admin", "Active")
+							@tableDemoRow("John Smith", "john@example.com", "Editor", "Inactive")
+							@tableDemoRow("Robert Brown", "robert@example.com", "Viewer", "Active")
+						}
+					}
+				</div>
+				<!-- Compact Table -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Compact Density</h3>
+					@ui.Table(ui.TableProp{
+						Compact: true,
+						Header:  tableDemoHeader(),
+					}) {
+						@ui.TableBody() {
+							@tableDemoRow("Jane Doe", "jane@example.com", "Admin", "Active")
+							@tableDemoRow("John Smith", "john@example.com", "Editor", "Inactive")
+						}
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+}
+
+templ tableDemoHeader() {
+	@ui.TableHeader() {
+		<th>Name</th>
+		<th>Email</th>
+		<th>Role</th>
+		<th>Status</th>
+	}
+}
+
+templ tableDemoRow(name, email, role, status string) {
+	@ui.TableRow("", nil) {
+		<td>
+			<div class="table-cell-content">
+				<div class="avatar avatar--sm" style="background-color: var(--color-primary-light); color: var(--color-primary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">
+					{ name[0:1] }
+				</div>
+				{ name }
+			</div>
+		</td>
+		<td>{ email }</td>
+		<td>{ role }</td>
+		<td>
+			if status == "Active" {
+				@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Size: ui.BadgeSizeSM}) {
+					{ status }
+				}
+			} else {
+				@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Size: ui.BadgeSizeSM}) {
+					{ status }
+				}
+			}
+		</td>
+	}
+}

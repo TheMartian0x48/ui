@@ -1,0 +1,74 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ CardDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Card</h1>
+			<p class="doc-section__description">
+				A flexible container for content and actions about a single subject.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Variants</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Card(ui.CardProp{Header: "Elevated Card"}) {
+							<p>This is the default elevated card with a subtle shadow and hover animation.</p>
+						}
+						@ui.Card(ui.CardProp{Header: "Outlined Card", Variant: ui.CardOutlined}) {
+							<p>This card has an outline instead of a shadow, perfect for secondary information.</p>
+						}
+						@ui.Card(ui.CardProp{Header: "Flat Card", Variant: ui.CardFlat}) {
+							<p>This card has a solid background and no border or shadow.</p>
+						}
+					</div>
+				</div>
+				<!-- With Header and Footer -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Media, Header and Footer</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Card(ui.CardProp{
+							Header: "Beautiful Nature",
+							Footer: "Last updated 2 mins ago",
+							Image:  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1200",
+						}) {
+							<p>Cards with media provide a rich visual experience. They are great for blog posts or product showcases.</p>
+						}
+						@ui.Card(ui.CardProp{
+							Header: "Project Overview",
+							Footer: "7 Tasks Remaining",
+						}) {
+							<p>You can also use cards without media for structured data and summaries.</p>
+							<div style="margin-top: 1rem;">
+								@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Shape: ui.BadgeSubtle}) {
+									Active 
+								}
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Content with Actions -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Content with Actions</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Card(ui.CardProp{Header: "Account Settings"}) {
+							<p>Manage your profile, security settings, and notifications here.</p>
+							<div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Size: ui.ButtonSizeSM}) {
+									Save Changes 
+								}
+								@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM}) {
+									Cancel 
+								}
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

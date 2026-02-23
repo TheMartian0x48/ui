@@ -1,0 +1,49 @@
+package ui
+
+type DividerVariant int
+
+const (
+	DividerHorizontal DividerVariant = iota
+	DividerVertical
+)
+
+type DividerProp struct {
+	Variant DividerVariant
+	Label   string // If provided, renders text in the middle of a horizontal divider
+	Class   string
+}
+
+// Divider renders a visual separator.
+templ Divider(prop DividerProp) {
+	if prop.Variant == DividerHorizontal {
+		if prop.Label != "" {
+			<div class={ dividerClass(prop) } role="separator">
+				<div class="divider__line"></div>
+				<div class="divider__label">{ prop.Label }</div>
+				<div class="divider__line"></div>
+			</div>
+		} else {
+			<hr class={ dividerClass(prop) } role="separator"/>
+		}
+	} else if prop.Variant == DividerVertical {
+		<div class={ dividerClass(prop) } role="separator" aria-orientation="vertical"></div>
+	}
+}
+
+func dividerClass(prop DividerProp) string {
+	base := "divider"
+
+	if prop.Variant == DividerVertical {
+		base += " divider--vertical"
+	} else {
+		base += " divider--horizontal"
+		if prop.Label != "" {
+			base += " divider--labelled"
+		}
+	}
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

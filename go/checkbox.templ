@@ -1,0 +1,73 @@
+package ui
+
+type CheckboxProp struct {
+	Id       string
+	Name     string
+	Value    string
+	Label    string
+	Checked  bool
+	Disabled bool
+	Required bool
+	Error    bool
+	Class    string
+}
+
+// Checkbox renders a custom-styled checkbox input.
+templ Checkbox(prop CheckboxProp) {
+	<div class={ checkboxClass(prop) }>
+		<input
+			type="checkbox"
+			class="checkbox__input"
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			if prop.Name != "" {
+				name={ prop.Name }
+			}
+			if prop.Value != "" {
+				value={ prop.Value }
+			}
+			if prop.Checked {
+				checked
+			}
+			if prop.Disabled {
+				disabled
+			}
+			if prop.Required {
+				required
+			}
+			if prop.Error {
+				aria-invalid="true"
+			}
+		/>
+		<div class="checkbox__control">
+			@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM, Class: "checkbox__icon"})
+		</div>
+		if prop.Label != "" {
+			<label
+				class="checkbox__label"
+				if prop.Id != "" {
+					for={ prop.Id }
+				}
+			>
+				{ prop.Label }
+			</label>
+		}
+	</div>
+}
+
+func checkboxClass(prop CheckboxProp) string {
+	base := "checkbox"
+
+	if prop.Disabled {
+		base += " checkbox--disabled"
+	}
+	if prop.Error {
+		base += " checkbox--error"
+	}
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

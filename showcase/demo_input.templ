@@ -1,0 +1,69 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ InputDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Input</h1>
+			<p class="doc-section__description">
+				Standard text-based input components for capturing user data.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Text Inputs -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Text Inputs</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Input(ui.InputProp{Placeholder: "Standard text input"})
+						@ui.Input(ui.InputProp{Value: "Read-only value", Disabled: true})
+					</div>
+				</div>
+				<!-- Types -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Input Types</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Email</span>
+							@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "user@example.com"})
+						</div>
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Password</span>
+							@ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "••••••••"})
+						</div>
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Number</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0", Step: "1"})
+						</div>
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Date</span>
+							@ui.Input(ui.InputProp{Type: ui.InputDate})
+						</div>
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Error State</span>
+							@ui.Input(ui.InputProp{Value: "Invalid input", Error: true})
+						</div>
+						<div class="input-demo-row">
+							<span class="text-xs text-muted">Disabled State</span>
+							@ui.Input(ui.InputProp{Placeholder: "Cannot type here", Disabled: true})
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.input-demo-row {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	</style>
+}

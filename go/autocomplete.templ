@@ -1,0 +1,147 @@
+package ui
+
+type AutocompleteOption struct {
+	Value string
+	Label string
+}
+
+type AutocompleteProp struct {
+	Id          string
+	Name        string
+	Placeholder string
+	Options     []AutocompleteOption
+	Value       string // Initial search query
+	Disabled    bool
+	Error       bool
+	Class       string
+}
+
+// Autocomplete renders an input field with a searchable dropdown of options.
+templ Autocomplete(prop AutocompleteProp) {
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ autocompleteClass(prop) }
+		x-data={ inlineAutocompleteData(prop) }
+		@click.outside="open = false"
+		@keydown.escape.prevent="open = false; $refs.input.focus()"
+	>
+		<div class="autocomplete__control">
+			<input
+				x-ref="input"
+				type="text"
+				class={ "autocomplete__input", templ.KV("autocomplete__input--error", prop.Error) }
+				if prop.Name != "" {
+					name={ prop.Name }
+				}
+				if prop.Placeholder != "" {
+					placeholder={ prop.Placeholder }
+				}
+				if prop.Disabled {
+					disabled
+				}
+				x-model="search"
+				@focus="open = true"
+				@input="open = true; highlightedIndex = 0"
+				@keydown.arrow-down.prevent="if(open) { highlightedIndex = Math.min(highlightedIndex + 1, filteredOptions().length - 1) } else { open = true; highlightedIndex = 0 }"
+				@keydown.arrow-up.prevent="if(open) { highlightedIndex = Math.max(highlightedIndex - 1, 0) }"
+				@keydown.enter.prevent="if(open && filteredOptions().length > 0) { selectOption(filteredOptions()[highlightedIndex]) }"
+				autocomplete="off"
+				role="combobox"
+				aria-expanded="false"
+				:aria-expanded="open.toString()"
+				aria-controls="autocomplete-listbox"
+			/>
+			<div class="autocomplete__indicator">
+				@Icon(IconProp{Icon: IconChevronDown(), Size: IconSizeSM})
+			</div>
+		</div>
+		// Dropdown Menu
+		<ul
+			x-show="open && filteredOptions().length > 0"
+			id="autocomplete-listbox"
+			class="autocomplete__menu"
+			x-transition.opacity.duration.150ms
+			tabindex="-1"
+			role="listbox"
+			x-cloak
+		>
+			<template x-for="(option, index) in filteredOptions()" :key="option.value">
+				<li
+					class="autocomplete__item"
+					:class="{ 'autocomplete__item--highlighted': index === highlightedIndex }"
+					@click="selectOption(option)"
+					@mouseenter="highlightedIndex = index"
+					role="option"
+					:aria-selected="index === highlightedIndex"
+					x-text="option.label"
+				></li>
+			</template>
+		</ul>
+		// Empty State
+		<div x-show="open && filteredOptions().length === 0" class="autocomplete__menu autocomplete__item--empty" x-cloak>
+			<span class="autocomplete__item" style="color: var(--color-text-muted); cursor: default;">No results found.</span>
+		</div>
+	</div>
+}
+
+func autocompleteClass(prop AutocompleteProp) string {
+	base := "autocomplete"
+	if prop.Disabled {
+		base += " autocomplete--disabled"
+	}
+	if prop.Class != "" {
+		base += " " + prop.Class
+	}
+	return base
+}
+
+// Inline data function generates the Alpine.js required initial state object with functions included
+func inlineAutocompleteData(prop AutocompleteProp) string {
+	optionsJSON := optionsToJSON(prop.Options)
+	searchInit := escapeQuotes(prop.Value)
+
+	return `{ 
+		open: false, 
+		search: '` + searchInit + `', 
+		options: ` + optionsJSON + `, 
+		highlightedIndex: 0,
+		filteredOptions() { 
+			if (this.search === '') return this.options; 
+			return this.options.filter(opt => opt.label.toLowerCase().includes(this.search.toLowerCase())); 
+		},
+		selectOption(option) {
+			if (!option) return;
+			this.search = option.label;
+			this.open = false;
+			this.$refs.input.focus();
+		} 
+	}`
+}
+
+func optionsToJSON(options []AutocompleteOption) string {
+	result := "["
+	for i, opt := range options {
+		label := escapeQuotes(opt.Label)
+		value := escapeQuotes(opt.Value)
+		result += "{label: '" + label + "', value: '" + value + "'}"
+		if i < len(options)-1 {
+			result += ", "
+		}
+	}
+	result += "]"
+	return result
+}
+
+func escapeQuotes(s string) string {
+	var result string
+	for _, char := range s {
+		if char == '\'' {
+			result += "\\'"
+		} else {
+			result += string(char)
+		}
+	}
+	return result
+}

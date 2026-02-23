@@ -1,0 +1,133 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ IconDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Icon</h1>
+			<p class="doc-section__description">
+				A collection of essential SVG icons designed to be clear and consistent across the UI.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<div class="doc-demo__list" style="align-items: center;">
+						<div class="doc-demo__item-label">
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
+							<span>Small (16px)</span>
+						</div>
+						<div class="doc-demo__item-label">
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeMD})
+							<span>Medium (24px)</span>
+						</div>
+						<div class="doc-demo__item-label">
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeLG})
+							<span>Large (32px)</span>
+						</div>
+					</div>
+				</div>
+				<!-- All Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Icon Library</h3>
+					<div class="doc-demo__list--grid">
+						<div class="icon-grid">
+							@iconBox("Camera", ui.IconCamera())
+							@iconBox("User", ui.IconUser())
+							@iconBox("Check", ui.IconCheck())
+							@iconBox("X", ui.IconX())
+							@iconBox("Warning", ui.IconWarning())
+							@iconBox("Info", ui.IconInfo())
+							@iconBox("ArrowLeft", ui.IconArrowLeft())
+							@iconBox("ArrowRight", ui.IconArrowRight())
+							@iconBox("Menu", ui.IconMenu())
+							@iconBox("Trash", ui.IconTrash())
+							@iconBox("ChevronDown", ui.IconChevronDown())
+							@iconBox("Settings", ui.IconSettings())
+							@iconBox("LogOut", ui.IconLogOut())
+							@iconBox("FileText", ui.IconFileText())
+							@iconBox("Share", ui.IconShare())
+							@iconBox("Download", ui.IconDownload())
+							@iconBox("Calendar", ui.IconCalendar())
+							@iconBox("Clock", ui.IconClock())
+							@iconBox("Edit", ui.IconEdit())
+							@iconBox("Search", ui.IconSearch())
+							@iconBox("Plus", ui.IconPlus())
+							@iconBox("Minus", ui.IconMinus())
+							@iconBox("ExternalLink", ui.IconExternalLink())
+							@iconBox("Eye", ui.IconEye())
+							@iconBox("Copy", ui.IconCopy())
+							@iconBox("Heart", ui.IconHeart())
+							@iconBox("Bell", ui.IconBell())
+							@iconBox("Lock", ui.IconLock())
+							@iconBox("Refresh", ui.IconRefresh())
+							@iconBox("Filter", ui.IconFilter())
+							@iconBox("Home", ui.IconHome())
+						</div>
+					</div>
+				</div>
+				<!-- Real-world Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Real-world Usage</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconDownload(), Size: ui.IconSizeSM})
+							Download File
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
+							Settings
+						}
+						<div style="display: flex; gap: var(--spacing-4); align-items: center; padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-md);">
+							@ui.Icon(ui.IconProp{Icon: ui.IconCalendar(), Class: "text-primary"})
+							<span class="text-secondary">Project Due: Dec 24, 2026</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.icon-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+			gap: var(--spacing-4);
+			width: 100%;
+		}
+		.icon-box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-2);
+			padding: var(--spacing-4);
+			background: var(--color-bg);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+			transition: all var(--transition-base);
+		}
+		.icon-box:hover {
+			border-color: var(--color-primary);
+			color: var(--color-primary);
+			transform: translateY(-2px);
+		}
+		.icon-box__name {
+			font-size: var(--font-size-xs);
+			color: var(--color-text-muted);
+		}
+		.icon-box:hover .icon-box__name {
+			color: var(--color-primary);
+		}
+		.text-primary { color: var(--color-primary); }
+		.text-secondary { color: var(--color-text-secondary); }
+	</style>
+}
+
+templ iconBox(name string, kind templ.Component) {
+	<div class="icon-box">
+		@ui.Icon(ui.IconProp{Icon: kind, Size: ui.IconSizeMD})
+		<span class="icon-box__name">{ name }</span>
+	</div>
+}

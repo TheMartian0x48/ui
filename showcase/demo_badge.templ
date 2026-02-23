@@ -7,14 +7,14 @@ templ BadgeDemo() {
 		<header class="doc-section__header">
 			<h1 class="doc-section__title">Badge</h1>
 			<p class="doc-section__description">
-				Small count and labeling component used to highlight status or categories.
+				Small count and labeling component used to highlight status, categories, or numbers.
 			</p>
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
-				<!-- Variants -->
+				<!-- Filled (Default) -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Variants</h3>
+					<h3 class="doc-demo__group-title">Filled (Default)</h3>
 					<div class="doc-demo__list">
 						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary}) {
 							Primary 
@@ -36,20 +36,89 @@ templ BadgeDemo() {
 						}
 					</div>
 				</div>
-				<!-- Usage Examples -->
+				<!-- Outlined -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Usage Examples</h3>
+					<h3 class="doc-demo__group-title">Outlined</h3>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Shape: ui.BadgeOutlined}) {
+							Primary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Shape: ui.BadgeOutlined}) {
+							Secondary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Shape: ui.BadgeOutlined}) {
+							Success 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeWarning, Shape: ui.BadgeOutlined}) {
+							Warning 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Shape: ui.BadgeOutlined}) {
+							Danger 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeInfo, Shape: ui.BadgeOutlined}) {
+							Info 
+						}
+					</div>
+				</div>
+				<!-- Subtle -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Subtle</h3>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Shape: ui.BadgeSubtle}) {
+							Primary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Shape: ui.BadgeSubtle}) {
+							Secondary 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Shape: ui.BadgeSubtle}) {
+							Success 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeWarning, Shape: ui.BadgeSubtle}) {
+							Warning 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Shape: ui.BadgeSubtle}) {
+							Danger 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeInfo, Shape: ui.BadgeSubtle}) {
+							Info 
+						}
+					</div>
+				</div>
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeSM}) {
+							Small 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeMD}) {
+							Medium 
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeLG}) {
+							Large 
+						}
+					</div>
+				</div>
+				<!-- Real-world Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Real-world Examples</h3>
 					<div class="doc-demo__list">
 						<div class="doc-demo__item-label">
-							<span>Notifications</span>
-							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Class: "badge--pill"}) {
+							<span>Inbox</span>
+							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Size: ui.BadgeSizeSM}) {
 								12 
 							}
 						</div>
 						<div class="doc-demo__item-label">
-							<span>Status:</span>
-							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess}) {
+							<span>Status</span>
+							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Shape: ui.BadgeSubtle}) {
 								Active 
+							}
+						</div>
+						<div class="doc-demo__item-label">
+							<span>Version</span>
+							@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Size: ui.BadgeSizeSM}) {
+								v1.0.4 
 							}
 						</div>
 					</div>

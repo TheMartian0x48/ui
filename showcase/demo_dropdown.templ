@@ -7,16 +7,53 @@ templ DropdownDemo() {
 		<header class="doc-section__header">
 			<h1 class="doc-section__title">Dropdown</h1>
 			<p class="doc-section__description">
-				Collapsible menu for actions.
+				Displays a menu to the user—such as a set of actions or functions—triggered by a button.
 			</p>
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
-				@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Settings"})
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Profile"})
-					@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Danger: true})
-				}
+				<!-- Basic Dropdown -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Account Settings", Icon: ui.IconSettings()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Support", Icon: ui.IconInfo()})
+							<hr class="dropdown__divider"/>
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Icon: ui.IconLogOut(), Danger: true})
+						}
+					</div>
+				</div>
+				<!-- Menu Alignment -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Menu Alignment</h3>
+					<div class="doc-demo__list" style="justify-content: space-between; margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Align Left (Default)"}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "View Profile", Icon: ui.IconUser()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Edit Settings", Icon: ui.IconEdit()})
+						}
+						@ui.Dropdown(ui.DropdownProp{Label: "Align Right", Right: true}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Share", Icon: ui.IconShare()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Copy Link", Icon: ui.IconCopy()})
+							<hr class="dropdown__divider"/>
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Delete Project", Icon: ui.IconTrash(), Danger: true})
+						}
+					</div>
+				</div>
+				<!-- With Links -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Links vs Buttons</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Actions"}) {
+							<div class="dropdown__group-label" style="padding: 0.5rem 0.75rem; font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Navigation</div>
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Go to Dashboard", Href: "#", Icon: ui.IconHome()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "External Documentation", Href: "https://example.com", Icon: ui.IconExternalLink()})
+							<hr class="dropdown__divider"/>
+							<div class="dropdown__group-label" style="padding: 0.5rem 0.75rem; font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Actions (Buttons)</div>
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Refresh Data", Attributes: templ.Attributes{"onclick": "alert('Refreshing...')"}, Icon: ui.IconRefresh()})
+						}
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

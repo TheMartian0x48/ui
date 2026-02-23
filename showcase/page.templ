@@ -7,12 +7,13 @@ import (
 
 templ SidebarLink(name string, active bool) {
 	<li>
-		<a
-			href={ templ.SafeURL(fmt.Sprintf("/?component=%s", name)) }
-			class={ "doc-sidebar__link", templ.KV("doc-sidebar__link--active", active) }
-		>
+		@ui.Link(ui.LinkProp{
+			Href:    fmt.Sprintf("/?component=%s", name),
+			Variant: ui.ButtonGhost,
+			Class:   "doc-sidebar__link " + map[bool]string{true: "doc-sidebar__link--active", false: ""}[active],
+		}) {
 			{ name }
-		</a>
+		}
 	</li>
 }
 
@@ -33,13 +34,17 @@ templ Showcase(activeComponent string) {
 			<div class="doc-layout">
 				<!-- Sidebar -->
 				<aside class="doc-sidebar">
-					<a href="/" class="doc-sidebar__logo">
+					@ui.Link(ui.LinkProp{
+						Href:    "/",
+						Variant: ui.ButtonGhost,
+						Class:   "doc-sidebar__logo",
+					}) {
 						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect width="32" height="32" rx="8" fill="var(--color-primary)"></rect>
 							<path d="M10 10V22M10 22H22M10 16H18" stroke="white" stroke-width="3" stroke-linecap="round"></path>
 						</svg>
 						ui
-					</a>
+					}
 					<nav class="doc-sidebar__nav">
 						<div>
 							<h3 class="doc-sidebar__group-title">Introduction</h3>
@@ -52,18 +57,31 @@ templ Showcase(activeComponent string) {
 							<ul class="doc-sidebar__links">
 								@SidebarLink("accordion", activeComponent == "accordion")
 								@SidebarLink("alert", activeComponent == "alert")
+								@SidebarLink("autocomplete", activeComponent == "autocomplete")
 								@SidebarLink("badge", activeComponent == "badge")
 								@SidebarLink("button", activeComponent == "button")
 								@SidebarLink("card", activeComponent == "card")
+								@SidebarLink("checkbox", activeComponent == "checkbox")
 								@SidebarLink("dialog", activeComponent == "dialog")
+								@SidebarLink("divider", activeComponent == "divider")
+								@SidebarLink("drawer", activeComponent == "drawer")
 								@SidebarLink("dropdown", activeComponent == "dropdown")
+								@SidebarLink("dropzone", activeComponent == "dropzone")
 								@SidebarLink("form-field", activeComponent == "form-field")
 								@SidebarLink("icon", activeComponent == "icon")
+								@SidebarLink("image-preview", activeComponent == "image-preview")
 								@SidebarLink("input", activeComponent == "input")
 								@SidebarLink("label", activeComponent == "label")
+								@SidebarLink("link", activeComponent == "link")
+								@SidebarLink("progress", activeComponent == "progress")
+								@SidebarLink("radio", activeComponent == "radio")
 								@SidebarLink("select", activeComponent == "select")
-								@SidebarLink("spinner", activeComponent == "spinner")
+								@SidebarLink("slider", activeComponent == "slider")
+								@SidebarLink("stepper", activeComponent == "stepper")
+								@SidebarLink("switch", activeComponent == "switch")
+								@SidebarLink("table", activeComponent == "table")
 								@SidebarLink("tabs", activeComponent == "tabs")
+								@SidebarLink("textarea", activeComponent == "textarea")
 								@SidebarLink("toast", activeComponent == "toast")
 								@SidebarLink("tooltip", activeComponent == "tooltip")
 							</ul>
@@ -72,16 +90,64 @@ templ Showcase(activeComponent string) {
 				</aside>
 				<!-- Main Content Area -->
 				<main class="doc-main">
-					if activeComponent == "button" {
-						@ButtonDemo()
-					} else if activeComponent == "badge" {
-						@BadgeDemo()
+					if activeComponent == "accordion" {
+						@AccordionDemo()
 					} else if activeComponent == "alert" {
 						@AlertDemo()
-					} else if activeComponent == "accordion" {
-						@AccordionDemo()
+					} else if activeComponent == "autocomplete" {
+						@AutocompleteDemo()
+					} else if activeComponent == "badge" {
+						@BadgeDemo()
+					} else if activeComponent == "button" {
+						@ButtonDemo()
+					} else if activeComponent == "card" {
+						@CardDemo()
+					} else if activeComponent == "checkbox" {
+						@CheckboxDemo()
+					} else if activeComponent == "dialog" {
+						@DialogDemo()
+					} else if activeComponent == "divider" {
+						@DividerDemo()
+					} else if activeComponent == "drawer" {
+						@DrawerDemo()
 					} else if activeComponent == "dropdown" {
 						@DropdownDemo()
+					} else if activeComponent == "dropzone" {
+						@DropzoneDemo()
+					} else if activeComponent == "form-field" {
+						@FormFieldDemo()
+					} else if activeComponent == "icon" {
+						@IconDemo()
+					} else if activeComponent == "image-preview" {
+						@ImagePreviewDemo()
+					} else if activeComponent == "input" {
+						@InputDemo()
+					} else if activeComponent == "label" {
+						@LabelDemo()
+					} else if activeComponent == "link" {
+						@LinkDemo()
+					} else if activeComponent == "progress" {
+						@ProgressDemo()
+					} else if activeComponent == "radio" {
+						@RadioDemo()
+					} else if activeComponent == "select" {
+						@SelectDemo()
+					} else if activeComponent == "slider" {
+						@SliderDemo()
+					} else if activeComponent == "stepper" {
+						@StepperDemo()
+					} else if activeComponent == "switch" {
+						@SwitchDemo()
+					} else if activeComponent == "table" {
+						@TableDemo()
+					} else if activeComponent == "tabs" {
+						@TabsDemo()
+					} else if activeComponent == "textarea" {
+						@TextareaDemo()
+					} else if activeComponent == "tooltip" {
+						@TooltipDemo()
+					} else if activeComponent == "toast" {
+						@ToastDemo()
 					} else {
 						<section class="doc-section">
 							<header class="doc-section__header">

@@ -1,0 +1,70 @@
+/* Table Component Styles */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+.table thead {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+    padding: var(--spacing-4);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.05em;
+}
+
+.table td {
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Striped variant */
+.table--striped tbody tr:nth-child(even) {
+    background-color: var(--color-bg-secondary);
+}
+
+/* Hover variant */
+.table--hover tbody tr:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+/* Density variants */
+.table--compact th,
+.table--compact td {
+    padding: var(--spacing-2) var(--spacing-4);
+}
+
+/* Utility for wrapping text and keeping layout clean */
+.table-cell-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.table-cell-secondary {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}

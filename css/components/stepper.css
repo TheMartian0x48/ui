@@ -1,0 +1,154 @@
+/* Stepper Component */
+
+.stepper {
+    width: 100%;
+    font-family: var(--font-primary);
+}
+
+.stepper__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+/* Base item states */
+.stepper__item {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.stepper__indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-secondary);
+    border: 2px solid var(--color-border);
+    transition: all var(--transition-normal);
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.stepper__connector {
+    background-color: var(--color-border);
+    transition: background-color var(--transition-normal);
+    z-index: 1;
+}
+
+.stepper__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.25rem;
+}
+
+.stepper__description {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin: var(--spacing-1) 0 0 0;
+}
+
+/* Active State */
+.stepper__item--active .stepper__indicator {
+    background-color: var(--color-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.stepper__item--active .stepper__title {
+    color: var(--color-text-primary);
+}
+
+/* Completed State */
+.stepper__item--completed .stepper__indicator {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+}
+
+.stepper__item--completed .stepper__title {
+    color: var(--color-text-primary);
+}
+
+.stepper__item--completed .stepper__connector {
+    background-color: var(--color-primary);
+}
+
+/* Horizontal Layout */
+.stepper--horizontal .stepper__list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.stepper--horizontal .stepper__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+    gap: var(--spacing-3);
+    padding: 0 var(--spacing-2);
+}
+
+.stepper--horizontal .stepper__connector {
+    position: absolute;
+    top: 1rem;
+    height: 2px;
+    left: calc(50% + 1rem + var(--spacing-3));
+    width: calc(100% - 2rem - calc(var(--spacing-3) * 2));
+    transform: translateY(-50%);
+}
+
+.stepper--horizontal .stepper__item:last-child {
+    /* To prevent the last item from artificially expanding container if not flexed 
+       But flex 1 is required to keep them even width. 
+       Usually no connector means it just sits gracefully centered.
+     */
+}
+
+/* Vertical Layout */
+.stepper--vertical .stepper__list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.stepper--vertical .stepper__item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0 var(--spacing-4);
+}
+
+.stepper--vertical .stepper__indicator {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.stepper--vertical .stepper__content {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding-bottom: var(--spacing-6);
+    /* Aligns the 1.25rem line-height perfectly with center of 2rem circle */
+    padding-top: 0.375rem;
+}
+
+.stepper--vertical .stepper__item:last-child .stepper__content {
+    padding-bottom: 0;
+}
+
+.stepper--vertical .stepper__connector {
+    grid-column: 1;
+    grid-row: 2;
+    width: 2px;
+    justify-self: center;
+    margin: var(--spacing-2) 0;
+    min-height: 2rem;
+}

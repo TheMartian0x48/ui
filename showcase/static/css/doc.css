@@ -19,6 +19,7 @@
 
 .doc-sidebar__logo {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     gap: var(--spacing-2);
     font-size: var(--font-size-xl);
@@ -53,7 +54,9 @@
 }
 
 .doc-sidebar__link {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
     padding: var(--spacing-2) var(--spacing-3);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
@@ -101,7 +104,7 @@
 /* Component Demo Container */
 .doc-demo {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     overflow: hidden;
     background-color: var(--color-bg);
 }

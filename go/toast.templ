@@ -40,13 +40,13 @@ templ Toast(prop ToastProp) {
 		<div class="toast__icon">
 			switch prop.Type {
 				case ToastSuccess:
-					@Icon(IconProp{Type: IconCheck, Size: IconSizeMD})
+					@Icon(IconProp{Icon: IconCheck(), Size: IconSizeMD})
 				case ToastWarning:
-					@Icon(IconProp{Type: IconWarning, Size: IconSizeMD})
+					@Icon(IconProp{Icon: IconWarning(), Size: IconSizeMD})
 				case ToastError:
-					@Icon(IconProp{Type: IconX, Size: IconSizeMD})
+					@Icon(IconProp{Icon: IconX(), Size: IconSizeMD})
 				default:
-					@Icon(IconProp{Type: IconInfo, Size: IconSizeMD})
+					@Icon(IconProp{Icon: IconInfo(), Size: IconSizeMD})
 			}
 		</div>
 		<div class="toast__content">
@@ -56,7 +56,7 @@ templ Toast(prop ToastProp) {
 			<div class="toast__message">{ prop.Message }</div>
 		</div>
 		<button class="toast__close" onclick="this.closest('.toast').remove()">
-			@Icon(IconProp{Type: IconX, Size: IconSizeSM})
+			@Icon(IconProp{Icon: IconX(), Size: IconSizeSM})
 		</button>
 	</div>
 }
