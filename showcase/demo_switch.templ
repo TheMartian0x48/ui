@@ -1,0 +1,106 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ SwitchDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Switch</h1>
+			<p class="doc-section__description">
+				A control that allows users to choose between two mutually exclusive options.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Switches -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Switch(ui.SwitchProp{
+							Label:   "Notify me",
+							Checked: true,
+						})
+						@ui.Switch(ui.SwitchProp{
+							Label: "Remember me",
+						})
+					</div>
+				</div>
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Switch(ui.SwitchProp{
+							Label: "Small",
+							Size:  ui.SwitchSizeSM,
+						})
+						@ui.Switch(ui.SwitchProp{
+							Label:   "Medium (Default)",
+							Size:    ui.SwitchSizeMD,
+							Checked: true,
+						})
+						@ui.Switch(ui.SwitchProp{
+							Label: "Large",
+							Size:  ui.SwitchSizeLG,
+						})
+					</div>
+				</div>
+				<!-- With Description -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Description</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Switch(ui.SwitchProp{
+							Label:       "Automatic Updates",
+							Description: "Always keep the app up to date with the latest features.",
+							Checked:     true,
+						})
+						@ui.Switch(ui.SwitchProp{
+							Label:       "Performance Mode",
+							Description: "Enable high-performance settings for faster processing.",
+						})
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Switch(ui.SwitchProp{
+							Label:    "Disabled Off",
+							Disabled: true,
+						})
+						@ui.Switch(ui.SwitchProp{
+							Label:    "Disabled On",
+							Disabled: true,
+							Checked:  true,
+						})
+					</div>
+				</div>
+				<!-- Real-world Case: Preferences Card -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Application Settings</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 500px;">
+						@ui.Card(ui.CardProp{Header: "Privacy Settings"}) {
+							<div style="display: flex; flex-direction: column; gap: 1.5rem;">
+								@ui.Switch(ui.SwitchProp{
+									Label:       "Public Profile",
+									Description: "Allow anyone to see your profile information.",
+									Checked:     true,
+								})
+								<div style="height: 1px; background: var(--color-border-light);"></div>
+								@ui.Switch(ui.SwitchProp{
+									Label:       "Location Sharing",
+									Description: "Share your location with nearby users for better matches.",
+								})
+								<div style="height: 1px; background: var(--color-border-light);"></div>
+								@ui.Switch(ui.SwitchProp{
+									Label:       "Analytics",
+									Description: "Help us improve by sending anonymous usage data.",
+									Checked:     true,
+								})
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

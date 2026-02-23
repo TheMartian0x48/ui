@@ -1,0 +1,90 @@
+package ui
+
+type SwitchSize int
+
+const (
+	SwitchSizeSM SwitchSize = iota
+	SwitchSizeMD
+	SwitchSizeLG
+)
+
+type SwitchProp struct {
+	Name        string
+	Label       string
+	Description string
+	Checked     bool
+	Disabled    bool
+	Size        SwitchSize
+	Class       string
+	Id          string
+	Attributes  templ.Attributes
+}
+
+// Switch renders a toggleable switch component.
+templ Switch(prop SwitchProp) {
+	{{
+		id := prop.Id
+		if id == "" && prop.Name != "" {
+			id = "switch-" + prop.Name
+		}
+	}}
+	<label
+		class={ switchContainerClass(prop) }
+		if id != "" {
+			for={ id }
+		}
+	>
+		<input
+			type="checkbox"
+			if id != "" {
+				id={ id }
+			}
+			if prop.Name != "" {
+				name={ prop.Name }
+			}
+			class="switch-input"
+			if prop.Checked {
+				checked
+			}
+			if prop.Disabled {
+				disabled
+			}
+			{ prop.Attributes... }
+		/>
+		<span class={ switchTrackClass(prop) }>
+			<span class="switch-thumb"></span>
+		</span>
+		if prop.Label != "" || prop.Description != "" {
+			<span class="switch-content">
+				if prop.Label != "" {
+					<span class="switch-label">{ prop.Label }</span>
+				}
+				if prop.Description != "" {
+					<span class="switch-description">{ prop.Description }</span>
+				}
+			</span>
+		}
+	</label>
+}
+
+func switchContainerClass(prop SwitchProp) string {
+	classes := "switch-container"
+	if prop.Disabled {
+		classes += " switch-container--disabled"
+	}
+	if prop.Class != "" {
+		classes += " " + prop.Class
+	}
+	return classes
+}
+
+func switchTrackClass(prop SwitchProp) string {
+	classes := "switch-track"
+	switch prop.Size {
+	case SwitchSizeSM:
+		classes += " switch-track--sm"
+	case SwitchSizeLG:
+		classes += " switch-track--lg"
+	}
+	return classes
+}
