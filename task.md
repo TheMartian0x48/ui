@@ -18,16 +18,6 @@ Expand our core building blocks with high-priority form essentials, advanced int
   * Add a comprehensive demo at `showcase/demo_drawer.templ` tying the drawer trigger to a button.
   * Update `css/main.css` and `showcase/page.templ` to register it.
 
-### 3. Divider / Separator
-* **Task:** Implement a structured `Divider` component.
-* **Requirements:**
-  * Create `go/divider.templ` and `css/components/divider.css`.
-  * Style basic horizontal (`<hr>`) dividers.
-  * Implement support for "Labelled Dividers" (text centered horizontally across the line).
-  * Implement vertical divider variants.
-  * Add demo showcase at `showcase/demo_divider.templ`.
-  * Update `css/main.css` and `showcase/page.templ` to register it.
-
 ### 4. Stepper
 * **Task:** Implement a `Stepper` component to indicate progress through a multi-step workflow.
 * **Requirements:**

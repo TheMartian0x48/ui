@@ -1,0 +1,83 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+func getFrameworkOptions() []ui.AutocompleteOption {
+	return []ui.AutocompleteOption{
+		{Value: "alpine", Label: "Alpine.js"},
+		{Value: "angular", Label: "Angular"},
+		{Value: "django", Label: "Django"},
+		{Value: "ember", Label: "Ember.js"},
+		{Value: "express", Label: "Express"},
+		{Value: "flutter", Label: "Flutter"},
+		{Value: "gin", Label: "Gin"},
+		{Value: "htmx", Label: "htmx"},
+		{Value: "laravel", Label: "Laravel"},
+		{Value: "nextjs", Label: "Next.js"},
+		{Value: "nuxt", Label: "Nuxt"},
+		{Value: "rails", Label: "Ruby on Rails"},
+		{Value: "react", Label: "React"},
+		{Value: "solid", Label: "Solid.js"},
+		{Value: "spring", Label: "Spring Boot"},
+		{Value: "svelte", Label: "Svelte"},
+		{Value: "templ", Label: "Templ"},
+		{Value: "vue", Label: "Vue.js"},
+	}
+}
+
+templ AutocompleteDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Autocomplete (Combobox)</h1>
+			<p class="doc-section__description">
+				An input field combined with a searchable list of selectable drop-down options.
+			</p>
+		</header>
+		<div class="doc-demo" style="min-height: 400px;">
+			<!-- Extra height for dropdown overlap bounds -->
+			<div class="doc-demo__preview">
+				<!-- Standard Usage -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list" style="max-width: 320px;">
+						@ui.Autocomplete(ui.AutocompleteProp{
+							Id:          "framework",
+							Name:        "framework",
+							Placeholder: "Search frameworks...",
+							Options:     getFrameworkOptions(),
+						})
+					</div>
+				</div>
+				<!-- With Initial Value -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Pre-filled Value (Templ)</h3>
+					<div class="doc-demo__list" style="max-width: 320px;">
+						@ui.Autocomplete(ui.AutocompleteProp{
+							Id:          "framework-prefilled",
+							Name:        "framework-prefilled",
+							Placeholder: "Search frameworks...",
+							Options:     getFrameworkOptions(),
+							Value:       "Templ",
+						})
+					</div>
+				</div>
+				<!-- Disabled & Error states -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 320px;">
+						@ui.Autocomplete(ui.AutocompleteProp{
+							Placeholder: "Disabled autocomplete",
+							Options:     getFrameworkOptions(),
+							Disabled:    true,
+						})
+						@ui.Autocomplete(ui.AutocompleteProp{
+							Placeholder: "Error state",
+							Options:     getFrameworkOptions(),
+							Error:       true,
+						})
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

@@ -161,6 +161,10 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = SidebarLink("autocomplete", activeComponent == "autocomplete").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = SidebarLink("badge", activeComponent == "badge").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -257,13 +261,8 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if activeComponent == "button" {
-			templ_7745c5c3_Err = ButtonDemo().Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else if activeComponent == "badge" {
-			templ_7745c5c3_Err = BadgeDemo().Render(ctx, templ_7745c5c3_Buffer)
+		if activeComponent == "accordion" {
+			templ_7745c5c3_Err = AccordionDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -272,8 +271,18 @@ func Showcase(activeComponent string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		} else if activeComponent == "accordion" {
-			templ_7745c5c3_Err = AccordionDemo().Render(ctx, templ_7745c5c3_Buffer)
+		} else if activeComponent == "autocomplete" {
+			templ_7745c5c3_Err = AutocompleteDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if activeComponent == "badge" {
+			templ_7745c5c3_Err = BadgeDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if activeComponent == "button" {
+			templ_7745c5c3_Err = ButtonDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -390,7 +399,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 142, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 145, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -403,7 +412,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 144, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 147, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {

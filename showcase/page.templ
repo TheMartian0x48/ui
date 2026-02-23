@@ -57,6 +57,7 @@ templ Showcase(activeComponent string) {
 							<ul class="doc-sidebar__links">
 								@SidebarLink("accordion", activeComponent == "accordion")
 								@SidebarLink("alert", activeComponent == "alert")
+								@SidebarLink("autocomplete", activeComponent == "autocomplete")
 								@SidebarLink("badge", activeComponent == "badge")
 								@SidebarLink("button", activeComponent == "button")
 								@SidebarLink("card", activeComponent == "card")
@@ -86,14 +87,16 @@ templ Showcase(activeComponent string) {
 				</aside>
 				<!-- Main Content Area -->
 				<main class="doc-main">
-					if activeComponent == "button" {
-						@ButtonDemo()
-					} else if activeComponent == "badge" {
-						@BadgeDemo()
+					if activeComponent == "accordion" {
+						@AccordionDemo()
 					} else if activeComponent == "alert" {
 						@AlertDemo()
-					} else if activeComponent == "accordion" {
-						@AccordionDemo()
+					} else if activeComponent == "autocomplete" {
+						@AutocompleteDemo()
+					} else if activeComponent == "badge" {
+						@BadgeDemo()
+					} else if activeComponent == "button" {
+						@ButtonDemo()
 					} else if activeComponent == "card" {
 						@CardDemo()
 					} else if activeComponent == "checkbox" {
