@@ -1,0 +1,50 @@
+/* Divider Component Styles */
+
+.divider {
+    font-family: var(--font-primary);
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+/* Standard Horizontal (hr) */
+hr.divider--horizontal {
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+    margin: var(--spacing-4) 0;
+}
+
+/* Labelled Horizontal (div) */
+div.divider--labelled {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    margin: var(--spacing-4) 0;
+}
+
+.divider__line {
+    flex-grow: 1;
+    border-top: 1px solid var(--color-border);
+}
+
+.divider__label {
+    padding: 0 var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+/* Vertical */
+.divider--vertical {
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    min-height: 1rem;
+    margin: 0 var(--spacing-2);
+    vertical-align: middle;
+    background-color: var(--color-border);
+}

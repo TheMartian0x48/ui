@@ -60,7 +60,9 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("badge", activeComponent == "badge")
 								@SidebarLink("button", activeComponent == "button")
 								@SidebarLink("card", activeComponent == "card")
+								@SidebarLink("checkbox", activeComponent == "checkbox")
 								@SidebarLink("dialog", activeComponent == "dialog")
+								@SidebarLink("divider", activeComponent == "divider")
 								@SidebarLink("dropdown", activeComponent == "dropdown")
 								@SidebarLink("form-field", activeComponent == "form-field")
 								@SidebarLink("icon", activeComponent == "icon")
@@ -69,6 +71,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("label", activeComponent == "label")
 								@SidebarLink("link", activeComponent == "link")
 								@SidebarLink("progress", activeComponent == "progress")
+								@SidebarLink("radio", activeComponent == "radio")
 								@SidebarLink("select", activeComponent == "select")
 								@SidebarLink("slider", activeComponent == "slider")
 								@SidebarLink("switch", activeComponent == "switch")
@@ -93,8 +96,12 @@ templ Showcase(activeComponent string) {
 						@AccordionDemo()
 					} else if activeComponent == "card" {
 						@CardDemo()
+					} else if activeComponent == "checkbox" {
+						@CheckboxDemo()
 					} else if activeComponent == "dialog" {
 						@DialogDemo()
+					} else if activeComponent == "divider" {
+						@DividerDemo()
 					} else if activeComponent == "dropdown" {
 						@DropdownDemo()
 					} else if activeComponent == "form-field" {
@@ -111,6 +118,8 @@ templ Showcase(activeComponent string) {
 						@LinkDemo()
 					} else if activeComponent == "progress" {
 						@ProgressDemo()
+					} else if activeComponent == "radio" {
+						@RadioDemo()
 					} else if activeComponent == "select" {
 						@SelectDemo()
 					} else if activeComponent == "slider" {

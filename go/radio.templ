@@ -1,0 +1,71 @@
+package ui
+
+type RadioProp struct {
+	Id       string
+	Name     string
+	Value    string
+	Label    string
+	Checked  bool
+	Disabled bool
+	Required bool
+	Error    bool
+	Class    string
+}
+
+// Radio renders a custom-styled radio input.
+templ Radio(prop RadioProp) {
+	<label
+		class={ radioClass(prop) }
+		if prop.Id != "" {
+			for={ prop.Id }
+		}
+	>
+		<input
+			type="radio"
+			class="radio__input"
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			if prop.Name != "" {
+				name={ prop.Name }
+			}
+			if prop.Value != "" {
+				value={ prop.Value }
+			}
+			if prop.Checked {
+				checked
+			}
+			if prop.Disabled {
+				disabled
+			}
+			if prop.Required {
+				required
+			}
+			if prop.Error {
+				aria-invalid="true"
+			}
+		/>
+		<div class="radio__control">
+			<span class="radio__circle"></span>
+		</div>
+		if prop.Label != "" {
+			<span class="radio__label">{ prop.Label }</span>
+		}
+	</label>
+}
+
+func radioClass(prop RadioProp) string {
+	base := "radio"
+
+	if prop.Disabled {
+		base += " radio--disabled"
+	}
+	if prop.Error {
+		base += " radio--error"
+	}
+
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}

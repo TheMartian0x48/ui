@@ -1,0 +1,65 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ DividerDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Divider</h1>
+			<p class="doc-section__description">
+				A visual rule used to separate content vertically or horizontally.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Standard Horizontal -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic (Horizontal)</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						<div style="font-size: var(--font-size-sm); color: var(--color-text-primary);">Preceding Content Block</div>
+						@ui.Divider(ui.DividerProp{Variant: ui.DividerHorizontal})
+						<div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Following Content Block</div>
+					</div>
+				</div>
+				<!-- Labelled -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Labelled</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px; padding: 2rem; background-color: var(--color-bg-secondary); border-radius: var(--radius-md);">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "w-full"}) {
+							<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" style="width: 16px; margin-right: 0.5rem;"/>
+							Continue with Google
+						}
+						@ui.Divider(ui.DividerProp{Variant: ui.DividerHorizontal, Label: "Or continue with"})
+						@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "Email Address", Class: "w-full"})
+						<div class="mt-2">
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "w-full"}) {
+								Sign In
+							}
+						</div>
+					</div>
+				</div>
+				<!-- Vertical -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Vertical</h3>
+					<div class="doc-demo__list" style="max-width: fit-content; padding: 0.5rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-bg);">
+						<div style="display: flex; align-items: center; justify-content: center; height: 1.5rem;">
+							<button aria-label="Format bold" style="padding: 0.25rem; color: var(--color-text-secondary); background: none; border: none; cursor: pointer;">
+								<strong>B</strong>
+							</button>
+							<button aria-label="Format italic" style="padding: 0.25rem; color: var(--color-text-secondary); background: none; border: none; cursor: pointer;">
+								<em>I</em>
+							</button>
+							<button aria-label="Format underline" style="padding: 0.25rem; color: var(--color-text-secondary); background: none; border: none; cursor: pointer;">
+								<u>U</u>
+							</button>
+							@ui.Divider(ui.DividerProp{Variant: ui.DividerVertical})
+							<button aria-label="Alignment Left" style="padding: 0.25rem; color: var(--color-text-secondary); background: none; border: none; cursor: pointer;">
+								@ui.Icon(ui.IconProp{Icon: ui.IconMenu(), Size: ui.IconSizeSM})
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

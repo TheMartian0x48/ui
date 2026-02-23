@@ -1,0 +1,88 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ RadioDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Radio</h1>
+			<p class="doc-section__description">
+				A control that allows the user to select one option from a set.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Standard Usage -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage (Grouped)</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Radio(ui.RadioProp{
+							Id:      "radio-1",
+							Name:    "radio-group-1",
+							Value:   "option1",
+							Label:   "Option 1",
+							Checked: true,
+						})
+						@ui.Radio(ui.RadioProp{
+							Id:    "radio-2",
+							Name:  "radio-group-1",
+							Value: "option2",
+							Label: "Option 2",
+						})
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Radio(ui.RadioProp{
+							Id:       "disabled-radio",
+							Label:    "Disabled unselected",
+							Disabled: true,
+						})
+						@ui.Radio(ui.RadioProp{
+							Id:       "disabled-checked-radio",
+							Label:    "Disabled selected",
+							Disabled: true,
+							Checked:  true,
+						})
+						@ui.Radio(ui.RadioProp{
+							Id:    "error-radio",
+							Label: "Error state",
+							Error: true,
+						})
+					</div>
+				</div>
+				<!-- In Context -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Form Selection</h3>
+					<div class="doc-demo__list" style="max-width: 400px;">
+						@ui.Card(ui.CardProp{Header: "Choose Plan"}) {
+							<div style="display: flex; flex-direction: column; gap: 0.75rem;">
+								@ui.Radio(ui.RadioProp{
+									Id:      "plan-basic",
+									Name:    "plan",
+									Value:   "basic",
+									Label:   "Basic (Free)",
+									Checked: true,
+								})
+								@ui.Radio(ui.RadioProp{
+									Id:    "plan-pro",
+									Name:  "plan",
+									Value: "pro",
+									Label: "Pro ($9/mo)",
+								})
+								@ui.Radio(ui.RadioProp{
+									Id:    "plan-enterprise",
+									Name:  "plan",
+									Value: "enterprise",
+									Label: "Enterprise (Contact Us)",
+								})
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}
