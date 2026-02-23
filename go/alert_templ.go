@@ -17,11 +17,24 @@ const (
 	AlertInfo
 )
 
+type AlertShape int
+
+const (
+	AlertStandard AlertShape = iota
+	AlertOutlined
+	AlertFilled
+)
+
 type AlertProp struct {
-	Variant AlertVariant
-	Title   string
-	Class   string
-	Id      string
+	Variant     AlertVariant
+	Shape       AlertShape
+	Title       string
+	Class       string
+	Id          string
+	Icon        IconKind         // Optional: Override default variant icon
+	HideIcon    bool             // Optional: Hide the icon entirely
+	Dismissible bool             // Optional: Show a close button
+	Attributes  templ.Attributes // HTML attributes for the alert container
 }
 
 // Alert renders a feedback message with an appropriate icon and styling.
@@ -63,7 +76,7 @@ func Alert(prop AlertProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/alert.templ`, Line: 23, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/alert.templ`, Line: 36, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -87,38 +100,69 @@ func Alert(prop AlertProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" role=\"alert\"><div class=\"alert__icon\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" role=\"alert\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Icon(IconProp{Type: alertIcon(prop.Variant), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+		if prop.Dismissible {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " x-data=\"{ show: true }\" x-show=\"show\" x-transition")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, prop.Attributes)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"alert__content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, ">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if !prop.HideIcon {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"alert__icon\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if prop.Icon != 0 {
+				templ_7745c5c3_Err = Icon(IconProp{Type: prop.Icon, Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				templ_7745c5c3_Err = Icon(IconProp{Type: alertIcon(prop.Variant), Size: IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"alert__content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if prop.Title != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<h4 class=\"alert__title\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<h4 class=\"alert__title\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/alert.templ`, Line: 33, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/alert.templ`, Line: 58, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</h4>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</h4>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div class=\"alert__body\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div class=\"alert__body\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -126,7 +170,25 @@ func Alert(prop AlertProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if prop.Dismissible {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<button type=\"button\" class=\"alert__close\" @click=\"show = false\" aria-label=\"Close alert\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = Icon(IconProp{Type: IconX, Size: IconSizeSM}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</button>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -134,28 +196,41 @@ func Alert(prop AlertProp) templ.Component {
 	})
 }
 
-// alertClass generates the CSS class for the alert based on variant.
+// alertClass generates the CSS class for the alert based on variant and shape.
 func alertClass(prop AlertProp) string {
 	base := "alert"
 
+	// Severity class
 	var variantClass string
 	switch prop.Variant {
 	case AlertSuccess:
-		variantClass = base + " alert--success"
+		variantClass = "alert--success"
 	case AlertWarning:
-		variantClass = base + " alert--warning"
+		variantClass = "alert--warning"
 	case AlertDanger:
-		variantClass = base + " alert--danger"
+		variantClass = "alert--danger"
 	case AlertInfo:
-		variantClass = base + " alert--info"
+		variantClass = "alert--info"
 	default:
-		variantClass = base + " alert--info"
+		variantClass = "alert--info"
 	}
 
-	if prop.Class != "" {
-		return variantClass + " " + prop.Class
+	// Shape class
+	var shapeClass string
+	switch prop.Shape {
+	case AlertOutlined:
+		shapeClass = "alert--outlined"
+	case AlertFilled:
+		shapeClass = "alert--filled"
+	default:
+		shapeClass = "alert--standard"
 	}
-	return variantClass
+
+	result := base + " " + variantClass + " " + shapeClass
+	if prop.Class != "" {
+		result += " " + prop.Class
+	}
+	return result
 }
 
 // alertIcon returns the appropriate icon type for the variant.

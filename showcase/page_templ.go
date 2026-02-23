@@ -124,7 +124,7 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " - ui library</title><!-- Framework CSS --><link rel=\"stylesheet\" href=\"/css/main.css\"><!-- Showcase specific CSS --><link rel=\"stylesheet\" href=\"/showcase-static/css/doc.css\"></head><body><div class=\"doc-layout\"><!-- Sidebar --><aside class=\"doc-sidebar\"><a href=\"/\" class=\"doc-sidebar__logo\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"32\" height=\"32\" rx=\"8\" fill=\"var(--color-primary)\"></rect> <path d=\"M10 10V22M10 22H22M10 16H18\" stroke=\"white\" stroke-width=\"3\" stroke-linecap=\"round\"></path></svg> ui</a><nav class=\"doc-sidebar__nav\"><div><h3 class=\"doc-sidebar__group-title\">Introduction</h3><ul class=\"doc-sidebar__links\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " - ui library</title><!-- Framework CSS --><link rel=\"stylesheet\" href=\"/css/main.css\"><!-- Showcase specific CSS --><link rel=\"stylesheet\" href=\"/showcase-static/css/doc.css\"><script defer src=\"https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body><div class=\"doc-layout\"><!-- Sidebar --><aside class=\"doc-sidebar\"><a href=\"/\" class=\"doc-sidebar__logo\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"32\" height=\"32\" rx=\"8\" fill=\"var(--color-primary)\"></rect> <path d=\"M10 10V22M10 22H22M10 16H18\" stroke=\"white\" stroke-width=\"3\" stroke-linecap=\"round\"></path></svg> ui</a><nav class=\"doc-sidebar__nav\"><div><h3 class=\"doc-sidebar__group-title\">Introduction</h3><ul class=\"doc-sidebar__links\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -237,7 +237,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 87, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 88, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -250,7 +250,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 89, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/page.templ`, Line: 90, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
