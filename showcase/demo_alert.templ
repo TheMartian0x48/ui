@@ -12,28 +12,72 @@ templ AlertDemo() {
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
+				<!-- Standard Shapes -->
 				<div class="doc-demo__group">
-					<div class="doc-demo__list doc-demo__list--column">
-						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Information"}) {
-							A new software update is available. See what’s new in version 2.0.
+					<h3 class="doc-demo__group-title">Standard Shapes (Default)</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Info"}) {
+							This is an info alert — check it out!
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Success"}) {
-							Your profile has been updated successfully.
+							This is a success alert — check it out!
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "Warning"}) {
-							Your subscription will expire in 3 days. Please renew to avoid service interruption.
+							This is a warning alert — check it out!
 						}
 						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Title: "Error"}) {
-							There was a problem with your submission. Please try again.
+							This is an error alert — check it out!
 						}
 					</div>
 				</div>
-				<!-- Without Title -->
+				<!-- Outlined Shapes -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">Without Title</h3>
-					<div class="doc-demo__list doc-demo__list--column">
-						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo}) {
-							This alert has no title, just the message content.
+					<h3 class="doc-demo__group-title">Outlined Shapes</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertOutlined, Title: "Info"}) {
+							This is an outlined info alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertOutlined, Title: "Success"}) {
+							This is an outlined success alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertOutlined, Title: "Warning"}) {
+							This is an outlined warning alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertOutlined, Title: "Error"}) {
+							This is an outlined error alert.
+						}
+					</div>
+				</div>
+				<!-- Filled Shapes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Filled Shapes</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertFilled, Title: "Info"}) {
+							This is a filled info alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertFilled, Title: "Success", Dismissible: true}) {
+							This is a filled success alert with a dismiss button.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertFilled, Title: "Warning"}) {
+							This is a filled warning alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertFilled, Title: "Error"}) {
+							This is a filled error alert.
+						}
+					</div>
+				</div>
+				<!-- Features -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Features</h3>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Dismissible", Dismissible: true}) {
+							You can close this alert.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Custom Icon", Icon: ui.IconCamera}) {
+							This success alert uses a camera icon.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "No Icon", HideIcon: true}) {
+							This alert has no icon.
 						}
 					</div>
 				</div>
