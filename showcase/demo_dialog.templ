@@ -1,0 +1,125 @@
+package main
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ DialogDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Dialog</h1>
+			<p class="doc-section__description">
+				Modal windows that disrupt the user's workflow to provide critical information or require decision-making.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Core Usage -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list">
+						@ui.DialogTrigger("basic-dialog") {
+							Open Basic Dialog
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "basic-dialog",
+							Title: "Welcome",
+						}) {
+							<p>This is a basic dialog using the native HTML <code>&lt;dialog&gt;</code> element. It handles focus trapping and backdrop automatically.</p>
+							<div class="dialog__footer">
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonPrimary,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('basic-dialog').close()",
+									},
+								}) {
+									Understand 
+								}
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Confirm Dialog -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Confirmation</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{
+							Variant: ui.ButtonDanger,
+							Attributes: templ.Attributes{
+								"onclick": "document.getElementById('confirm-dialog').showModal()",
+							},
+						}) {
+							Archive Project
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "confirm-dialog",
+							Title: "Confirm Archive",
+						}) {
+							<p>Are you sure you want to archive this project? This will move it to your archives and it will no longer be visible in your active dashboard.</p>
+							<div class="dialog__footer">
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonGhost,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('confirm-dialog').close()",
+									},
+								}) {
+									Cancel 
+								}
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonDanger,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('confirm-dialog').close(); alert('Archived!')",
+									},
+								}) {
+									Archive 
+								}
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Complex Content -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Complex Content</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{
+							Variant: ui.ButtonSecondary,
+							Attributes: templ.Attributes{
+								"onclick": "document.getElementById('form-dialog').showModal()",
+							},
+						}) {
+							Create New Entry
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "form-dialog",
+							Title: "Create Entry",
+						}) {
+							<p class="doc-section__description" style="margin-bottom: var(--spacing-4);">Fill out the details below to add a new item to your collection.</p>
+							<div style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+								<div class="doc-demo__item-label">
+									<span>Reference ID:</span>
+									@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Size: ui.BadgeSizeSM}) {
+										AUTOGEN-102 
+									}
+								</div>
+								@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Reminder", Shape: ui.AlertStandard}) {
+									Project deadlines are approaching. Ensure all fields are accurate.
+								}
+								<div style="padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-md); border: 1px dashed var(--color-border);">
+									<p style="margin: 0; text-align: center; color: var(--color-text-muted);">Form inputs will be added here once developed.</p>
+								</div>
+							</div>
+							<div class="dialog__footer">
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonPrimary,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('form-dialog').close()",
+									},
+								}) {
+									Create 
+								}
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}
