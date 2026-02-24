@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		component := r.URL.Query().Get("component")
 		if component == "" {
-			component = "button" // Default
+			component = "getting-started" // Default
 		}
 		templ.Handler(Showcase(component)).ServeHTTP(w, r)
 	})

@@ -2,6 +2,7 @@
 
 :root {
     /* ========== Colors ========== */
+    /* ========== Default Theme (Blue) & Baseline Colors ========== */
 
     /* Primary Colors */
     --color-primary: #2563eb;
@@ -41,7 +42,59 @@
     --color-border: #e5e7eb;
     --color-border-dark: #d1d5db;
     --color-border-light: #f3f4f6;
+}
 
+/* ========== Color Themes ========== */
+
+/* Green Theme */
+[data-theme="green"] {
+    --color-primary: #10b981;
+    --color-primary-dark: #059669;
+    --color-primary-darker: #047857;
+    --color-primary-light: #34d399;
+}
+
+/* Red Theme */
+[data-theme="red"] {
+    --color-primary: #ef4444;
+    --color-primary-dark: #dc2626;
+    --color-primary-darker: #b91c1c;
+    --color-primary-light: #f87171;
+}
+
+/* Violet Theme */
+[data-theme="violet"] {
+    --color-primary: #8b5cf6;
+    --color-primary-dark: #7c3aed;
+    --color-primary-darker: #6d28d9;
+    --color-primary-light: #a78bfa;
+}
+
+/* ========== Dark Mode Theme ========== */
+
+[data-theme="dark"],
+[data-mode="dark"] {
+    /* Text Colors for Dark Mode */
+    --color-text: #f9fafb;
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #d1d5db;
+    --color-text-muted: #9ca3af;
+    --color-text-inverse: #111827;
+
+    /* Background Colors for Dark Mode */
+    --color-bg: #111827;
+    --color-bg-primary: #111827;
+    --color-bg-secondary: #1f2937;
+    --color-bg-tertiary: #374151;
+    --color-bg-overlay: rgba(0, 0, 0, 0.75);
+
+    /* Border Colors for Dark Mode */
+    --color-border: #374151;
+    --color-border-dark: #4b5563;
+    --color-border-light: #1f2937;
+}
+
+:root {
     /* ========== Spacing ========== */
     /* ========== Spacing ========== */
     /* Numeric Scale (Tailwind-like) */

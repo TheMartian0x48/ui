@@ -41,7 +41,7 @@ templ Showcase(activeComponent string) {
 					}) {
 						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect width="32" height="32" rx="8" fill="var(--color-primary)"></rect>
-							<path d="M10 10V22M10 22H22M10 16H18" stroke="white" stroke-width="3" stroke-linecap="round"></path>
+							<path d="M21 10H11L16 16L11 22H21" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
 						</svg>
 						ui
 					}
@@ -90,7 +90,9 @@ templ Showcase(activeComponent string) {
 				</aside>
 				<!-- Main Content Area -->
 				<main class="doc-main">
-					if activeComponent == "accordion" {
+					if activeComponent == "getting-started" {
+						@GettingStartedDemo()
+					} else if activeComponent == "accordion" {
 						@AccordionDemo()
 					} else if activeComponent == "alert" {
 						@AlertDemo()
