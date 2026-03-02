@@ -1,4 +1,7 @@
-/* Switch Component Styles */
+/* Switch Component Styles
+ * A toggle switch for binary on/off settings.
+ * Supports three sizes (SM, MD, LG) and disabled/error states.
+ */
 
 .switch-container {
     display: flex;
@@ -10,7 +13,7 @@
 
 .switch-container--disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--opacity-disabled);
 }
 
 /* Hidden peer checkbox */
@@ -26,20 +29,27 @@
     border: 0;
 }
 
-/* Track */
+/* Track - Medium (Default) */
 .switch-track {
+    --switch-width: 2.75rem;
+    --switch-height: 1.5rem;
+    --switch-thumb-size: 1.125rem;
+    --switch-thumb-offset: 0.125rem;
+    --switch-thumb-translate: 1.25rem;
+
     position: relative;
     display: inline-block;
-    width: 44px;
-    height: 24px;
-    background-color: var(--color-bg-secondary);
+    flex-shrink: 0;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    background-color: var(--color-bg-tertiary);
     border-radius: var(--radius-full);
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+    border: var(--border-width-thin) solid var(--color-border);
 }
 
 .switch-input:focus-visible+.switch-track {
-    box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-primary-light);
+    box-shadow: var(--focus-ring-primary);
 }
 
 .switch-input:checked+.switch-track {
@@ -47,21 +57,30 @@
     border-color: var(--color-primary);
 }
 
+/* Error State */
+.switch-container--error .switch-track {
+    border-color: var(--color-danger);
+}
+
+.switch-container--error .switch-input:focus-visible+.switch-track {
+    box-shadow: var(--focus-ring-danger);
+}
+
 /* Thumb */
 .switch-thumb {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 18px;
-    height: 18px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    top: var(--switch-thumb-offset);
+    left: var(--switch-thumb-offset);
+    width: var(--switch-thumb-size);
+    height: var(--switch-thumb-size);
+    background-color: var(--color-text-inverse);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-fast);
     box-shadow: var(--shadow-sm);
 }
 
 .switch-input:checked+.switch-track .switch-thumb {
-    transform: translateX(20px);
+    transform: translateX(var(--switch-thumb-translate));
 }
 
 /* Label & Description */
@@ -81,32 +100,20 @@
     color: var(--color-text-muted);
 }
 
-/* Large Size Variant */
-.switch-track--lg {
-    width: 52px;
-    height: 28px;
-}
-
-.switch-track--lg .switch-thumb {
-    width: 22px;
-    height: 22px;
-}
-
-.switch-input:checked+.switch-track--lg .switch-thumb {
-    transform: translateX(24px);
-}
-
 /* Small Size Variant */
 .switch-track--sm {
-    width: 32px;
-    height: 18px;
+    --switch-width: 2rem;
+    --switch-height: 1.125rem;
+    --switch-thumb-size: 0.75rem;
+    --switch-thumb-offset: 0.125rem;
+    --switch-thumb-translate: 0.875rem;
 }
 
-.switch-track--sm .switch-thumb {
-    width: 12px;
-    height: 12px;
-}
-
-.switch-input:checked+.switch-track--sm .switch-thumb {
-    transform: translateX(14px);
+/* Large Size Variant */
+.switch-track--lg {
+    --switch-width: 3.25rem;
+    --switch-height: 1.75rem;
+    --switch-thumb-size: 1.375rem;
+    --switch-thumb-offset: 0.125rem;
+    --switch-thumb-translate: 1.5rem;
 }

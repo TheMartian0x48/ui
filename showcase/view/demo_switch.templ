@@ -72,6 +72,15 @@ templ SwitchDemo() {
 							Disabled: true,
 							Checked:  true,
 						})
+						<div>
+							@ui.Switch(ui.SwitchProp{
+								Id:              "error-switch",
+								Label:           "Error State",
+								Error:           true,
+								AriaDescribedBy: "switch-error-msg",
+							})
+							<span id="switch-error-msg" class="form-field__error">This setting is required</span>
+						</div>
 					</div>
 				</div>
 				<!-- Real-world Case: Preferences Card -->
@@ -79,7 +88,7 @@ templ SwitchDemo() {
 					<h3 class="doc-demo__group-title">Application Settings</h3>
 					<div class="doc-demo__list doc-demo__list--column" style="max-width: 500px;">
 						@ui.Card(ui.CardProp{Header: "Privacy Settings"}) {
-							<div style="display: flex; flex-direction: column; gap: 1.5rem;">
+							<div style="display: flex; flex-direction: column; gap: var(--spacing-6);">
 								@ui.Switch(ui.SwitchProp{
 									Label:       "Public Profile",
 									Description: "Allow anyone to see your profile information.",
