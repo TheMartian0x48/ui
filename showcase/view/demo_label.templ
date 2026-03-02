@@ -27,9 +27,19 @@ templ LabelDemo() {
 					<h3 class="doc-demo__group-title">Required State</h3>
 					<div class="doc-demo__list doc-demo__list--column">
 						@ui.Label(ui.LabelProp{For: "input-2", Required: true}) {
-							Mandatory Field 
+							Mandatory Field
 						}
 						@ui.Input(ui.InputProp{Id: "input-2", Required: true})
+					</div>
+				</div>
+				<!-- Disabled State -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Disabled State</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Label(ui.LabelProp{For: "input-3", Disabled: true}) {
+							Disabled Field
+						}
+						@ui.Input(ui.InputProp{Id: "input-3", Disabled: true, Placeholder: "This input is disabled"})
 					</div>
 				</div>
 			</div>

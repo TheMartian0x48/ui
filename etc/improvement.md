@@ -24,7 +24,7 @@ for
 * [ ] icon
 * [ ] image_preview
 * [ ] input
-* [ ] label
+* [x] label
 * [x] link
 * [ ] progress
 * [x] radio
