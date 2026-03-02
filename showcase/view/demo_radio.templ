@@ -46,11 +46,16 @@ templ RadioDemo() {
 							Disabled: true,
 							Checked:  true,
 						})
-						@ui.Radio(ui.RadioProp{
-							Id:    "error-radio",
-							Label: "Error state",
-							Error: true,
-						})
+						<div>
+							@ui.Radio(ui.RadioProp{
+								Id:              "error-radio",
+								Name:            "error-group",
+								Label:           "Error state with description",
+								Error:           true,
+								AriaDescribedBy: "radio-error-msg",
+							})
+							<span id="radio-error-msg" class="form-field__error">Please select an option</span>
+						</div>
 					</div>
 				</div>
 				<!-- In Context -->
@@ -58,7 +63,7 @@ templ RadioDemo() {
 					<h3 class="doc-demo__group-title">Form Selection</h3>
 					<div class="doc-demo__list" style="max-width: 400px;">
 						@ui.Card(ui.CardProp{Header: "Choose Plan"}) {
-							<div style="display: flex; flex-direction: column; gap: 0.75rem;">
+							<div style="display: flex; flex-direction: column; gap: var(--spacing-3);">
 								@ui.Radio(ui.RadioProp{
 									Id:      "plan-basic",
 									Name:    "plan",
