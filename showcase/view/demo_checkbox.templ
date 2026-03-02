@@ -33,6 +33,11 @@ templ CheckboxDemo() {
 							Checked: true,
 						})
 						@ui.Checkbox(ui.CheckboxProp{
+							Id:            "indeterminate-state",
+							Label:         "Indeterminate (partial selection)",
+							Indeterminate: true,
+						})
+						@ui.Checkbox(ui.CheckboxProp{
 							Id:       "disabled-state",
 							Label:    "Disabled checkbox",
 							Disabled: true,
@@ -43,11 +48,15 @@ templ CheckboxDemo() {
 							Disabled: true,
 							Checked:  true,
 						})
-						@ui.Checkbox(ui.CheckboxProp{
-							Id:    "error-state",
-							Label: "Error state (e.g., must accept terms)",
-							Error: true,
-						})
+						<div>
+							@ui.Checkbox(ui.CheckboxProp{
+								Id:              "error-state",
+								Label:           "You must accept the terms",
+								Error:           true,
+								AriaDescribedBy: "error-state-msg",
+							})
+							<span id="error-state-msg" class="form-field__error">This field is required</span>
+						</div>
 					</div>
 				</div>
 				<!-- In Context (Group) -->

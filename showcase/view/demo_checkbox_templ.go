@@ -56,6 +56,14 @@ func CheckboxDemo() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = ui.Checkbox(ui.CheckboxProp{
+			Id:            "indeterminate-state",
+			Label:         "Indeterminate (partial selection)",
+			Indeterminate: true,
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Checkbox(ui.CheckboxProp{
 			Id:       "disabled-state",
 			Label:    "Disabled checkbox",
 			Disabled: true,
@@ -72,15 +80,20 @@ func CheckboxDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = ui.Checkbox(ui.CheckboxProp{
-			Id:    "error-state",
-			Label: "Error state (e.g., must accept terms)",
-			Error: true,
+			Id:              "error-state",
+			Label:           "You must accept the terms",
+			Error:           true,
+			AriaDescribedBy: "error-state-msg",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div><!-- In Context (Group) --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">In a Form Group</h3><div class=\"doc-demo__list\" style=\"max-width: 400px;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<span id=\"error-state-msg\" class=\"form-field__error\">This field is required</span></div></div></div><!-- In Context (Group) --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">In a Form Group</h3><div class=\"doc-demo__list\" style=\"max-width: 400px;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,7 +109,7 @@ func CheckboxDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div style=\"display: flex; flex-direction: column; gap: 0.75rem;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div style=\"display: flex; flex-direction: column; gap: 0.75rem;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -122,7 +135,7 @@ func CheckboxDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -132,7 +145,7 @@ func CheckboxDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
