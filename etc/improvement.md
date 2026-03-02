@@ -31,9 +31,9 @@ for
 * [x] select
 * [ ] slider
 * [ ] stepper
-* [ ] switch
+* [x] switch
 * [ ] table
-* [ ] tabs
+* [x] tabs
 * [ ] textarea
 * [ ] toast
 * [ ] tooltip

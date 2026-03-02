@@ -1,4 +1,7 @@
-/* Tabs Component Styles */
+/* Tabs Component Styles
+ * A tabbed interface with keyboard navigation support.
+ * Comprises Tabs (container), TabsList (triggers), and TabsContent (panels).
+ */
 
 .tabs {
     display: flex;
@@ -9,7 +12,7 @@
 .tabs__list {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
     gap: var(--spacing-6);
     margin-bottom: var(--spacing-6);
 }
@@ -18,8 +21,7 @@
     background: transparent;
     border: none;
     padding: var(--spacing-2) 0;
-    margin-bottom: -1px;
-    /* Overlap border */
+    margin-bottom: calc(-1 * var(--border-width-thin));
 
     font-family: var(--font-primary);
     font-size: var(--font-size-sm);
@@ -27,16 +29,21 @@
     color: var(--color-text-muted);
     cursor: pointer;
 
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
+    border-bottom: var(--border-width-medium) solid transparent;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .tabs__trigger:hover:not(:disabled) {
     color: var(--color-text);
 }
 
+.tabs__trigger:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
+}
+
 .tabs__trigger:disabled {
-    opacity: 0.5;
+    opacity: var(--opacity-disabled);
     cursor: not-allowed;
 }
 
@@ -47,8 +54,7 @@
 
 .tabs__content {
     display: none;
-    /* optional animation */
-    animation: tab-fade-in 0.2s ease-out;
+    animation: tab-fade-in var(--transition-fast) ease-out;
 }
 
 .tabs__content[data-state="active"] {
@@ -58,7 +64,7 @@
 @keyframes tab-fade-in {
     from {
         opacity: 0;
-        transform: translateY(4px);
+        transform: translateY(var(--spacing-1));
     }
 
     to {

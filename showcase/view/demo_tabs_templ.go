@@ -371,7 +371,7 @@ func TabsDemo() templ.Component {
 						}()
 					}
 					ctx = templ.InitializeContext(ctx)
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div style=\"padding: 1.5rem 0 0; display: flex; flex-direction: column; gap: 1rem;\">")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div style=\"padding: var(--spacing-6) 0 0; display: flex; flex-direction: column; gap: var(--spacing-4);\">")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -471,7 +471,7 @@ func TabsDemo() templ.Component {
 						}()
 					}
 					ctx = templ.InitializeContext(ctx)
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div style=\"padding: 1.5rem 0 0; display: flex; flex-direction: column; gap: 1rem;\"><div style=\"display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--color-bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--color-border-light);\"><div><div style=\"font-weight: 600; font-size: var(--font-size-sm);\">Pro Plan</div><div style=\"font-size: var(--font-size-xs); color: var(--color-text-muted);\">Renews on March 15, 2026</div></div>")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div style=\"padding: var(--spacing-6) 0 0; display: flex; flex-direction: column; gap: var(--spacing-4);\"><div style=\"display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-md); border: var(--border-width-thin) solid var(--color-border-light);\"><div><div style=\"font-weight: 600; font-size: var(--font-size-sm);\">Pro Plan</div><div style=\"font-size: var(--font-size-xs); color: var(--color-text-muted);\">Renews on March 15, 2026</div></div>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -545,7 +545,7 @@ func TabsDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</div></div></div></div></section><style type=\"text/css\">\n\t\t.demo-tab-panel {\n\t\t\tpadding: 1.5rem 0;\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tcolor: var(--color-text-secondary);\n\t\t}\n\t\t.tabs__list--stretched {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: 1fr 1fr 1fr;\n\t\t}\n\t\t.tabs__list--stretched .tabs__trigger {\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 0.5rem;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</div></div></div></div></section><style type=\"text/css\">\n\t\t.demo-tab-panel {\n\t\t\tpadding: var(--spacing-6) 0;\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tcolor: var(--color-text-secondary);\n\t\t}\n\t\t.tabs__list--stretched {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: 1fr 1fr 1fr;\n\t\t}\n\t\t.tabs__list--stretched .tabs__trigger {\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: var(--spacing-2);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,17 +1,24 @@
 package ui
 
+import "strings"
+
+// TabsProp configures the root tabs container.
+// The Id is required for JavaScript initialization.
 type TabsProp struct {
-	Id           string // Unique ID for the tabs container (required for JS logic)
-	DefaultValue string // Value of the tab that should be active by default
-	Class        string // Additional CSS classes
+	Id           string           // Unique ID for the tabs container (required for JS logic)
+	DefaultValue string           // Value of the tab that should be active by default
+	Class        string           // Additional CSS classes
+	Attributes   templ.Attributes // Additional HTML attributes
 }
 
 // Tabs is the root component for a tab interface.
+// Contains TabsList and TabsContent children.
 templ Tabs(prop TabsProp) {
 	<div
 		id={ prop.Id }
 		class={ tabsClass(prop) }
 		data-value={ prop.DefaultValue }
+		{ prop.Attributes... }
 	>
 		{ children... }
 	</div>
@@ -20,14 +27,17 @@ templ Tabs(prop TabsProp) {
 	}
 }
 
+// TabsListProp configures the tab triggers container.
 type TabsListProp struct {
-	Class string
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // TabsList contains the triggers for the tabs.
+// Handles keyboard navigation with arrow keys.
 templ TabsList(prop TabsListProp) {
-	<div 
-		class={ "tabs__list " + prop.Class } 
+	<div
+		class={ tabsListClass(prop) }
 		role="tablist"
 		@keydown="(e) => {
 			if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -35,31 +45,36 @@ templ TabsList(prop TabsListProp) {
 				const tabs = Array.from(e.currentTarget.querySelectorAll('[role=tab]'));
 				const currentTab = document.activeElement;
 				const currentIndex = tabs.indexOf(currentTab);
-				
+
 				let newIndex;
 				if (e.key === 'ArrowRight') {
 					newIndex = (currentIndex + 1) % tabs.length;
 				} else {
 					newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
 				}
-				
+
 				// Focus and activate the new tab
 				tabs[newIndex].focus();
 				tabs[newIndex].click();
 			}
 		}"
+		{ prop.Attributes... }
 	>
 		{ children... }
 	</div>
 }
 
+// TabsTriggerProp configures a tab trigger button.
 type TabsTriggerProp struct {
-	Value    string // The value this trigger activates
-	Class    string
-	Disabled bool
+	Value      string           // The value this trigger activates
+	Class      string           // Additional CSS classes
+	Disabled   bool             // Prevents interaction
+	Attributes templ.Attributes // Additional HTML attributes
+	AriaLabel  string           // Screen reader label (for icon-only tabs)
 }
 
 // TabsTrigger is the button that activates a tab content.
+// Connects to TabsContent via matching Value prop.
 templ TabsTrigger(prop TabsTriggerProp) {
 	{{
 	// Generate IDs to connect tabs with their panels
@@ -80,17 +95,24 @@ templ TabsTrigger(prop TabsTriggerProp) {
 			disabled
 			aria-disabled="true"
 		}
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		}
+		{ prop.Attributes... }
 	>
 		{ children... }
 	</button>
 }
 
+// TabsContentProp configures a tab content panel.
 type TabsContentProp struct {
-	Value string // The value that activates this content
-	Class string
+	Value      string           // The value that activates this content
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // TabsContent contains the content for a specific tab.
+// Shown when TabsTrigger with matching Value is activated.
 templ TabsContent(prop TabsContentProp) {
 	{{
 	// Generate IDs to connect panels with their tabs
@@ -105,6 +127,7 @@ templ TabsContent(prop TabsContentProp) {
 		data-value={ prop.Value }
 		aria-labelledby={ tabId }
 		tabindex="0"
+		{ prop.Attributes... }
 	>
 		{ children... }
 	</div>
@@ -113,27 +136,47 @@ templ TabsContent(prop TabsContentProp) {
 // Helper functions for classes
 
 func tabsClass(prop TabsProp) string {
-	base := "tabs"
+	var b strings.Builder
+	b.Grow(20)
+	b.WriteString("tabs")
 	if prop.Class != "" {
-		return base + " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return base
+	return b.String()
+}
+
+func tabsListClass(prop TabsListProp) string {
+	var b strings.Builder
+	b.Grow(25)
+	b.WriteString("tabs__list")
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+	return b.String()
 }
 
 func tabsTriggerClass(prop TabsTriggerProp) string {
-	base := "tabs__trigger"
+	var b strings.Builder
+	b.Grow(25)
+	b.WriteString("tabs__trigger")
 	if prop.Class != "" {
-		return base + " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return base
+	return b.String()
 }
 
 func tabsContentClass(prop TabsContentProp) string {
-	base := "tabs__content"
+	var b strings.Builder
+	b.Grow(25)
+	b.WriteString("tabs__content")
 	if prop.Class != "" {
-		return base + " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return base
+	return b.String()
 }
 
 // Script to initialize tabs logic (event delegation + default state)
