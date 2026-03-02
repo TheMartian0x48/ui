@@ -1,26 +1,34 @@
 package ui
 
+import "strings"
+
+// SelectOption represents a single option in a select dropdown.
 type SelectOption struct {
-	Label    string
-	Value    string
-	Disabled bool
+	Label    string // Display text for the option
+	Value    string // Value submitted with form
+	Disabled bool   // Whether option is selectable
 }
 
+// SelectProp configures a select dropdown component.
+// Supports placeholder, pre-selected values, disabled options, and error states.
 type SelectProp struct {
-	Name        string         // Select name attribute
-	Id          string         // Select ID
-	Value       string         // Selected value
-	Placeholder string         // Placeholder text (default option)
-	Options     []SelectOption // List of options
-	Required    bool           // Whether the select is required
-	Disabled    bool           // Whether the select is disabled
-	Error       bool           // Whether to show error state
-	Class       string         // Additional CSS classes
+	Name            string           // Form field name
+	Id              string           // HTML id attribute
+	Value           string           // Currently selected value
+	Placeholder     string           // Placeholder text (first disabled option)
+	Options         []SelectOption   // List of selectable options
+	Required        bool             // Form validation requirement
+	Disabled        bool             // Prevents interaction
+	Error           bool             // Shows error styling
+	Class           string           // Additional CSS classes
+	Attributes      templ.Attributes // Additional HTML attributes
+	AriaLabel       string           // Screen reader label
+	AriaDescribedBy string           // ID of element describing this select (e.g., error message)
 }
 
-// Select renders a select element with configurable options and states.
+// Select renders a dropdown select element with configurable options and states.
 templ Select(prop SelectProp) {
-	<div class={ selectContainerClass(prop) }>
+	<div class="select-container">
 		<select
 			if prop.Id != "" {
 				id={ prop.Id }
@@ -38,6 +46,13 @@ templ Select(prop SelectProp) {
 			if prop.Error {
 				aria-invalid="true"
 			}
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			if prop.AriaDescribedBy != "" {
+				aria-describedby={ prop.AriaDescribedBy }
+			}
+			{ prop.Attributes... }
 		>
 			if prop.Placeholder != "" {
 				<option value="" disabled selected?={ prop.Value == "" }>{ prop.Placeholder }</option>
@@ -52,30 +67,26 @@ templ Select(prop SelectProp) {
 				</option>
 			}
 		</select>
-		// Custom arrow icon can be added here if needed, or handled via CSS
 	</div>
 }
 
 // selectClass generates the CSS class for the select based on state.
 func selectClass(prop SelectProp) string {
-	base := "select"
+	var b strings.Builder
+	b.Grow(30)
 
-	var stateClass string
+	b.WriteString("select")
+
 	if prop.Error {
-		stateClass = base + " select--error"
-	} else if prop.Disabled {
-		stateClass = base + " select--disabled"
-	} else {
-		stateClass = base
+		b.WriteString(" select--error")
 	}
-
+	if prop.Disabled {
+		b.WriteString(" select--disabled")
+	}
 	if prop.Class != "" {
-		return stateClass + " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return stateClass
-}
 
-// selectContainerClass generates the CSS class for the wrapper container
-func selectContainerClass(prop SelectProp) string {
-	return "select-container"
+	return b.String()
 }

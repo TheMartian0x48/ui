@@ -14,7 +14,7 @@ for
 * [x] badge
 * [x] button
 * [ ] card
-* [ ] checkbox
+* [x] checkbox
 * [ ] dialog
 * [ ] divider
 * [ ] drawer
@@ -28,7 +28,7 @@ for
 * [ ] link
 * [ ] progress
 * [ ] radio
-* [ ] select
+* [x] select
 * [ ] slider
 * [ ] stepper
 * [ ] switch

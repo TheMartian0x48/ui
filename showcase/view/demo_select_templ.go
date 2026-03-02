@@ -89,20 +89,24 @@ func SelectDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><div class=\"select-demo-row\"><span class=\"text-xs text-muted\">Error State</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><div class=\"select-demo-row\"><span class=\"text-xs text-muted\">Error State with AriaDescribedBy</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = ui.Select(ui.SelectProp{
-			Error: true,
+			Id:              "country-select",
+			Error:           true,
+			Placeholder:     "Select a country...",
+			AriaDescribedBy: "country-error",
 			Options: []ui.SelectOption{
-				{Label: "Invalid Selection", Value: "invalid"},
+				{Label: "United States", Value: "us"},
+				{Label: "Canada", Value: "ca"},
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div></div></div></div></section><style type=\"text/css\">\n\t\t.select-demo-row {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: 0.25rem;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<span id=\"country-error\" class=\"form-field__error\">Please select a country</span></div></div></div></div></div></section><style type=\"text/css\">\n\t\t.select-demo-row {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-1);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
