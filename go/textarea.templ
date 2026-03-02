@@ -2,19 +2,34 @@ package ui
 
 import "strconv"
 
+// TextareaProp configures a multi-line text input component.
+// Use Rows to control visible height, MaxLength to limit input length.
 type TextareaProp struct {
-	Name        string
-	Id          string
-	Value       string
-	Placeholder string
-	Required    bool
-	Disabled    bool
-	Error       bool
-	Class       string
-	Rows        int
-	MaxLength   int
+	Id              string           // HTML id attribute
+	Name            string           // Form field name
+	Value           string           // Initial text content
+	Placeholder     string           // Hint text shown when empty
+	Rows            int              // Visible text lines (default browser behavior if 0)
+	MaxLength       int              // Maximum character limit
+	Required        bool             // Form validation requirement
+	Disabled        bool             // Prevents interaction
+	Error           bool             // Shows error styling
+	Class           string           // Additional CSS classes
+	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, spellcheck)
+	AriaDescribedBy string           // ID of element describing this textarea (e.g., error message)
 }
 
+// Textarea renders a multi-line text input.
+//
+// Example:
+//
+//	@Textarea(TextareaProp{
+//	    Id:          "message",
+//	    Name:        "message",
+//	    Placeholder: "Enter your message...",
+//	    Rows:        4,
+//	    Required:    true,
+//	})
 templ Textarea(prop TextareaProp) {
 	<textarea
 		if prop.Id != "" {
@@ -35,13 +50,19 @@ templ Textarea(prop TextareaProp) {
 		class={ textareaClass(prop) }
 		if prop.Required {
 			required
+			aria-required="true"
 		}
 		if prop.Disabled {
 			disabled
+			aria-disabled="true"
 		}
 		if prop.Error {
 			aria-invalid="true"
 		}
+		if prop.AriaDescribedBy != "" {
+			aria-describedby={ prop.AriaDescribedBy }
+		}
+		{ prop.Attributes... }
 	>{ prop.Value }</textarea>
 }
 

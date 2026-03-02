@@ -1,7 +1,34 @@
 /* Textarea Component Styles */
+/*
+ * Multi-line text input extending the base input styles.
+ *
+ * Usage:
+ *   @ui.Textarea(ui.TextareaProp{Placeholder: "Enter text...", Rows: 4})
+ *
+ * Classes:
+ *   - .textarea: Base textarea styles (extends .input)
+ *   - .input--error: Error state (inherited from input)
+ *   - .input--disabled: Disabled state (inherited from input)
+ *
+ * Accessibility:
+ *   - Use with FormField for proper labeling
+ *   - Error state sets aria-invalid="true"
+ */
 
 textarea.input {
-    min-height: 100px;
+    min-height: 6.25rem; /* 100px */
     resize: vertical;
-    font-family: var(--font-primary);
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-normal);
+}
+
+/* Prevent horizontal resize */
+textarea.input.textarea--no-resize {
+    resize: none;
+}
+
+/* Auto-grow textarea (requires JS) */
+textarea.input.textarea--auto-grow {
+    overflow: hidden;
+    resize: none;
 }
