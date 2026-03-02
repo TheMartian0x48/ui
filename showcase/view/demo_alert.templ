@@ -1,0 +1,216 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+// AlertDemo displays various examples of the Alert component
+templ AlertDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Alert</h1>
+			<p class="doc-section__description">
+				Feedback messages which are displayed after specific actions or to provide system-level notifications.
+				Alerts are used to communicate status, warning, error, or informational messages to users.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Standard Shapes (Standard) -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Shapes: Standard</h3>
+					<p class="doc-demo__description">
+						Default alerts with subtle backgrounds and left borders indicating their type.
+						Standard alerts provide contextual feedback without being overly intrusive.
+					</p>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Info"}) {
+							A new software update is available.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Success"}) {
+							Your profile has been updated successfully.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "Warning"}) {
+							Your subscription will expire in 3 days.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Title: "Error"}) {
+							There was a problem connecting to the server.
+						}
+					</div>
+				</div>
+				<!-- Outlined Shape -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Shapes: Outlined</h3>
+					<p class="doc-demo__description">
+						Outlined alerts use borders to create a more subtle appearance while maintaining their contextual meaning.
+						Use these when you want a less prominent visual presence.
+					</p>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertOutlined, Title: "Info"}) {
+							Outlined alerts offer a more subtle emphasis.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertOutlined, Title: "Success"}) {
+							The changes were saved without issues.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertOutlined, Title: "Warning"}) {
+							Please review the security settings.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertOutlined, Title: "Error"}) {
+							Validation failed for the input fields.
+						}
+					</div>
+				</div>
+				<!-- Filled Shape -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Shapes: Filled</h3>
+					<p class="doc-demo__description">
+						Filled alerts use solid background colors for high emphasis messages that need immediate attention.
+						Ideal for critical information that should not be missed.
+					</p>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Shape: ui.AlertFilled, Title: "Info"}) {
+							Filled alerts are high-priority notifications.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Shape: ui.AlertFilled, Title: "Success", Dismissible: true}) {
+							Operation completed successfully. You can dismiss this.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Shape: ui.AlertFilled, Title: "Warning"}) {
+							This action cannot be undone.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertDanger, Shape: ui.AlertFilled, Title: "Error"}) {
+							Critical system error encountered.
+						}
+					</div>
+				</div>
+				<!-- Customization -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Customization</h3>
+					<p class="doc-demo__description">
+						Alerts can be customized with various options including dismissible buttons, custom icons, and icon visibility.
+					</p>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Dismissible", Dismissible: true}) {
+							You can close this alert manually.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Custom Icon", Icon: ui.IconCamera()}) {
+							You can override the default variant icon.
+						}
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "No Icon", HideIcon: true}) {
+							The icon can be hidden entirely.
+						}
+						@ui.ToastAlert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Auto-dismiss"}, 5000) {
+							This alert will automatically dismiss after 5 seconds.
+						}
+					</div>
+				</div>
+				<!-- Advanced Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Advanced Examples</h3>
+					<p class="doc-demo__description">
+						Examples of alerts with more complex content including actions and links.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						<!-- Alert with action buttons -->
+						@ui.Alert(ui.AlertProp{
+							Variant:     ui.AlertInfo,
+							Title:       "Update Available",
+							Dismissible: true,
+							Actions: []ui.AlertAction{
+								{
+									Label:       "Update Now",
+									EventName:   "update-app",
+									EventData:   "confirm",
+									ButtonStyle: "btn-primary",
+								},
+								{
+									Label:       "Release Notes",
+									EventName:   "view-notes",
+									ButtonStyle: "",
+								},
+							},
+						}) {
+							<p>A new version (2.5.0) of the application is available.</p>
+						}
+						<!-- Alert with progress -->
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Upload Progress"}) {
+							<div class="alert-with-progress">
+								<p>Uploading files... 75% complete</p>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+						}
+						<!-- Alert with rich content -->
+						@ui.Alert(ui.AlertProp{Variant: ui.AlertWarning, Title: "Account Security", Shape: ui.AlertOutlined}) {
+							<div class="alert-with-list">
+								<p>We've detected some security concerns with your account:</p>
+								<ul>
+									<li>Your password has not been changed in 90 days</li>
+									<li>Two-factor authentication is not enabled</li>
+									<li>Recent login from an unrecognized device</li>
+								</ul>
+								<a href="#" class="alert-link">View Account Settings</a>
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Helper Functions Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Helper Functions</h3>
+					<p class="doc-demo__description">
+						Convenience functions for creating common alert types with less code.
+					</p>
+					<div class="doc-demo__list doc-demo__list--grid">
+						@ui.InfoAlert("Info Alert") {
+							Created with InfoAlert helper function.
+						}
+						@ui.SuccessAlert("Success Alert") {
+							Created with SuccessAlert helper function.
+						}
+						@ui.WarningAlert("Warning Alert") {
+							Created with WarningAlert helper function.
+						}
+						@ui.DangerAlert("Error Alert") {
+							Created with DangerAlert helper function.
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Best Practices Section -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">Usage Guidelines</h2>
+			<ul class="doc-list">
+				<li><strong>Color Meaning:</strong> Maintain consistent use of colors - green for success, blue for info, yellow/orange for warnings, red for errors</li>
+				<li><strong>Placement:</strong> Position alerts where they are relevant to the user's action. For form validations, place alerts near the form</li>
+				<li><strong>Content:</strong> Keep alert text concise and actionable. Explain what happened and what the user should do next</li>
+				<li><strong>Accessibility:</strong> Alerts are automatically announced by screen readers using ARIA roles. Ensure enough contrast between text and background</li>
+				<li><strong>Auto-dismissal:</strong> Use auto-dismissing alerts for non-critical information. Critical warnings or errors should remain visible until explicitly dismissed</li>
+				<li><strong>Action Buttons:</strong> When an alert requires user action, include clear action buttons rather than expecting users to navigate elsewhere</li>
+			</ul>
+		</div>
+		<!-- JavaScript Integration -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">JavaScript Integration</h2>
+			<p>
+				Alerts can be integrated with JavaScript in several ways:
+			</p>
+			<ul class="doc-list">
+				<li><strong>Auto-dismissal:</strong> Set the DismissTimeout property to automatically hide alerts after a specified time in milliseconds</li>
+				<li><strong>Event Handling:</strong> Listen for events dispatched by action buttons using Alpine.js or vanilla JavaScript event listeners</li>
+				<li><strong>Custom Animation:</strong> Override the default transitions by providing custom Alpine.js transition directives</li>
+			</ul>
+			<div class="doc-code">
+				<pre>
+					<code>
+						// Example: Listening for alert action events
+						document.addEventListener('update-app', (e) =&gt; { "{" }
+						{ "if" } (e.detail === 'confirm') { "{" }
+						// Handle update confirmation
+						console.log('Update confirmed');
+						{ "}" }
+						{ "}" });
+					</code>
+				</pre>
+			</div>
+		</div>
+	</section>
+}

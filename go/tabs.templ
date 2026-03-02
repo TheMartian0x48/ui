@@ -26,7 +26,29 @@ type TabsListProp struct {
 
 // TabsList contains the triggers for the tabs.
 templ TabsList(prop TabsListProp) {
-	<div class={ "tabs__list " + prop.Class } role="tablist">
+	<div 
+		class={ "tabs__list " + prop.Class } 
+		role="tablist"
+		@keydown="(e) => {
+			if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+				e.preventDefault();
+				const tabs = Array.from(e.currentTarget.querySelectorAll('[role=tab]'));
+				const currentTab = document.activeElement;
+				const currentIndex = tabs.indexOf(currentTab);
+				
+				let newIndex;
+				if (e.key === 'ArrowRight') {
+					newIndex = (currentIndex + 1) % tabs.length;
+				} else {
+					newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+				}
+				
+				// Focus and activate the new tab
+				tabs[newIndex].focus();
+				tabs[newIndex].click();
+			}
+		}"
+	>
 		{ children... }
 	</div>
 }
@@ -39,13 +61,24 @@ type TabsTriggerProp struct {
 
 // TabsTrigger is the button that activates a tab content.
 templ TabsTrigger(prop TabsTriggerProp) {
+	{{
+	// Generate IDs to connect tabs with their panels
+	var tabId = "tab-" + prop.Value
+	var panelId = "panel-" + prop.Value
+	}}
+
 	<button
 		type="button"
 		role="tab"
+		id={ tabId }
 		class={ tabsTriggerClass(prop) }
 		data-value={ prop.Value }
+		aria-selected="false"
+		aria-controls={ panelId }
+		tabindex="-1"
 		if prop.Disabled {
 			disabled
+			aria-disabled="true"
 		}
 	>
 		{ children... }
@@ -59,10 +92,19 @@ type TabsContentProp struct {
 
 // TabsContent contains the content for a specific tab.
 templ TabsContent(prop TabsContentProp) {
+	{{
+	// Generate IDs to connect panels with their tabs
+	var panelId = "panel-" + prop.Value
+	var tabId = "tab-" + prop.Value
+	}}
+
 	<div
+		id={ panelId }
 		role="tabpanel"
 		class={ tabsContentClass(prop) }
 		data-value={ prop.Value }
+		aria-labelledby={ tabId }
+		tabindex="0"
 	>
 		{ children... }
 	</div>
@@ -111,11 +153,18 @@ script initTabs(id string, defaultValue string) {
 			const allTriggers = tabs.querySelectorAll('.tabs__trigger');
 			const allContents = tabs.querySelectorAll('.tabs__content');
 			
-			allTriggers.forEach(t => t.removeAttribute('data-state'));
+			// Update data-state, tabindex and ARIA attributes
+			allTriggers.forEach(t => {
+				t.removeAttribute('data-state');
+				t.setAttribute('aria-selected', 'false');
+				t.setAttribute('tabindex', '-1');
+			});
 			allContents.forEach(c => c.removeAttribute('data-state'));
 			
 			// Activate the clicked trigger
 			trigger.setAttribute('data-state', 'active');
+			trigger.setAttribute('aria-selected', 'true');
+			trigger.setAttribute('tabindex', '0');
 			
 			// Activate the corresponding content
 			const value = trigger.getAttribute('data-value');
@@ -142,7 +191,11 @@ script initTabs(id string, defaultValue string) {
 		if (activeValue) {
 			const trigger = tabs.querySelector(`.tabs__trigger[data-value="${activeValue}"]`);
 			const content = tabs.querySelector(`.tabs__content[data-value="${activeValue}"]`);
-			if (trigger) trigger.setAttribute('data-state', 'active');
+			if (trigger) {
+				trigger.setAttribute('data-state', 'active');
+				trigger.setAttribute('aria-selected', 'true');
+				trigger.setAttribute('tabindex', '0');
+			}
 			if (content) content.setAttribute('data-state', 'active');
 		}
 	})();

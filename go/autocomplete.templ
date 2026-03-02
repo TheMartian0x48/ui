@@ -1,31 +1,47 @@
 package ui
 
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+	"sync/atomic"
+)
+
+// autocompleteIdCounter is an atomic counter for generating unique autocomplete IDs.
+var autocompleteIdCounter atomic.Uint64
+
 type AutocompleteOption struct {
-	Value string
-	Label string
+	Value string `json:"value"`
+	Label string `json:"label"`
 }
 
 type AutocompleteProp struct {
 	Id          string
 	Name        string
 	Placeholder string
+	Label       string // Accessible label for screen readers
 	Options     []AutocompleteOption
 	Value       string // Initial search query
 	Disabled    bool
+	Required    bool
 	Error       bool
 	Class       string
+	Attributes  templ.Attributes
 }
 
 // Autocomplete renders an input field with a searchable dropdown of options.
 templ Autocomplete(prop AutocompleteProp) {
+	{{ uid := autocompleteUniqueId(prop.Id) }}
+	{{ listboxId := "autocomplete-listbox-" + uid }}
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ autocompleteClass(prop) }
-		x-data={ inlineAutocompleteData(prop) }
+		x-data={ inlineAutocompleteData(prop, uid) }
 		@click.outside="open = false"
 		@keydown.escape.prevent="open = false; $refs.input.focus()"
+		{ prop.Attributes... }
 	>
 		<div class="autocomplete__control">
 			<input
@@ -41,17 +57,29 @@ templ Autocomplete(prop AutocompleteProp) {
 				if prop.Disabled {
 					disabled
 				}
+				if prop.Required {
+					required
+				}
+				if prop.Label != "" {
+					aria-label={ prop.Label }
+				}
+				else
+				if prop.Placeholder != "" {
+					aria-label={ prop.Placeholder }
+				}
 				x-model="search"
 				@focus="open = true"
-				@input="open = true; highlightedIndex = 0"
-				@keydown.arrow-down.prevent="if(open) { highlightedIndex = Math.min(highlightedIndex + 1, filteredOptions().length - 1) } else { open = true; highlightedIndex = 0 }"
-				@keydown.arrow-up.prevent="if(open) { highlightedIndex = Math.max(highlightedIndex - 1, 0) }"
-				@keydown.enter.prevent="if(open && filteredOptions().length > 0) { selectOption(filteredOptions()[highlightedIndex]) }"
+				@input="open = true; highlightedIndex = 0; _filtered = null"
+				@keydown.arrow-down.prevent="navigateDown()"
+				@keydown.arrow-up.prevent="navigateUp()"
+				@keydown.enter.prevent="selectHighlighted()"
 				autocomplete="off"
 				role="combobox"
+				aria-haspopup="listbox"
 				aria-expanded="false"
 				:aria-expanded="open.toString()"
-				aria-controls="autocomplete-listbox"
+				aria-controls={ listboxId }
+				:aria-activedescendant={ "open && getFiltered().length > 0 ? '" + uid + "-option-' + highlightedIndex : ''" }
 			/>
 			<div class="autocomplete__indicator">
 				@Icon(IconProp{Icon: IconChevronDown(), Size: IconSizeSM})
@@ -59,16 +87,20 @@ templ Autocomplete(prop AutocompleteProp) {
 		</div>
 		// Dropdown Menu
 		<ul
-			x-show="open && filteredOptions().length > 0"
-			id="autocomplete-listbox"
+			x-show="open && getFiltered().length > 0"
+			id={ listboxId }
 			class="autocomplete__menu"
 			x-transition.opacity.duration.150ms
 			tabindex="-1"
 			role="listbox"
+			if prop.Label != "" {
+				aria-label={ prop.Label }
+			}
 			x-cloak
 		>
-			<template x-for="(option, index) in filteredOptions()" :key="option.value">
+			<template x-for="(option, index) in getFiltered()" :key="option.value">
 				<li
+					:id={ "'" + uid + "-option-' + index" }
 					class="autocomplete__item"
 					:class="{ 'autocomplete__item--highlighted': index === highlightedIndex }"
 					@click="selectOption(option)"
@@ -80,68 +112,102 @@ templ Autocomplete(prop AutocompleteProp) {
 			</template>
 		</ul>
 		// Empty State
-		<div x-show="open && filteredOptions().length === 0" class="autocomplete__menu autocomplete__item--empty" x-cloak>
-			<span class="autocomplete__item" style="color: var(--color-text-muted); cursor: default;">No results found.</span>
+		<div x-show="open && getFiltered().length === 0" class="autocomplete__menu" x-cloak>
+			<span class="autocomplete__item autocomplete__item--empty">No results found.</span>
 		</div>
 	</div>
 }
 
 func autocompleteClass(prop AutocompleteProp) string {
-	base := "autocomplete"
+	var sb strings.Builder
+	sb.WriteString("autocomplete")
 	if prop.Disabled {
-		base += " autocomplete--disabled"
+		sb.WriteString(" autocomplete--disabled")
 	}
 	if prop.Class != "" {
-		base += " " + prop.Class
+		sb.WriteString(" ")
+		sb.WriteString(prop.Class)
 	}
-	return base
+	return sb.String()
 }
 
-// Inline data function generates the Alpine.js required initial state object with functions included
-func inlineAutocompleteData(prop AutocompleteProp) string {
-	optionsJSON := optionsToJSON(prop.Options)
-	searchInit := escapeQuotes(prop.Value)
+// autocompleteUniqueId generates a unique ID suffix or returns the provided ID.
+func autocompleteUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("ac%d", autocompleteIdCounter.Add(1))
+}
 
-	return `{ 
-		open: false, 
-		search: '` + searchInit + `', 
-		options: ` + optionsJSON + `, 
+// inlineAutocompleteData generates the Alpine.js data object with cached filtering.
+func inlineAutocompleteData(prop AutocompleteProp, uid string) string {
+	optionsJSON := optionsToJSON(prop.Options)
+	searchInit := escapeJSString(prop.Value)
+
+	return `{
+		open: false,
+		search: '` + searchInit + `',
+		options: ` + optionsJSON + `,
 		highlightedIndex: 0,
-		filteredOptions() { 
-			if (this.search === '') return this.options; 
-			return this.options.filter(opt => opt.label.toLowerCase().includes(this.search.toLowerCase())); 
+		_filtered: null,
+		getFiltered() {
+			if (this._filtered !== null) return this._filtered;
+			if (this.search === '') {
+				this._filtered = this.options;
+			} else {
+				const term = this.search.toLowerCase();
+				this._filtered = this.options.filter(opt => opt.label.toLowerCase().includes(term));
+			}
+			return this._filtered;
+		},
+		navigateDown() {
+			const filtered = this.getFiltered();
+			if (this.open) {
+				this.highlightedIndex = Math.min(this.highlightedIndex + 1, filtered.length - 1);
+			} else {
+				this.open = true;
+				this.highlightedIndex = 0;
+			}
+		},
+		navigateUp() {
+			if (this.open) {
+				this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
+			}
+		},
+		selectHighlighted() {
+			const filtered = this.getFiltered();
+			if (this.open && filtered.length > 0) {
+				this.selectOption(filtered[this.highlightedIndex]);
+			}
 		},
 		selectOption(option) {
 			if (!option) return;
 			this.search = option.label;
 			this.open = false;
+			this._filtered = null;
 			this.$refs.input.focus();
-		} 
+			this.$dispatch('autocomplete-select', { value: option.value, label: option.label });
+		}
 	}`
 }
 
+// optionsToJSON converts options to JSON using encoding/json for safety.
 func optionsToJSON(options []AutocompleteOption) string {
-	result := "["
-	for i, opt := range options {
-		label := escapeQuotes(opt.Label)
-		value := escapeQuotes(opt.Value)
-		result += "{label: '" + label + "', value: '" + value + "'}"
-		if i < len(options)-1 {
-			result += ", "
-		}
+	if len(options) == 0 {
+		return "[]"
 	}
-	result += "]"
-	return result
+	data, err := json.Marshal(options)
+	if err != nil {
+		return "[]"
+	}
+	return string(data)
 }
 
-func escapeQuotes(s string) string {
-	var result string
-	for _, char := range s {
-		if char == '\'' {
-			result += "\\'"
-		} else {
-			result += string(char)
-		}
-	}
-	return result
+// escapeJSString escapes a string for use in JavaScript single-quoted strings.
+func escapeJSString(s string) string {
+	s = strings.ReplaceAll(s, "\\", "\\\\")
+	s = strings.ReplaceAll(s, "'", "\\'")
+	s = strings.ReplaceAll(s, "\n", "\\n")
+	s = strings.ReplaceAll(s, "\r", "\\r")
+	return s
 }

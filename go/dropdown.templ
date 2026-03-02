@@ -1,27 +1,53 @@
 package ui
 
 type DropdownProp struct {
-	Label  string          // Text for the trigger button
-	Icon   templ.Component // Changed from enum to component
-	Class  string          // Additional classes
-	Right  bool            // Align menu to the right
-	Id     string          // Optional ID
-	Values []string        // Optional values if selectable (simple case)
+	Label      string          // Text for the trigger button
+	Icon       templ.Component // Changed from enum to component
+	Class      string          // Additional classes
+	Right      bool            // Align menu to the right
+	Id         string          // Optional ID
+	Values     []string        // Optional values if selectable (simple case)
+	AriaLabel  string          // Accessible name for the dropdown (optional)
 }
 
 // Dropdown renders a collapsible menu using the native details/summary pattern.
 templ Dropdown(prop DropdownProp) {
+	// Generate menu ID for aria-controls
+	{{var menuId string}}
+	if prop.Id != "" {
+		menuId = prop.Id + "-menu"
+	} else {
+		menuId = "dropdown-menu-" + fmt.Sprint(&prop) // Use pointer address as unique identifier
+	}
+
 	<details
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ dropdownClass(prop) }
+		@click="el => {
+			const details = el.target.closest('details');
+			const summary = details.querySelector('summary');
+			if (details.open) {
+				summary.setAttribute('aria-expanded', 'true');
+			} else {
+				summary.setAttribute('aria-expanded', 'false');
+			}
+		}"
 	>
-		<summary class="btn btn--secondary btn--md dropdown__trigger">
+		<summary 
+			class="btn btn--secondary btn--md dropdown__trigger"
+			aria-expanded="false"
+			aria-controls={ menuId }
+			aria-haspopup="true"
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+		>
 			<span>{ prop.Label }</span>
 			@Icon(IconProp{Icon: IconChevronDown(), Size: IconSizeSM, Class: "dropdown__arrow"})
 		</summary>
-		<div class="dropdown__menu">
+		<div id={ menuId } class="dropdown__menu" role="menu">
 			{ children... }
 		</div>
 	</details>
@@ -35,11 +61,19 @@ type DropdownItemProp struct {
 	Icon       templ.Component  // Changed from enum to component
 	Attributes templ.Attributes // Helper for arbitrary attributes (onclick etc)
 	Danger     bool             // Apply danger styling
+	AriaLabel  string           // Accessible name for the item (optional)
 }
 
 templ DropdownItem(prop DropdownItemProp) {
 	if prop.Href != "" {
-		<a href={ templ.SafeURL(prop.Href) } class={ dropdownItemClass(prop) }>
+		<a 
+			href={ templ.SafeURL(prop.Href) } 
+			class={ dropdownItemClass(prop) }
+			role="menuitem"
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+		>
 			if prop.Icon != nil {
 				@Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM})
 			}
@@ -50,6 +84,10 @@ templ DropdownItem(prop DropdownItemProp) {
 			class={ dropdownItemClass(prop) }
 			{ prop.Attributes... }
 			type="button"
+			role="menuitem"
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
 		>
 			if prop.Icon != nil {
 				@Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM})

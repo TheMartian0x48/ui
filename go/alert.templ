@@ -1,46 +1,80 @@
 package ui
 
+import (
+	"fmt"
+	"strings"
+	"sync/atomic"
+)
+
+// AlertVariant defines the semantic meaning/severity of an alert.
 type AlertVariant int
 
 const (
-	AlertSuccess AlertVariant = iota
-	AlertWarning
-	AlertDanger
-	AlertInfo
+	AlertSuccess AlertVariant = iota // Success or positive outcome
+	AlertWarning                     // Warning or caution required
+	AlertDanger                      // Error or problem encountered
+	AlertInfo                        // Informational message (default)
 )
 
+// AlertShape defines the visual style of an alert.
 type AlertShape int
 
 const (
-	AlertStandard AlertShape = iota
-	AlertOutlined
-	AlertFilled
+	AlertStandard AlertShape = iota // Standard style with subtle background (default)
+	AlertOutlined                   // Outlined style with borders
+	AlertFilled                     // Filled style with solid background
 )
 
+// AlertAction represents a button or action that can be taken within an alert.
+type AlertAction struct {
+	Label       string           // Text to display on the button
+	EventName   string           // Alpine.js event name to dispatch (e.g., "alert-action")
+	EventData   string           // Optional data to pass with the event (e.g., "confirm")
+	ButtonStyle string           // Optional CSS class for the button (e.g., "btn-primary")
+	Icon        templ.Component  // Optional icon for the button
+	Attributes  templ.Attributes // Additional HTML attributes for the button
+}
+
+// AlertProp contains all configuration options for an Alert component.
 type AlertProp struct {
-	Variant     AlertVariant
-	Shape       AlertShape
-	Title       string
-	Class       string
-	Id          string
-	Icon        templ.Component // Changed from enum to component
-	HideIcon    bool
-	Dismissible bool
-	Attributes  templ.Attributes
+	Variant        AlertVariant     // Alert type/severity (default: AlertInfo)
+	Shape          AlertShape       // Visual style (default: AlertStandard)
+	Title          string           // Optional title for the alert
+	Class          string           // Additional CSS classes
+	Id             string           // HTML ID attribute
+	Icon           templ.Component  // Custom icon (overrides default for variant)
+	HideIcon       bool             // Whether to hide the icon
+	Dismissible    bool             // Whether alert can be dismissed
+	DismissTimeout int              // Auto-dismiss after X milliseconds (0 = no auto-dismiss)
+	Actions        []AlertAction    // Action buttons to display in the alert
+	Attributes     templ.Attributes // Additional HTML attributes
 }
 
 // Alert renders a feedback message with an appropriate icon and styling.
 templ Alert(prop AlertProp) {
+	{{ uid := alertUniqueId(prop.Id) }}
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ alertClass(prop) }
 		role="alert"
-		if prop.Dismissible {
-			x-data="{ show: true }"
+		if alertIsUrgent(prop.Variant) {
+			aria-live="assertive"
+		} else {
+			aria-live="polite"
+		}
+		aria-atomic="true"
+		data-status={ alertStatus(prop.Variant) }
+		if prop.Title != "" {
+			aria-labelledby={ "alert-title-" + uid }
+		}
+		aria-describedby={ "alert-desc-" + uid }
+		if prop.Dismissible || prop.DismissTimeout > 0 {
+			x-data={ alpineData(prop) }
 			x-show="show"
 			x-transition
+			@keydown.escape="if ($event.target === $el || $el.contains($event.target)) show = false"
 		}
 		{ prop.Attributes... }
 	>
@@ -55,11 +89,29 @@ templ Alert(prop AlertProp) {
 		}
 		<div class="alert__content">
 			if prop.Title != "" {
-				<h4 class="alert__title">{ prop.Title }</h4>
+				<h4 id={ "alert-title-" + uid } class="alert__title">{ prop.Title }</h4>
 			}
-			<div class="alert__body">
+			<div id={ "alert-desc-" + uid } class="alert__body">
 				{ children... }
 			</div>
+			if len(prop.Actions) > 0 {
+				<div class="alert__actions">
+					for _, action := range prop.Actions {
+						<button
+							type="button"
+							class={ "btn " + action.ButtonStyle }
+							@click={ "this.$dispatch('" + action.EventName + "', '" + action.EventData + "')" }
+							aria-label={ action.Label }
+							{ action.Attributes... }
+						>
+							if action.Icon != nil {
+								@Icon(IconProp{Icon: action.Icon, Size: IconSizeSM, Class: "me-1"})
+							}
+							{ action.Label }
+						</button>
+					}
+				</div>
+			}
 		</div>
 		if prop.Dismissible {
 			<button
@@ -74,41 +126,85 @@ templ Alert(prop AlertProp) {
 	</div>
 }
 
+// alertIsUrgent determines if the alert should be announced with higher priority.
+func alertIsUrgent(variant AlertVariant) bool {
+	return variant == AlertDanger || variant == AlertWarning
+}
+
+// alpineData generates the Alpine.js data initialization with timeout support.
+func alpineData(prop AlertProp) string {
+	// Create Alpine.js data object with show state and optional timeout
+	if prop.DismissTimeout > 0 {
+		// Auto-dismiss version with timeout
+		return fmt.Sprintf("{ show: true, init() { setTimeout(() => { this.show = false }, %d) } }", prop.DismissTimeout)
+	}
+	return "{ show: true }"
+}
+
+// alertIdCounter is an atomic counter for generating unique alert IDs.
+var alertIdCounter atomic.Uint64
+
+// alertUniqueId generates a unique ID suffix or returns the provided ID.
+// This ensures ARIA attributes have unique references even without explicit IDs.
+func alertUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("a%d", alertIdCounter.Add(1))
+}
+
+// alertStatus returns the appropriate status attribute value based on variant.
+func alertStatus(variant AlertVariant) string {
+	switch variant {
+	case AlertSuccess:
+		return "success"
+	case AlertWarning:
+		return "warning"
+	case AlertDanger:
+		return "error"
+	case AlertInfo:
+		return "info"
+	default:
+		return "info"
+	}
+}
+
 // alertClass generates the CSS class for the alert based on variant and shape.
+// This uses a strings.Builder for better performance with multiple concatenations.
 func alertClass(prop AlertProp) string {
-	base := "alert"
+	var sb strings.Builder
+	sb.WriteString("alert")
 
 	// Severity class
-	var variantClass string
 	switch prop.Variant {
 	case AlertSuccess:
-		variantClass = "alert--success"
+		sb.WriteString(" alert--success")
 	case AlertWarning:
-		variantClass = "alert--warning"
+		sb.WriteString(" alert--warning")
 	case AlertDanger:
-		variantClass = "alert--danger"
+		sb.WriteString(" alert--danger")
 	case AlertInfo:
-		variantClass = "alert--info"
+		sb.WriteString(" alert--info")
 	default:
-		variantClass = "alert--info"
+		sb.WriteString(" alert--info")
 	}
 
 	// Shape class
-	var shapeClass string
 	switch prop.Shape {
 	case AlertOutlined:
-		shapeClass = "alert--outlined"
+		sb.WriteString(" alert--outlined")
 	case AlertFilled:
-		shapeClass = "alert--filled"
+		sb.WriteString(" alert--filled")
 	default:
-		shapeClass = "alert--standard"
+		sb.WriteString(" alert--standard")
 	}
 
-	result := base + " " + variantClass + " " + shapeClass
 	if prop.Class != "" {
-		result += " " + prop.Class
+		sb.WriteString(" ")
+		sb.WriteString(prop.Class)
 	}
-	return result
+
+	return sb.String()
 }
 
 // alertIcon returns the appropriate icon component for the variant.
@@ -124,5 +220,59 @@ func alertIcon(variant AlertVariant) templ.Component {
 		return IconInfo()
 	default:
 		return IconInfo()
+	}
+}
+
+// Helper functions for common alert patterns
+
+// InfoAlert creates a standard info alert with the given title and children.
+templ InfoAlert(title string) {
+	@Alert(AlertProp{
+		Variant: AlertInfo,
+		Title:   title,
+	}) {
+		{ children... }
+	}
+}
+
+// SuccessAlert creates a standard success alert with the given title and children.
+templ SuccessAlert(title string) {
+	@Alert(AlertProp{
+		Variant: AlertSuccess,
+		Title:   title,
+	}) {
+		{ children... }
+	}
+}
+
+// WarningAlert creates a standard warning alert with the given title and children.
+templ WarningAlert(title string) {
+	@Alert(AlertProp{
+		Variant: AlertWarning,
+		Title:   title,
+	}) {
+		{ children... }
+	}
+}
+
+// DangerAlert creates a standard danger alert with the given title and children.
+templ DangerAlert(title string) {
+	@Alert(AlertProp{
+		Variant: AlertDanger,
+		Title:   title,
+	}) {
+		{ children... }
+	}
+}
+
+// ToastAlert creates a dismissible alert that automatically dismisses after the specified duration.
+templ ToastAlert(prop AlertProp, durationMs int) {
+	{{
+		toastProp := prop
+		toastProp.Dismissible = true
+		toastProp.DismissTimeout = durationMs
+	}}
+	@Alert(toastProp) {
+		{ children... }
 	}
 }

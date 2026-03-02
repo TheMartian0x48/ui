@@ -36,6 +36,8 @@ templ Toast(prop ToastProp) {
 	<div
 		class={ toastClass(prop) }
 		role="alert"
+		aria-live="assertive"
+		aria-atomic="true"
 	>
 		<div class="toast__icon">
 			switch prop.Type {
@@ -55,7 +57,11 @@ templ Toast(prop ToastProp) {
 			}
 			<div class="toast__message">{ prop.Message }</div>
 		</div>
-		<button class="toast__close" onclick="this.closest('.toast').remove()">
+		<button 
+			class="toast__close" 
+			onclick="this.closest('.toast').remove()"
+			aria-label="Close notification"
+		>
 			@Icon(IconProp{Icon: IconX(), Size: IconSizeSM})
 		</button>
 	</div>
@@ -63,7 +69,9 @@ templ Toast(prop ToastProp) {
 
 // ToastContainer renders the script and initial markup.
 templ ToastContainer() {
-	<script src="/js/components/toast.js" defer></script>
+	<div id="toast-container" aria-live="polite" aria-atomic="true">
+		<script src="/js/components/toast.js" defer></script>
+	</div>
 }
 
 // Helper functions for classes
