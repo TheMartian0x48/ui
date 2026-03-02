@@ -31,7 +31,7 @@ func LinkDemo() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Link</h1><p class=\"doc-section__description\">Anchor element styled as an interactive button component, perfect for navigation within the UI.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><!-- Variants --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Link Variants vs Buttons</h3><p class=\"text-sm text-secondary\" style=\"margin-bottom: 1rem;\">Links share identical visual variant styling with buttons since they are essentially navigational buttons.</p><div class=\"doc-demo__list\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Link</h1><p class=\"doc-section__description\">Anchor element styled as an interactive button component, perfect for navigation within the UI.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><!-- Variants --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Link Variants vs Buttons</h3><p class=\"text-sm text-secondary\" style=\"margin-bottom: var(--spacing-4);\">Links share identical visual variant styling with buttons since they are essentially navigational buttons.</p><div class=\"doc-demo__list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -201,7 +201,7 @@ func LinkDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></div><!-- States --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">States</h3><div class=\"doc-demo__list\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></div><!-- Icon-only Links --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Icon-only Links</h3><p class=\"text-sm text-secondary\" style=\"margin-bottom: var(--spacing-4);\">Use AriaLabel for accessibility when links have no visible text.</p><div class=\"doc-demo__list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -217,43 +217,91 @@ func LinkDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "Disabled Link ")
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#", Disabled: true}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Link(ui.LinkProp{Variant: ui.ButtonOutline, Href: "#", Class: "btn--icon", AriaLabel: "View settings"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</div></div><!-- Comparison Text --><div class=\"doc-demo__group\"><div style=\"background-color: var(--color-bg-secondary); padding: 1rem; border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;\"><strong>When to use Link vs Button:</strong><br>Use  <code>")
+		templ_7745c5c3_Var10 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeMD}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = ui.Link(ui.LinkProp{Variant: ui.ButtonGhost, Href: "#", Class: "btn--icon", AriaLabel: "Edit profile"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var10), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("@ui.Link")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_link.templ`, Line: 67, Col: 19}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</div></div><!-- States --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">States</h3><div class=\"doc-demo__list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code> when the action takes the user to a new URL, route, or external page (relies on an <code>&lt;a href=\"...\"&gt;</code> tag).<br><br>Use  <code>")
+		templ_7745c5c3_Var11 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "Disabled Link")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#", Disabled: true}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("@ui.Button")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_link.templ`, Line: 73, Col: 21}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div></div><!-- Comparison Text --><div class=\"doc-demo__group\"><div style=\"background-color: var(--color-bg-secondary); padding: var(--spacing-4); border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--line-height-normal);\"><strong>When to use Link vs Button:</strong><br>Use  <code>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code> when the action triggers a script, form submission, or state change on the current page (relies on a <code>&lt;button type=\"...\"&gt;</code> tag).</div></div></div></div></section>")
+		var templ_7745c5c3_Var12 string
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("@ui.Link")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_link.templ`, Line: 80, Col: 19}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code> when the action takes the user to a new URL, route, or external page (relies on an <code>&lt;a href=\"...\"&gt;</code> tag).<br><br>Use  <code>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs("@ui.Button")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_link.templ`, Line: 86, Col: 21}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</code> when the action triggers a script, form submission, or state change on the current page (relies on a <code>&lt;button type=\"...\"&gt;</code> tag).</div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

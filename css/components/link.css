@@ -1,0 +1,18 @@
+/* Link Component Styles
+ * An anchor element styled as a button for navigation actions.
+ * Reuses button.css styles (btn, btn--primary, btn--sm, etc.)
+ *
+ * This file contains link-specific overrides and enhancements.
+ */
+
+/* Ensure links behave like buttons */
+a.btn {
+    text-decoration: none;
+    display: inline-flex;
+}
+
+/* Disabled link state */
+a.btn--disabled {
+    pointer-events: none;
+    opacity: var(--opacity-disabled);
+}

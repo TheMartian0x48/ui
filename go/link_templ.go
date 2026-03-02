@@ -8,16 +8,25 @@ package ui
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "strings"
+
+// LinkProp configures an anchor element styled as a button.
+// Use Link for navigation actions, Button for in-page actions.
 type LinkProp struct {
-	Variant    ButtonVariant
-	Size       ButtonSize
-	Href       string
-	Target     string // _blank, _self, etc.
-	Class      string
-	Attributes templ.Attributes
-	Disabled   bool
+	Variant    ButtonVariant    // Visual style (Primary, Secondary, etc.)
+	Size       ButtonSize       // Size (SM, MD, LG)
+	Href       string           // URL destination
+	Target     string           // _blank, _self, etc.
+	Rel        string           // Link relationship (auto-set for _blank)
+	Id         string           // HTML id attribute
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+	Disabled   bool             // Visually disabled, prevents navigation
+	AriaLabel  string           // Screen reader label (for icon-only links)
 }
 
+// Link renders an anchor element styled as a button.
+// Automatically adds rel="noopener noreferrer" for target="_blank" links.
 func Link(props LinkProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -51,7 +60,7 @@ func Link(props LinkProp) templ.Component {
 		var templ_7745c5c3_Var3 templ.SafeURL
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(props.Href))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 15, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 24, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -61,15 +70,15 @@ func Link(props LinkProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if props.Target != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " target=\"")
+		if props.Id != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " id=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Target)
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 17, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 26, Col: 16}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -80,25 +89,76 @@ func Link(props LinkProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " class=\"")
+		if props.Target != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " target=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Target)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 29, Col: 24}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " rel=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var2).String())
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(linkRel(props))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 31, Col: 22}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" class=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var2).String())
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 1, Col: 0}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if props.Disabled {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " aria-disabled=\"true\" tabindex=\"-1\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " aria-disabled=\"true\" tabindex=\"-1\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if props.AriaLabel != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, " aria-label=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(props.AriaLabel)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/link.templ`, Line: 38, Col: 31}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -107,7 +167,7 @@ func Link(props LinkProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, ">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, ">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -115,7 +175,7 @@ func Link(props LinkProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</a>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</a>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -123,51 +183,60 @@ func Link(props LinkProp) templ.Component {
 	})
 }
 
-func linkClass(prop LinkProp) string {
-	base := "btn"
+// linkRel returns the rel attribute value, auto-adding security attrs for external links.
+func linkRel(prop LinkProp) string {
+	if prop.Rel != "" {
+		return prop.Rel
+	}
+	if prop.Target == "_blank" {
+		return "noopener noreferrer"
+	}
+	return ""
+}
 
-	// Determine variant class
-	var variantClass string
+// linkClass generates the CSS class for the link based on variant and size.
+func linkClass(prop LinkProp) string {
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("btn")
+
+	// Variant class
 	switch prop.Variant {
-	case ButtonPrimary:
-		variantClass = base + " btn--primary"
 	case ButtonSecondary:
-		variantClass = base + " btn--secondary"
+		b.WriteString(" btn--secondary")
 	case ButtonOutline:
-		variantClass = base + " btn--outline"
+		b.WriteString(" btn--outline")
 	case ButtonGhost:
-		variantClass = base + " btn--ghost"
+		b.WriteString(" btn--ghost")
 	case ButtonDanger:
-		variantClass = base + " btn--danger"
+		b.WriteString(" btn--danger")
 	default:
-		variantClass = base + " btn--primary"
+		b.WriteString(" btn--primary")
 	}
 
-	// Determine size class
-	var sizeClass string
+	// Size class
 	switch prop.Size {
 	case ButtonSizeSM:
-		sizeClass = "btn--sm"
+		b.WriteString(" btn--sm")
 	case ButtonSizeLG:
-		sizeClass = "btn--lg"
+		b.WriteString(" btn--lg")
 	default:
-		sizeClass = "btn--md"
+		b.WriteString(" btn--md")
 	}
 
-	// Combine classes
-	result := variantClass + " " + sizeClass
-
-	// Add custom class if provided
-	if prop.Class != "" {
-		result += " " + prop.Class
-	}
-
-	// Add disabled class if disabled
+	// Disabled class
 	if prop.Disabled {
-		result += " btn--disabled"
+		b.WriteString(" btn--disabled")
 	}
 
-	return result
+	// Custom class
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+
+	return b.String()
 }
 
 var _ = templruntime.GeneratedTemplate

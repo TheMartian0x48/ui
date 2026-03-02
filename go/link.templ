@@ -1,25 +1,41 @@
 package ui
 
+import "strings"
+
+// LinkProp configures an anchor element styled as a button.
+// Use Link for navigation actions, Button for in-page actions.
 type LinkProp struct {
-	Variant    ButtonVariant
-	Size       ButtonSize
-	Href       string
-	Target     string // _blank, _self, etc.
-	Class      string
-	Attributes templ.Attributes
-	Disabled   bool
+	Variant    ButtonVariant    // Visual style (Primary, Secondary, etc.)
+	Size       ButtonSize       // Size (SM, MD, LG)
+	Href       string           // URL destination
+	Target     string           // _blank, _self, etc.
+	Rel        string           // Link relationship (auto-set for _blank)
+	Id         string           // HTML id attribute
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+	Disabled   bool             // Visually disabled, prevents navigation
+	AriaLabel  string           // Screen reader label (for icon-only links)
 }
 
+// Link renders an anchor element styled as a button.
+// Automatically adds rel="noopener noreferrer" for target="_blank" links.
 templ Link(props LinkProp) {
 	<a
 		href={ templ.SafeURL(props.Href) }
+		if props.Id != "" {
+			id={ props.Id }
+		}
 		if props.Target != "" {
 			target={ props.Target }
 		}
+		rel={ linkRel(props) }
 		class={ linkClass(props) }
 		if props.Disabled {
 			aria-disabled="true"
 			tabindex="-1"
+		}
+		if props.AriaLabel != "" {
+			aria-label={ props.AriaLabel }
 		}
 		{ props.Attributes... }
 	>
@@ -27,49 +43,58 @@ templ Link(props LinkProp) {
 	</a>
 }
 
-func linkClass(prop LinkProp) string {
-	base := "btn"
+// linkRel returns the rel attribute value, auto-adding security attrs for external links.
+func linkRel(prop LinkProp) string {
+	if prop.Rel != "" {
+		return prop.Rel
+	}
+	if prop.Target == "_blank" {
+		return "noopener noreferrer"
+	}
+	return ""
+}
 
-	// Determine variant class
-	var variantClass string
+// linkClass generates the CSS class for the link based on variant and size.
+func linkClass(prop LinkProp) string {
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("btn")
+
+	// Variant class
 	switch prop.Variant {
-	case ButtonPrimary:
-		variantClass = base + " btn--primary"
 	case ButtonSecondary:
-		variantClass = base + " btn--secondary"
+		b.WriteString(" btn--secondary")
 	case ButtonOutline:
-		variantClass = base + " btn--outline"
+		b.WriteString(" btn--outline")
 	case ButtonGhost:
-		variantClass = base + " btn--ghost"
+		b.WriteString(" btn--ghost")
 	case ButtonDanger:
-		variantClass = base + " btn--danger"
+		b.WriteString(" btn--danger")
 	default:
-		variantClass = base + " btn--primary"
+		b.WriteString(" btn--primary")
 	}
 
-	// Determine size class
-	var sizeClass string
+	// Size class
 	switch prop.Size {
 	case ButtonSizeSM:
-		sizeClass = "btn--sm"
+		b.WriteString(" btn--sm")
 	case ButtonSizeLG:
-		sizeClass = "btn--lg"
+		b.WriteString(" btn--lg")
 	default:
-		sizeClass = "btn--md"
+		b.WriteString(" btn--md")
 	}
 
-	// Combine classes
-	result := variantClass + " " + sizeClass
-
-	// Add custom class if provided
-	if prop.Class != "" {
-		result += " " + prop.Class
-	}
-
-	// Add disabled class if disabled
+	// Disabled class
 	if prop.Disabled {
-		result += " btn--disabled"
+		b.WriteString(" btn--disabled")
 	}
 
-	return result
+	// Custom class
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+
+	return b.String()
 }

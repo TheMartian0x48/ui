@@ -15,7 +15,7 @@ templ LinkDemo() {
 				<!-- Variants -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Link Variants vs Buttons</h3>
-					<p class="text-sm text-secondary" style="margin-bottom: 1rem;">Links share identical visual variant styling with buttons since they are essentially navigational buttons.</p>
+					<p class="text-sm text-secondary" style="margin-bottom: var(--spacing-4);">Links share identical visual variant styling with buttons since they are essentially navigational buttons.</p>
 					<div class="doc-demo__list">
 						@ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#"}) {
 							Primary Link 
@@ -48,18 +48,31 @@ templ LinkDemo() {
 						}
 					</div>
 				</div>
+				<!-- Icon-only Links -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Icon-only Links</h3>
+					<p class="text-sm text-secondary" style="margin-bottom: var(--spacing-4);">Use AriaLabel for accessibility when links have no visible text.</p>
+					<div class="doc-demo__list">
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonOutline, Href: "#", Class: "btn--icon", AriaLabel: "View settings"}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeMD})
+						}
+						@ui.Link(ui.LinkProp{Variant: ui.ButtonGhost, Href: "#", Class: "btn--icon", AriaLabel: "Edit profile"}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeMD})
+						}
+					</div>
+				</div>
 				<!-- States -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">States</h3>
 					<div class="doc-demo__list">
 						@ui.Link(ui.LinkProp{Variant: ui.ButtonPrimary, Href: "#", Disabled: true}) {
-							Disabled Link 
+							Disabled Link
 						}
 					</div>
 				</div>
 				<!-- Comparison Text -->
 				<div class="doc-demo__group">
-					<div style="background-color: var(--color-bg-secondary); padding: 1rem; border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+					<div style="background-color: var(--color-bg-secondary); padding: var(--spacing-4); border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
 						<strong>When to use Link vs Button:</strong>
 						<br/>
 						Use 

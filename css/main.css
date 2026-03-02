@@ -8,6 +8,7 @@
 /* Component styles (alphabetically ordered) */
 @import url('components/badge.css');
 @import url('components/button.css');
+@import url('components/link.css');
 @import url('components/icon.css');
 @import url('components/input.css');
 @import url('components/label.css');
