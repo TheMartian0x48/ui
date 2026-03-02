@@ -21,7 +21,7 @@ for
 * [ ] dropdown
 * [ ] dropzone
 * [ ] form_field
-* [ ] icon
+* [x] icon
 * [ ] image_preview
 * [ ] input
 * [x] label

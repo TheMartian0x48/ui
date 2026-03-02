@@ -31,7 +31,7 @@ func TooltipDemo() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Tooltip</h1><p class=\"doc-section__description\">A brief, informative message that appears when a user hovers over, focuses on, or taps an element.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><!-- Positions --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Positions</h3><div class=\"doc-demo__list\" style=\"gap: 2rem; padding: 2rem 0;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">Tooltip</h1><p class=\"doc-section__description\">A brief, informative message that appears when a user hovers over, focuses on, or taps an element.</p></header><div class=\"doc-demo\"><div class=\"doc-demo__preview\"><!-- Positions --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Positions</h3><div class=\"doc-demo__list\" style=\"gap: var(--spacing-8); padding: var(--spacing-8) 0;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -195,7 +195,7 @@ func TooltipDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div><!-- Usage Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Usage Examples</h3><div class=\"doc-demo__list\" style=\"gap: 1.5rem; align-items: center;\"><!-- Icon Button with Tooltip -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div><!-- Usage Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Usage Examples</h3><div class=\"doc-demo__list\" style=\"gap: var(--spacing-6); align-items: center;\"><!-- Icon Button with Tooltip -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -239,7 +239,7 @@ func TooltipDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<!-- Info Icon with Tooltip --><div style=\"display: flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-sm); color: var(--color-text-secondary);\">Maximum file size: 10MB")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<!-- Info Icon with Tooltip --><div style=\"display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary);\">Maximum file size: 10MB")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -324,7 +324,7 @@ func TooltipDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div style=\"display: flex; flex-direction: column; gap: 1.5rem;\"><div style=\"display: flex; justify-content: space-between; align-items: center;\"><div><h4 style=\"margin: 0; font-size: var(--font-size-sm);\">Advanced Analytics</h4><p style=\"margin: 0.25rem 0 0; font-size: var(--font-size-xs); color: var(--color-text-muted);\">Enable deep tracking metrics.</p></div><div style=\"display: flex; align-items: center; gap: 0.5rem;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div style=\"display: flex; flex-direction: column; gap: var(--spacing-6);\"><div style=\"display: flex; justify-content: space-between; align-items: center;\"><div><h4 style=\"margin: 0; font-size: var(--font-size-sm);\">Advanced Analytics</h4><p style=\"margin: var(--spacing-1) 0 0; font-size: var(--font-size-xs); color: var(--color-text-muted);\">Enable deep tracking metrics.</p></div><div style=\"display: flex; align-items: center; gap: var(--spacing-2);\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -362,7 +362,7 @@ func TooltipDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div></div><div style=\"display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--color-border-light); padding-top: 1rem;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div></div><div style=\"display: flex; justify-content: flex-end; gap: var(--spacing-3); border-top: var(--border-width-thin) solid var(--color-border-light); padding-top: var(--spacing-4);\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

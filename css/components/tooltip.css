@@ -1,36 +1,32 @@
-/* Tooltip Component Styles */
+/* Tooltip Component Styles
+ * A hover/focus tooltip that provides additional context.
+ * Supports four positions: top, bottom, left, right.
+ */
 
 .tooltip-wrapper {
     position: relative;
     display: inline-flex;
-    /* Shrink to fit content */
 }
 
 .tooltip__content {
+    --tooltip-offset: var(--spacing-1);
+
     position: absolute;
-    z-index: 100;
+    z-index: var(--z-tooltip);
 
     visibility: hidden;
     opacity: 0;
 
-    background-color: var(--color-bg-tertiary);
-    /* Dark background usually */
-    color: var(--color-text);
-    /* Invert colors for tooltip contrast if desired, or stick to theme */
     background-color: var(--color-text);
-    /* Black/White contrast usually */
     color: var(--color-bg);
 
-    padding: 0.5rem 0.75rem;
+    padding: var(--spacing-2) var(--spacing-3);
     border-radius: var(--radius-sm);
     font-size: var(--font-size-xs);
     white-space: nowrap;
     pointer-events: none;
-    /* Let clicks pass through */
 
-    transition: opacity 0.2s ease, transform 0.2s ease;
-
-    /* Box shadow */
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
     box-shadow: var(--shadow-md);
 }
 
@@ -47,8 +43,7 @@
 .tooltip--top .tooltip__content {
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    /* Start slightly down */
+    transform: translateX(-50%) translateY(var(--tooltip-offset));
     margin-bottom: var(--spacing-2);
 }
 
@@ -61,7 +56,7 @@
 .tooltip--bottom .tooltip__content {
     top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-5px);
+    transform: translateX(-50%) translateY(calc(-1 * var(--tooltip-offset)));
     margin-top: var(--spacing-2);
 }
 
@@ -74,7 +69,7 @@
 .tooltip--left .tooltip__content {
     top: 50%;
     right: 100%;
-    transform: translateY(-50%) translateX(5px);
+    transform: translateY(-50%) translateX(var(--tooltip-offset));
     margin-right: var(--spacing-2);
 }
 
@@ -87,7 +82,7 @@
 .tooltip--right .tooltip__content {
     top: 50%;
     left: 100%;
-    transform: translateY(-50%) translateX(-5px);
+    transform: translateY(-50%) translateX(calc(-1 * var(--tooltip-offset)));
     margin-left: var(--spacing-2);
 }
 
@@ -95,6 +90,3 @@
 .tooltip--right:focus-within .tooltip__content {
     transform: translateY(-50%) translateX(0);
 }
-
-/* Optional arrow using ::after on tooltip__content if desired, 
-   but simplistic box is usually clean enough */

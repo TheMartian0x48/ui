@@ -8,23 +8,29 @@ package ui
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-type TooltipPosition string
+import "strings"
+
+type TooltipPosition int
 
 const (
-	TooltipTop    TooltipPosition = "top"
-	TooltipBottom TooltipPosition = "bottom"
-	TooltipLeft   TooltipPosition = "left"
-	TooltipRight  TooltipPosition = "right"
+	TooltipTop TooltipPosition = iota // default
+	TooltipBottom
+	TooltipLeft
+	TooltipRight
 )
 
+// TooltipProp configures a tooltip component.
+// Tooltips appear on hover/focus to provide additional context.
 type TooltipProp struct {
-	Content  string // The text or simple content for the tooltip
-	Position TooltipPosition
-	Class    string
+	Content    string           // The text content for the tooltip
+	Position   TooltipPosition  // Where tooltip appears (Top, Bottom, Left, Right)
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute (used for aria-describedby)
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
-// Tooltip wraps any child element and displays a tooltip on hover.
-// It uses CSS positioning relative to the wrapper.
+// Tooltip wraps any child element and displays a tooltip on hover/focus.
+// Uses CSS positioning relative to the wrapper.
 func Tooltip(prop TooltipProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -46,6 +52,10 @@ func Tooltip(prop TooltipProp) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		tooltipId := prop.Id
+		if tooltipId == "" && prop.Content != "" {
+			tooltipId = "tooltip-" + strings.ReplaceAll(prop.Content[:min(len(prop.Content), 10)], " ", "-")
+		}
 		var templ_7745c5c3_Var2 = []any{tooltipWrapperClass(prop)}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
@@ -71,13 +81,21 @@ func Tooltip(prop TooltipProp) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Content)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/tooltip.templ`, Line: 21, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/tooltip.templ`, Line: 35, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, prop.Attributes)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, ">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -85,20 +103,43 @@ func Tooltip(prop TooltipProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<span class=\"tooltip__content\" role=\"tooltip\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<span class=\"tooltip__content\" role=\"tooltip\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Content)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/tooltip.templ`, Line: 23, Col: 62}
+		if tooltipId != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " id=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(tooltipId)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/tooltip.templ`, Line: 43, Col: 18}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, ">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span></div>")
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Content)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/tooltip.templ`, Line: 46, Col: 17}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</span></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -107,19 +148,28 @@ func Tooltip(prop TooltipProp) templ.Component {
 }
 
 func tooltipWrapperClass(prop TooltipProp) string {
-	base := "tooltip-wrapper"
-	pos := "tooltip--" + string(prop.Position)
+	var b strings.Builder
+	b.Grow(35)
 
-	// Default to top if not specified
-	if prop.Position == "" {
-		pos = "tooltip--top"
+	b.WriteString("tooltip-wrapper")
+
+	switch prop.Position {
+	case TooltipBottom:
+		b.WriteString(" tooltip--bottom")
+	case TooltipLeft:
+		b.WriteString(" tooltip--left")
+	case TooltipRight:
+		b.WriteString(" tooltip--right")
+	default:
+		b.WriteString(" tooltip--top")
 	}
 
-	classes := base + " " + pos
 	if prop.Class != "" {
-		classes += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return classes
+
+	return b.String()
 }
 
 var _ = templruntime.GeneratedTemplate
