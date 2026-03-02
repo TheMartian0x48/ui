@@ -19,9 +19,19 @@
     --color-danger: #ef4444;
     --color-danger-dark: #dc2626;
     --color-danger-darker: #b91c1c;
+    --color-danger-subtle-bg: #fef2f2;
+    --color-danger-subtle-text: #991b1b;
     --color-success: #10b981;
+    --color-success-subtle-bg: #f0fdf4;
+    --color-success-subtle-text: #166534;
     --color-warning: #f59e0b;
+    --color-warning-text: #92400e;
+    --color-warning-subtle-bg: #fffbeb;
     --color-info: #3b82f6;
+    --color-info-subtle-bg: #f0f9ff;
+    --color-info-subtle-text: #075985;
+    --color-primary-subtle-bg: #eff6ff;
+    --color-primary-subtle-text: #1e40af;
 
     /* Text Colors */
     --color-text: #1f2937;
@@ -97,6 +107,18 @@
     --color-border: #374151;
     --color-border-dark: #4b5563;
     --color-border-light: #1f2937;
+
+    /* Subtle Colors for Dark Mode */
+    --color-primary-subtle-bg: #1e3a5f;
+    --color-primary-subtle-text: #93c5fd;
+    --color-success-subtle-bg: #064e3b;
+    --color-success-subtle-text: #6ee7b7;
+    --color-warning-subtle-bg: #78350f;
+    --color-warning-text: #fcd34d;
+    --color-danger-subtle-bg: #7f1d1d;
+    --color-danger-subtle-text: #fca5a5;
+    --color-info-subtle-bg: #1e3a5f;
+    --color-info-subtle-text: #93c5fd;
 }
 
 :root {

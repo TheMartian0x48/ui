@@ -1,5 +1,7 @@
 package ui
 
+import "strings"
+
 type BadgeVariant int
 
 const (
@@ -22,8 +24,8 @@ const (
 type BadgeSize int
 
 const (
-	BadgeSizeSM BadgeSize = iota
-	BadgeSizeMD
+	BadgeSizeMD BadgeSize = iota // default
+	BadgeSizeSM
 	BadgeSizeLG
 )
 
@@ -34,6 +36,7 @@ type BadgeProp struct {
 	Class      string
 	Id         string
 	Attributes templ.Attributes
+	AriaLabel  string // Screen reader text for context
 }
 
 // Badge renders a small label/badge component.
@@ -43,6 +46,9 @@ templ Badge(prop BadgeProp) {
 			id={ prop.Id }
 		}
 		class={ badgeClass(prop) }
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		}
 		{ prop.Attributes... }
 	>
 		{ children... }
@@ -51,50 +57,52 @@ templ Badge(prop BadgeProp) {
 
 // badgeClass generates the CSS class for the badge based on variant, shape, and size.
 func badgeClass(prop BadgeProp) string {
-	base := "badge"
+	var b strings.Builder
+	b.Grow(50)
+
+	b.WriteString("badge")
 
 	// Variant class
-	var variantClass string
 	switch prop.Variant {
 	case BadgeSecondary:
-		variantClass = "badge--secondary"
+		b.WriteString(" badge--secondary")
 	case BadgeSuccess:
-		variantClass = "badge--success"
+		b.WriteString(" badge--success")
 	case BadgeWarning:
-		variantClass = "badge--warning"
+		b.WriteString(" badge--warning")
 	case BadgeDanger:
-		variantClass = "badge--danger"
+		b.WriteString(" badge--danger")
 	case BadgeInfo:
-		variantClass = "badge--info"
+		b.WriteString(" badge--info")
 	default:
-		variantClass = "badge--primary"
+		b.WriteString(" badge--primary")
 	}
 
 	// Shape class
-	var shapeClass string
 	switch prop.Shape {
 	case BadgeOutlined:
-		shapeClass = "badge--outlined"
+		b.WriteString(" badge--outlined")
 	case BadgeSubtle:
-		shapeClass = "badge--subtle"
+		b.WriteString(" badge--subtle")
 	default:
-		shapeClass = "badge--filled"
+		b.WriteString(" badge--filled")
 	}
 
 	// Size class
-	var sizeClass string
 	switch prop.Size {
 	case BadgeSizeSM:
-		sizeClass = "badge--sm"
+		b.WriteString(" badge--sm")
 	case BadgeSizeLG:
-		sizeClass = "badge--lg"
+		b.WriteString(" badge--lg")
 	default:
-		sizeClass = "badge--md"
+		b.WriteString(" badge--md")
 	}
 
-	result := base + " " + variantClass + " " + shapeClass + " " + sizeClass
+	// Add custom class if provided
 	if prop.Class != "" {
-		result += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return result
+
+	return b.String()
 }

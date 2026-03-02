@@ -4,12 +4,14 @@ check against following critieria
 - performace
 - improvement
 - accessiblity
+- in possible, add brief documents
+- in css, can we use variable from @css/base/variables.css ?
 for 
 
 * [ ] accordion
 * [x] alert
 * [x] autocomplete
-* [ ] badge
+* [x] badge
 * [x] button
 * [ ] card
 * [ ] checkbox
