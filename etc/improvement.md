@@ -35,6 +35,6 @@ for
 * [x] table
 * [x] tabs
 * [ ] textarea
-* [ ] toast
-* [ ] tooltip
+* [x] toast
+* [x] tooltip
 

@@ -28,18 +28,27 @@ const (
 	ToastBottomRight  ToastPosition = "bottom-right"
 )
 
+// ToastProp configures a toast notification.
+//
+// Fields:
+//   - Type: The semantic type (info, success, warning, error). Defaults to info.
+//   - Title: Optional bold heading text.
+//   - Message: The main notification text (required).
+//   - Class: Additional CSS classes for customization.
 type ToastProp struct {
-	Id       string
-	Type     ToastType
-	Title    string
-	Message  string
-	Class    string
-	Position ToastPosition
+	Type    ToastType
+	Title   string
+	Message string
+	Class   string
 }
 
 // Toast renders a single toast notification.
-// Note: This component is primarily for server-side rendering.
-// Client-side toasts are created via JS, but we keep this consistent.
+//
+// Accessibility: Uses role="alert" with appropriate aria-live politeness
+// based on toast type (assertive for errors/warnings, polite for info/success).
+//
+// Note: This component supports both SSR and client-side rendering.
+// Client-side toasts are typically created via showToast() JS function.
 func Toast(prop ToastProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -79,7 +88,20 @@ func Toast(prop ToastProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\"><div class=\"toast__icon\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" role=\"alert\" aria-live=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(ariaLiveValue(prop.Type))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/toast.templ`, Line: 48, Col: 38}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" aria-atomic=\"true\"><div class=\"toast__icon\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -105,43 +127,43 @@ func Toast(prop ToastProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"toast__content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><div class=\"toast__content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if prop.Title != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div class=\"toast__title\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div class=\"toast__title\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Title)
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/toast.templ`, Line: 56, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/toast.templ`, Line: 65, Col: 42}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"toast__message\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"toast__message\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Message)
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Message)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/toast.templ`, Line: 58, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/toast.templ`, Line: 67, Col: 45}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div><button class=\"toast__close\" onclick=\"this.closest('.toast').remove()\" aria-label=\"Close notification\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div></div><button class=\"toast__close\" onclick=\"this.closest('.toast').remove()\" aria-label=\"Close notification\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -149,7 +171,7 @@ func Toast(prop ToastProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -157,7 +179,14 @@ func Toast(prop ToastProp) templ.Component {
 	})
 }
 
-// ToastContainer renders the script and initial markup.
+// ToastContainer renders the container element and loads the toast JS.
+//
+// Place this once in your base layout. Toasts will be dynamically
+// appended to this container via the showToast() function.
+//
+// Default position is bottom-right. Change via JS:
+//
+//	showToast('message', 'info', 'Title', ToastPosition.TopCenter)
 func ToastContainer() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -174,12 +203,12 @@ func ToastContainer() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div id=\"toast-container\" aria-live=\"polite\" aria-atomic=\"true\"><script src=\"/js/components/toast.js\" defer></script></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div id=\"toast-container\" aria-live=\"polite\" aria-atomic=\"true\"><script src=\"/js/components/toast.js\" defer></script></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -187,17 +216,32 @@ func ToastContainer() templ.Component {
 	})
 }
 
-// Helper functions for classes
+// Helper functions
 
 func toastClass(prop ToastProp) string {
 	base := "toast"
-	typeClass := "toast--" + string(prop.Type)
+	toastType := prop.Type
+	if toastType == "" {
+		toastType = ToastInfo
+	}
+	typeClass := "toast--" + string(toastType)
 
 	classes := base + " " + typeClass
 	if prop.Class != "" {
 		classes += " " + prop.Class
 	}
 	return classes
+}
+
+// ariaLiveValue returns appropriate politeness level.
+// Errors and warnings are assertive (interrupt), others are polite.
+func ariaLiveValue(t ToastType) string {
+	switch t {
+	case ToastError, ToastWarning:
+		return "assertive"
+	default:
+		return "polite"
+	}
 }
 
 var _ = templruntime.GeneratedTemplate

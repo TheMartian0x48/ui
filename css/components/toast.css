@@ -1,8 +1,22 @@
 /* Toast Component Styles */
+/*
+ * Toast notifications for displaying brief, temporary messages.
+ *
+ * Usage:
+ *   - Use ToastContainer() once in your layout
+ *   - Trigger toasts via JS: showToast(message, type, title, position)
+ *   - Types: info, success, warning, error
+ *   - Positions: top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+ *
+ * Accessibility:
+ *   - Info/success toasts use aria-live="polite"
+ *   - Error/warning toasts use aria-live="assertive"
+ *   - Respects prefers-reduced-motion
+ */
 
 .toast-container {
     position: fixed;
-    z-index: 1000;
+    z-index: var(--z-dropdown);
 
     display: flex;
     flex-direction: column;
@@ -63,11 +77,19 @@
     pointer-events: auto;
     /* Re-enable clicks on toasts */
 
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all var(--transition-base) cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: center;
 
     /* Animation hooks */
-    animation: toast-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: toast-slide-in var(--transition-base) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .toast {
+        animation: none;
+        transition: opacity var(--transition-fast);
+    }
 }
 
 @keyframes toast-slide-in {
@@ -113,11 +135,16 @@
     border: none;
     cursor: pointer;
     color: var(--color-text-muted);
-    padding: 2px;
+    padding: var(--spacing-px);
     border-radius: var(--radius-sm);
-    margin-top: 2px;
+    margin-top: var(--spacing-px);
 
-    transition: color 0.1s ease;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.toast__close:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .toast__close:hover {
@@ -143,19 +170,19 @@
     color: var(--color-danger);
 }
 
-/* Optional border accent */
+/* Border accent for visual distinction */
 .toast--success {
-    border-left: 4px solid var(--color-success);
+    border-left: var(--border-width-thick) solid var(--color-success);
 }
 
 .toast--warning {
-    border-left: 4px solid var(--color-warning);
+    border-left: var(--border-width-thick) solid var(--color-warning);
 }
 
 .toast--error {
-    border-left: 4px solid var(--color-danger);
+    border-left: var(--border-width-thick) solid var(--color-danger);
 }
 
 .toast--info {
-    border-left: 4px solid var(--color-primary);
+    border-left: var(--border-width-thick) solid var(--color-primary);
 }
