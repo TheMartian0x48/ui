@@ -103,6 +103,10 @@ func IconDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = iconBox("ChevronUp", ui.IconChevronUp()).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = iconBox("Settings", ui.IconSettings()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -183,6 +187,10 @@ func IconDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = iconBox("UploadCloud", ui.IconUploadCloud()).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div></div><!-- Real-world Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Real-world Usage</h3><div class=\"doc-demo__list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -247,7 +255,7 @@ func IconDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<span class=\"text-secondary\">Project Due: Dec 24, 2026</span></div></div></div></div></div></section><style type=\"text/css\">\n\t\t.icon-grid {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: repeat(auto-fill, minmax(120px, 1fr));\n\t\t\tgap: var(--spacing-4);\n\t\t\twidth: 100%;\n\t\t}\n\t\t.icon-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tgap: var(--spacing-2);\n\t\t\tpadding: var(--spacing-4);\n\t\t\tbackground: var(--color-bg);\n\t\t\tborder: 1px solid var(--color-border);\n\t\t\tborder-radius: var(--radius-md);\n\t\t\ttransition: all var(--transition-base);\n\t\t}\n\t\t.icon-box:hover {\n\t\t\tborder-color: var(--color-primary);\n\t\t\tcolor: var(--color-primary);\n\t\t\ttransform: translateY(-2px);\n\t\t}\n\t\t.icon-box__name {\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.icon-box:hover .icon-box__name {\n\t\t\tcolor: var(--color-primary);\n\t\t}\n\t\t.text-primary { color: var(--color-primary); }\n\t\t.text-secondary { color: var(--color-text-secondary); }\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<span class=\"text-secondary\">Project Due: Dec 24, 2026</span></div></div></div></div></div></section><style type=\"text/css\">\n\t\t.icon-grid {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: repeat(auto-fill, minmax(120px, 1fr));\n\t\t\tgap: var(--spacing-4);\n\t\t\twidth: 100%;\n\t\t}\n\t\t.icon-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tgap: var(--spacing-2);\n\t\t\tpadding: var(--spacing-4);\n\t\t\tbackground: var(--color-bg);\n\t\t\tborder: var(--border-width-thin) solid var(--color-border);\n\t\t\tborder-radius: var(--radius-md);\n\t\t\ttransition: all var(--transition-base);\n\t\t}\n\t\t.icon-box:hover {\n\t\t\tborder-color: var(--color-primary);\n\t\t\tcolor: var(--color-primary);\n\t\t\ttransform: translateY(calc(-1 * var(--spacing-px)));\n\t\t}\n\t\t.icon-box__name {\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.icon-box:hover .icon-box__name {\n\t\t\tcolor: var(--color-primary);\n\t\t}\n\t\t.text-primary { color: var(--color-primary); }\n\t\t.text-secondary { color: var(--color-text-secondary); }\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -291,7 +299,7 @@ func iconBox(name string, kind templ.Component) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_icon.templ`, Line: 131, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_icon.templ`, Line: 133, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
