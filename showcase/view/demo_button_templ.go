@@ -877,7 +877,7 @@ func ButtonDemo() templ.Component {
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = ui.TableHeader().Render(templ.WithChildren(ctx, templ_7745c5c3_Var36), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.TableHeader(ui.TableHeaderProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var36), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -915,7 +915,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var38), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var38), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -941,7 +941,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var39), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var39), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -967,7 +967,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var40), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var40), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -993,7 +993,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1019,7 +1019,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var42), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var42), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1045,7 +1045,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var43), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var43), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1071,7 +1071,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var44), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var44), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1097,7 +1097,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var45), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var45), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1123,7 +1123,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var46), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var46), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1149,7 +1149,7 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var47), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var47), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -1175,13 +1175,13 @@ func ButtonDemo() templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var48), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var48), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = ui.TableBody().Render(templ.WithChildren(ctx, templ_7745c5c3_Var37), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.TableBody(ui.TableBodyProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var37), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

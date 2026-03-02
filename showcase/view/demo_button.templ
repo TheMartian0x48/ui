@@ -238,75 +238,75 @@ templ ButtonDemo() {
 			<h2 class="doc-section__subtitle">API Reference</h2>
 			@ui.Table(ui.TableProp{Striped: true, Hover: true}) {
 				<thead>
-					@ui.TableHeader() {
+					@ui.TableHeader(ui.TableHeaderProp{}) {
 						<th>Prop</th>
 						<th>Type</th>
 						<th>Default</th>
 						<th>Description</th>
 					}
 				</thead>
-				@ui.TableBody() {
-					@ui.TableRow("", nil) {
+				@ui.TableBody(ui.TableBodyProp{}) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Variant</code></td>
 						<td>ButtonVariant</td>
 						<td>ButtonPrimary</td>
 						<td>Visual style: Primary, Secondary, Outline, Ghost, Danger</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Size</code></td>
 						<td>ButtonSize</td>
 						<td>ButtonSizeMD</td>
 						<td>Button size: SM, MD, LG</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Type</code></td>
 						<td>ButtonType</td>
 						<td>ButtonTypeButton</td>
 						<td>HTML type: Button, Submit, Reset</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Disabled</code></td>
 						<td>bool</td>
 						<td>false</td>
 						<td>Disables button and prevents interaction</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>AriaDisabled</code></td>
 						<td>bool</td>
 						<td>false</td>
 						<td>Visually disabled but remains focusable</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Loading</code></td>
 						<td>bool</td>
 						<td>false</td>
 						<td>Shows loading spinner, sets aria-busy</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>AriaPressed</code></td>
 						<td>*bool</td>
 						<td>nil</td>
 						<td>Toggle button state (nil = not a toggle)</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>AriaExpanded</code></td>
 						<td>*bool</td>
 						<td>nil</td>
 						<td>Expandable content state</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Id</code></td>
 						<td>string</td>
 						<td>""</td>
 						<td>HTML id attribute</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Class</code></td>
 						<td>string</td>
 						<td>""</td>
 						<td>Additional CSS classes</td>
 					}
-					@ui.TableRow("", nil) {
+					@ui.TableRow(ui.TableRowProp{}) {
 						<td><code>Attributes</code></td>
 						<td>templ.Attributes</td>
 						<td>nil</td>

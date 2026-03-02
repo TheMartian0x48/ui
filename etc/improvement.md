@@ -32,7 +32,7 @@ for
 * [ ] slider
 * [ ] stepper
 * [x] switch
-* [ ] table
+* [x] table
 * [x] tabs
 * [ ] textarea
 * [ ] toast

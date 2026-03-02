@@ -1,10 +1,13 @@
-/* Table Component Styles */
+/* Table Component Styles
+ * A responsive data table with striped, hover, and compact variants.
+ * Includes accessible caption support.
+ */
 
 .table-container {
     width: 100%;
     overflow-x: auto;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     background-color: var(--color-bg);
 }
 
@@ -16,9 +19,19 @@
     color: var(--color-text);
 }
 
+/* Caption for accessibility */
+.table__caption {
+    padding: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-align: left;
+    caption-side: top;
+}
+
 .table thead {
     background-color: var(--color-bg-secondary);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
 }
 
 .table th {
@@ -32,7 +45,7 @@
 
 .table td {
     padding: var(--spacing-4);
-    border-bottom: 1px solid var(--color-border-light);
+    border-bottom: var(--border-width-thin) solid var(--color-border-light);
     vertical-align: middle;
 }
 
@@ -50,13 +63,13 @@
     background-color: var(--color-bg-secondary);
 }
 
-/* Density variants */
+/* Compact density */
 .table--compact th,
 .table--compact td {
     padding: var(--spacing-2) var(--spacing-4);
 }
 
-/* Utility for wrapping text and keeping layout clean */
+/* Utility for cell content with icons */
 .table-cell-content {
     display: flex;
     align-items: center;

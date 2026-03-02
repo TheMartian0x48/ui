@@ -81,7 +81,7 @@ func TableDemo() templ.Component {
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = ui.TableBody().Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.TableBody(ui.TableBodyProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -143,7 +143,7 @@ func TableDemo() templ.Component {
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = ui.TableBody().Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.TableBody(ui.TableBodyProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -199,7 +199,7 @@ func TableDemo() templ.Component {
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = ui.TableBody().Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = ui.TableBody(ui.TableBodyProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -212,7 +212,7 @@ func TableDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div></div></div><style type=\"text/css\">\n\t\t\t.demo-avatar {\n\t\t\t\twidth: var(--spacing-6);\n\t\t\t\theight: var(--spacing-6);\n\t\t\t\tborder-radius: var(--radius-full);\n\t\t\t\tbackground-color: var(--color-primary-subtle-bg);\n\t\t\t\tcolor: var(--color-primary);\n\t\t\t\tdisplay: flex;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tfont-size: var(--font-size-xs);\n\t\t\t\tfont-weight: var(--font-weight-bold);\n\t\t\t}\n\t\t</style></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -253,13 +253,13 @@ func tableDemoHeader() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<th>Name</th><th>Email</th><th>Role</th><th>Status</th>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<th scope=\"col\">Name</th><th scope=\"col\">Email</th><th scope=\"col\">Role</th><th scope=\"col\">Status</th>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = ui.TableHeader().Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.TableHeader(ui.TableHeaderProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -300,14 +300,14 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<td><div class=\"table-cell-content\"><div class=\"avatar avatar--sm\" style=\"background-color: var(--color-primary-light); color: var(--color-primary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<td><div class=\"table-cell-content\"><div class=\"demo-avatar\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(name[0:1])
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 75, Col: 16}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 89, Col: 16}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -320,7 +320,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 77, Col: 10}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 91, Col: 10}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -333,7 +333,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 80, Col: 13}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 94, Col: 13}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -346,7 +346,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(role)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 81, Col: 12}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 95, Col: 12}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -372,7 +372,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 					var templ_7745c5c3_Var17 string
 					templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(status)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 85, Col: 13}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 99, Col: 13}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 					if templ_7745c5c3_Err != nil {
@@ -400,7 +400,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 					var templ_7745c5c3_Var19 string
 					templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(status)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 89, Col: 13}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/demo_table.templ`, Line: 103, Col: 13}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 					if templ_7745c5c3_Err != nil {
@@ -419,7 +419,7 @@ func tableDemoRow(name, email, role, status string) templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = ui.TableRow("", nil).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.TableRow(ui.TableRowProp{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

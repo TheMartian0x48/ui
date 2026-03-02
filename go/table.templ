@@ -1,17 +1,23 @@
 package ui
 
+import "strings"
+
+// TableProp configures a data table component.
+// Supports striped rows, hover effects, and compact density.
 type TableProp struct {
-	Striped    bool
-	Hover      bool
-	Compact    bool
-	Header     templ.Component // Optional: if using standard table structure
-	Class      string
-	Id         string
-	Attributes templ.Attributes
+	Striped    bool             // Alternating row backgrounds
+	Hover      bool             // Highlight rows on hover
+	Compact    bool             // Reduced padding density
+	Header     templ.Component  // Optional thead content
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute
+	Attributes templ.Attributes // Additional HTML attributes
+	Caption    string           // Accessible table description (visible)
+	AriaLabel  string           // Screen reader label (invisible)
 }
 
 // Table renders a responsive data table.
-// It wraps the content in a responsive container with a border.
+// Wraps content in a scrollable container for mobile responsiveness.
 templ Table(prop TableProp) {
 	<div class="table-container">
 		<table
@@ -19,8 +25,14 @@ templ Table(prop TableProp) {
 				id={ prop.Id }
 			}
 			class={ tableClass(prop) }
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
 			{ prop.Attributes... }
 		>
+			if prop.Caption != "" {
+				<caption class="table__caption">{ prop.Caption }</caption>
+			}
 			if prop.Header != nil {
 				<thead>
 					@prop.Header
@@ -32,39 +44,78 @@ templ Table(prop TableProp) {
 }
 
 func tableClass(prop TableProp) string {
-	classes := "table"
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("table")
+
 	if prop.Striped {
-		classes += " table--striped"
+		b.WriteString(" table--striped")
 	}
 	if prop.Hover {
-		classes += " table--hover"
+		b.WriteString(" table--hover")
 	}
 	if prop.Compact {
-		classes += " table--compact"
+		b.WriteString(" table--compact")
 	}
 	if prop.Class != "" {
-		classes += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return classes
+
+	return b.String()
 }
 
-// TableHeader is a helper for table headers
-templ TableHeader() {
-	<tr>
+// TableHeaderProp configures a table header row.
+type TableHeaderProp struct {
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// TableHeader renders a table header row (<tr> inside <thead>).
+templ TableHeader(prop TableHeaderProp) {
+	<tr
+		if prop.Class != "" {
+			class={ prop.Class }
+		}
+		{ prop.Attributes... }
+	>
 		{ children... }
 	</tr>
 }
 
-// TableBody is a helper for table body
-templ TableBody() {
-	<tbody>
+// TableBodyProp configures a table body container.
+type TableBodyProp struct {
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// TableBody renders a table body container (<tbody>).
+templ TableBody(prop TableBodyProp) {
+	<tbody
+		if prop.Class != "" {
+			class={ prop.Class }
+		}
+		{ prop.Attributes... }
+	>
 		{ children... }
 	</tbody>
 }
 
-// TableRow is a helper for table rows
-templ TableRow(class string, attributes templ.Attributes) {
-	<tr class={ class } { attributes... }>
+// TableRowProp configures a table row.
+type TableRowProp struct {
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// TableRow renders a table row (<tr>).
+templ TableRow(prop TableRowProp) {
+	<tr
+		if prop.Class != "" {
+			class={ prop.Class }
+		}
+		{ prop.Attributes... }
+	>
 		{ children... }
 	</tr>
 }
