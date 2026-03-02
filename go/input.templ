@@ -1,5 +1,8 @@
 package ui
 
+import "strconv"
+
+// InputType defines the HTML input type variants.
 type InputType int
 
 const (
@@ -14,20 +17,40 @@ const (
 	InputDateTimeLocal
 )
 
+// InputProp configures a text-based form input component.
+// Use Type to specify the input variant (text, email, password, etc.).
 type InputProp struct {
-	Type        InputType // Input type enum
-	Name        string    // Input name attribute
-	Id          string    // Input ID
-	Value       string    // Input value
-	Placeholder string    // Placeholder text
-	Required    bool      // Whether the input is required
-	Disabled    bool      // Whether the input is disabled
-	Error       bool      // Whether to show error state
-	Class       string    // Additional CSS classes
-	Step        string    // Step attribute for number/date inputs
+	Type            InputType        // Input type (text, email, password, number, etc.)
+	Id              string           // HTML id attribute
+	Name            string           // Form field name
+	Value           string           // Current input value
+	Placeholder     string           // Hint text shown when empty
+	Required        bool             // Form validation requirement
+	Disabled        bool             // Prevents interaction
+	Error           bool             // Shows error styling
+	Class           string           // Additional CSS classes
+	Step            string           // Step increment for number/date inputs
+	Min             string           // Minimum value for number/date inputs
+	Max             string           // Maximum value for number/date inputs
+	MaxLength       int              // Maximum character length
+	Pattern         string           // Regex pattern for validation
+	Autocomplete    string           // Browser autocomplete hint (e.g., "email", "current-password")
+	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, readonly)
+	AriaLabel       string           // Screen reader label (when no visible label)
+	AriaDescribedBy string           // ID of element describing this input (e.g., error message)
 }
 
 // Input renders a form input element with configurable type and states.
+//
+// Example:
+//
+//	@Input(InputProp{
+//	    Type:        InputEmail,
+//	    Id:          "email",
+//	    Name:        "email",
+//	    Placeholder: "user@example.com",
+//	    Required:    true,
+//	})
 templ Input(prop InputProp) {
 	<input
 		if prop.Id != "" {
@@ -46,16 +69,40 @@ templ Input(prop InputProp) {
 		if prop.Step != "" {
 			step={ prop.Step }
 		}
-		class={ inputClass(prop) }
+		if prop.Min != "" {
+			min={ prop.Min }
+		}
+		if prop.Max != "" {
+			max={ prop.Max }
+		}
+		if prop.MaxLength > 0 {
+			maxlength={ strconv.Itoa(prop.MaxLength) }
+		}
+		if prop.Pattern != "" {
+			pattern={ prop.Pattern }
+		}
+		if prop.Autocomplete != "" {
+			autocomplete={ prop.Autocomplete }
+		}
+		class={ inputClass(prop.Error, prop.Disabled, prop.Class) }
 		if prop.Required {
 			required
+			aria-required="true"
 		}
 		if prop.Disabled {
 			disabled
+			aria-disabled="true"
 		}
 		if prop.Error {
 			aria-invalid="true"
 		}
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		}
+		if prop.AriaDescribedBy != "" {
+			aria-describedby={ prop.AriaDescribedBy }
+		}
+		{ prop.Attributes... }
 	/>
 }
 
@@ -84,20 +131,20 @@ func inputTypeString(t InputType) string {
 }
 
 // inputClass generates the CSS class for the input based on state.
-func inputClass(prop InputProp) string {
+func inputClass(hasError, isDisabled bool, class string) string {
 	base := "input"
 
 	var stateClass string
-	if prop.Error {
+	if hasError {
 		stateClass = base + " input--error"
-	} else if prop.Disabled {
+	} else if isDisabled {
 		stateClass = base + " input--disabled"
 	} else {
 		stateClass = base
 	}
 
-	if prop.Class != "" {
-		return stateClass + " " + prop.Class
+	if class != "" {
+		return stateClass + " " + class
 	}
 	return stateClass
 }

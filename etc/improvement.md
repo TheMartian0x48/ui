@@ -34,7 +34,7 @@ for
 * [x] switch
 * [x] table
 * [x] tabs
-* [ ] textarea
+* [x] textarea
 * [x] toast
 * [x] tooltip
 
