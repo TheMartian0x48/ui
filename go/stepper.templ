@@ -2,39 +2,55 @@ package ui
 
 import "fmt"
 
+// StepState represents the current state of a step in the stepper.
 type StepState int
 
 const (
-	StepInactive StepState = iota
-	StepActive
-	StepCompleted
+	StepInactive  StepState = iota // Step not yet reached
+	StepActive                     // Current step in progress
+	StepCompleted                  // Step successfully completed
 )
 
+// StepItemProp configures a single step within the stepper.
 type StepItemProp struct {
-	Title       string
-	Description string // Optional
-	State       StepState
+	Title       string    // Step label text
+	Description string    // Optional helper text below title
+	State       StepState // Current state of this step
 }
 
+// StepperProp configures the stepper progress indicator.
 type StepperProp struct {
-	Id       string
-	Steps    []StepItemProp
-	Vertical bool   // If true, renders vertically. Defaults to horizontal.
-	Class    string // Additional custom classes
+	Id        string         // HTML id attribute
+	Steps     []StepItemProp // List of steps to display
+	Vertical  bool           // Vertical layout (default: horizontal)
+	Class     string         // Additional CSS classes
+	AriaLabel string         // Accessible label for the stepper (e.g., "Checkout progress")
 }
 
-// Stepper renders a progress indicator through a sequence of steps.
+// Stepper renders a progress indicator showing advancement through a sequence of steps.
+// Supports both horizontal and vertical layouts with three step states:
+// inactive, active, and completed.
 templ Stepper(prop StepperProp) {
-	<div
+	<nav
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
-		class={ stepperClass(prop) }
+		class={ stepperClass(prop.Vertical, prop.Class) }
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		} else {
+			aria-label="Progress steps"
+		}
 	>
-		<ol class="stepper__list">
+		<ol class="stepper__list" role="list">
 			for i, step := range prop.Steps {
-				<li class={ stepItemClass(step) }>
-					<div class="stepper__indicator">
+				<li
+					class={ stepItemClass(step.State) }
+					if step.State == StepActive {
+						aria-current="step"
+					}
+				>
+					<div class="stepper__indicator" aria-hidden="true">
 						if step.State == StepCompleted {
 							@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM})
 						} else {
@@ -42,42 +58,54 @@ templ Stepper(prop StepperProp) {
 						}
 					</div>
 					<div class="stepper__content">
-						<h4 class="stepper__title">{ step.Title }</h4>
+						<h4 class="stepper__title">
+							{ step.Title }
+							<span class="sr-only">
+								if step.State == StepCompleted {
+									(completed)
+								} else if step.State == StepActive {
+									(current)
+								} else {
+									(upcoming)
+								}
+							</span>
+						</h4>
 						if step.Description != "" {
 							<p class="stepper__description">{ step.Description }</p>
 						}
 					</div>
 					if i < len(prop.Steps)-1 {
-						<div class="stepper__connector"></div>
+						<div class="stepper__connector" aria-hidden="true"></div>
 					}
 				</li>
 			}
 		</ol>
-	</div>
+	</nav>
 }
 
-func stepperClass(prop StepperProp) string {
+// stepperClass generates the CSS class string based on layout and custom classes.
+func stepperClass(vertical bool, class string) string {
 	base := "stepper"
-	if prop.Vertical {
+	if vertical {
 		base += " stepper--vertical"
 	} else {
 		base += " stepper--horizontal"
 	}
-	if prop.Class != "" {
-		base += " " + prop.Class
+	if class != "" {
+		base += " " + class
 	}
 	return base
 }
 
-func stepItemClass(step StepItemProp) string {
+// stepItemClass generates the CSS class string based on step state.
+func stepItemClass(state StepState) string {
 	base := "stepper__item"
-	switch step.State {
+	switch state {
 	case StepActive:
-		base += " stepper__item--active"
+		return base + " stepper__item--active"
 	case StepCompleted:
-		base += " stepper__item--completed"
+		return base + " stepper__item--completed"
 	default:
-		base += " stepper__item--inactive"
+		return base + " stepper__item--inactive"
 	}
-	return base
 }

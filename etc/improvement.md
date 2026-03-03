@@ -1,4 +1,3 @@
-
 check against following critieria
 - ergonomics 
 - performace
@@ -29,8 +28,8 @@ for
 * [ ] progress
 * [x] radio
 * [x] select
-* [ ] slider
-* [ ] stepper
+* [x] slider
+* [x] stepper
 * [x] switch
 * [x] table
 * [x] tabs
