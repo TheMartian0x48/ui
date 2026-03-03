@@ -2,22 +2,25 @@ package ui
 
 import "fmt"
 
+// SliderProp configures a range input slider component.
+// Uses Alpine.js for real-time value updates when ShowValue is enabled.
 type SliderProp struct {
-	Name       string
-	Label      string
-	Value      float64
-	Min        float64
-	Max        float64
-	Step       float64
-	ShowValue  bool
-	Disabled   bool
-	Class      string
-	Id         string
-	Attributes templ.Attributes
+	Name       string           // Form field name
+	Label      string           // Visible label text
+	Value      float64          // Current slider value
+	Min        float64          // Minimum value (default: 0)
+	Max        float64          // Maximum value (default: 100)
+	Step       float64          // Step increment (default: 1)
+	ShowValue  bool             // Display current value alongside label
+	Disabled   bool             // Prevents interaction
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute (auto-generated from Name if empty)
+	AriaLabel  string           // Accessible label when no visible label is used
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
-// Slider renders a customized range input.
-// It uses Alpine.js for real-time value updates if ShowValue is true.
+// Slider renders a customizable range input with optional real-time value display.
+// Requires Alpine.js for interactive value updates.
 templ Slider(prop SliderProp) {
 	{{
 		min := prop.Min
@@ -34,6 +37,11 @@ templ Slider(prop SliderProp) {
 		if id == "" && prop.Name != "" {
 			id = "slider-" + prop.Name
 		}
+
+		valueId := ""
+		if prop.ShowValue && id != "" {
+			valueId = id + "-value"
+		}
 	}}
 	<div
 		class="slider-container"
@@ -45,25 +53,54 @@ templ Slider(prop SliderProp) {
 					<label for={ id } class="slider-label">{ prop.Label }</label>
 				}
 				if prop.ShowValue {
-					<span class="slider-value" x-text="val"></span>
+					<span
+						if valueId != "" {
+							id={ valueId }
+						}
+						class="slider-value"
+						x-text="val"
+						aria-live="polite"
+					></span>
 				}
 			</div>
 		}
 		<input
 			type="range"
-			id={ id }
-			name={ prop.Name }
-			class={ "slider " + prop.Class }
+			if id != "" {
+				id={ id }
+			}
+			if prop.Name != "" {
+				name={ prop.Name }
+			}
+			class={ sliderClass(prop.Class) }
 			min={ fmt.Sprintf("%v", min) }
 			max={ fmt.Sprintf("%v", max) }
 			step={ fmt.Sprintf("%v", step) }
 			value={ fmt.Sprintf("%v", prop.Value) }
+			aria-valuemin={ fmt.Sprintf("%v", min) }
+			aria-valuemax={ fmt.Sprintf("%v", max) }
+			:aria-valuenow="val"
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			if valueId != "" {
+				aria-describedby={ valueId }
+			}
 			if prop.Disabled {
 				disabled
+				aria-disabled="true"
 			}
 			x-model="val"
 			:style="`--slider-pct: ${((val - min) / (max - min)) * 100}%`"
 			{ prop.Attributes... }
 		/>
 	</div>
+}
+
+// sliderClass generates the CSS class string for the slider input.
+func sliderClass(class string) string {
+	if class != "" {
+		return "slider " + class
+	}
+	return "slider"
 }
