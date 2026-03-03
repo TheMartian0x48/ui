@@ -8,58 +8,61 @@ package ui
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"fmt"
-	"strconv"
+import "strconv"
+
+// AccordionVariant defines the visual style of the accordion.
+type AccordionVariant int
+
+const (
+	AccordionBasic    AccordionVariant = iota // Default style with top border
+	AccordionBordered                         // Card-like with full border and rounded corners
+	AccordionFlush                            // No borders, blends into container
 )
 
-// Helper functions for generating IDs
-func generateTitleId(prefix string, id string, index int) string {
+// AccordionProp configures the accordion container.
+type AccordionProp struct {
+	Items      []AccordionItem  // List of collapsible items
+	Variant    AccordionVariant // Visual style variant
+	Icon       templ.Component  // Custom expand/collapse icon (default: chevron)
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute
+	Attributes templ.Attributes // Additional HTML attributes
+	IdPrefix   string           // Prefix for generating unique accessibility IDs
+}
+
+// AccordionItem configures a single collapsible item within the accordion.
+type AccordionItem struct {
+	Title       string           // Header text displayed in the summary
+	Content     string           // Plain text content (use RichContent for complex content)
+	RichContent templ.Component  // Rich HTML content (takes precedence over Content)
+	Open        bool             // Whether the item is expanded by default
+	Attributes  templ.Attributes // Additional HTML attributes for the summary element
+}
+
+// generateTitleId creates a unique ID for the accordion item title.
+func generateTitleId(prefix, id string, index int) string {
 	if prefix != "" {
 		return prefix + "-title-" + strconv.Itoa(index)
-	} else if id != "" {
+	}
+	if id != "" {
 		return id + "-title-" + strconv.Itoa(index)
 	}
 	return "accordion-title-" + strconv.Itoa(index)
 }
 
-func generateContentId(prefix string, id string, index int) string {
+// generateContentId creates a unique ID for the accordion item content.
+func generateContentId(prefix, id string, index int) string {
 	if prefix != "" {
 		return prefix + "-content-" + strconv.Itoa(index)
-	} else if id != "" {
+	}
+	if id != "" {
 		return id + "-content-" + strconv.Itoa(index)
 	}
 	return "accordion-content-" + strconv.Itoa(index)
 }
 
-type AccordionVariant int
-
-const (
-	AccordionBasic AccordionVariant = iota
-	AccordionBordered
-	AccordionFlush
-)
-
-type AccordionProp struct {
-	Items      []AccordionItem
-	Variant    AccordionVariant
-	Icon       templ.Component // Changed from enum to component
-	Class      string
-	Id         string
-	Attributes templ.Attributes
-	// Used to generate unique IDs for accessibility attributes
-	IdPrefix string // Optional prefix for generating unique IDs
-}
-
-type AccordionItem struct {
-	Title       string
-	Content     string          // Plain text content
-	RichContent templ.Component // Optional rich content
-	Open        bool
-	Attributes  templ.Attributes
-}
-
-// Accordion renders a list of collapsible items.
+// Accordion renders a list of collapsible items using native details/summary
+// elements for optimal accessibility and keyboard navigation.
 func Accordion(prop AccordionProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -81,7 +84,7 @@ func Accordion(prop AccordionProp) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{accordionClass(prop)}
+		var templ_7745c5c3_Var2 = []any{accordionClass(prop.Variant, prop.Class)}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -98,7 +101,7 @@ func Accordion(prop AccordionProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 58, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 61, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -135,7 +138,6 @@ func Accordion(prop AccordionProp) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		for i, item := range prop.Items {
-			// Use helper functions to generate IDs
 			titleID := generateTitleId(prop.IdPrefix, prop.Id, i)
 			contentID := generateContentId(prop.IdPrefix, prop.Id, i)
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<details class=\"accordion__item\"")
@@ -156,59 +158,46 @@ func Accordion(prop AccordionProp) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " aria-expanded=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " aria-controls=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(item.Open))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(contentID)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 78, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 80, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" aria-controls=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"><span id=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(contentID)
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(titleID)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 79, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 82, Col: 23}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"><span id=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" class=\"accordion__title\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(titleID)
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 81, Col: 23}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 82, Col: 63}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" class=\"accordion__title\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 81, Col: 63}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</span><div class=\"accordion__icon\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</span><div class=\"accordion__icon\" aria-hidden=\"true\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -223,33 +212,33 @@ func Accordion(prop AccordionProp) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</div></summary><div id=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div></summary><div id=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(contentID)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 92, Col: 19}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\" class=\"accordion__content\" aria-labelledby=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(contentID)
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(titleID)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 91, Col: 19}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 94, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\" class=\"accordion__content\" aria-labelledby=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(titleID)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 93, Col: 30}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "\"><div class=\"accordion__body\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\" role=\"region\"><div class=\"accordion__body\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -259,22 +248,22 @@ func Accordion(prop AccordionProp) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				var templ_7745c5c3_Var11 string
-				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(item.Content)
+				var templ_7745c5c3_Var10 string
+				templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(item.Content)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 99, Col: 21}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/accordion.templ`, Line: 101, Col: 21}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</div></div></details>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</div></div></details>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -282,10 +271,11 @@ func Accordion(prop AccordionProp) templ.Component {
 	})
 }
 
-func accordionClass(prop AccordionProp) string {
+// accordionClass generates the CSS class string based on variant and custom classes.
+func accordionClass(variant AccordionVariant, class string) string {
 	base := "accordion"
 	var variantClass string
-	switch prop.Variant {
+	switch variant {
 	case AccordionBordered:
 		variantClass = "accordion--bordered"
 	case AccordionFlush:
@@ -295,8 +285,8 @@ func accordionClass(prop AccordionProp) string {
 	}
 
 	result := base + " " + variantClass
-	if prop.Class != "" {
-		result += " " + prop.Class
+	if class != "" {
+		result += " " + class
 	}
 	return result
 }

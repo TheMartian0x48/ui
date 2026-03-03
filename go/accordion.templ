@@ -1,68 +1,70 @@
 package ui
 
-import (
-	"fmt"
-	"strconv"
+import "strconv"
+
+// AccordionVariant defines the visual style of the accordion.
+type AccordionVariant int
+
+const (
+	AccordionBasic    AccordionVariant = iota // Default style with top border
+	AccordionBordered                         // Card-like with full border and rounded corners
+	AccordionFlush                            // No borders, blends into container
 )
 
-// Helper functions for generating IDs
-func generateTitleId(prefix string, id string, index int) string {
+// AccordionProp configures the accordion container.
+type AccordionProp struct {
+	Items      []AccordionItem  // List of collapsible items
+	Variant    AccordionVariant // Visual style variant
+	Icon       templ.Component  // Custom expand/collapse icon (default: chevron)
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute
+	Attributes templ.Attributes // Additional HTML attributes
+	IdPrefix   string           // Prefix for generating unique accessibility IDs
+}
+
+// AccordionItem configures a single collapsible item within the accordion.
+type AccordionItem struct {
+	Title       string           // Header text displayed in the summary
+	Content     string           // Plain text content (use RichContent for complex content)
+	RichContent templ.Component  // Rich HTML content (takes precedence over Content)
+	Open        bool             // Whether the item is expanded by default
+	Attributes  templ.Attributes // Additional HTML attributes for the summary element
+}
+
+// generateTitleId creates a unique ID for the accordion item title.
+func generateTitleId(prefix, id string, index int) string {
 	if prefix != "" {
 		return prefix + "-title-" + strconv.Itoa(index)
-	} else if id != "" {
+	}
+	if id != "" {
 		return id + "-title-" + strconv.Itoa(index)
 	}
 	return "accordion-title-" + strconv.Itoa(index)
 }
 
-func generateContentId(prefix string, id string, index int) string {
+// generateContentId creates a unique ID for the accordion item content.
+func generateContentId(prefix, id string, index int) string {
 	if prefix != "" {
 		return prefix + "-content-" + strconv.Itoa(index)
-	} else if id != "" {
+	}
+	if id != "" {
 		return id + "-content-" + strconv.Itoa(index)
 	}
 	return "accordion-content-" + strconv.Itoa(index)
 }
 
-type AccordionVariant int
-
-const (
-	AccordionBasic AccordionVariant = iota
-	AccordionBordered
-	AccordionFlush
-)
-
-type AccordionProp struct {
-	Items      []AccordionItem
-	Variant    AccordionVariant
-	Icon       templ.Component // Changed from enum to component
-	Class      string
-	Id         string
-	Attributes templ.Attributes
-	// Used to generate unique IDs for accessibility attributes
-	IdPrefix string // Optional prefix for generating unique IDs
-}
-
-type AccordionItem struct {
-	Title       string
-	Content     string           // Plain text content
-	RichContent templ.Component  // Optional rich content
-	Open        bool
-	Attributes  templ.Attributes
-}
-
-// Accordion renders a list of collapsible items.
+// Accordion renders a list of collapsible items using native details/summary
+// elements for optimal accessibility and keyboard navigation.
 templ Accordion(prop AccordionProp) {
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
-		class={ accordionClass(prop) }
+		class={ accordionClass(prop.Variant, prop.Class) }
 		{ prop.Attributes... }
 	>
 		for i, item := range prop.Items {
 			{{
-				// Use helper functions to generate IDs
 				titleID := generateTitleId(prop.IdPrefix, prop.Id, i)
 				contentID := generateContentId(prop.IdPrefix, prop.Id, i)
 			}}
@@ -75,11 +77,10 @@ templ Accordion(prop AccordionProp) {
 				<summary
 					class="accordion__summary"
 					{ item.Attributes... }
-					aria-expanded={ fmt.Sprint(item.Open) }
 					aria-controls={ contentID }
 				>
 					<span id={ titleID } class="accordion__title">{ item.Title }</span>
-					<div class="accordion__icon">
+					<div class="accordion__icon" aria-hidden="true">
 						if prop.Icon != nil {
 							@Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM})
 						} else {
@@ -91,6 +92,7 @@ templ Accordion(prop AccordionProp) {
 					id={ contentID }
 					class="accordion__content"
 					aria-labelledby={ titleID }
+					role="region"
 				>
 					<div class="accordion__body">
 						if item.RichContent != nil {
@@ -105,10 +107,11 @@ templ Accordion(prop AccordionProp) {
 	</div>
 }
 
-func accordionClass(prop AccordionProp) string {
+// accordionClass generates the CSS class string based on variant and custom classes.
+func accordionClass(variant AccordionVariant, class string) string {
 	base := "accordion"
 	var variantClass string
-	switch prop.Variant {
+	switch variant {
 	case AccordionBordered:
 		variantClass = "accordion--bordered"
 	case AccordionFlush:
@@ -118,8 +121,8 @@ func accordionClass(prop AccordionProp) string {
 	}
 
 	result := base + " " + variantClass
-	if prop.Class != "" {
-		result += " " + prop.Class
+	if class != "" {
+		result += " " + class
 	}
 	return result
 }

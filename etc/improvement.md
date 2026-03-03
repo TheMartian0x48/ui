@@ -8,7 +8,7 @@ check against following critieria
 - in css, can we use variable from @css/base/variables.css ?
 for 
 
-* [ ] accordion
+* [x] accordion
 * [x] alert
 * [x] autocomplete
 * [x] badge
@@ -23,7 +23,7 @@ for
 * [ ] form_field
 * [x] icon
 * [ ] image_preview
-* [ ] input
+* [x] input
 * [x] label
 * [x] link
 * [ ] progress

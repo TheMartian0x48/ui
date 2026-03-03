@@ -1,4 +1,17 @@
-/* Accordion Component Styles */
+/* Accordion Component Styles
+ *
+ * A vertically stacked list of collapsible items using native <details>/<summary>.
+ * Supports three variants: basic (default), bordered, and flush.
+ *
+ * Structure:
+ *   .accordion
+ *     .accordion__item (<details>)
+ *       .accordion__summary (<summary>)
+ *         .accordion__title
+ *         .accordion__icon
+ *       .accordion__content
+ *         .accordion__body
+ */
 
 .accordion {
     display: flex;
@@ -8,7 +21,7 @@
 }
 
 .accordion__item {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
 }
 
 .accordion__item:last-child {
@@ -34,13 +47,23 @@
     background-color: var(--color-bg-secondary);
 }
 
+.accordion__summary:focus {
+    outline: none;
+}
+
+.accordion__summary:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
+}
+
 .accordion__title {
     font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
     color: var(--color-text-primary);
 }
 
 .accordion__icon {
+    flex-shrink: 0;
     color: var(--color-text-muted);
     transition: transform var(--transition-fast);
 }
@@ -62,20 +85,20 @@
 
 /* ========== Variants ========== */
 
-/* Basic (Default) */
+/* Basic (Default) - Simple top border */
 .accordion--basic {
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-width-thin) solid var(--color-border);
 }
 
-/* Bordered */
+/* Bordered - Card-like with full border and rounded corners */
 .accordion--bordered {
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     background-color: var(--color-bg);
     overflow: hidden;
 }
 
-/* Flush */
+/* Flush - No borders, blends into container */
 .accordion--flush {
     border: none;
 }
