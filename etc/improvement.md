@@ -12,7 +12,7 @@ for
 * [x] autocomplete
 * [x] badge
 * [x] button
-* [ ] card
+* [x] card
 * [x] checkbox
 * [ ] dialog
 * [ ] divider

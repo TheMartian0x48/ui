@@ -45,6 +45,7 @@
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-slow);
+    will-change: transform;
 }
 
 .card:hover .card__media img {
@@ -83,4 +84,26 @@
     font-weight: var(--font-weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.025em;
+}
+
+/* Focus state for interactive cards */
+.card:focus-within {
+    outline: var(--border-width-medium) solid var(--color-primary);
+    outline-offset: var(--border-width-medium);
+}
+
+/* Reduced motion preference for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .card__media img {
+        transition: none;
+    }
+
+    .card--elevated:hover {
+        transform: none;
+    }
+
+    .card:hover .card__media img {
+        transform: none;
+    }
 }

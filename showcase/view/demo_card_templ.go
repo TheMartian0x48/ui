@@ -124,9 +124,10 @@ func CardDemo() templ.Component {
 			return nil
 		})
 		templ_7745c5c3_Err = ui.Card(ui.CardProp{
-			Header: "Beautiful Nature",
-			Footer: "Last updated 2 mins ago",
-			Image:  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1200",
+			Header:   "Beautiful Nature",
+			Footer:   "Last updated 2 mins ago",
+			Image:    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1200",
+			ImageAlt: "Misty mountain landscape at sunrise with rolling hills",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
