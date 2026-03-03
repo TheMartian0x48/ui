@@ -2,25 +2,30 @@ package ui
 
 import "fmt"
 
+// ProgressSize defines the height of the linear progress bar.
 type ProgressSize int
 
 const (
-	ProgressSizeSM ProgressSize = iota
-	ProgressSizeMD
-	ProgressSizeLG
+	ProgressSizeSM ProgressSize = iota // Small height (4px)
+	ProgressSizeMD                     // Medium height (8px, default)
+	ProgressSizeLG                     // Large height (12px)
 )
 
+// ProgressProp configures a linear progress bar component.
 type ProgressProp struct {
-	Value         float64 // 0 to 100
-	Max           float64 // default 100
-	Label         string
-	ShowValue     bool
-	Size          ProgressSize
-	Indeterminate bool
-	Class         string
+	Value         float64      // Current progress value (0 to Max)
+	Max           float64      // Maximum value (default: 100)
+	Label         string       // Text label displayed above the bar
+	ShowValue     bool         // Display percentage value
+	Size          ProgressSize // Bar height variant
+	Indeterminate bool         // Animated loading state (ignores Value)
+	Class         string       // Additional CSS classes
+	Id            string       // HTML id attribute for accessibility
+	AriaLabel     string       // Accessible label when no visible label
 }
 
-// Progress renders a linear progress bar.
+// Progress renders a linear progress bar showing completion status.
+// Use Indeterminate mode for unknown duration operations.
 templ Progress(prop ProgressProp) {
 	{{
 		max := prop.Max
@@ -31,19 +36,60 @@ templ Progress(prop ProgressProp) {
 		if percent > 100 {
 			percent = 100
 		}
+
+		labelId := ""
+		valueId := ""
+		if prop.Id != "" {
+			if prop.Label != "" {
+				labelId = prop.Id + "-label"
+			}
+			if prop.ShowValue {
+				valueId = prop.Id + "-value"
+			}
+		}
 	}}
 	<div class="progress-container">
 		if prop.Label != "" || prop.ShowValue {
 			<div class="progress-header">
 				if prop.Label != "" {
-					<span class="progress-label">{ prop.Label }</span>
+					<span
+						if labelId != "" {
+							id={ labelId }
+						}
+						class="progress-label"
+					>{ prop.Label }</span>
 				}
 				if prop.ShowValue && !prop.Indeterminate {
-					<span class="progress-value">{ fmt.Sprintf("%.0f%%", percent) }</span>
+					<span
+						if valueId != "" {
+							id={ valueId }
+						}
+						class="progress-value"
+						aria-live="polite"
+					>{ fmt.Sprintf("%.0f%%", percent) }</span>
 				}
 			</div>
 		}
-		<div class={ progressClass(prop) }>
+		<div
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			class={ progressClass(prop.Size, prop.Indeterminate, prop.Class) }
+			role="progressbar"
+			if !prop.Indeterminate {
+				aria-valuenow={ fmt.Sprintf("%.0f", prop.Value) }
+				aria-valuemin="0"
+				aria-valuemax={ fmt.Sprintf("%.0f", max) }
+			}
+			if prop.Indeterminate {
+				aria-busy="true"
+			}
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			} else if labelId != "" {
+				aria-labelledby={ labelId }
+			}
+		>
 			<div
 				class="progress__bar"
 				if !prop.Indeterminate {
@@ -54,11 +100,12 @@ templ Progress(prop ProgressProp) {
 	</div>
 }
 
-func progressClass(prop ProgressProp) string {
+// progressClass generates the CSS class string based on size and state.
+func progressClass(size ProgressSize, indeterminate bool, class string) string {
 	base := "progress"
 
 	var sizeClass string
-	switch prop.Size {
+	switch size {
 	case ProgressSizeSM:
 		sizeClass = "progress--sm"
 	case ProgressSizeLG:
@@ -68,28 +115,31 @@ func progressClass(prop ProgressProp) string {
 	}
 
 	classes := base + " " + sizeClass
-	if prop.Indeterminate {
+	if indeterminate {
 		classes += " progress--indeterminate"
 	}
-	if prop.Class != "" {
-		classes += " " + prop.Class
+	if class != "" {
+		classes += " " + class
 	}
 	return classes
 }
 
+// CircularProgressProp configures a circular progress indicator.
 type CircularProgressProp struct {
-	Value         float64 // 0 to 100. If 0 and Indeterminate is false, it stays empty.
-	Max           float64 // default 100
-	Size          int     // pixels
-	Thickness     int     // pixels
-	ShowValue     bool
-	Indeterminate bool // Default is true if no value is provided? User said "keep Indeterminate as default"
-	Class         string
-	Id            string
+	Value         float64 // Current progress value (0 to Max)
+	Max           float64 // Maximum value (default: 100)
+	Size          int     // Diameter in pixels (default: 24)
+	Thickness     int     // Stroke width in pixels (default: 3)
+	ShowValue     bool    // Display percentage in center
+	Indeterminate bool    // Spinning animation (default when Value=0 and ShowValue=false)
+	Class         string  // Additional CSS classes
+	Id            string  // HTML id attribute
+	AriaLabel     string  // Accessible label for screen readers
 }
 
-// CircularProgress renders a circular progress indicator (merged with Spinner functionality).
-// By default, it is indeterminate (spinning). Pass a Value to make it determinate.
+// CircularProgress renders a circular progress indicator.
+// Defaults to indeterminate (spinning) mode when no Value is provided.
+// Pass a Value and/or ShowValue=true for determinate mode.
 templ CircularProgress(prop CircularProgressProp) {
 	{{
 		// Indeterminate by default if value is 0 and not explicitly set to determinate
@@ -97,7 +147,7 @@ templ CircularProgress(prop CircularProgressProp) {
 
 		size := prop.Size
 		if size == 0 {
-			size = 24 // Default to a standard spinner size
+			size = 24
 		}
 		thickness := prop.Thickness
 		if thickness == 0 {
@@ -117,22 +167,12 @@ templ CircularProgress(prop CircularProgressProp) {
 			percent = 100
 		}
 		offset := circumference - (percent / 100 * circumference)
-
-		classes := "circular-progress"
-		if isIndeterminate {
-			classes += " circular-progress--indeterminate"
-		} else {
-			classes += " circular-progress--determinate"
-		}
-		if prop.Class != "" {
-			classes += " " + prop.Class
-		}
 	}}
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
-		class={ classes }
+		class={ circularProgressClass(isIndeterminate, prop.Class) }
 		style={ fmt.Sprintf("width: %dpx; height: %dpx;", size, size) }
 		role="progressbar"
 		if !isIndeterminate {
@@ -140,8 +180,19 @@ templ CircularProgress(prop CircularProgressProp) {
 			aria-valuemin="0"
 			aria-valuemax={ fmt.Sprintf("%.0f", max) }
 		}
+		if isIndeterminate {
+			aria-busy="true"
+		}
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		}
 	>
-		<svg width={ fmt.Sprintf("%d", size) } height={ fmt.Sprintf("%d", size) } viewBox={ fmt.Sprintf("0 0 %d %d", size, size) }>
+		<svg
+			width={ fmt.Sprintf("%d", size) }
+			height={ fmt.Sprintf("%d", size) }
+			viewBox={ fmt.Sprintf("0 0 %d %d", size, size) }
+			aria-hidden="true"
+		>
 			<circle
 				class="circular-progress__background"
 				cx={ fmt.Sprintf("%d", center) }
@@ -162,9 +213,23 @@ templ CircularProgress(prop CircularProgressProp) {
 			></circle>
 		</svg>
 		if prop.ShowValue && !isIndeterminate {
-			<div class="circular-progress__content">
+			<div class="circular-progress__content" aria-hidden="true">
 				{ fmt.Sprintf("%.0f%%", percent) }
 			</div>
 		}
 	</div>
+}
+
+// circularProgressClass generates the CSS class string based on state.
+func circularProgressClass(indeterminate bool, class string) string {
+	base := "circular-progress"
+	if indeterminate {
+		base += " circular-progress--indeterminate"
+	} else {
+		base += " circular-progress--determinate"
+	}
+	if class != "" {
+		base += " " + class
+	}
+	return base
 }
