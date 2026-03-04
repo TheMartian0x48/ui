@@ -79,7 +79,7 @@ func DropzoneDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div><!-- In context of FormField --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Within Form Field</h3><div class=\"doc-demo__list\" style=\"max-width: 500px;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div><!-- Within Form Field --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Within Form Field</h3><div class=\"doc-demo__list\" style=\"max-width: 500px;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -114,7 +114,25 @@ func DropzoneDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div><!-- With Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">With Custom Attributes</h3><div class=\"doc-demo__list\" style=\"max-width: 500px;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Dropzone(ui.DropzoneProp{
+			Id:       "custom-dropzone",
+			Name:     "attachments",
+			Label:    "Drop files here",
+			HelpText: "Any file type accepted.",
+			Attributes: templ.Attributes{
+				"data-testid":    "attachment-dropzone",
+				"data-max-size":  "10485760",
+				"x-on:drop.once": "console.log('First drop!')",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

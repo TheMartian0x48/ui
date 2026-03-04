@@ -18,10 +18,10 @@ for
 * [x] divider
 * [ ] drawer
 * [x] dropdown
-* [ ] dropzone
+* [x] dropzone
 * [ ] form_field
 * [x] icon
-* [ ] image_preview
+* [x] image_preview
 * [x] input
 * [x] label
 * [x] link

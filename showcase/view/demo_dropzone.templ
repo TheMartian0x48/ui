@@ -54,7 +54,7 @@ templ DropzoneDemo() {
 						})
 					</div>
 				</div>
-				<!-- In context of FormField -->
+				<!-- Within Form Field -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Within Form Field</h3>
 					<div class="doc-demo__list" style="max-width: 500px;">
@@ -70,6 +70,23 @@ templ DropzoneDemo() {
 								Accept:   "image/png, image/jpeg, image/gif",
 							})
 						}
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list" style="max-width: 500px;">
+						@ui.Dropzone(ui.DropzoneProp{
+							Id:       "custom-dropzone",
+							Name:     "attachments",
+							Label:    "Drop files here",
+							HelpText: "Any file type accepted.",
+							Attributes: templ.Attributes{
+								"data-testid":    "attachment-dropzone",
+								"data-max-size":  "10485760",
+								"x-on:drop.once": "console.log('First drop!')",
+							},
+						})
 					</div>
 				</div>
 			</div>
