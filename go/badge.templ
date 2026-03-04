@@ -117,6 +117,7 @@ templ Badge(prop BadgeProp) {
 //	}
 type BadgeGroupProp struct {
 	Class      string           // Additional CSS classes
+	AriaLabel  string           // Accessible label for the badge group
 	Attributes templ.Attributes // Additional HTML attributes
 }
 
@@ -125,6 +126,9 @@ templ BadgeGroup(prop BadgeGroupProp) {
 	<div
 		class={ badgeGroupClass(prop.Class) }
 		role="group"
+		if prop.AriaLabel != "" {
+			aria-label={ prop.AriaLabel }
+		}
 		{ prop.Attributes... }
 	>
 		{ children... }

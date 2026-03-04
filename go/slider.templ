@@ -80,6 +80,7 @@ templ Slider(prop SliderProp) {
 			aria-valuemin={ fmt.Sprintf("%v", min) }
 			aria-valuemax={ fmt.Sprintf("%v", max) }
 			:aria-valuenow="val"
+			aria-orientation="horizontal"
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
 			}

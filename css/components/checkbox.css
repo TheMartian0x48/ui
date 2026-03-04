@@ -30,7 +30,7 @@
 /* Custom checkbox box */
 .checkbox__control {
     flex-shrink: 0;
-    width: var(--spacing-5)
+    width: var(--spacing-5);
     height: var(--spacing-5);
     border: var(--border-width-medium) solid var(--color-border);
     border-radius: var(--radius-sm);

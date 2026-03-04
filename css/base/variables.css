@@ -237,3 +237,79 @@
     --focus-ring-primary: 0 0 0 3px rgba(59, 130, 246, 0.5);
     --focus-ring-danger: 0 0 0 3px rgba(248, 113, 113, 0.5);
 }
+
+/* ========================================================
+   SYSTEM PREFERENCE DETECTION
+   Automatically applies dark mode based on OS preference
+   unless explicitly overridden with data-theme="light"
+   ======================================================== */
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        /* Primary Colors - Lighter for dark backgrounds */
+        --color-primary: #3b82f6;
+        --color-primary-dark: #2563eb;
+        --color-primary-darker: #1d4ed8;
+        --color-primary-light: #60a5fa;
+        --color-primary-subtle-bg: #1e3a5f;
+        --color-primary-subtle-text: #93c5fd;
+
+        /* Secondary Colors */
+        --color-secondary: #34d399;
+        --color-secondary-dark: #10b981;
+        --color-secondary-light: #6ee7b7;
+
+        /* Semantic - Success */
+        --color-success: #34d399;
+        --color-success-subtle-bg: #064e3b;
+        --color-success-subtle-text: #6ee7b7;
+
+        /* Semantic - Warning */
+        --color-warning: #fbbf24;
+        --color-warning-text: #fcd34d;
+        --color-warning-subtle-bg: #78350f;
+
+        /* Semantic - Danger */
+        --color-danger: #f87171;
+        --color-danger-dark: #ef4444;
+        --color-danger-darker: #dc2626;
+        --color-danger-subtle-bg: #7f1d1d;
+        --color-danger-subtle-text: #fca5a5;
+
+        /* Semantic - Info */
+        --color-info: #60a5fa;
+        --color-info-subtle-bg: #1e3a5f;
+        --color-info-subtle-text: #93c5fd;
+
+        /* Text Colors */
+        --color-text: #f9fafb;
+        --color-text-primary: #f9fafb;
+        --color-text-secondary: #d1d5db;
+        --color-text-muted: #9ca3af;
+        --color-text-disabled: #6b7280;
+        --color-text-inverse: #111827;
+
+        /* Background Colors */
+        --color-bg: #101010;
+        --color-bg-primary: #101010;
+        --color-bg-secondary: #1a1a1a;
+        --color-bg-tertiary: #2a2a2a;
+        --color-bg-overlay: rgba(0, 0, 0, 0.75);
+
+        /* Border Colors */
+        --color-border: #374151;
+        --color-border-dark: #4b5563;
+        --color-border-light: #1f2937;
+
+        /* Shadows - Stronger for dark backgrounds */
+        --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+
+        /* Focus Rings - More visible on dark backgrounds */
+        --focus-ring-primary: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        --focus-ring-danger: 0 0 0 3px rgba(248, 113, 113, 0.5);
+    }
+}
