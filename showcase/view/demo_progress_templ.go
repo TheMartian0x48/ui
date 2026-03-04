@@ -50,7 +50,35 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div><!-- Circular Progress (New Merged Component) --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Circular Progress (Indeterminate by Default)</h3><p class=\"doc-demo__text\">If no value is provided, it behaves as a spinner.</p><div class=\"doc-demo__list\" style=\"align-items: center;\"><div class=\"spinner-demo-item\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div><!-- Linear Progress Sizes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Linear Progress Sizes</h3><div class=\"doc-demo__list doc-demo__list--column\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Progress(ui.ProgressProp{
+			Value: 60,
+			Size:  ui.ProgressSizeSM,
+			Label: "Small",
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Progress(ui.ProgressProp{
+			Value: 60,
+			Size:  ui.ProgressSizeMD,
+			Label: "Medium (default)",
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Progress(ui.ProgressProp{
+			Value: 60,
+			Size:  ui.ProgressSizeLG,
+			Label: "Large",
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div><!-- Circular Progress (Indeterminate) --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Circular Progress (Indeterminate by Default)</h3><p class=\"progress-demo__text\">If no value is provided, it behaves as a spinner.</p><div class=\"doc-demo__list\" style=\"align-items: center;\"><div class=\"progress-demo__item\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,7 +86,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<span class=\"text-xs\">Small (24px)</span></div><div class=\"spinner-demo-item\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<span class=\"text-xs\">Small (24px)</span></div><div class=\"progress-demo__item\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -66,7 +94,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<span class=\"text-xs\">Medium (48px)</span></div><div class=\"spinner-demo-item\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<span class=\"text-xs\">Medium (48px)</span></div><div class=\"progress-demo__item\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -74,7 +102,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<span class=\"text-xs\">Large (64px)</span></div></div></div><!-- Determinate Circular --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Circular Progress (Determinate)</h3><div class=\"doc-demo__list\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<span class=\"text-xs\">Large (64px)</span></div></div></div><!-- Determinate Circular --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Circular Progress (Determinate)</h3><div class=\"doc-demo__list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -103,7 +131,38 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div><!-- Usage Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Usage Examples</h3><div class=\"doc-demo__list doc-demo__list--column\"><!-- File Upload in a Card --><div style=\"max-width: 400px;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div><!-- With Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">With Custom Attributes</h3><div class=\"doc-demo__list doc-demo__list--column\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Progress(ui.ProgressProp{
+			Value:     45,
+			Label:     "Upload Progress",
+			ShowValue: true,
+			Attributes: templ.Attributes{
+				"data-testid":  "upload-progress",
+				"data-task-id": "task-123",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"doc-demo__list\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.CircularProgress(ui.CircularProgressProp{
+			Value:     75,
+			Size:      48,
+			ShowValue: true,
+			Attributes: templ.Attributes{
+				"data-testid": "sync-progress",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div></div></div><!-- Usage Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Usage Examples</h3><div class=\"doc-demo__list doc-demo__list--column\"><!-- Storage Card --><div style=\"max-width: 400px;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -119,7 +178,7 @@ func ProgressDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div style=\"display: flex; flex-direction: column; gap: 1rem;\"><div style=\"display: flex; justify-content: space-between; align-items: flex-end;\"><div><div style=\"font-size: var(--font-size-sm); font-weight: 500;\">Capacity</div><div style=\"font-size: var(--font-size-xs); color: var(--color-text-muted);\">850 GB used of 1 TB</div></div><div style=\"text-align: right;\"><div style=\"font-size: var(--font-size-lg); font-weight: 600; color: var(--color-primary);\">85%</div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"progress-demo__storage\"><div class=\"progress-demo__storage-header\"><div><div class=\"progress-demo__storage-title\">Capacity</div><div class=\"progress-demo__storage-subtitle\">850 GB used of 1 TB</div></div><div class=\"progress-demo__storage-percent\">85%</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -127,7 +186,7 @@ func ProgressDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div style=\"display: flex; gap: 0.5rem; margin-top: 0.5rem;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div style=\"margin-top: var(--spacing-3);\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -143,7 +202,7 @@ func ProgressDemo() templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "Upgrade Plan ")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "Upgrade Plan")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -153,7 +212,7 @@ func ProgressDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -163,7 +222,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</div><!-- Multi-step Profile Setup --><div style=\"display: flex; gap: 2rem; align-items: center; padding: 1.5rem; background: var(--color-bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--color-border);\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><!-- Profile Completion --><div class=\"progress-demo__profile\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -176,7 +235,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div style=\"flex: 1;\"><h4 style=\"margin: 0; font-size: var(--font-size-md);\">Profile Completion</h4><p style=\"margin: 0.25rem 0 0; font-size: var(--font-size-sm); color: var(--color-text-muted);\">Next step: Add a profile picture to reach 80%</p></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div class=\"progress-demo__profile-content\"><h4 class=\"progress-demo__profile-title\">Profile Completion</h4><p class=\"progress-demo__profile-text\">Next step: Add a profile picture to reach 80%</p></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -192,7 +251,7 @@ func ProgressDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "Finish Setup ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "Finish Setup")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -202,7 +261,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><!-- Processing Button --><div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</div><!-- Processing Button --><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -222,7 +281,7 @@ func ProgressDemo() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, " Processing Request...")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, " Processing Request...")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -232,7 +291,7 @@ func ProgressDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div></div></div></div></div></section><style type=\"text/css\">\n\t\t.spinner-demo-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tgap: 0.75rem;\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tpadding: 1rem;\n\t\t}\n\t\t.doc-demo__text {\n\t\t\tmargin-bottom: 1rem;\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tfont-size: var(--font-size-sm);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div></div></div></div></div></section><style type=\"text/css\">\n\t\t.progress-demo__item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tgap: var(--spacing-3);\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tpadding: var(--spacing-4);\n\t\t}\n\t\t.progress-demo__text {\n\t\t\tmargin-bottom: var(--spacing-4);\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tfont-size: var(--font-size-sm);\n\t\t}\n\t\t.progress-demo__storage {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-4);\n\t\t}\n\t\t.progress-demo__storage-header {\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: space-between;\n\t\t\talign-items: flex-end;\n\t\t}\n\t\t.progress-demo__storage-title {\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tfont-weight: var(--font-weight-medium);\n\t\t}\n\t\t.progress-demo__storage-subtitle {\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.progress-demo__storage-percent {\n\t\t\tfont-size: var(--font-size-lg);\n\t\t\tfont-weight: var(--font-weight-semibold);\n\t\t\tcolor: var(--color-primary);\n\t\t}\n\t\t.progress-demo__profile {\n\t\t\tdisplay: flex;\n\t\t\tgap: var(--spacing-8);\n\t\t\talign-items: center;\n\t\t\tpadding: var(--spacing-6);\n\t\t\tbackground: var(--color-bg-secondary);\n\t\t\tborder-radius: var(--radius-md);\n\t\t\tborder: var(--border-width-thin) solid var(--color-border);\n\t\t}\n\t\t.progress-demo__profile-content {\n\t\t\tflex: 1;\n\t\t}\n\t\t.progress-demo__profile-title {\n\t\t\tmargin: 0;\n\t\t\tfont-size: var(--font-size-base);\n\t\t}\n\t\t.progress-demo__profile-text {\n\t\t\tmargin: var(--spacing-1) 0 0;\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
