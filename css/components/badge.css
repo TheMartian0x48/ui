@@ -13,7 +13,7 @@
     letter-spacing: 0.05em;
     white-space: nowrap;
 
-    border: 1px solid transparent;
+    border: var(--border-width-thin) solid transparent;
     border-radius: var(--radius-full);
 
     user-select: none;

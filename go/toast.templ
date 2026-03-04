@@ -21,17 +21,12 @@ const (
 )
 
 // ToastProp configures a toast notification.
-//
-// Fields:
-//   - Type: The semantic type (info, success, warning, error). Defaults to info.
-//   - Title: Optional bold heading text.
-//   - Message: The main notification text (required).
-//   - Class: Additional CSS classes for customization.
 type ToastProp struct {
-	Type    ToastType
-	Title   string
-	Message string
-	Class   string
+	Type       ToastType        // Semantic type: info, success, warning, error (default: info)
+	Title      string           // Optional bold heading text
+	Message    string           // Main notification text (required)
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Toast renders a single toast notification.
@@ -47,6 +42,7 @@ templ Toast(prop ToastProp) {
 		role="alert"
 		aria-live={ ariaLiveValue(prop.Type) }
 		aria-atomic="true"
+		{ prop.Attributes... }
 	>
 		<div class="toast__icon">
 			switch prop.Type {

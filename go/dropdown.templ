@@ -113,7 +113,8 @@ templ DropdownItem(prop DropdownItemProp) {
 
 // DropdownDividerProp configures the dropdown divider component.
 type DropdownDividerProp struct {
-	Class string // Additional CSS classes
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // DropdownDivider renders a horizontal separator within a dropdown menu.
@@ -122,6 +123,7 @@ templ DropdownDivider(prop DropdownDividerProp) {
 		class={ dropdownDividerClass(prop) }
 		role="separator"
 		aria-orientation="horizontal"
+		{ prop.Attributes... }
 	/>
 }
 
@@ -136,12 +138,13 @@ func dropdownDividerClass(prop DropdownDividerProp) string {
 
 // DropdownLabelProp configures the dropdown group label component.
 type DropdownLabelProp struct {
-	Class string // Additional CSS classes
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // DropdownLabel renders a non-interactive group label within a dropdown menu.
 templ DropdownLabel(prop DropdownLabelProp) {
-	<div class={ dropdownLabelClass(prop) } role="presentation">
+	<div class={ dropdownLabelClass(prop) } role="presentation" { prop.Attributes... }>
 		{ children... }
 	</div>
 }

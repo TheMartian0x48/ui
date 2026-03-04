@@ -70,7 +70,7 @@
     max-width: 400px;
 
     background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
 
@@ -108,7 +108,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--spacing-px);
 }
 
 .toast__title {
@@ -127,7 +127,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: var(--spacing-px);
 }
 
 .toast__close {
@@ -143,8 +143,8 @@
 }
 
 .toast__close:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+    outline: var(--border-width-medium) solid var(--color-primary);
+    outline-offset: var(--border-width-medium);
 }
 
 .toast__close:hover {

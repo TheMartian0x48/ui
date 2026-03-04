@@ -1,37 +1,138 @@
-/* CSS Custom Properties - Design Tokens */
+/* CSS Custom Properties - Design Tokens
+ *
+ * Structure:
+ *   1. STATIC TOKENS - Never change between themes (spacing, typography, etc.)
+ *   2. THEME COLORS - Light mode defaults (colors, shadows, focus rings)
+ *   3. DARK MODE - Theme-aware color overrides
+ */
 
 :root {
-    /* ========== Colors ========== */
-    /* ========== Default Theme (Blue) & Baseline Colors ========== */
+    /* ========================================================
+       STATIC TOKENS (Never change between themes)
+       ======================================================== */
+
+    /* Spacing Scale (Tailwind-like) */
+    --spacing-0: 0px;
+    --spacing-px: 1px;
+    --spacing-1: 0.25rem;   /* 4px */
+    --spacing-2: 0.5rem;    /* 8px */
+    --spacing-3: 0.75rem;   /* 12px */
+    --spacing-4: 1rem;      /* 16px */
+    --spacing-5: 1.25rem;   /* 20px */
+    --spacing-6: 1.5rem;    /* 24px */
+    --spacing-8: 2rem;      /* 32px */
+    --spacing-10: 2.5rem;   /* 40px */
+    --spacing-12: 3rem;     /* 48px */
+    --spacing-16: 4rem;     /* 64px */
+    --spacing-20: 5rem;     /* 80px */
+    --spacing-24: 6rem;     /* 96px */
+    --spacing-32: 8rem;     /* 128px */
+
+    /* Typography - Font Families */
+    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
+        Consolas, "Courier New", monospace;
+
+    /* Typography - Font Sizes */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-md: 1rem;       /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+
+    /* Typography - Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Typography - Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.5rem;    /* 8px */
+    --radius-lg: 1rem;      /* 16px */
+    --radius-xl: 1.5rem;    /* 24px */
+    --radius-full: 9999px;
+
+    /* Border Widths */
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-width-thick: 4px;
+
+    /* Z-Index Scale */
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-fixed: 1200;
+    --z-modal-backdrop: 1300;
+    --z-modal: 1400;
+    --z-popover: 1500;
+    --z-tooltip: 1600;
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+
+    /* Easing Functions */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Opacity */
+    --opacity-disabled: 0.5;
+    --opacity-muted: 0.6;
+    --opacity-subtle: 0.8;
+
+    /* ========================================================
+       THEME COLORS (Light Mode - Default)
+       ======================================================== */
 
     /* Primary Colors */
     --color-primary: #2563eb;
     --color-primary-dark: #1d4ed8;
     --color-primary-darker: #1e40af;
     --color-primary-light: #3b82f6;
+    --color-primary-subtle-bg: #eff6ff;
+    --color-primary-subtle-text: #1e40af;
 
     /* Secondary Colors */
     --color-secondary: #10b981;
     --color-secondary-dark: #059669;
     --color-secondary-light: #34d399;
 
-    /* Semantic Colors */
+    /* Semantic - Success */
+    --color-success: #10b981;
+    --color-success-subtle-bg: #f0fdf4;
+    --color-success-subtle-text: #166534;
+
+    /* Semantic - Warning */
+    --color-warning: #f59e0b;
+    --color-warning-text: #92400e;
+    --color-warning-subtle-bg: #fffbeb;
+
+    /* Semantic - Danger */
     --color-danger: #ef4444;
     --color-danger-dark: #dc2626;
     --color-danger-darker: #b91c1c;
     --color-danger-subtle-bg: #fef2f2;
     --color-danger-subtle-text: #991b1b;
-    --color-success: #10b981;
-    --color-success-subtle-bg: #f0fdf4;
-    --color-success-subtle-text: #166534;
-    --color-warning: #f59e0b;
-    --color-warning-text: #92400e;
-    --color-warning-subtle-bg: #fffbeb;
+
+    /* Semantic - Info */
     --color-info: #3b82f6;
     --color-info-subtle-bg: #f0f9ff;
     --color-info-subtle-text: #075985;
-    --color-primary-subtle-bg: #eff6ff;
-    --color-primary-subtle-text: #1e40af;
 
     /* Text Colors */
     --color-text: #1f2937;
@@ -53,169 +154,7 @@
     --color-border-dark: #d1d5db;
     --color-border-light: #f3f4f6;
 
-    /* ========== Opacity ========== */
-    --opacity-disabled: 0.5;
-    --opacity-muted: 0.6;
-    --opacity-subtle: 0.8;
-}
-
-/* ========== Color Themes ========== */
-
-/* Green Theme */
-[data-theme="green"] {
-    --color-primary: #10b981;
-    --color-primary-dark: #059669;
-    --color-primary-darker: #047857;
-    --color-primary-light: #34d399;
-}
-
-/* Red Theme */
-[data-theme="red"] {
-    --color-primary: #ef4444;
-    --color-primary-dark: #dc2626;
-    --color-primary-darker: #b91c1c;
-    --color-primary-light: #f87171;
-}
-
-/* Violet Theme */
-[data-theme="violet"] {
-    --color-primary: #8b5cf6;
-    --color-primary-dark: #7c3aed;
-    --color-primary-darker: #6d28d9;
-    --color-primary-light: #a78bfa;
-}
-
-/* ========== Dark Mode Theme ========== */
-
-[data-theme="dark"],
-[data-mode="dark"] {
-    /* Text Colors for Dark Mode */
-    --color-text: #f9fafb;
-    --color-text-primary: #f9fafb;
-    --color-text-secondary: #d1d5db;
-    --color-text-muted: #9ca3af;
-    --color-text-inverse: #111827;
-
-    /* Background Colors for Dark Mode */
-    --color-bg: #111827;
-    --color-bg-primary: #111827;
-    --color-bg-secondary: #1f2937;
-    --color-bg-tertiary: #374151;
-    --color-bg-overlay: rgba(0, 0, 0, 0.75);
-
-    /* Border Colors for Dark Mode */
-    --color-border: #374151;
-    --color-border-dark: #4b5563;
-    --color-border-light: #1f2937;
-
-    /* Subtle Colors for Dark Mode */
-    --color-primary-subtle-bg: #1e3a5f;
-    --color-primary-subtle-text: #93c5fd;
-    --color-success-subtle-bg: #064e3b;
-    --color-success-subtle-text: #6ee7b7;
-    --color-warning-subtle-bg: #78350f;
-    --color-warning-text: #fcd34d;
-    --color-danger-subtle-bg: #7f1d1d;
-    --color-danger-subtle-text: #fca5a5;
-    --color-info-subtle-bg: #1e3a5f;
-    --color-info-subtle-text: #93c5fd;
-}
-
-:root {
-    /* ========== Spacing ========== */
-    /* ========== Spacing ========== */
-    /* Numeric Scale (Tailwind-like) */
-    --spacing-0: 0px;
-    --spacing-px: 1px;
-
-    --spacing-1: 0.25rem;
-    /* 4px */
-    --spacing-2: 0.5rem;
-    /* 8px */
-    --spacing-3: 0.75rem;
-    /* 12px */
-    --spacing-4: 1rem;
-    /* 16px */
-    --spacing-5: 1.25rem;
-    /* 20px */
-    --spacing-6: 1.5rem;
-    /* 24px */
-    --spacing-8: 2rem;
-    /* 32px */
-    --spacing-10: 2.5rem;
-    /* 40px */
-    --spacing-12: 3rem;
-    /* 48px */
-    --spacing-16: 4rem;
-    /* 64px */
-    --spacing-20: 5rem;
-    /* 80px */
-    --spacing-24: 6rem;
-    /* 96px */
-    --spacing-32: 8rem;
-    /* 128px */
-
-
-
-    /* ========== Typography ========== */
-
-    /* Font Families */
-    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-    --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
-        Consolas, "Courier New", monospace;
-
-    /* Font Sizes */
-    --font-size-xs: 0.75rem;
-    /* 12px */
-    --font-size-sm: 0.875rem;
-    /* 14px */
-    --font-size-base: 1rem;
-    /* 16px */
-    --font-size-lg: 1.125rem;
-    /* 18px */
-    --font-size-xl: 1.25rem;
-    /* 20px */
-    --font-size-2xl: 1.5rem;
-    /* 24px */
-    --font-size-3xl: 1.875rem;
-    /* 30px */
-    --font-size-4xl: 2.25rem;
-    /* 36px */
-
-    /* Font Weights */
-    --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
-
-    /* Line Heights */
-    --line-height-tight: 1.25;
-    --line-height-normal: 1.5;
-    --line-height-relaxed: 1.75;
-
-    /* ========== Borders ========== */
-
-    /* Border Radius */
-    --radius-sm: 0.25rem;
-    /* 4px */
-    --radius-md: 0.5rem;
-    /* 8px */
-    --radius-lg: 1rem;
-    /* 16px */
-    --radius-xl: 1.5rem;
-    /* 24px */
-    --radius-full: 9999px;
-    /* Fully rounded */
-
-    /* Border Widths */
-    --border-width-thin: 1px;
-    --border-width-medium: 2px;
-    --border-width-thick: 4px;
-
-    /* ========== Shadows ========== */
+    /* Shadows */
     --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -225,31 +164,76 @@
     /* Focus Rings */
     --focus-ring-primary: 0 0 0 3px rgba(37, 99, 235, 0.3);
     --focus-ring-danger: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
 
-    /* ========== Transitions ========== */
-    --transition-fast: 150ms ease-in-out;
-    --transition-base: 250ms ease-in-out;
-    --transition-slow: 350ms ease-in-out;
+/* ========================================================
+   DARK MODE
+   ======================================================== */
 
-    /* Easing Functions */
-    --ease-in: cubic-bezier(0.4, 0, 1, 1);
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+[data-theme="dark"] {
+    /* Primary Colors - Lighter for dark backgrounds */
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-primary-darker: #1d4ed8;
+    --color-primary-light: #60a5fa;
+    --color-primary-subtle-bg: #1e3a5f;
+    --color-primary-subtle-text: #93c5fd;
 
-    /* ========== Z-Index Scale ========== */
-    --z-base: 0;
-    --z-dropdown: 1000;
-    --z-sticky: 1100;
-    --z-fixed: 1200;
-    --z-modal-backdrop: 1300;
-    --z-modal: 1400;
-    --z-popover: 1500;
-    --z-tooltip: 1600;
+    /* Secondary Colors */
+    --color-secondary: #34d399;
+    --color-secondary-dark: #10b981;
+    --color-secondary-light: #6ee7b7;
 
-    /* ========== Breakpoints (for reference in media queries) ========== */
-    /* 
-    Mobile: 0-639px (default)
-    Tablet: 640px-1023px
-    Desktop: 1024px+
-  */
+    /* Semantic - Success */
+    --color-success: #34d399;
+    --color-success-subtle-bg: #064e3b;
+    --color-success-subtle-text: #6ee7b7;
+
+    /* Semantic - Warning */
+    --color-warning: #fbbf24;
+    --color-warning-text: #fcd34d;
+    --color-warning-subtle-bg: #78350f;
+
+    /* Semantic - Danger */
+    --color-danger: #f87171;
+    --color-danger-dark: #ef4444;
+    --color-danger-darker: #dc2626;
+    --color-danger-subtle-bg: #7f1d1d;
+    --color-danger-subtle-text: #fca5a5;
+
+    /* Semantic - Info */
+    --color-info: #60a5fa;
+    --color-info-subtle-bg: #1e3a5f;
+    --color-info-subtle-text: #93c5fd;
+
+    /* Text Colors */
+    --color-text: #f9fafb;
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #d1d5db;
+    --color-text-muted: #9ca3af;
+    --color-text-disabled: #6b7280;
+    --color-text-inverse: #111827;
+
+    /* Background Colors */
+    --color-bg: #101010;
+    --color-bg-primary: #101010;
+    --color-bg-secondary: #1a1a1a;
+    --color-bg-tertiary: #2a2a2a;
+    --color-bg-overlay: rgba(0, 0, 0, 0.75);
+
+    /* Border Colors */
+    --color-border: #374151;
+    --color-border-dark: #4b5563;
+    --color-border-light: #1f2937;
+
+    /* Shadows - Stronger for dark backgrounds */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+
+    /* Focus Rings - More visible on dark backgrounds */
+    --focus-ring-primary: 0 0 0 3px rgba(59, 130, 246, 0.5);
+    --focus-ring-danger: 0 0 0 3px rgba(248, 113, 113, 0.5);
 }

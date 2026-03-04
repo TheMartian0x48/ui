@@ -1,4 +1,19 @@
-/* Icon Component */
+/* Icon Component Styles
+ *
+ * A wrapper component for rendering SVG icons with consistent sizing.
+ *
+ * Structure:
+ *   .icon      - Icon container (inline-flex)
+ *   .icon svg  - The SVG element, scales to fill container
+ *
+ * Size Variants:
+ *   .icon--sm  - Small (16px)
+ *   .icon--md  - Medium (24px, default)
+ *   .icon--lg  - Large (32px)
+ *
+ * Usage:
+ *   Icons inherit color from parent. Set color on icon or parent element.
+ */
 
 .icon {
     display: inline-flex;

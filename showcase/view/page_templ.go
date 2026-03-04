@@ -111,7 +111,7 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " - ui library</title><!-- Framework CSS --><link rel=\"stylesheet\" href=\"/css/main.css\"><!-- Showcase specific CSS --><link rel=\"stylesheet\" href=\"/showcase-static/css/doc.css\"><script defer src=\"https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body><div class=\"doc-layout\"><!-- Sidebar --><aside class=\"doc-sidebar\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " - ui library</title><!-- Framework CSS --><link rel=\"stylesheet\" href=\"/css/main.css\"><!-- Showcase specific CSS --><link rel=\"stylesheet\" href=\"/showcase-static/css/doc.css\"><script defer src=\"https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body x-data=\"{ darkMode: localStorage.getItem('theme') === 'dark' }\" x-init=\"$watch('darkMode', val => { localStorage.setItem('theme', val ? 'dark' : 'light'); document.documentElement.setAttribute('data-theme', val ? 'dark' : 'light') }); if (darkMode) document.documentElement.setAttribute('data-theme', 'dark')\"><div class=\"doc-layout\"><!-- Sidebar --><aside class=\"doc-sidebar\"><div class=\"doc-sidebar__header\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -141,7 +141,30 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<nav class=\"doc-sidebar__nav\"><div><h3 class=\"doc-sidebar__group-title\">Introduction</h3><ul class=\"doc-sidebar__links\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"doc-theme-toggle\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconSun(), Size: ui.IconSizeSM, Class: "doc-theme-toggle__icon"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Switch(ui.SwitchProp{
+			Id:        "theme-toggle",
+			Size:      ui.SwitchSizeSM,
+			AriaLabel: "Toggle dark mode",
+			Attributes: templ.Attributes{
+				"x-model": "darkMode",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Icon(ui.IconProp{Icon: ui.IconMoon(), Size: ui.IconSizeSM, Class: "doc-theme-toggle__icon"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div><nav class=\"doc-sidebar__nav\"><div><h3 class=\"doc-sidebar__group-title\">Introduction</h3><ul class=\"doc-sidebar__links\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -149,7 +172,7 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</ul></div><div><h3 class=\"doc-sidebar__group-title\">Components</h3><ul class=\"doc-sidebar__links\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</ul></div><div><h3 class=\"doc-sidebar__group-title\">Components</h3><ul class=\"doc-sidebar__links\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -269,7 +292,7 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</ul></div></nav></aside><!-- Main Content Area --><main class=\"doc-main\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</ul></div></nav></aside><!-- Main Content Area --><main class=\"doc-main\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -424,38 +447,38 @@ func Showcase(activeComponent string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<section class=\"doc-section\"><header class=\"doc-section__header\"><h1 class=\"doc-section__title\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 156, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 170, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</h1><p class=\"doc-section__description\">Demo for ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</h1><p class=\"doc-section__description\">Demo for ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 158, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 172, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, " coming soon.</p></header></section>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, " coming soon.</p></header></section>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</main></div><!-- Global components -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</main></div><!-- Global components -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -463,7 +486,7 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
