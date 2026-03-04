@@ -7,17 +7,22 @@
 
 /* Component styles (alphabetically ordered) */
 @import url('components/badge.css');
+@import url('components/breadcrumb.css');
 @import url('components/button.css');
 @import url('components/link.css');
 @import url('components/icon.css');
 @import url('components/input.css');
 @import url('components/label.css');
+@import url('components/list.css');
+@import url('components/pagination.css');
 @import url('components/progress.css');
 @import url('components/radio.css');
 @import url('components/select.css');
+@import url('components/skeleton.css');
 @import url('components/slider.css');
 @import url('components/stepper.css');
 @import url('components/switch.css');
+@import url('components/timeline.css');
 @import url('components/accordion.css');
 @import url('components/alert.css');
 @import url('components/autocomplete.css');

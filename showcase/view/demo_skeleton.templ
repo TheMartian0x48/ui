@@ -1,0 +1,259 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ SkeletonDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Skeleton</h1>
+			<p class="doc-section__description">
+				Loading placeholders with shimmer animation to improve perceived performance while content is loading.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Text Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Text Variant</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonText,
+							Size:    ui.SkeletonSizeSM,
+						})
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonText,
+							Size:    ui.SkeletonSizeMD,
+						})
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonText,
+							Size:    ui.SkeletonSizeLG,
+						})
+					</div>
+				</div>
+				<!-- Text Lines -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Multiple Text Lines</h3>
+					<div style="max-width: 400px;">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonText,
+							Lines:   3,
+						})
+					</div>
+				</div>
+				<!-- Circular Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Circular Variant</h3>
+					<div class="doc-demo__list">
+						<div class="skeleton-demo__item">
+							@ui.Skeleton(ui.SkeletonProp{
+								Variant: ui.SkeletonCircular,
+								Size:    ui.SkeletonSizeSM,
+							})
+							<span class="text-xs">Small</span>
+						</div>
+						<div class="skeleton-demo__item">
+							@ui.Skeleton(ui.SkeletonProp{
+								Variant: ui.SkeletonCircular,
+								Size:    ui.SkeletonSizeMD,
+							})
+							<span class="text-xs">Medium</span>
+						</div>
+						<div class="skeleton-demo__item">
+							@ui.Skeleton(ui.SkeletonProp{
+								Variant: ui.SkeletonCircular,
+								Size:    ui.SkeletonSizeLG,
+							})
+							<span class="text-xs">Large</span>
+						</div>
+					</div>
+				</div>
+				<!-- Rectangular Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Rectangular Variant</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonRectangular,
+							Size:    ui.SkeletonSizeSM,
+						})
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonRectangular,
+							Size:    ui.SkeletonSizeMD,
+						})
+					</div>
+				</div>
+				<!-- Custom Dimensions -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Dimensions</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonText,
+							Width:   "60%",
+						})
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonRectangular,
+							Width:   "200px",
+							Height:  "100px",
+						})
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant: ui.SkeletonCircular,
+							Width:   "80px",
+							Height:  "80px",
+						})
+					</div>
+				</div>
+				<!-- Card Loading Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Card Loading Example</h3>
+					<div style="max-width: 320px;">
+						@ui.Card(ui.CardProp{}) {
+							<div class="skeleton-demo__card">
+								@ui.Skeleton(ui.SkeletonProp{
+									Variant:   ui.SkeletonRectangular,
+									Height:    "160px",
+									AriaLabel: "Loading image",
+								})
+								<div class="skeleton-demo__card-content">
+									@ui.Skeleton(ui.SkeletonProp{
+										Variant:   ui.SkeletonText,
+										Size:      ui.SkeletonSizeLG,
+										Width:     "70%",
+										AriaLabel: "Loading title",
+									})
+									@ui.Skeleton(ui.SkeletonProp{
+										Variant:   ui.SkeletonText,
+										Lines:     2,
+										AriaLabel: "Loading description",
+									})
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Profile Loading Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Profile Loading Example</h3>
+					<div class="skeleton-demo__profile">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant:   ui.SkeletonCircular,
+							Size:      ui.SkeletonSizeLG,
+							AriaLabel: "Loading avatar",
+						})
+						<div class="skeleton-demo__profile-info">
+							@ui.Skeleton(ui.SkeletonProp{
+								Variant:   ui.SkeletonText,
+								Size:      ui.SkeletonSizeMD,
+								Width:     "150px",
+								AriaLabel: "Loading name",
+							})
+							@ui.Skeleton(ui.SkeletonProp{
+								Variant:   ui.SkeletonText,
+								Size:      ui.SkeletonSizeSM,
+								Width:     "100px",
+								AriaLabel: "Loading role",
+							})
+						</div>
+					</div>
+				</div>
+				<!-- List Loading Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">List Loading Example</h3>
+					<div class="skeleton-demo__list">
+						for i := 0; i < 3; i++ {
+							<div class="skeleton-demo__list-item">
+								@ui.Skeleton(ui.SkeletonProp{
+									Variant: ui.SkeletonCircular,
+									Size:    ui.SkeletonSizeMD,
+								})
+								<div class="skeleton-demo__list-content">
+									@ui.Skeleton(ui.SkeletonProp{
+										Variant: ui.SkeletonText,
+										Size:    ui.SkeletonSizeMD,
+										Width:   "70%",
+									})
+									@ui.Skeleton(ui.SkeletonProp{
+										Variant: ui.SkeletonText,
+										Size:    ui.SkeletonSizeSM,
+										Width:   "50%",
+									})
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+				<!-- Without Animation -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Without Animation</h3>
+					<p class="skeleton-demo__text">Animation can be disabled by setting Animated to false.</p>
+					<div style="max-width: 400px;">
+						@ui.Skeleton(ui.SkeletonProp{
+							Variant:  ui.SkeletonText,
+							Lines:    2,
+							Animated: boolPtr(false),
+						})
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.skeleton-demo__item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-3);
+			color: var(--color-text-muted);
+		}
+		.skeleton-demo__text {
+			margin-bottom: var(--spacing-4);
+			color: var(--color-text-muted);
+			font-size: var(--font-size-sm);
+		}
+		.skeleton-demo__card {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-4);
+			margin: calc(-1 * var(--spacing-4));
+		}
+		.skeleton-demo__card-content {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-3);
+			padding: 0 var(--spacing-4) var(--spacing-4);
+		}
+		.skeleton-demo__profile {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-4);
+			padding: var(--spacing-4);
+			background: var(--color-bg-secondary);
+			border-radius: var(--radius-md);
+			border: var(--border-width-thin) solid var(--color-border);
+		}
+		.skeleton-demo__profile-info {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-2);
+		}
+		.skeleton-demo__list {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-4);
+			padding: var(--spacing-4);
+			background: var(--color-bg-secondary);
+			border-radius: var(--radius-md);
+			border: var(--border-width-thin) solid var(--color-border);
+			max-width: 400px;
+		}
+		.skeleton-demo__list-item {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-3);
+		}
+		.skeleton-demo__list-content {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-2);
+			flex: 1;
+		}
+	</style>
+}

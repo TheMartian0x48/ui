@@ -1,0 +1,111 @@
+package ui
+
+import "strings"
+
+// BreadcrumbProp configures the breadcrumb navigation container.
+//
+// Breadcrumbs show the user's location within a site hierarchy and
+// allow navigation to parent pages. The component renders a semantic
+// <nav> element with proper ARIA attributes.
+//
+// Example usage:
+//
+//	@ui.Breadcrumb(ui.BreadcrumbProp{}) {
+//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) { Home }
+//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/products"}) { Products }
+//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) { Details }
+//	}
+type BreadcrumbProp struct {
+	Separator  string           // Custom separator (default: "/")
+	Class      string           // Additional CSS classes
+	AriaLabel  string           // Navigation label (default: "Breadcrumb")
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// BreadcrumbItemProp configures a single breadcrumb item.
+//
+// Items can be links (with Href) or the current page (with Current: true).
+// The last item is typically the current page and should not be a link.
+type BreadcrumbItemProp struct {
+	Href       string           // Link destination (empty for current page)
+	Current    bool             // Marks this as the current page (aria-current="page")
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// Breadcrumb renders a navigation breadcrumb trail.
+//
+// Accessibility:
+//   - Uses <nav> element with aria-label for screen readers
+//   - Implements WAI-ARIA breadcrumb pattern
+//   - Current page marked with aria-current="page"
+//   - Separators are hidden from screen readers
+templ Breadcrumb(prop BreadcrumbProp) {
+	{{
+		ariaLabel := prop.AriaLabel
+		if ariaLabel == "" {
+			ariaLabel = "Breadcrumb"
+		}
+		separator := prop.Separator
+		if separator == "" {
+			separator = "/"
+		}
+	}}
+	<nav
+		class={ breadcrumbClass(prop.Class) }
+		aria-label={ ariaLabel }
+		{ prop.Attributes... }
+	>
+		<ol class="breadcrumb__list" data-separator={ separator }>
+			{ children... }
+		</ol>
+	</nav>
+}
+
+// BreadcrumbItem renders a single item in the breadcrumb trail.
+// Use Href for navigable links, or Current: true for the active page.
+templ BreadcrumbItem(prop BreadcrumbItemProp) {
+	<li class={ breadcrumbItemClass(prop.Current, prop.Class) } { prop.Attributes... }>
+		if prop.Href != "" && !prop.Current {
+			<a href={ templ.SafeURL(prop.Href) } class="breadcrumb__link">
+				{ children... }
+			</a>
+		} else {
+			<span
+				class="breadcrumb__text"
+				if prop.Current {
+					aria-current="page"
+				}
+			>
+				{ children... }
+			</span>
+		}
+	</li>
+}
+
+// breadcrumbClass generates CSS class for breadcrumb container.
+func breadcrumbClass(class string) string {
+	if class == "" {
+		return "breadcrumb"
+	}
+	var b strings.Builder
+	b.Grow(20)
+	b.WriteString("breadcrumb ")
+	b.WriteString(class)
+	return b.String()
+}
+
+// breadcrumbItemClass generates CSS class for breadcrumb item.
+func breadcrumbItemClass(current bool, class string) string {
+	var b strings.Builder
+	b.Grow(30)
+	b.WriteString("breadcrumb__item")
+	if current {
+		b.WriteString(" breadcrumb__item--current")
+	}
+	if class != "" {
+		b.WriteString(" ")
+		b.WriteString(class)
+	}
+	return b.String()
+}

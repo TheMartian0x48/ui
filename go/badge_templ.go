@@ -10,44 +10,72 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "strings"
 
+// BadgeVariant defines the color variant of the badge.
 type BadgeVariant int
 
 const (
-	BadgePrimary BadgeVariant = iota
-	BadgeSecondary
-	BadgeSuccess
-	BadgeWarning
-	BadgeDanger
-	BadgeInfo
+	BadgePrimary   BadgeVariant = iota // Primary brand color
+	BadgeSecondary                     // Neutral/gray
+	BadgeSuccess                       // Green/success
+	BadgeWarning                       // Yellow/warning
+	BadgeDanger                        // Red/error
+	BadgeInfo                          // Blue/info
 )
 
+// BadgeShape defines the visual style of the badge.
 type BadgeShape int
 
 const (
-	BadgeFilled BadgeShape = iota
-	BadgeOutlined
-	BadgeSubtle
+	BadgeFilled   BadgeShape = iota // Solid background (default)
+	BadgeOutlined                   // Border only
+	BadgeSubtle                     // Light background tint
 )
 
+// BadgeSize defines the size of the badge.
 type BadgeSize int
 
 const (
-	BadgeSizeMD BadgeSize = iota // default
-	BadgeSizeSM
-	BadgeSizeLG
+	BadgeSizeMD BadgeSize = iota // Medium (default)
+	BadgeSizeSM                  // Small
+	BadgeSizeLG                  // Large
 )
 
+// BadgeProp configures a badge/label component.
+//
+// Badges are compact elements for labeling, categorizing, or showing status.
+// They support icons, dismissible functionality, and multiple visual styles.
+//
+// Example usage:
+//
+//	// Simple badge
+//	@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess}) { Active }
+//
+//	// With icon
+//	@ui.Badge(ui.BadgeProp{Icon: ui.IconCheck()}) { Verified }
+//
+//	// Dismissible
+//	@ui.Badge(ui.BadgeProp{Dismissible: true, OnDismiss: "remove()"}) { Tag }
 type BadgeProp struct {
-	Variant    BadgeVariant
-	Shape      BadgeShape
-	Size       BadgeSize
-	Class      string
-	Id         string
-	Attributes templ.Attributes
-	AriaLabel  string // Screen reader text for context
+	Variant     BadgeVariant     // Color variant
+	Shape       BadgeShape       // Visual style (filled, outlined, subtle)
+	Size        BadgeSize        // Size variant
+	Rounded     bool             // Use pill/capsule shape (more rounded)
+	Icon        templ.Component  // Optional leading icon
+	Dismissible bool             // Show dismiss/close button
+	OnDismiss   string           // JavaScript handler for dismiss (Alpine.js @click)
+	Disabled    bool             // Disable interactions
+	Class       string           // Additional CSS classes
+	Id          string           // HTML id attribute
+	Attributes  templ.Attributes // Additional HTML attributes
+	AriaLabel   string           // Screen reader text for context
 }
 
 // Badge renders a small label/badge component.
+//
+// Accessibility:
+//   - Dismiss button includes aria-label for screen readers
+//   - Disabled state indicated with aria-disabled
+//   - Icons are hidden from screen readers (decorative)
 func Badge(prop BadgeProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -86,7 +114,7 @@ func Badge(prop BadgeProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 46, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 74, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -122,7 +150,7 @@ func Badge(prop BadgeProp) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(prop.AriaLabel)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 50, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 78, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -133,11 +161,35 @@ func Badge(prop BadgeProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
+		if prop.Disabled {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, " aria-disabled=\"true\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
 		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, prop.Attributes)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, ">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, ">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if prop.Icon != nil {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<span class=\"badge__icon\" aria-hidden=\"true\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = prop.Icon.Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<span class=\"badge__text\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -145,7 +197,117 @@ func Badge(prop BadgeProp) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</span> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if prop.Dismissible && !prop.Disabled {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<button type=\"button\" class=\"badge__dismiss\" aria-label=\"Remove\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if prop.OnDismiss != "" {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, " @click=\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var6 string
+				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(prop.OnDismiss)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 99, Col: 28}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M18 6L6 18M6 6l12 12\"></path></svg></button>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</span>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+// BadgeGroupProp configures a container for multiple badges.
+//
+// Example:
+//
+//	@ui.BadgeGroup(ui.BadgeGroupProp{}) {
+//	    @ui.Badge(ui.BadgeProp{}) { Tag 1 }
+//	    @ui.Badge(ui.BadgeProp{}) { Tag 2 }
+//	}
+type BadgeGroupProp struct {
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// BadgeGroup renders a flex container for badges with proper spacing.
+func BadgeGroup(prop BadgeGroupProp) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		var templ_7745c5c3_Var8 = []any{badgeGroupClass(prop.Class)}
+		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var8...)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div class=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var9 string
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var8).String())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/badge.templ`, Line: 1, Col: 0}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "\" role=\"group\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, prop.Attributes)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, ">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ_7745c5c3_Var7.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -156,7 +318,7 @@ func Badge(prop BadgeProp) templ.Component {
 // badgeClass generates the CSS class for the badge based on variant, shape, and size.
 func badgeClass(prop BadgeProp) string {
 	var b strings.Builder
-	b.Grow(50)
+	b.Grow(60)
 
 	b.WriteString("badge")
 
@@ -196,6 +358,21 @@ func badgeClass(prop BadgeProp) string {
 		b.WriteString(" badge--md")
 	}
 
+	// Rounded modifier
+	if prop.Rounded {
+		b.WriteString(" badge--rounded")
+	}
+
+	// Dismissible modifier
+	if prop.Dismissible {
+		b.WriteString(" badge--dismissible")
+	}
+
+	// Disabled modifier
+	if prop.Disabled {
+		b.WriteString(" badge--disabled")
+	}
+
 	// Add custom class if provided
 	if prop.Class != "" {
 		b.WriteString(" ")
@@ -203,6 +380,14 @@ func badgeClass(prop BadgeProp) string {
 	}
 
 	return b.String()
+}
+
+// badgeGroupClass generates CSS class for badge group.
+func badgeGroupClass(class string) string {
+	if class == "" {
+		return "badge-group"
+	}
+	return "badge-group " + class
 }
 
 var _ = templruntime.GeneratedTemplate

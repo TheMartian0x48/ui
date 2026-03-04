@@ -1,0 +1,124 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ TimelineDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Timeline</h1>
+			<p class="doc-section__description">
+				Displays a sequence of events in chronological order. Useful for activity feeds, process steps, or historical records.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Timeline -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Timeline</h3>
+					<div style="max-width: 500px;">
+						@ui.Timeline(ui.TimelineProp{}) {
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Order Placed", Time: "Dec 20, 2024"}) {
+								Your order #12345 has been placed successfully.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Payment Confirmed", Time: "Dec 20, 2024"}) {
+								Payment has been processed and confirmed.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Shipped", Time: "Dec 21, 2024"}) {
+								Package has been shipped via Express Delivery.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Delivered", Time: "Dec 23, 2024"}) {
+								Package was delivered to your address.
+							}
+						}
+					</div>
+				</div>
+				<!-- With Active State -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Active State</h3>
+					<div style="max-width: 500px;">
+						@ui.Timeline(ui.TimelineProp{}) {
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Application Submitted", Time: "Jan 5", Completed: true}) {
+								Your application has been received.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Under Review", Time: "Jan 8", Active: true}) {
+								Our team is currently reviewing your application.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Interview", Time: "Pending"}) {
+								Schedule an interview with the hiring manager.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Decision", Time: "Pending"}) {
+								Final decision will be communicated.
+							}
+						}
+					</div>
+				</div>
+				<!-- With Color Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Color Variants</h3>
+					<div style="max-width: 500px;">
+						@ui.Timeline(ui.TimelineProp{}) {
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Build Started", Time: "10:30 AM", Variant: ui.BadgeInfo}) {
+								CI pipeline initiated.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Tests Passed", Time: "10:35 AM", Variant: ui.BadgeSuccess}) {
+								All 156 tests passed successfully.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Warning: Deprecation", Time: "10:36 AM", Variant: ui.BadgeWarning}) {
+								3 deprecated API calls detected.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Deployment Failed", Time: "10:40 AM", Variant: ui.BadgeDanger}) {
+								Unable to connect to production server.
+							}
+						}
+					</div>
+				</div>
+				<!-- Compact Timeline -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Compact Timeline</h3>
+					<div style="max-width: 400px;">
+						@ui.Timeline(ui.TimelineProp{Variant: ui.TimelineCompact}) {
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Created repository", Time: "2 hours ago"}) {}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Added README.md", Time: "1 hour ago"}) {}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "First commit", Time: "45 min ago"}) {}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Opened pull request", Time: "30 min ago", Active: true}) {}
+						}
+					</div>
+				</div>
+				<!-- With Custom Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Icons</h3>
+					<div style="max-width: 500px;">
+						@ui.Timeline(ui.TimelineProp{}) {
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Account Created", Time: "Jan 1", Icon: ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})}) {
+								Welcome to the platform!
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Profile Updated", Time: "Jan 3", Icon: ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeSM})}) {
+								Added profile picture and bio.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "First Project", Time: "Jan 5", Icon: ui.Icon(ui.IconProp{Icon: ui.IconFileText(), Size: ui.IconSizeSM})}) {
+								Created your first project.
+							}
+							@ui.TimelineItem(ui.TimelineItemProp{Title: "Team Invite", Time: "Jan 7", Icon: ui.Icon(ui.IconProp{Icon: ui.IconShare(), Size: ui.IconSizeSM})}) {
+								Invited 3 team members.
+							}
+						}
+					</div>
+				</div>
+				<!-- Activity Feed Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Activity Feed Example</h3>
+					<div style="max-width: 500px;">
+						@ui.Card(ui.CardProp{Header: "Recent Activity"}) {
+							@ui.Timeline(ui.TimelineProp{Variant: ui.TimelineCompact}) {
+								@ui.TimelineItem(ui.TimelineItemProp{Title: "Sarah commented on your post", Time: "5 min ago", Variant: ui.BadgePrimary}) {}
+								@ui.TimelineItem(ui.TimelineItemProp{Title: "New follower: John Doe", Time: "1 hour ago"}) {}
+								@ui.TimelineItem(ui.TimelineItemProp{Title: "Your post reached 100 likes", Time: "3 hours ago", Variant: ui.BadgeSuccess}) {}
+								@ui.TimelineItem(ui.TimelineItemProp{Title: "Mentioned in a comment", Time: "Yesterday"}) {}
+							}
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

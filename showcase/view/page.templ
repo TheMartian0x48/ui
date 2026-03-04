@@ -73,6 +73,7 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("alert", activeComponent == "alert")
 								@SidebarLink("autocomplete", activeComponent == "autocomplete")
 								@SidebarLink("badge", activeComponent == "badge")
+								@SidebarLink("breadcrumb", activeComponent == "breadcrumb")
 								@SidebarLink("button", activeComponent == "button")
 								@SidebarLink("card", activeComponent == "card")
 								@SidebarLink("checkbox", activeComponent == "checkbox")
@@ -87,12 +88,16 @@ templ Showcase(activeComponent string) {
 								@SidebarLink("input", activeComponent == "input")
 								@SidebarLink("label", activeComponent == "label")
 								@SidebarLink("link", activeComponent == "link")
+								@SidebarLink("list", activeComponent == "list")
+								@SidebarLink("pagination", activeComponent == "pagination")
 								@SidebarLink("progress", activeComponent == "progress")
 								@SidebarLink("radio", activeComponent == "radio")
 								@SidebarLink("select", activeComponent == "select")
+								@SidebarLink("skeleton", activeComponent == "skeleton")
 								@SidebarLink("slider", activeComponent == "slider")
 								@SidebarLink("stepper", activeComponent == "stepper")
 								@SidebarLink("switch", activeComponent == "switch")
+								@SidebarLink("timeline", activeComponent == "timeline")
 								@SidebarLink("table", activeComponent == "table")
 								@SidebarLink("tabs", activeComponent == "tabs")
 								@SidebarLink("textarea", activeComponent == "textarea")
@@ -114,6 +119,8 @@ templ Showcase(activeComponent string) {
 						@AutocompleteDemo()
 					} else if activeComponent == "badge" {
 						@BadgeDemo()
+					} else if activeComponent == "breadcrumb" {
+						@BreadcrumbDemo()
 					} else if activeComponent == "button" {
 						@ButtonDemo()
 					} else if activeComponent == "card" {
@@ -142,18 +149,26 @@ templ Showcase(activeComponent string) {
 						@LabelDemo()
 					} else if activeComponent == "link" {
 						@LinkDemo()
+					} else if activeComponent == "list" {
+						@ListDemo()
+					} else if activeComponent == "pagination" {
+						@PaginationDemo()
 					} else if activeComponent == "progress" {
 						@ProgressDemo()
 					} else if activeComponent == "radio" {
 						@RadioDemo()
 					} else if activeComponent == "select" {
 						@SelectDemo()
+					} else if activeComponent == "skeleton" {
+						@SkeletonDemo()
 					} else if activeComponent == "slider" {
 						@SliderDemo()
 					} else if activeComponent == "stepper" {
 						@StepperDemo()
 					} else if activeComponent == "switch" {
 						@SwitchDemo()
+					} else if activeComponent == "timeline" {
+						@TimelineDemo()
 					} else if activeComponent == "table" {
 						@TableDemo()
 					} else if activeComponent == "tabs" {

@@ -1,46 +1,67 @@
-/* Badge Component Styles */
+/* Badge Component Styles
+ *
+ * Compact elements for labeling, categorizing, or showing status.
+ * Supports icons, dismissible functionality, and multiple visual styles.
+ *
+ * Structure:
+ *   span.badge
+ *     span.badge__icon (optional)
+ *     span.badge__text
+ *     button.badge__dismiss (optional)
+ *
+ * Modifiers:
+ *   --primary/--secondary/--success/--warning/--danger/--info  - Color variants
+ *   --filled/--outlined/--subtle                               - Shape variants
+ *   --sm/--md/--lg                                             - Size variants
+ *   --rounded                                                  - Pill shape
+ *   --dismissible                                              - Has dismiss button
+ *   --disabled                                                 - Disabled state
+ *
+ * CSS Variables (from variables.css):
+ *   Uses --color-*, --spacing-*, --font-*, --radius-* tokens
+ */
 
 .badge {
-    /* Base styles */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-1);
 
     font-family: var(--font-primary);
-    font-weight: var(--font-weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: var(--font-weight-medium);
     white-space: nowrap;
 
     border: var(--border-width-thin) solid transparent;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-sm);
 
     user-select: none;
-    -webkit-user-select: none;
-    transition: var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 /* Sizes */
 .badge--sm {
-    padding: 0 var(--spacing-1);
+    padding: 0 var(--spacing-2);
     font-size: var(--font-size-xs);
     height: var(--spacing-5);
-    min-width: var(--spacing-5);
+    gap: var(--spacing-1);
 }
 
 .badge--md {
-    padding: var(--spacing-px) var(--spacing-2);
+    padding: var(--spacing-px) var(--spacing-3);
     font-size: var(--font-size-xs);
     height: var(--spacing-6);
-    min-width: var(--spacing-6);
 }
 
 .badge--lg {
-    padding: var(--spacing-1) var(--spacing-3);
+    padding: var(--spacing-1) var(--spacing-4);
     font-size: var(--font-size-sm);
     height: var(--spacing-8);
-    min-width: var(--spacing-8);
+    gap: var(--spacing-2);
+}
+
+/* Rounded/pill shape */
+.badge--rounded {
+    border-radius: var(--radius-full);
 }
 
 /* ========== Shapes & Variants ========== */
@@ -99,7 +120,7 @@
 
 .badge--outlined.badge--warning {
     border-color: var(--color-warning);
-    color: var(--color-warning);
+    color: var(--color-warning-text);
 }
 
 .badge--outlined.badge--danger {
@@ -141,4 +162,97 @@
 .badge--subtle.badge--info {
     background-color: var(--color-info-subtle-bg);
     color: var(--color-info-subtle-text);
+}
+
+/* ========== Icon ========== */
+
+.badge__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.badge--sm .badge__icon {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+.badge--md .badge__icon {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.badge--lg .badge__icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* ========== Text ========== */
+
+.badge__text {
+    line-height: 1.25;
+}
+
+/* ========== Dismiss Button ========== */
+
+.badge__dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    margin-left: var(--spacing-1);
+    background: none;
+    border: none;
+    color: currentColor;
+    cursor: pointer;
+    opacity: var(--opacity-muted);
+    transition: opacity var(--transition-fast);
+    border-radius: var(--radius-sm);
+}
+
+.badge__dismiss:hover {
+    opacity: 1;
+}
+
+.badge__dismiss:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
+}
+
+.badge--sm .badge__dismiss {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+.badge--md .badge__dismiss {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.badge--lg .badge__dismiss {
+    width: 1rem;
+    height: 1rem;
+}
+
+.badge__dismiss svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========== Disabled State ========== */
+
+.badge--disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+}
+
+/* ========== Badge Group ========== */
+
+.badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    align-items: center;
 }

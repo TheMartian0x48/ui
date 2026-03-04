@@ -104,13 +104,107 @@ templ BadgeDemo() {
 					</p>
 					<div class="doc-demo__list">
 						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeSM}) {
-							Small 
+							Small
 						}
 						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeMD}) {
-							Medium 
+							Medium
 						}
 						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Size: ui.BadgeSizeLG}) {
-							Large 
+							Large
+						}
+					</div>
+				</div>
+				<!-- Rounded -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Rounded (Pill)</h3>
+					<p class="doc-demo__description">
+						Pill-shaped badges with fully rounded corners for a softer appearance.
+					</p>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Rounded: true}) {
+							Primary
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Rounded: true}) {
+							Active
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Shape: ui.BadgeOutlined, Rounded: true}) {
+							Urgent
+						}
+					</div>
+				</div>
+				<!-- With Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Icons</h3>
+					<p class="doc-demo__description">
+						Badges can include leading icons for additional visual context.
+					</p>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Icon: ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeSM})}) {
+							Verified
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeWarning, Icon: ui.Icon(ui.IconProp{Icon: ui.IconClock(), Size: ui.IconSizeSM})}) {
+							Pending
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeDanger, Icon: ui.Icon(ui.IconProp{Icon: ui.IconLock(), Size: ui.IconSizeSM})}) {
+							Private
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeInfo, Icon: ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})}) {
+							Admin
+						}
+					</div>
+				</div>
+				<!-- Dismissible -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Dismissible</h3>
+					<p class="doc-demo__description">
+						Badges with a dismiss button for removable tags or filters.
+					</p>
+					<div x-data="{ badges: ['React', 'Vue', 'Angular', 'Svelte'] }">
+						@ui.BadgeGroup(ui.BadgeGroupProp{}) {
+							<template x-for="badge in badges" :key="badge">
+								@ui.Badge(ui.BadgeProp{Dismissible: true, Variant: ui.BadgePrimary, Shape: ui.BadgeSubtle, OnDismiss: "badges = badges.filter(b => b !== badge)"}) {
+									<span x-text="badge"></span>
+								}
+							</template>
+						}
+					</div>
+				</div>
+				<!-- Badge Group -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Badge Group</h3>
+					<p class="doc-demo__description">
+						Use BadgeGroup to display multiple badges with consistent spacing.
+					</p>
+					@ui.BadgeGroup(ui.BadgeGroupProp{}) {
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Shape: ui.BadgeSubtle, Rounded: true, Size: ui.BadgeSizeSM}) {
+							JavaScript
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Shape: ui.BadgeSubtle, Rounded: true, Size: ui.BadgeSizeSM}) {
+							TypeScript
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeInfo, Shape: ui.BadgeSubtle, Rounded: true, Size: ui.BadgeSizeSM}) {
+							Go
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Shape: ui.BadgeSubtle, Rounded: true, Size: ui.BadgeSizeSM}) {
+							Python
+						}
+					}
+				</div>
+				<!-- Disabled -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Disabled</h3>
+					<p class="doc-demo__description">
+						Disabled badges for inactive or unavailable states.
+					</p>
+					<div class="doc-demo__list">
+						@ui.Badge(ui.BadgeProp{Disabled: true}) {
+							Disabled
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgePrimary, Disabled: true}) {
+							Disabled Primary
+						}
+						@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Disabled: true, Dismissible: true}) {
+							Disabled Dismissible
 						}
 					</div>
 				</div>

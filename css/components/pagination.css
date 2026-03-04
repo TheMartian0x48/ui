@@ -1,0 +1,139 @@
+/* Pagination Component Styles
+ *
+ * Navigation component for paginated content with page numbers,
+ * previous/next buttons, and ellipsis for large ranges.
+ *
+ * Structure:
+ *   nav.pagination
+ *     ul.pagination__list
+ *       li.pagination__item
+ *         a.pagination__link | span.pagination__link--current
+ *         span.pagination__ellipsis
+ *
+ * Modifiers:
+ *   --current              - Currently active page
+ *   --disabled             - Disabled navigation state
+ *   --prev/--next          - Previous/Next buttons
+ *
+ * CSS Variables (customizable):
+ *   --pagination-gap       - Space between items (default: --spacing-1)
+ *   --pagination-size      - Button size (default: --spacing-10)
+ */
+
+.pagination {
+    --pagination-gap: var(--spacing-1);
+    --pagination-size: var(--spacing-10);
+}
+
+.pagination__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pagination-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination__item {
+    display: flex;
+}
+
+/* Hide page numbers on small screens, show only prev/next */
+.pagination__item--page {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .pagination__item--page {
+        display: flex;
+    }
+}
+
+/* Base link/button styles */
+.pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--pagination-size);
+    height: var(--pagination-size);
+    padding: 0 var(--spacing-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    background-color: transparent;
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    user-select: none;
+}
+
+.pagination__link:hover:not(.pagination__link--disabled):not(.pagination__link--current) {
+    color: var(--color-text);
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border-dark);
+}
+
+.pagination__link:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
+}
+
+/* Current page */
+.pagination__link--current {
+    color: var(--color-text-inverse);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    cursor: default;
+}
+
+/* Disabled state */
+.pagination__link--disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+}
+
+/* Previous/Next buttons */
+.pagination__link--prev,
+.pagination__link--next {
+    gap: var(--spacing-2);
+    padding: 0 var(--spacing-4);
+}
+
+/* Icon sizing */
+.pagination__icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+/* Hide text labels on small screens */
+.pagination__prev-text,
+.pagination__next-text {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .pagination__prev-text,
+    .pagination__next-text {
+        display: inline;
+    }
+}
+
+/* Ellipsis */
+.pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--pagination-size);
+    height: var(--pagination-size);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    user-select: none;
+}

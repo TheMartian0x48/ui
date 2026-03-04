@@ -1,0 +1,113 @@
+/* Breadcrumb Component Styles
+ *
+ * Navigation component showing the user's location in a site hierarchy.
+ * Follows WAI-ARIA breadcrumb pattern for accessibility.
+ *
+ * Structure:
+ *   nav.breadcrumb
+ *     ol.breadcrumb__list
+ *       li.breadcrumb__item
+ *         a.breadcrumb__link | span.breadcrumb__text
+ *
+ * Modifiers:
+ *   --current              - Current page item (not clickable)
+ *
+ * CSS Variables (customizable):
+ *   --breadcrumb-gap       - Space between items (default: --spacing-2)
+ *   --breadcrumb-separator - Separator character (set via data-separator attr)
+ */
+
+.breadcrumb {
+    --breadcrumb-gap: var(--spacing-2);
+}
+
+.breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--breadcrumb-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-sm);
+}
+
+.breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--breadcrumb-gap);
+}
+
+/* Separator using CSS - hidden from screen readers */
+.breadcrumb__item:not(:last-child)::after {
+    content: attr(data-separator);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Fallback separator when data-separator not on item */
+.breadcrumb__list[data-separator] > .breadcrumb__item:not(:last-child)::after {
+    content: "/";
+}
+
+/* Use parent's separator value */
+.breadcrumb__list[data-separator="/"] > .breadcrumb__item:not(:last-child)::after {
+    content: "/";
+}
+
+.breadcrumb__list[data-separator=">"] > .breadcrumb__item:not(:last-child)::after {
+    content: ">";
+}
+
+.breadcrumb__list[data-separator="›"] > .breadcrumb__item:not(:last-child)::after {
+    content: "›";
+}
+
+.breadcrumb__list[data-separator="→"] > .breadcrumb__item:not(:last-child)::after {
+    content: "→";
+}
+
+.breadcrumb__list[data-separator="|"] > .breadcrumb__item:not(:last-child)::after {
+    content: "|";
+}
+
+/* Link styles */
+.breadcrumb__link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    white-space: nowrap;
+}
+
+.breadcrumb__link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.breadcrumb__link:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
+    border-radius: var(--radius-sm);
+}
+
+/* Current page text */
+.breadcrumb__text {
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.breadcrumb__item--current .breadcrumb__text {
+    color: var(--color-text);
+}
+
+/* Truncation for long breadcrumbs on small screens */
+@media (max-width: 640px) {
+    .breadcrumb__link,
+    .breadcrumb__text {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

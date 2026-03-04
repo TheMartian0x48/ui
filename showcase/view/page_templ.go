@@ -192,6 +192,10 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = SidebarLink("breadcrumb", activeComponent == "breadcrumb").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = SidebarLink("button", activeComponent == "button").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -248,6 +252,14 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = SidebarLink("list", activeComponent == "list").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = SidebarLink("pagination", activeComponent == "pagination").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = SidebarLink("progress", activeComponent == "progress").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -260,6 +272,10 @@ func Showcase(activeComponent string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		templ_7745c5c3_Err = SidebarLink("skeleton", activeComponent == "skeleton").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = SidebarLink("slider", activeComponent == "slider").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -269,6 +285,10 @@ func Showcase(activeComponent string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = SidebarLink("switch", activeComponent == "switch").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = SidebarLink("timeline", activeComponent == "timeline").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -318,6 +338,11 @@ func Showcase(activeComponent string) templ.Component {
 			}
 		} else if activeComponent == "badge" {
 			templ_7745c5c3_Err = BadgeDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if activeComponent == "breadcrumb" {
+			templ_7745c5c3_Err = BreadcrumbDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -391,6 +416,16 @@ func Showcase(activeComponent string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+		} else if activeComponent == "list" {
+			templ_7745c5c3_Err = ListDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if activeComponent == "pagination" {
+			templ_7745c5c3_Err = PaginationDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		} else if activeComponent == "progress" {
 			templ_7745c5c3_Err = ProgressDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -406,6 +441,11 @@ func Showcase(activeComponent string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+		} else if activeComponent == "skeleton" {
+			templ_7745c5c3_Err = SkeletonDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		} else if activeComponent == "slider" {
 			templ_7745c5c3_Err = SliderDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -418,6 +458,11 @@ func Showcase(activeComponent string) templ.Component {
 			}
 		} else if activeComponent == "switch" {
 			templ_7745c5c3_Err = SwitchDemo().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if activeComponent == "timeline" {
+			templ_7745c5c3_Err = TimelineDemo().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -454,7 +499,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 170, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 185, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -467,7 +512,7 @@ func Showcase(activeComponent string) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(activeComponent)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 172, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `showcase/view/page.templ`, Line: 187, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {

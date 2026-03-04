@@ -1,0 +1,179 @@
+package ui
+
+import "strings"
+
+// ListVariant defines the visual style of the list.
+//
+// Available variants:
+//   - ListPlain: No bullets or numbers (default)
+//   - ListBulleted: Unordered list with bullet points
+//   - ListNumbered: Ordered list with numbers
+//   - ListIcon: Custom icon for each item
+type ListVariant int
+
+const (
+	ListPlain    ListVariant = iota // No markers (default)
+	ListBulleted                    // Bullet points
+	ListNumbered                    // Numbered list
+	ListIcon                        // Custom icons per item
+)
+
+// ListSize defines the spacing and text size of list items.
+type ListSize int
+
+const (
+	ListSizeSM ListSize = iota // Compact spacing
+	ListSizeMD                 // Default spacing
+	ListSizeLG                 // Relaxed spacing
+)
+
+// ListProp configures a list container component.
+//
+// Lists display a collection of items in a vertical layout.
+// Supports plain, bulleted, numbered, and icon variants.
+//
+// Example usage:
+//
+//	@ui.List(ui.ListProp{Variant: ui.ListBulleted}) {
+//	    @ui.ListItem(ui.ListItemProp{}) { First item }
+//	    @ui.ListItem(ui.ListItemProp{}) { Second item }
+//	}
+//
+//	// With dividers
+//	@ui.List(ui.ListProp{Divided: true}) {
+//	    @ui.ListItem(ui.ListItemProp{}) { Item with divider }
+//	}
+type ListProp struct {
+	Variant    ListVariant      // Visual style (plain, bulleted, numbered, icon)
+	Size       ListSize         // Spacing size (sm, md, lg)
+	Divided    bool             // Add dividers between items
+	Class      string           // Additional CSS classes
+	AriaLabel  string           // Accessible label for the list
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// ListItemProp configures a single list item.
+//
+// For icon variant, pass an Icon component as children before the text.
+type ListItemProp struct {
+	Icon       templ.Component  // Optional icon (for ListIcon variant)
+	Active     bool             // Highlight this item as active/selected
+	Disabled   bool             // Visually disable the item
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// List renders a list container.
+//
+// Accessibility:
+//   - Uses semantic <ul> or <ol> elements based on variant
+//   - Supports aria-label for screen readers
+//   - Disabled items marked with aria-disabled
+templ List(prop ListProp) {
+	{{
+		isOrdered := prop.Variant == ListNumbered
+	}}
+	if isOrdered {
+		<ol
+			class={ listClass(prop) }
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			{ prop.Attributes... }
+		>
+			{ children... }
+		</ol>
+	} else {
+		<ul
+			class={ listClass(prop) }
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			{ prop.Attributes... }
+		>
+			{ children... }
+		</ul>
+	}
+}
+
+// ListItem renders a single item within a List.
+templ ListItem(prop ListItemProp) {
+	<li
+		class={ listItemClass(prop) }
+		if prop.Disabled {
+			aria-disabled="true"
+		}
+		{ prop.Attributes... }
+	>
+		if prop.Icon != nil {
+			<span class="list__icon" aria-hidden="true">
+				@prop.Icon
+			</span>
+		}
+		<span class="list__content">
+			{ children... }
+		</span>
+	</li>
+}
+
+// listClass generates CSS class for list container.
+func listClass(prop ListProp) string {
+	var b strings.Builder
+	b.Grow(40)
+	b.WriteString("list")
+
+	// Variant
+	switch prop.Variant {
+	case ListBulleted:
+		b.WriteString(" list--bulleted")
+	case ListNumbered:
+		b.WriteString(" list--numbered")
+	case ListIcon:
+		b.WriteString(" list--icon")
+	default:
+		b.WriteString(" list--plain")
+	}
+
+	// Size
+	switch prop.Size {
+	case ListSizeSM:
+		b.WriteString(" list--sm")
+	case ListSizeLG:
+		b.WriteString(" list--lg")
+	default:
+		b.WriteString(" list--md")
+	}
+
+	// Divided
+	if prop.Divided {
+		b.WriteString(" list--divided")
+	}
+
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+	return b.String()
+}
+
+// listItemClass generates CSS class for list item.
+func listItemClass(prop ListItemProp) string {
+	var b strings.Builder
+	b.Grow(30)
+	b.WriteString("list__item")
+
+	if prop.Active {
+		b.WriteString(" list__item--active")
+	}
+	if prop.Disabled {
+		b.WriteString(" list__item--disabled")
+	}
+	if prop.Icon != nil {
+		b.WriteString(" list__item--has-icon")
+	}
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+	return b.String()
+}
