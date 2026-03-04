@@ -14,7 +14,7 @@ for
 * [x] button
 * [x] card
 * [x] checkbox
-* [ ] dialog
+* [x] dialog
 * [ ] divider
 * [ ] drawer
 * [ ] dropdown

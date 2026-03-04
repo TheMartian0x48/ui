@@ -59,6 +59,21 @@ templ DividerDemo() {
 						</div>
 					</div>
 				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						<div style="font-size: var(--font-size-sm); color: var(--color-text-primary);">Section A</div>
+						@ui.Divider(ui.DividerProp{
+							Variant: ui.DividerHorizontal,
+							Attributes: templ.Attributes{
+								"data-testid": "section-divider",
+								"id":          "main-divider",
+							},
+						})
+						<div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Section B</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

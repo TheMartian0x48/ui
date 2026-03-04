@@ -115,7 +115,21 @@ func DividerDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</button></div></div></div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</button></div></div></div><!-- With Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">With Custom Attributes</h3><div class=\"doc-demo__list doc-demo__list--column\"><div style=\"font-size: var(--font-size-sm); color: var(--color-text-primary);\">Section A</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Divider(ui.DividerProp{
+			Variant: ui.DividerHorizontal,
+			Attributes: templ.Attributes{
+				"data-testid": "section-divider",
+				"id":          "main-divider",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div style=\"font-size: var(--font-size-sm); color: var(--color-text-secondary);\">Section B</div></div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
