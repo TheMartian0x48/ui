@@ -19,7 +19,7 @@ templ FormFieldDemo() {
 						@ui.FormField(ui.FormFieldProp{
 							Label:    "Username",
 							LabelFor: "username",
-							Help:     "This is your unique identifiers on the platform.",
+							Help:     "This is your unique identifier on the platform.",
 						}) {
 							@ui.Input(ui.InputProp{
 								Id:          "username",
@@ -89,13 +89,34 @@ templ FormFieldDemo() {
 						}
 					</div>
 				</div>
-				<!-- Real-world Form -->
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "API Key",
+							LabelFor: "api-key",
+							Help:     "Your secret API key for authentication.",
+							Attributes: templ.Attributes{
+								"data-testid":   "api-key-field",
+								"data-validate": "required",
+							},
+						}) {
+							@ui.Input(ui.InputProp{
+								Id:          "api-key",
+								Type:        ui.InputPassword,
+								Placeholder: "sk-xxxxxxxxxxxx",
+							})
+						}
+					</div>
+				</div>
+				<!-- Complete Form Example -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Complete Form Example</h3>
 					<div style="max-width: 500px;">
 						@ui.Card(ui.CardProp{Header: "Create Account"}) {
-							<form style="display: flex; flex-direction: column; gap: 1.5rem;" onsubmit="return false">
-								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+							<form class="form-field-demo__form" onsubmit="return false">
+								<div class="form-field-demo__grid">
 									@ui.FormField(ui.FormFieldProp{Label: "First Name", Required: true}) {
 										@ui.Input(ui.InputProp{Placeholder: "Jane"})
 									}
@@ -107,16 +128,16 @@ templ FormFieldDemo() {
 									@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "jane@example.com"})
 								}
 								@ui.FormField(ui.FormFieldProp{Label: "Account Type"}) {
-									<div style="display: flex; gap: 1rem; padding: 0.5rem 0;">
+									<div class="form-field-demo__switch-row">
 										@ui.Switch(ui.SwitchProp{Label: "Business Account"})
 									</div>
 								}
-								<div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--color-border-light); padding-top: 1.5rem;">
+								<div class="form-field-demo__actions">
 									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost}) {
-										Cancel 
+										Cancel
 									}
 									@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
-										Register 
+										Register
 									}
 								</div>
 							</form>
@@ -126,4 +147,28 @@ templ FormFieldDemo() {
 			</div>
 		</div>
 	</section>
+	<style type="text/css">
+		.form-field-demo__form {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-6);
+		}
+		.form-field-demo__grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: var(--spacing-4);
+		}
+		.form-field-demo__switch-row {
+			display: flex;
+			gap: var(--spacing-4);
+			padding: var(--spacing-2) 0;
+		}
+		.form-field-demo__actions {
+			display: flex;
+			justify-content: flex-end;
+			gap: var(--spacing-4);
+			border-top: var(--border-width-thin) solid var(--color-border-light);
+			padding-top: var(--spacing-6);
+		}
+	</style>
 }

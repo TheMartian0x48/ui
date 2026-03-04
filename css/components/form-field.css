@@ -1,17 +1,26 @@
-/* FormField Component Styles */
+/* FormField Component Styles
+ *
+ * A wrapper component that provides consistent layout for form inputs
+ * with labels, help text, and error messages.
+ *
+ * Structure:
+ *   .form-field
+ *     .form-field__label    - Label component
+ *     .form-field__control  - Input wrapper
+ *     .form-field__help     - Help text (mutually exclusive with error)
+ *     .form-field__error    - Error message with icon
+ */
 
 .form-field {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-1);
     margin-bottom: var(--spacing-4);
-
     font-family: var(--font-primary);
 }
 
 .form-field__label {
-    /* Inherits from Label component but can have specific overrides here */
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--spacing-1);
 }
 
 .form-field__control {
@@ -24,24 +33,20 @@
 .form-field__help {
     font-size: var(--font-size-xs);
     color: var(--color-text-muted);
-    margin-top: 0.125rem;
+    margin-top: var(--spacing-1);
 }
 
 /* Error message */
 .form-field__error {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-
+    gap: var(--spacing-1);
     font-size: var(--font-size-xs);
     color: var(--color-danger);
-    margin-top: 0.25rem;
-
-    /* Make sure error icon aligns nicely */
+    margin-top: var(--spacing-1);
 }
 
 .form-field__error span {
-    /* Error text styles */
     font-weight: var(--font-weight-medium);
 }
 
@@ -51,7 +56,7 @@
 }
 
 .form-field--error .input:focus {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: var(--focus-ring-danger);
 }
 
 .form-field--error .label {

@@ -19,7 +19,7 @@ for
 * [x] drawer
 * [x] dropdown
 * [x] dropzone
-* [ ] form_field
+* [x] form_field
 * [x] icon
 * [x] image_preview
 * [x] input
