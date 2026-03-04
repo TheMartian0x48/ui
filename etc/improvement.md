@@ -16,7 +16,7 @@ for
 * [x] checkbox
 * [x] dialog
 * [x] divider
-* [ ] drawer
+* [x] drawer
 * [x] dropdown
 * [x] dropzone
 * [ ] form_field
@@ -25,7 +25,7 @@ for
 * [x] input
 * [x] label
 * [x] link
-* [ ] progress
+* [x] progress
 * [x] radio
 * [x] select
 * [x] slider

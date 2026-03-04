@@ -20,11 +20,11 @@ templ DrawerDemo() {
 							Open Drawer (Right)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:       "demo-drawer-right",
-							Position: ui.DrawerRight,
-							Title:    "Profile Settings",
+							Id:          "demo-drawer-right",
+							Position:    ui.DrawerRight,
+							Title:       "Profile Settings",
+							Description: "Update your profile information and preferences.",
 						}) {
-							<p>This is the drawer content. It slides over the main application layer.</p>
 							<div style="margin-top: var(--spacing-4);">
 								@ui.FormField(ui.FormFieldProp{LabelFor: "input1", Label: "Name"}) {
 									@ui.Input(ui.InputProp{Id: "input1", Value: "John Doe"})
@@ -115,10 +115,36 @@ templ DrawerDemo() {
 							<p>Use the bottom drawer on mobile primarily to mimic native iOS/Android bottom sheets.</p>
 							<div style="display: flex; gap: var(--spacing-4); margin-top: var(--spacing-4);">
 								@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
-									Copy Link 
+									Copy Link
 								}
 								@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
-									Send Email 
+									Send Email
+								}
+							</div>
+						}
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list">
+						@ui.DrawerTrigger("demo-drawer-attrs", ui.ButtonOutline) {
+							Open Drawer (With Attributes)
+						}
+						@ui.Drawer(ui.DrawerProp{
+							Id:          "demo-drawer-attrs",
+							Position:    ui.DrawerRight,
+							Title:       "Custom Drawer",
+							Description: "This drawer has custom data attributes for testing.",
+							Attributes: templ.Attributes{
+								"data-testid":  "custom-drawer",
+								"data-feature": "settings-panel",
+							},
+						}) {
+							<p>This drawer demonstrates the use of custom attributes for testing or tracking purposes.</p>
+							<div style="margin-top: var(--spacing-4);">
+								@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Custom Attributes"}) {
+									Check the DOM to see the data-testid and data-feature attributes on this drawer.
 								}
 							</div>
 						}
