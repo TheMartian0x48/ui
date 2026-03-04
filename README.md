@@ -100,7 +100,7 @@ templ generate
 ### Run Showcase
 
 ```bash
-cd showcase && go run .
+go run showcase/main.go
 ```
 
 The showcase will be available at `http://localhost:8080`.

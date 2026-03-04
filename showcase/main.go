@@ -5,13 +5,16 @@ import (
 	"log"
 	"net/http"
 
+	"os"
+
 	"github.com/a-h/templ"
 	"github.com/themartian0x48/ui/showcase/view"
 )
 
 func main() {
 	// Use absolute paths for static assets
-	baseDir := "/home/adityaku/dev/playground/ui"
+	baseDir, _ := os.Getwd()
+	fmt.Println("baseDir : " + baseDir)
 
 	cssDir := baseDir + "/css"
 	jsDir := baseDir + "/js"
