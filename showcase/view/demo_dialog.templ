@@ -24,16 +24,16 @@ templ DialogDemo() {
 							Title: "Welcome",
 						}) {
 							<p>This is a basic dialog using the native HTML <code>&lt;dialog&gt;</code> element. It handles focus trapping and backdrop automatically.</p>
-							<div class="dialog__footer">
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
 									Variant: ui.ButtonPrimary,
 									Attributes: templ.Attributes{
 										"onclick": "document.getElementById('basic-dialog').close()",
 									},
 								}) {
-									Understand 
+									Understand
 								}
-							</div>
+							}
 						}
 					</div>
 				</div>
@@ -50,18 +50,19 @@ templ DialogDemo() {
 							Archive Project
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "confirm-dialog",
-							Title: "Confirm Archive",
+							Id:          "confirm-dialog",
+							Title:       "Confirm Archive",
+							Description: "This action will move the project to archives.",
 						}) {
 							<p>Are you sure you want to archive this project? This will move it to your archives and it will no longer be visible in your active dashboard.</p>
-							<div class="dialog__footer">
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
 									Variant: ui.ButtonGhost,
 									Attributes: templ.Attributes{
 										"onclick": "document.getElementById('confirm-dialog').close()",
 									},
 								}) {
-									Cancel 
+									Cancel
 								}
 								@ui.Button(ui.ButtonProp{
 									Variant: ui.ButtonDanger,
@@ -69,9 +70,90 @@ templ DialogDemo() {
 										"onclick": "document.getElementById('confirm-dialog').close(); alert('Archived!')",
 									},
 								}) {
-									Archive 
+									Archive
 								}
-							</div>
+							}
+						}
+					</div>
+				</div>
+				<!-- Size Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Size Variants</h3>
+					<div class="doc-demo__list">
+						@ui.Button(ui.ButtonProp{
+							Variant: ui.ButtonSecondary,
+							Attributes: templ.Attributes{
+								"onclick": "document.getElementById('sm-dialog').showModal()",
+							},
+						}) {
+							Small Dialog
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "sm-dialog",
+							Title: "Small Dialog",
+							Size:  ui.DialogSizeSM,
+						}) {
+							<p>This is a small dialog (24rem max-width). Great for simple confirmations or short messages.</p>
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonPrimary,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('sm-dialog').close()",
+									},
+								}) {
+									Close
+								}
+							}
+						}
+						@ui.Button(ui.ButtonProp{
+							Variant: ui.ButtonSecondary,
+							Attributes: templ.Attributes{
+								"onclick": "document.getElementById('lg-dialog').showModal()",
+							},
+						}) {
+							Large Dialog
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "lg-dialog",
+							Title: "Large Dialog",
+							Size:  ui.DialogSizeLG,
+						}) {
+							<p>This is a large dialog (42rem max-width). Suitable for forms or content that needs more horizontal space.</p>
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonPrimary,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('lg-dialog').close()",
+									},
+								}) {
+									Close
+								}
+							}
+						}
+						@ui.Button(ui.ButtonProp{
+							Variant: ui.ButtonSecondary,
+							Attributes: templ.Attributes{
+								"onclick": "document.getElementById('xl-dialog').showModal()",
+							},
+						}) {
+							Extra Large Dialog
+						}
+						@ui.Dialog(ui.DialogProp{
+							Id:    "xl-dialog",
+							Title: "Extra Large Dialog",
+							Size:  ui.DialogSizeXL,
+						}) {
+							<p>This is an extra large dialog (56rem max-width). Best for complex forms, data tables, or rich content.</p>
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonPrimary,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('xl-dialog').close()",
+									},
+								}) {
+									Close
+								}
+							}
 						}
 					</div>
 				</div>
@@ -88,15 +170,16 @@ templ DialogDemo() {
 							Create New Entry
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "form-dialog",
-							Title: "Create Entry",
+							Id:          "form-dialog",
+							Title:       "Create Entry",
+							Description: "Fill out the details to add a new item to your collection.",
+							Size:        ui.DialogSizeLG,
 						}) {
-							<p class="doc-section__description" style="margin-bottom: var(--spacing-4);">Fill out the details below to add a new item to your collection.</p>
 							<div style="display: flex; flex-direction: column; gap: var(--spacing-4);">
 								<div class="doc-demo__item-label">
 									<span>Reference ID:</span>
 									@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSecondary, Size: ui.BadgeSizeSM}) {
-										AUTOGEN-102 
+										AUTOGEN-102
 									}
 								</div>
 								@ui.Alert(ui.AlertProp{Variant: ui.AlertInfo, Title: "Reminder", Shape: ui.AlertStandard}) {
@@ -106,16 +189,24 @@ templ DialogDemo() {
 									<p style="margin: 0; text-align: center; color: var(--color-text-muted);">Form inputs will be added here once developed.</p>
 								</div>
 							</div>
-							<div class="dialog__footer">
+							@ui.DialogFooter(ui.DialogFooterProp{}) {
+								@ui.Button(ui.ButtonProp{
+									Variant: ui.ButtonGhost,
+									Attributes: templ.Attributes{
+										"onclick": "document.getElementById('form-dialog').close()",
+									},
+								}) {
+									Cancel
+								}
 								@ui.Button(ui.ButtonProp{
 									Variant: ui.ButtonPrimary,
 									Attributes: templ.Attributes{
 										"onclick": "document.getElementById('form-dialog').close()",
 									},
 								}) {
-									Create 
+									Create
 								}
-							</div>
+							}
 						}
 					</div>
 				</div>
