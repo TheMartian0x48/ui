@@ -19,7 +19,7 @@ templ DropdownDemo() {
 						@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Account Settings", Icon: ui.IconSettings()})
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Support", Icon: ui.IconInfo()})
-							<hr class="dropdown__divider"/>
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Icon: ui.IconLogOut(), Danger: true})
 						}
 					</div>
@@ -35,22 +35,54 @@ templ DropdownDemo() {
 						@ui.Dropdown(ui.DropdownProp{Label: "Align Right", Right: true}) {
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Share", Icon: ui.IconShare()})
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Copy Link", Icon: ui.IconCopy()})
-							<hr class="dropdown__divider"/>
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Delete Project", Icon: ui.IconTrash(), Danger: true})
 						}
 					</div>
 				</div>
-				<!-- With Links -->
+				<!-- With Links and Group Labels -->
 				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">With Links vs Buttons</h3>
+					<h3 class="doc-demo__group-title">With Links and Group Labels</h3>
 					<div class="doc-demo__list" style="margin-bottom: 8rem;">
 						@ui.Dropdown(ui.DropdownProp{Label: "Actions"}) {
-							<div class="dropdown__group-label" style="padding: 0.5rem 0.75rem; font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Navigation</div>
+							@ui.DropdownLabel(ui.DropdownLabelProp{}) {
+								Navigation
+							}
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Go to Dashboard", Href: "#", Icon: ui.IconHome()})
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "External Documentation", Href: "https://example.com", Icon: ui.IconExternalLink()})
-							<hr class="dropdown__divider"/>
-							<div class="dropdown__group-label" style="padding: 0.5rem 0.75rem; font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Actions (Buttons)</div>
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
+							@ui.DropdownLabel(ui.DropdownLabelProp{}) {
+								Actions
+							}
 							@ui.DropdownItem(ui.DropdownItemProp{Label: "Refresh Data", Attributes: templ.Attributes{"onclick": "alert('Refreshing...')"}, Icon: ui.IconRefresh()})
+						}
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{
+							Label: "More Actions",
+							Attributes: templ.Attributes{
+								"data-testid": "actions-dropdown",
+							},
+						}) {
+							@ui.DropdownItem(ui.DropdownItemProp{
+								Label: "Download",
+								Icon:  ui.IconDownload(),
+								Attributes: templ.Attributes{
+									"data-action": "download",
+								},
+							})
+							@ui.DropdownItem(ui.DropdownItemProp{
+								Label: "Print",
+								Icon:  ui.IconPrinter(),
+								Attributes: templ.Attributes{
+									"data-action": "print",
+									"onclick":     "window.print()",
+								},
+							})
 						}
 					</div>
 				</div>

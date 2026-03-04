@@ -1,29 +1,40 @@
 package ui
 
+import (
+	"fmt"
+	"sync/atomic"
+)
+
+// dropdownIdCounter is an atomic counter for generating unique dropdown IDs.
+var dropdownIdCounter atomic.Uint64
+
+// dropdownUniqueId generates a unique ID or returns the provided ID.
+func dropdownUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("dd%d", dropdownIdCounter.Add(1))
+}
+
+// DropdownProp configures the Dropdown component.
 type DropdownProp struct {
-	Label      string          // Text for the trigger button
-	Icon       templ.Component // Changed from enum to component
-	Class      string          // Additional classes
-	Right      bool            // Align menu to the right
-	Id         string          // Optional ID
-	Values     []string        // Optional values if selectable (simple case)
-	AriaLabel  string          // Accessible name for the dropdown (optional)
+	Label      string           // Text for the trigger button
+	Icon       templ.Component  // Optional icon component for the trigger
+	Class      string           // Additional CSS classes
+	Right      bool             // Align menu to the right edge
+	Id         string           // Optional ID (auto-generated if empty)
+	Values     []string         // Optional values for selectable dropdowns
+	AriaLabel  string           // Accessible name for the dropdown
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Dropdown renders a collapsible menu using the native details/summary pattern.
+// It provides a trigger button that reveals a menu of items when clicked.
 templ Dropdown(prop DropdownProp) {
-	// Generate menu ID for aria-controls
-	{{var menuId string}}
-	if prop.Id != "" {
-		menuId = prop.Id + "-menu"
-	} else {
-		menuId = "dropdown-menu-" + fmt.Sprint(&prop) // Use pointer address as unique identifier
-	}
-
+	{{ dropdownId := dropdownUniqueId(prop.Id) }}
+	{{ menuId := dropdownId + "-menu" }}
 	<details
-		if prop.Id != "" {
-			id={ prop.Id }
-		}
+		id={ dropdownId }
 		class={ dropdownClass(prop) }
 		@click="el => {
 			const details = el.target.closest('details');
@@ -34,12 +45,13 @@ templ Dropdown(prop DropdownProp) {
 				summary.setAttribute('aria-expanded', 'false');
 			}
 		}"
+		{ prop.Attributes... }
 	>
-		<summary 
+		<summary
 			class="btn btn--secondary btn--md dropdown__trigger"
 			aria-expanded="false"
 			aria-controls={ menuId }
-			aria-haspopup="true"
+			aria-haspopup="menu"
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
 			}
@@ -53,26 +65,28 @@ templ Dropdown(prop DropdownProp) {
 	</details>
 }
 
-// DropdownItem renders a single item within the dropdown menu.
-// It can be a link or a button action.
+// DropdownItemProp configures a single item within a dropdown menu.
 type DropdownItemProp struct {
-	Href       string // If provided, renders as <a>, else <button>
-	Label      string
-	Icon       templ.Component  // Changed from enum to component
-	Attributes templ.Attributes // Helper for arbitrary attributes (onclick etc)
-	Danger     bool             // Apply danger styling
-	AriaLabel  string           // Accessible name for the item (optional)
+	Href       string           // If provided, renders as <a>, otherwise <button>
+	Label      string           // Display text for the item
+	Icon       templ.Component  // Optional icon component
+	Attributes templ.Attributes // Additional HTML attributes (onclick, etc.)
+	Danger     bool             // Apply danger/destructive styling
+	AriaLabel  string           // Accessible name for the item
 }
 
+// DropdownItem renders a single actionable item within a dropdown menu.
+// Use Href for navigation links, or Attributes with onclick for actions.
 templ DropdownItem(prop DropdownItemProp) {
 	if prop.Href != "" {
-		<a 
-			href={ templ.SafeURL(prop.Href) } 
+		<a
+			href={ templ.SafeURL(prop.Href) }
 			class={ dropdownItemClass(prop) }
 			role="menuitem"
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
 			}
+			{ prop.Attributes... }
 		>
 			if prop.Icon != nil {
 				@Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM})
@@ -82,12 +96,12 @@ templ DropdownItem(prop DropdownItemProp) {
 	} else {
 		<button
 			class={ dropdownItemClass(prop) }
-			{ prop.Attributes... }
 			type="button"
 			role="menuitem"
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
 			}
+			{ prop.Attributes... }
 		>
 			if prop.Icon != nil {
 				@Icon(IconProp{Icon: prop.Icon, Size: IconSizeSM})
@@ -97,8 +111,51 @@ templ DropdownItem(prop DropdownItemProp) {
 	}
 }
 
-// Helper functions for CSS classes
+// DropdownDividerProp configures the dropdown divider component.
+type DropdownDividerProp struct {
+	Class string // Additional CSS classes
+}
 
+// DropdownDivider renders a horizontal separator within a dropdown menu.
+templ DropdownDivider(prop DropdownDividerProp) {
+	<hr
+		class={ dropdownDividerClass(prop) }
+		role="separator"
+		aria-orientation="horizontal"
+	/>
+}
+
+// dropdownDividerClass generates the CSS class string for the divider.
+func dropdownDividerClass(prop DropdownDividerProp) string {
+	base := "dropdown__divider"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+// DropdownLabelProp configures the dropdown group label component.
+type DropdownLabelProp struct {
+	Class string // Additional CSS classes
+}
+
+// DropdownLabel renders a non-interactive group label within a dropdown menu.
+templ DropdownLabel(prop DropdownLabelProp) {
+	<div class={ dropdownLabelClass(prop) } role="presentation">
+		{ children... }
+	</div>
+}
+
+// dropdownLabelClass generates the CSS class string for the label.
+func dropdownLabelClass(prop DropdownLabelProp) string {
+	base := "dropdown__label"
+	if prop.Class != "" {
+		return base + " " + prop.Class
+	}
+	return base
+}
+
+// dropdownClass generates the CSS class string for the dropdown container.
 func dropdownClass(prop DropdownProp) string {
 	classes := "dropdown"
 	if prop.Right {
@@ -110,6 +167,7 @@ func dropdownClass(prop DropdownProp) string {
 	return classes
 }
 
+// dropdownItemClass generates the CSS class string for a dropdown item.
 func dropdownItemClass(prop DropdownItemProp) string {
 	classes := "dropdown__item"
 	if prop.Danger {
