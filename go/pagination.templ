@@ -1,0 +1,236 @@
+package ui
+
+import (
+	"fmt"
+	"strings"
+)
+
+// PaginationProp configures a pagination navigation component.
+//
+// The component renders page numbers with previous/next navigation.
+// It automatically handles ellipsis for large page ranges and
+// provides proper ARIA attributes for accessibility.
+//
+// Example usage:
+//
+//	// Basic pagination
+//	@ui.Pagination(ui.PaginationProp{
+//	    CurrentPage: 5,
+//	    TotalPages:  20,
+//	    BaseURL:     "/products?page=",
+//	})
+//
+//	// With custom sibling count
+//	@ui.Pagination(ui.PaginationProp{
+//	    CurrentPage:  5,
+//	    TotalPages:   100,
+//	    BaseURL:      "/items?page=",
+//	    SiblingCount: 2,
+//	})
+type PaginationProp struct {
+	CurrentPage  int              // Current active page (1-indexed)
+	TotalPages   int              // Total number of pages
+	BaseURL      string           // URL prefix for page links (page number appended)
+	SiblingCount int              // Pages shown on each side of current (default: 1)
+	ShowPrevNext bool             // Show previous/next buttons (default: true when nil)
+	PrevLabel    string           // Label for previous button (default: "Previous")
+	NextLabel    string           // Label for next button (default: "Next")
+	Class        string           // Additional CSS classes
+	AriaLabel    string           // Navigation label (default: "Pagination")
+	Attributes   templ.Attributes // Additional HTML attributes
+}
+
+// PaginationSize defines the size variant for pagination.
+type PaginationSize int
+
+const (
+	PaginationSizeSM PaginationSize = iota
+	PaginationSizeMD
+	PaginationSizeLG
+)
+
+// paginationRange generates the page numbers to display.
+// Returns a slice where -1 represents an ellipsis.
+func paginationRange(current, total, siblings int) []int {
+	if total <= 0 {
+		return []int{}
+	}
+	if current < 1 {
+		current = 1
+	}
+	if current > total {
+		current = total
+	}
+	if siblings < 0 {
+		siblings = 1
+	}
+
+	// Calculate range boundaries
+	leftSibling := max(current-siblings, 1)
+	rightSibling := min(current+siblings, total)
+
+	// Determine if ellipsis needed
+	showLeftEllipsis := leftSibling > 2
+	showRightEllipsis := rightSibling < total-1
+
+	// Build the range
+	var pages []int
+
+	// Always show first page
+	pages = append(pages, 1)
+
+	// Left ellipsis or page 2
+	if showLeftEllipsis {
+		pages = append(pages, -1) // -1 = ellipsis
+	} else if leftSibling > 1 {
+		// Show pages between 1 and leftSibling
+		startPage := 2
+		endPage := leftSibling - 1
+		for i := startPage; i <= endPage; i++ {
+			pages = append(pages, i)
+		}
+	}
+
+	// Sibling pages and current
+	for i := leftSibling; i <= rightSibling; i++ {
+		if i != 1 && i != total {
+			pages = append(pages, i)
+		}
+	}
+
+	// Right ellipsis or remaining pages
+	if showRightEllipsis {
+		pages = append(pages, -1) // -1 = ellipsis
+	} else if rightSibling < total {
+		// Show pages between rightSibling and total
+		startPage := rightSibling + 1
+		endPage := total - 1
+		for i := startPage; i <= endPage; i++ {
+			pages = append(pages, i)
+		}
+	}
+
+	// Always show last page (if more than 1 page)
+	if total > 1 {
+		pages = append(pages, total)
+	}
+
+	return pages
+}
+
+// Pagination renders a page navigation component.
+//
+// Accessibility:
+//   - Uses <nav> element with aria-label
+//   - Current page marked with aria-current="page"
+//   - Disabled states properly indicated
+//   - Keyboard navigable links
+templ Pagination(prop PaginationProp) {
+	{{
+		ariaLabel := prop.AriaLabel
+		if ariaLabel == "" {
+			ariaLabel = "Pagination"
+		}
+		prevLabel := prop.PrevLabel
+		if prevLabel == "" {
+			prevLabel = "Previous"
+		}
+		nextLabel := prop.NextLabel
+		if nextLabel == "" {
+			nextLabel = "Next"
+		}
+		siblings := prop.SiblingCount
+		if siblings == 0 {
+			siblings = 1
+		}
+		pages := paginationRange(prop.CurrentPage, prop.TotalPages, siblings)
+		hasPrev := prop.CurrentPage > 1
+		hasNext := prop.CurrentPage < prop.TotalPages
+	}}
+	if prop.TotalPages > 1 {
+		<nav
+			class={ paginationClass(prop.Class) }
+			aria-label={ ariaLabel }
+			{ prop.Attributes... }
+		>
+			<ul class="pagination__list">
+				<!-- Previous button -->
+				<li class="pagination__item">
+					if hasPrev {
+						<a
+							href={ templ.SafeURL(prop.BaseURL + fmt.Sprintf("%d", prop.CurrentPage-1)) }
+							class="pagination__link pagination__link--prev"
+							aria-label={ fmt.Sprintf("Go to previous page, page %d", prop.CurrentPage-1) }
+						>
+							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+								<path d="M15 18l-6-6 6-6"></path>
+							</svg>
+							<span class="pagination__prev-text">{ prevLabel }</span>
+						</a>
+					} else {
+						<span class="pagination__link pagination__link--prev pagination__link--disabled" aria-disabled="true">
+							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+								<path d="M15 18l-6-6 6-6"></path>
+							</svg>
+							<span class="pagination__prev-text">{ prevLabel }</span>
+						</span>
+					}
+				</li>
+				<!-- Page numbers -->
+				for _, page := range pages {
+					<li class="pagination__item pagination__item--page">
+						if page == -1 {
+							<span class="pagination__ellipsis" aria-hidden="true">...</span>
+						} else if page == prop.CurrentPage {
+							<span class="pagination__link pagination__link--current" aria-current="page">
+								{ fmt.Sprintf("%d", page) }
+							</span>
+						} else {
+							<a
+								href={ templ.SafeURL(prop.BaseURL + fmt.Sprintf("%d", page)) }
+								class="pagination__link"
+								aria-label={ fmt.Sprintf("Go to page %d", page) }
+							>
+								{ fmt.Sprintf("%d", page) }
+							</a>
+						}
+					</li>
+				}
+				<!-- Next button -->
+				<li class="pagination__item">
+					if hasNext {
+						<a
+							href={ templ.SafeURL(prop.BaseURL + fmt.Sprintf("%d", prop.CurrentPage+1)) }
+							class="pagination__link pagination__link--next"
+							aria-label={ fmt.Sprintf("Go to next page, page %d", prop.CurrentPage+1) }
+						>
+							<span class="pagination__next-text">{ nextLabel }</span>
+							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+								<path d="M9 18l6-6-6-6"></path>
+							</svg>
+						</a>
+					} else {
+						<span class="pagination__link pagination__link--next pagination__link--disabled" aria-disabled="true">
+							<span class="pagination__next-text">{ nextLabel }</span>
+							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+								<path d="M9 18l6-6-6-6"></path>
+							</svg>
+						</span>
+					}
+				</li>
+			</ul>
+		</nav>
+	}
+}
+
+// paginationClass generates CSS class for pagination container.
+func paginationClass(class string) string {
+	if class == "" {
+		return "pagination"
+	}
+	var b strings.Builder
+	b.Grow(25)
+	b.WriteString("pagination ")
+	b.WriteString(class)
+	return b.String()
+}

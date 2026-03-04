@@ -6,7 +6,7 @@ dialog.dialog {
     border-radius: var(--radius-md);
     background-color: var(--color-bg-secondary);
     color: var(--color-text);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-xl);
     max-width: 32rem;
     width: 90%;
 
@@ -18,7 +18,7 @@ dialog.dialog {
     /* Animation hooks */
     opacity: 0;
     transform: scale(0.95);
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out, display 0.2s ease-out allow-discrete, overlay 0.2s ease-out allow-discrete;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), display var(--transition-fast) allow-discrete, overlay var(--transition-fast) allow-discrete;
 }
 
 dialog.dialog[open] {
@@ -36,11 +36,11 @@ dialog.dialog[open] {
 
 /* Backdrop styling */
 dialog.dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--color-bg-overlay);
     backdrop-filter: blur(4px);
 
     opacity: 0;
-    transition: opacity 0.2s ease-out, display 0.2s ease-out allow-discrete, overlay 0.2s ease-out allow-discrete;
+    transition: opacity var(--transition-fast), display var(--transition-fast) allow-discrete, overlay var(--transition-fast) allow-discrete;
 }
 
 dialog.dialog[open]::backdrop {
@@ -54,6 +54,18 @@ dialog.dialog[open]::backdrop {
     }
 }
 
+/* Size variants */
+dialog.dialog--sm {
+    max-width: 24rem;
+}
+
+dialog.dialog--lg {
+    max-width: 42rem;
+}
+
+dialog.dialog--xl {
+    max-width: 56rem;
+}
 
 .dialog__content {
     display: flex;
@@ -65,7 +77,7 @@ dialog.dialog[open]::backdrop {
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-6);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
 }
 
 .dialog__title {
@@ -80,7 +92,12 @@ dialog.dialog[open]::backdrop {
     justify-content: center;
 }
 
-/* Removed old .dialog__close styles as we now use Button component */
+.dialog__description {
+    margin: 0;
+    padding: var(--spacing-4) var(--spacing-6) 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
 
 .dialog__body {
     padding: var(--spacing-6);
@@ -88,9 +105,9 @@ dialog.dialog[open]::backdrop {
 
 .dialog__footer {
     padding: var(--spacing-6);
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-width-thin) solid var(--color-border);
     display: flex;
     justify-content: flex-end;
     gap: var(--spacing-4);
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: var(--color-bg-tertiary);
 }

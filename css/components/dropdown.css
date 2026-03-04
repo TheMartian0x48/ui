@@ -1,4 +1,9 @@
-/* Dropdown Component Styles */
+/* Dropdown Component Styles
+ *
+ * A collapsible menu triggered by a button, built on the native
+ * details/summary pattern. Supports left/right alignment and
+ * danger-styled items for destructive actions.
+ */
 
 .dropdown {
     position: relative;
@@ -6,7 +11,7 @@
 }
 
 .dropdown__trigger {
-    /* Inherits btn styles but we need to remove the default marker */
+    /* Inherits btn styles, remove default marker */
     list-style: none;
     display: inline-flex;
     align-items: center;
@@ -21,7 +26,7 @@
 }
 
 .dropdown__arrow {
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-fast);
 }
 
 .dropdown[open] .dropdown__arrow {
@@ -32,22 +37,22 @@
     position: absolute;
     top: calc(100% + var(--spacing-1));
     left: 0;
-    z-index: 50;
+    z-index: var(--z-dropdown);
 
     min-width: 12rem;
     padding: var(--spacing-1);
 
     background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
 
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--spacing-px);
 
-    /* Animation hooks */
-    animation: dropdown-fade-in 0.15s ease-out forwards;
+    /* Animation */
+    animation: dropdown-fade-in var(--transition-fast) forwards;
     transform-origin: top left;
 }
 
@@ -60,8 +65,8 @@
 .dropdown__item {
     display: flex;
     align-items: center;
-    gap: var(--spacing-4);
-    padding: 0.5rem 0.75rem;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
 
     font-size: var(--font-size-sm);
     color: var(--color-text);
@@ -74,12 +79,17 @@
     cursor: pointer;
     width: 100%;
 
-    transition: background-color 0.1s ease, color 0.1s ease;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .dropdown__item:hover {
     background-color: var(--color-bg-tertiary);
     color: var(--color-primary);
+}
+
+.dropdown__item:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
 }
 
 /* Danger variant */
@@ -88,22 +98,40 @@
 }
 
 .dropdown__item--danger:hover {
-    background-color: var(--color-danger-bg, rgba(239, 68, 68, 0.1));
+    background-color: var(--color-danger-subtle-bg);
     color: var(--color-danger);
 }
 
+.dropdown__item--danger:focus-visible {
+    box-shadow: var(--focus-ring-danger);
+}
+
 .dropdown__item .icon {
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
 }
 
 .dropdown__item:hover .icon {
     color: currentColor;
 }
 
-/* Overlay to help close on click outside (optional pure CSS trick, 
-   but for robust closing JS is usually better. 
-   We will rely on simple native usage for now or add a global click listener in main.js later if needed)
-*/
+/* Divider */
+.dropdown__divider {
+    height: 0;
+    margin: var(--spacing-1) 0;
+    border: none;
+    border-top: var(--border-width-thin) solid var(--color-border);
+}
+
+/* Group label */
+.dropdown__label {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
 @keyframes dropdown-fade-in {
     from {

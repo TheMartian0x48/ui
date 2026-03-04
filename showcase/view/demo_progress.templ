@@ -1,0 +1,230 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ ProgressDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Progress Indicators</h1>
+			<p class="doc-section__description">
+				Indicators for the status of an ongoing operation, either indeterminate (spinning/pulsing) or determinate (showing exact progress).
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Linear Progress -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Linear Progress</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Progress(ui.ProgressProp{
+							Value:     30,
+							Label:     "Determinate (Linear)",
+							ShowValue: true,
+						})
+						@ui.Progress(ui.ProgressProp{
+							Indeterminate: true,
+							Label:         "Indeterminate (Linear)",
+						})
+					</div>
+				</div>
+				<!-- Linear Progress Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Linear Progress Sizes</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Progress(ui.ProgressProp{
+							Value: 60,
+							Size:  ui.ProgressSizeSM,
+							Label: "Small",
+						})
+						@ui.Progress(ui.ProgressProp{
+							Value: 60,
+							Size:  ui.ProgressSizeMD,
+							Label: "Medium (default)",
+						})
+						@ui.Progress(ui.ProgressProp{
+							Value: 60,
+							Size:  ui.ProgressSizeLG,
+							Label: "Large",
+						})
+					</div>
+				</div>
+				<!-- Circular Progress (Indeterminate) -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Circular Progress (Indeterminate by Default)</h3>
+					<p class="progress-demo__text">If no value is provided, it behaves as a spinner.</p>
+					<div class="doc-demo__list" style="align-items: center;">
+						<div class="progress-demo__item">
+							@ui.CircularProgress(ui.CircularProgressProp{Size: 24})
+							<span class="text-xs">Small (24px)</span>
+						</div>
+						<div class="progress-demo__item">
+							@ui.CircularProgress(ui.CircularProgressProp{Size: 48})
+							<span class="text-xs">Medium (48px)</span>
+						</div>
+						<div class="progress-demo__item">
+							@ui.CircularProgress(ui.CircularProgressProp{Size: 64, Thickness: 6})
+							<span class="text-xs">Large (64px)</span>
+						</div>
+					</div>
+				</div>
+				<!-- Determinate Circular -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Circular Progress (Determinate)</h3>
+					<div class="doc-demo__list">
+						@ui.CircularProgress(ui.CircularProgressProp{
+							Value:     25,
+							ShowValue: true,
+						})
+						@ui.CircularProgress(ui.CircularProgressProp{
+							Value:     60,
+							Size:      64,
+							Thickness: 6,
+							ShowValue: true,
+						})
+						@ui.CircularProgress(ui.CircularProgressProp{
+							Value:     85,
+							Size:      80,
+							Thickness: 8,
+							ShowValue: true,
+						})
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Progress(ui.ProgressProp{
+							Value:     45,
+							Label:     "Upload Progress",
+							ShowValue: true,
+							Attributes: templ.Attributes{
+								"data-testid":  "upload-progress",
+								"data-task-id": "task-123",
+							},
+						})
+						<div class="doc-demo__list">
+							@ui.CircularProgress(ui.CircularProgressProp{
+								Value:     75,
+								Size:      48,
+								ShowValue: true,
+								Attributes: templ.Attributes{
+									"data-testid": "sync-progress",
+								},
+							})
+						</div>
+					</div>
+				</div>
+				<!-- Usage Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Usage Examples</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						<!-- Storage Card -->
+						<div style="max-width: 400px;">
+							@ui.Card(ui.CardProp{Header: "Backup Storage"}) {
+								<div class="progress-demo__storage">
+									<div class="progress-demo__storage-header">
+										<div>
+											<div class="progress-demo__storage-title">Capacity</div>
+											<div class="progress-demo__storage-subtitle">850 GB used of 1 TB</div>
+										</div>
+										<div class="progress-demo__storage-percent">85%</div>
+									</div>
+									@ui.Progress(ui.ProgressProp{Value: 85})
+									<div style="margin-top: var(--spacing-3);">
+										@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Size: ui.ButtonSizeSM}) {
+											Upgrade Plan
+										}
+									</div>
+								</div>
+							}
+						</div>
+						<!-- Profile Completion -->
+						<div class="progress-demo__profile">
+							@ui.CircularProgress(ui.CircularProgressProp{
+								Value:     60,
+								Size:      56,
+								Thickness: 5,
+								ShowValue: true,
+							})
+							<div class="progress-demo__profile-content">
+								<h4 class="progress-demo__profile-title">Profile Completion</h4>
+								<p class="progress-demo__profile-text">
+									Next step: Add a profile picture to reach 80%
+								</p>
+							</div>
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM}) {
+								Finish Setup
+							}
+						</div>
+						<!-- Processing Button -->
+						<div>
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Disabled: true}) {
+								@ui.CircularProgress(ui.CircularProgressProp{Size: 16, Thickness: 2})
+								Processing Request...
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.progress-demo__item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-3);
+			color: var(--color-text-muted);
+			padding: var(--spacing-4);
+		}
+		.progress-demo__text {
+			margin-bottom: var(--spacing-4);
+			color: var(--color-text-muted);
+			font-size: var(--font-size-sm);
+		}
+		.progress-demo__storage {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-4);
+		}
+		.progress-demo__storage-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+		}
+		.progress-demo__storage-title {
+			font-size: var(--font-size-sm);
+			font-weight: var(--font-weight-medium);
+		}
+		.progress-demo__storage-subtitle {
+			font-size: var(--font-size-xs);
+			color: var(--color-text-muted);
+		}
+		.progress-demo__storage-percent {
+			font-size: var(--font-size-lg);
+			font-weight: var(--font-weight-semibold);
+			color: var(--color-primary);
+		}
+		.progress-demo__profile {
+			display: flex;
+			gap: var(--spacing-8);
+			align-items: center;
+			padding: var(--spacing-6);
+			background: var(--color-bg-secondary);
+			border-radius: var(--radius-md);
+			border: var(--border-width-thin) solid var(--color-border);
+		}
+		.progress-demo__profile-content {
+			flex: 1;
+		}
+		.progress-demo__profile-title {
+			margin: 0;
+			font-size: var(--font-size-base);
+		}
+		.progress-demo__profile-text {
+			margin: var(--spacing-1) 0 0;
+			font-size: var(--font-size-sm);
+			color: var(--color-text-muted);
+		}
+	</style>
+}

@@ -1,5 +1,7 @@
 package ui
 
+import "strings"
+
 type ButtonType int
 
 const (
@@ -27,13 +29,17 @@ const (
 )
 
 type ButtonProp struct {
-	Variant    ButtonVariant
-	Size       ButtonSize
-	Disabled   bool
-	Type       ButtonType
-	Class      string
-	Id         string
-	Attributes templ.Attributes
+	Variant      ButtonVariant
+	Size         ButtonSize
+	Disabled     bool
+	Type         ButtonType
+	Class        string
+	Id           string
+	Attributes   templ.Attributes
+	AriaDisabled bool  // Visually disabled but still focusable
+	Loading      bool  // Shows loading state with aria-busy
+	AriaPressed  *bool // nil = not a toggle, true/false = toggle state
+	AriaExpanded *bool // For buttons controlling expandable content
 }
 
 // Button renders a button element with configurable variants and sizes.
@@ -46,6 +52,18 @@ templ Button(prop ButtonProp) {
 		class={ buttonClass(prop) }
 		if prop.Disabled {
 			disabled
+		}
+		if prop.AriaDisabled {
+			aria-disabled="true"
+		}
+		if prop.Loading {
+			aria-busy="true"
+		}
+		if prop.AriaPressed != nil {
+			aria-pressed={ boolToString(*prop.AriaPressed) }
+		}
+		if prop.AriaExpanded != nil {
+			aria-expanded={ boolToString(*prop.AriaExpanded) }
 		}
 		{ prop.Attributes... }
 	>
@@ -67,43 +85,45 @@ func buttonType(prop ButtonProp) string {
 
 // buttonClass generates the CSS class for the button based on variant and size.
 func buttonClass(prop ButtonProp) string {
-	base := "btn"
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("btn")
 
 	// Determine variant class
-	var variantClass string
 	switch prop.Variant {
-	case ButtonPrimary:
-		variantClass = base + " btn--primary"
 	case ButtonSecondary:
-		variantClass = base + " btn--secondary"
+		b.WriteString(" btn--secondary")
 	case ButtonOutline:
-		variantClass = base + " btn--outline"
+		b.WriteString(" btn--outline")
 	case ButtonGhost:
-		variantClass = base + " btn--ghost"
+		b.WriteString(" btn--ghost")
 	case ButtonDanger:
-		variantClass = base + " btn--danger"
+		b.WriteString(" btn--danger")
 	default:
-		variantClass = base + " btn--primary"
+		b.WriteString(" btn--primary")
 	}
 
 	// Determine size class
-	var sizeClass string
 	switch prop.Size {
 	case ButtonSizeSM:
-		sizeClass = "btn--sm"
+		b.WriteString(" btn--sm")
 	case ButtonSizeLG:
-		sizeClass = "btn--lg"
+		b.WriteString(" btn--lg")
 	default:
-		sizeClass = "btn--md"
+		b.WriteString(" btn--md")
 	}
 
-	// Combine classes
-	result := variantClass + " " + sizeClass
+	// Add loading class if loading
+	if prop.Loading {
+		b.WriteString(" btn--loading")
+	}
 
 	// Add custom class if provided
 	if prop.Class != "" {
-		result += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
 
-	return result
+	return b.String()
 }

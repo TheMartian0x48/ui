@@ -1,17 +1,57 @@
 package ui
 
-type FormFieldProp struct {
-	Label    string // Label text
-	LabelFor string // ID of the input (for label association)
-	Required bool   // Whether the field is required (adds * to label)
-	Error    string // Error message to display
-	Help     string // Help text to display
-	Class    string // Additional CSS classes
+import (
+	"fmt"
+	"sync/atomic"
+)
+
+// formFieldIdCounter is an atomic counter for generating unique form field IDs.
+var formFieldIdCounter atomic.Uint64
+
+// formFieldUniqueId generates a unique ID or returns the provided ID.
+func formFieldUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("ff%d", formFieldIdCounter.Add(1))
 }
 
-// FormField renders a standard form field layout with label, input (children), and error/help text.
+// FormFieldProp configures the FormField component.
+type FormFieldProp struct {
+	Id         string           // Optional ID for the field container (auto-generated if empty)
+	Label      string           // Label text
+	LabelFor   string           // ID of the input element (for label association)
+	Required   bool             // Whether the field is required (adds * to label)
+	Error      string           // Error message to display
+	Help       string           // Help text to display below the input
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
+}
+
+// FormField renders a standard form field layout with label, input (children),
+// and optional error/help text. It automatically links the input to help/error
+// text via aria-describedby for accessibility.
 templ FormField(prop FormFieldProp) {
-	<div class={ formFieldClass(prop) }>
+	{{ fieldId := formFieldUniqueId(prop.Id) }}
+	{{ helpId := fieldId + "-help" }}
+	{{ errorId := fieldId + "-error" }}
+	{{
+		// Determine which ID to use for aria-describedby
+		descById := ""
+		if prop.Error != "" {
+			descById = errorId
+		} else if prop.Help != "" {
+			descById = helpId
+		}
+	}}
+	<div
+		id={ fieldId }
+		class={ formFieldClass(prop) }
+		if descById != "" {
+			data-describedby={ descById }
+		}
+		{ prop.Attributes... }
+	>
 		if prop.Label != "" {
 			@Label(LabelProp{
 				For:      prop.LabelFor,
@@ -25,12 +65,12 @@ templ FormField(prop FormFieldProp) {
 			{ children... }
 		</div>
 		if prop.Error != "" {
-			<div class="form-field__error" role="alert">
+			<div id={ errorId } class="form-field__error" role="alert" aria-live="polite">
 				@Icon(IconProp{Icon: IconWarning(), Size: IconSizeSM})
 				<span>{ prop.Error }</span>
 			</div>
 		} else if prop.Help != "" {
-			<div class="form-field__help">
+			<div id={ helpId } class="form-field__help">
 				{ prop.Help }
 			</div>
 		}
@@ -41,15 +81,12 @@ templ FormField(prop FormFieldProp) {
 func formFieldClass(prop FormFieldProp) string {
 	base := "form-field"
 
-	var stateClass string
 	if prop.Error != "" {
-		stateClass = base + " form-field--error"
-	} else {
-		stateClass = base
+		base += " form-field--error"
 	}
 
 	if prop.Class != "" {
-		return stateClass + " " + prop.Class
+		base += " " + prop.Class
 	}
-	return stateClass
+	return base
 }

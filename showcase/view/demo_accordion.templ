@@ -1,0 +1,173 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+// Rich content components for the advanced example
+templ productSpecifications() {
+	<div class="rich-content">
+		<ul>
+			<li><strong>Dimensions:</strong> 12" x 8" x 2"</li>
+			<li><strong>Weight:</strong> 2.5 lbs</li>
+			<li><strong>Material:</strong> Aluminum</li>
+			<li><strong>Color Options:</strong> Silver, Black, Gold</li>
+		</ul>
+	</div>
+}
+
+templ shippingInformation() {
+	<div class="rich-content">
+		<p>Free shipping on orders over $50. Standard delivery takes 3-5 business days.</p>
+		<div class="form-group">
+			@ui.Label(ui.LabelProp{
+				For: "shipping-option",
+			}) {
+				Shipping Method:
+			}
+			@ui.Select(ui.SelectProp{
+				Id: "shipping-option",
+				Name: "shipping-option",
+				Options: []ui.SelectOption{
+					{Label: "Standard (Free)", Value: "standard"},
+					{Label: "Express ($15)", Value: "express"},
+					{Label: "Next Day ($25)", Value: "next-day"},
+				},
+				Class: "form-control",
+			})
+		</div>
+	</div>
+}
+
+templ returnPolicy() {
+	<div class="rich-content">
+		<p>30-day money-back guarantee. Return shipping is free for defective products.</p>
+		@ui.Button(ui.ButtonProp{
+			Variant: ui.ButtonSecondary,
+			Size: ui.ButtonSizeSM,
+		}) {
+			Print Return Label
+		}
+	</div>
+}
+
+// AccordionDemo displays various examples of the Accordion component
+templ AccordionDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Accordion</h1>
+			<p class="doc-section__description">
+				@ui.Accordion(ui.AccordionProp{
+					Variant: ui.AccordionBordered,
+					Items: []ui.AccordionItem{
+						{Title: "Why use bordered?", Content: "Bordered accordions work great..."},
+						{Title: "Can one be open by default?", Content: "Yes, just set the Open property...", Open: true},
+					},
+				})
+				A vertically stacked list of items that can each be expanded or collapsed to reveal content.
+				Accordions are useful for organizing and presenting large amounts of information in a compact space.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Variant (Default)</h3>
+					<p class="doc-demo__description">
+						Standard accordion with default styling. Uses native HTML details/summary elements for optimal accessibility.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Accordion(ui.AccordionProp{
+							Items: []ui.AccordionItem{
+								{Title: "Is it accessible?", Content: "Yes. It uses native details and summary elements for maximum compatibility with screen readers and keyboard navigation."},
+								{Title: "Does it support icons?", Content: "Absolutely. You can override the default chevron with any icon from the library."},
+							},
+						})
+					</div>
+				</div>
+				<!-- Bordered Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Bordered Variant</h3>
+					<p class="doc-demo__description">
+						Adds visual borders to clearly separate accordion items, making them stand out as a cohesive group.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Accordion(ui.AccordionProp{
+							Variant: ui.AccordionBordered,
+							Items: []ui.AccordionItem{
+								{Title: "Why use bordered?", Content: "Bordered accordions work great when you need to contain a group of related items within a card-like structure."},
+								{Title: "Can one be open by default?", Content: "Yes, just set the Open property to true on any AccordionItem.", Open: true},
+							},
+						})
+					</div>
+				</div>
+				<!-- Flush Variant -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Flush Variant</h3>
+					<p class="doc-demo__description">
+						Removes margins and outer borders, allowing accordions to blend seamlessly into their container.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Accordion(ui.AccordionProp{
+							Variant: ui.AccordionFlush,
+							Items: []ui.AccordionItem{
+								{Title: "What is flush?", Content: "Flush accordions remove margins and outer borders, allowing them to blend seamlessly into their parent container."},
+								{Title: "When should I use flush?", Content: "Use flush accordions when you want to embed them in a container like a card or a sidebar without extra spacing."},
+							},
+						})
+					</div>
+				</div>
+				<!-- Custom Icon -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Icon</h3>
+					<p class="doc-demo__description">
+						Replace the default chevron icon with any icon from the library to match your design requirements.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Accordion(ui.AccordionProp{
+							Icon: ui.IconEdit(),
+							Items: []ui.AccordionItem{
+								{Title: "Settings", Content: "Change your account settings and preferences here."},
+								{Title: "Privacy", Content: "Manage your data and privacy settings."},
+							},
+						})
+					</div>
+				</div>
+				<!-- Advanced Example: Rich Content -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Advanced Example: Rich Content</h3>
+					<p class="doc-demo__description">
+						Accordions can contain complex content including forms, lists, images, or even nested accordions.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Accordion(ui.AccordionProp{
+							Variant: ui.AccordionBordered,
+							Items: []ui.AccordionItem{
+								{
+									Title: "Product Specifications",
+									RichContent: productSpecifications(),
+								},
+								{
+									Title: "Shipping Information",
+									RichContent: shippingInformation(),
+								},
+								{
+									Title: "Return Policy",
+									RichContent: returnPolicy(),
+								},
+							},
+						})
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Best Practices Section -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">Accessibility Best Practices</h2>
+			<ul class="doc-list">
+				<li>Accordions use native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> elements for optimal keyboard navigation</li>
+				<li>Users can navigate between accordion headers using Tab key</li>
+				<li>Space or Enter key toggles the accordion open/closed</li>
+				<li>Screen readers announce the expanded/collapsed state</li>
+			</ul>
+		</div>
+	</section>
+}

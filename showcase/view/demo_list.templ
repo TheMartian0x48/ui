@@ -1,0 +1,169 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ ListDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">List</h1>
+			<p class="doc-section__description">
+				Displays a collection of items in a vertical layout with support for bullets, numbers, icons, and dividers.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Plain List -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Plain List</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Variant: ui.ListPlain}) {
+							@ui.ListItem(ui.ListItemProp{}) {
+								First item in plain list
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Second item in plain list
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Third item in plain list
+							}
+						}
+					</div>
+				</div>
+				<!-- Bulleted List -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Bulleted List</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Variant: ui.ListBulleted}) {
+							@ui.ListItem(ui.ListItemProp{}) {
+								Design mockups
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Implement frontend
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Write documentation
+							}
+						}
+					</div>
+				</div>
+				<!-- Numbered List -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Numbered List</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Variant: ui.ListNumbered}) {
+							@ui.ListItem(ui.ListItemProp{}) {
+								Clone the repository
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Install dependencies
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Run the development server
+							}
+							@ui.ListItem(ui.ListItemProp{}) {
+								Open browser to localhost:3000
+							}
+						}
+					</div>
+				</div>
+				<!-- Icon List -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Icon List</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Variant: ui.ListIcon}) {
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeSM})}) {
+								Feature complete
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeSM})}) {
+								Tests passing
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeSM})}) {
+								Documentation updated
+							}
+						}
+					</div>
+				</div>
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<div class="doc-demo__list" style="gap: var(--spacing-8); align-items: flex-start;">
+						<div>
+							<p class="list-demo__label">Small</p>
+							@ui.List(ui.ListProp{Variant: ui.ListBulleted, Size: ui.ListSizeSM}) {
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item one
+								}
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item two
+								}
+							}
+						</div>
+						<div>
+							<p class="list-demo__label">Medium</p>
+							@ui.List(ui.ListProp{Variant: ui.ListBulleted, Size: ui.ListSizeMD}) {
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item one
+								}
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item two
+								}
+							}
+						</div>
+						<div>
+							<p class="list-demo__label">Large</p>
+							@ui.List(ui.ListProp{Variant: ui.ListBulleted, Size: ui.ListSizeLG}) {
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item one
+								}
+								@ui.ListItem(ui.ListItemProp{}) {
+									Item two
+								}
+							}
+						</div>
+					</div>
+				</div>
+				<!-- Divided List -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Divided List</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Divided: true}) {
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})}) {
+								John Doe - john@example.com
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})}) {
+								Jane Smith - jane@example.com
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})}) {
+								Bob Wilson - bob@example.com
+							}
+						}
+					</div>
+				</div>
+				<!-- Active and Disabled -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Active and Disabled States</h3>
+					<div style="max-width: 400px;">
+						@ui.List(ui.ListProp{Variant: ui.ListIcon}) {
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconHome(), Size: ui.IconSizeSM})}) {
+								Dashboard
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM}), Active: true}) {
+								Settings (Active)
+							}
+							@ui.ListItem(ui.ListItemProp{Icon: ui.Icon(ui.IconProp{Icon: ui.IconLock(), Size: ui.IconSizeSM}), Disabled: true}) {
+								Admin Panel (Disabled)
+							}
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.list-demo__label {
+			margin: 0 0 var(--spacing-2);
+			font-size: var(--font-size-sm);
+			color: var(--color-text-muted);
+		}
+	</style>
+}

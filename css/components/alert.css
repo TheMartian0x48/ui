@@ -5,7 +5,7 @@
     gap: var(--spacing-4);
     padding: var(--spacing-4);
     border-radius: var(--radius-md);
-    border: 1px solid transparent;
+    border: var(--border-width-thin) solid transparent;
     margin-bottom: var(--spacing-4);
     font-family: var(--font-primary);
 }
@@ -14,7 +14,7 @@
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
-    padding-top: 0.125rem;
+    padding-top: var(--spacing-px);
 }
 
 .alert__content {
@@ -22,7 +22,7 @@
 }
 
 .alert__title {
-    margin: 0 0 0.25rem 0;
+    margin: 0 0 var(--spacing-1) 0;
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-md);
     color: inherit;
@@ -32,6 +32,39 @@
     font-size: var(--font-size-sm);
     line-height: var(--line-height-relaxed);
     color: inherit;
+    margin-bottom: var(--spacing-2);
+}
+
+.alert__actions {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-3);
+}
+
+.alert__actions .btn {
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+    background-color: rgba(255, 255, 255, 0.15);
+    border: var(--border-width-thin) solid currentColor;
+    color: inherit;
+    opacity: 0.8;
+    transition: var(--transition-fast);
+}
+
+.alert__actions .btn:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.alert__actions .btn.btn-primary {
+    background-color: currentColor;
+    color: var(--color-bg);
+    border: var(--border-width-thin) solid transparent;
+}
+
+.alert__actions .btn.btn-primary:hover {
+    opacity: 0.9;
 }
 
 .alert__close {
@@ -39,9 +72,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    margin: -0.5rem -0.5rem -0.5rem 0;
+    width: var(--spacing-8);
+    height: var(--spacing-8);
+    margin: calc(-1 * var(--spacing-2)) calc(-1 * var(--spacing-2)) calc(-1 * var(--spacing-2)) 0;
     padding: 0;
     background: transparent;
     border: none;
@@ -61,27 +94,27 @@
 
 /* Standard (Default) */
 .alert--standard.alert--info {
-    background-color: #eef2ff;
-    border-color: #e0e7ff;
-    color: #1e40af;
+    background-color: var(--color-info-subtle-bg);
+    border-color: var(--color-border);
+    color: var(--color-info-subtle-text);
 }
 
 .alert--standard.alert--success {
-    background-color: #f0fdf4;
-    border-color: #dcfce7;
-    color: #166534;
+    background-color: var(--color-success-subtle-bg);
+    border-color: var(--color-border);
+    color: var(--color-success-subtle-text);
 }
 
 .alert--standard.alert--warning {
-    background-color: #fffbeb;
-    border-color: #fef3c7;
-    color: #92400e;
+    background-color: var(--color-warning-subtle-bg);
+    border-color: var(--color-border);
+    color: var(--color-warning-text);
 }
 
 .alert--standard.alert--danger {
-    background-color: #fef2f2;
-    border-color: #fee2e2;
-    color: #991b1b;
+    background-color: var(--color-danger-subtle-bg);
+    border-color: var(--color-border);
+    color: var(--color-danger-subtle-text);
 }
 
 /* Outlined */

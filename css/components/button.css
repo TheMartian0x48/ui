@@ -5,18 +5,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--spacing-2);
 
     font-family: var(--font-primary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-align: center;
     text-decoration: none;
 
-    border: 1px solid transparent;
+    border: var(--border-width-thin) solid transparent;
     border-radius: var(--radius-md);
 
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all var(--transition-base);
 
     /* Prevent text selection */
     user-select: none;
@@ -24,34 +24,34 @@
 }
 
 .btn:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+    outline: var(--border-width-medium) solid var(--color-primary);
+    outline-offset: var(--border-width-medium);
 }
 
 .btn:disabled,
 .btn--disabled {
-    opacity: 0.5;
+    opacity: var(--opacity-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }
 
 /* Size Variants */
 .btn--sm {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
 }
 
 .btn--md {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    line-height: 1.5rem;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
 }
 
 .btn--lg {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
 }
 
 /* Primary Variant */
@@ -147,18 +147,73 @@
 
 /* Icon-only utility */
 .btn--icon {
-    padding: 0;
-    width: 2.5rem;
-    height: 2.5rem;
+    padding: var(--spacing-0);
+    width: var(--spacing-10);
+    height: var(--spacing-10);
     flex-shrink: 0;
 }
 
 .btn--icon.btn--sm {
-    width: 2rem;
-    height: 2rem;
+    width: var(--spacing-8);
+    height: var(--spacing-8);
 }
 
 .btn--icon.btn--lg {
-    width: 3rem;
-    height: 3rem;
+    width: var(--spacing-12);
+    height: var(--spacing-12);
+}
+
+/* Loading State */
+.btn--loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.btn--loading::after {
+    content: "";
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    border: var(--border-width-medium) solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--radius-full);
+    animation: btn-spin 0.6s linear infinite;
+}
+
+.btn--loading.btn--primary::after,
+.btn--loading.btn--danger::after {
+    border-color: var(--color-text-inverse);
+    border-right-color: transparent;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+
+    .btn--loading::after {
+        animation: none;
+        border-right-color: currentColor;
+        opacity: 0.5;
+    }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+    .btn:focus-visible {
+        outline: var(--border-width-thick) solid CanvasText;
+    }
+
+    .btn--loading::after {
+        border-color: CanvasText;
+        border-right-color: transparent;
+    }
 }

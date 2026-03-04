@@ -1,0 +1,163 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ BreadcrumbDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Breadcrumb</h1>
+			<p class="doc-section__description">
+				Navigation component showing the user's location within a site hierarchy, allowing quick navigation to parent pages.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Breadcrumb -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Breadcrumb</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Breadcrumb(ui.BreadcrumbProp{}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Home
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/products"}) {
+								Products
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Electronics
+							}
+						}
+					</div>
+				</div>
+				<!-- With Different Separators -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Separators</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="gap: var(--spacing-6);">
+						@ui.Breadcrumb(ui.BreadcrumbProp{Separator: ">"}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Home
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/docs"}) {
+								Documentation
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Getting Started
+							}
+						}
+						@ui.Breadcrumb(ui.BreadcrumbProp{Separator: "›"}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Home
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/blog"}) {
+								Blog
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Article Title
+							}
+						}
+						@ui.Breadcrumb(ui.BreadcrumbProp{Separator: "→"}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Dashboard
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/settings"}) {
+								Settings
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Profile
+							}
+						}
+					</div>
+				</div>
+				<!-- Longer Trail -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Longer Trail</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Breadcrumb(ui.BreadcrumbProp{}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Home
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/shop"}) {
+								Shop
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/shop/electronics"}) {
+								Electronics
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/shop/electronics/phones"}) {
+								Phones
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								iPhone 15 Pro
+							}
+						}
+					</div>
+				</div>
+				<!-- With Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Icons</h3>
+					<div class="doc-demo__list doc-demo__list--column">
+						@ui.Breadcrumb(ui.BreadcrumbProp{}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-2);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconHome(), Size: ui.IconSizeSM})
+									Home
+								</span>
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/settings"}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-2);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
+									Settings
+								</span>
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-2);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})
+									Profile
+								</span>
+							}
+						}
+					</div>
+				</div>
+				<!-- In Card Context -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">In Page Header</h3>
+					<div style="max-width: 600px;">
+						@ui.Card(ui.CardProp{}) {
+							<div class="breadcrumb-demo__header">
+								@ui.Breadcrumb(ui.BreadcrumbProp{}) {
+									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+										Dashboard
+									}
+									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/orders"}) {
+										Orders
+									}
+									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+										Order #12345
+									}
+								}
+								<h2 class="breadcrumb-demo__title">Order Details</h2>
+								<p class="breadcrumb-demo__subtitle">View and manage order information</p>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.breadcrumb-demo__header {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-2);
+		}
+		.breadcrumb-demo__title {
+			margin: var(--spacing-4) 0 0;
+			font-size: var(--font-size-xl);
+			font-weight: var(--font-weight-semibold);
+		}
+		.breadcrumb-demo__subtitle {
+			margin: 0;
+			font-size: var(--font-size-sm);
+			color: var(--color-text-muted);
+		}
+	</style>
+}

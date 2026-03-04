@@ -1,18 +1,27 @@
 package ui
 
+import "strings"
+
+// CheckboxProp configures a checkbox input component.
+// Use Checked for controlled state, Indeterminate for partial selection (e.g., "select all").
 type CheckboxProp struct {
-	Id       string
-	Name     string
-	Value    string
-	Label    string
-	Checked  bool
-	Disabled bool
-	Required bool
-	Error    bool
-	Class    string
+	Id              string           // HTML id attribute
+	Name            string           // Form field name
+	Value           string           // Input value when checked
+	Label           string           // Visible label text
+	Checked         bool             // Whether checkbox is checked
+	Indeterminate   bool             // Partial selection state (visual only, requires JS)
+	Disabled        bool             // Prevents interaction
+	Required        bool             // Form validation requirement
+	Error           bool             // Shows error styling
+	Class           string           // Additional CSS classes
+	Attributes      templ.Attributes // Additional HTML attributes
+	AriaLabel       string           // Screen reader label (when no visible label)
+	AriaDescribedBy string           // ID of element describing this checkbox (e.g., error message)
 }
 
-// Checkbox renders a custom-styled checkbox input.
+// Checkbox renders a custom-styled checkbox input with optional label.
+// Supports checked, indeterminate, disabled, and error states.
 templ Checkbox(prop CheckboxProp) {
 	<div class={ checkboxClass(prop) }>
 		<input
@@ -39,9 +48,20 @@ templ Checkbox(prop CheckboxProp) {
 			if prop.Error {
 				aria-invalid="true"
 			}
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			if prop.AriaDescribedBy != "" {
+				aria-describedby={ prop.AriaDescribedBy }
+			}
+			if prop.Indeterminate {
+				data-indeterminate="true"
+			}
+			{ prop.Attributes... }
 		/>
 		<div class="checkbox__control">
-			@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM, Class: "checkbox__icon"})
+			@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM, Class: "checkbox__icon checkbox__icon--check"})
+			@Icon(IconProp{Icon: IconMinus(), Size: IconSizeSM, Class: "checkbox__icon checkbox__icon--indeterminate"})
 		</div>
 		if prop.Label != "" {
 			<label
@@ -57,17 +77,24 @@ templ Checkbox(prop CheckboxProp) {
 }
 
 func checkboxClass(prop CheckboxProp) string {
-	base := "checkbox"
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("checkbox")
 
 	if prop.Disabled {
-		base += " checkbox--disabled"
+		b.WriteString(" checkbox--disabled")
 	}
 	if prop.Error {
-		base += " checkbox--error"
+		b.WriteString(" checkbox--error")
+	}
+	if prop.Indeterminate {
+		b.WriteString(" checkbox--indeterminate")
+	}
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
 
-	if prop.Class != "" {
-		return base + " " + prop.Class
-	}
-	return base
+	return b.String()
 }

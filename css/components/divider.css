@@ -1,4 +1,9 @@
-/* Divider Component Styles */
+/* Divider Component Styles
+ *
+ * A visual separator for content sections.
+ * Supports horizontal (default) and vertical orientations.
+ * Horizontal dividers can optionally include a text label.
+ */
 
 .divider {
     font-family: var(--font-primary);
@@ -10,7 +15,7 @@
 
 /* Standard Horizontal (hr) */
 hr.divider--horizontal {
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-width-thin) solid var(--color-border);
     width: 100%;
     margin: var(--spacing-4) 0;
 }
@@ -26,7 +31,7 @@ div.divider--labelled {
 
 .divider__line {
     flex-grow: 1;
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-width-thin) solid var(--color-border);
 }
 
 .divider__label {
@@ -36,14 +41,15 @@ div.divider--labelled {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-muted);
+    white-space: nowrap;
 }
 
 /* Vertical */
 .divider--vertical {
     display: inline-block;
-    width: 1px;
+    width: var(--border-width-thin);
     height: 100%;
-    min-height: 1rem;
+    min-height: var(--spacing-4);
     margin: 0 var(--spacing-2);
     vertical-align: middle;
     background-color: var(--color-border);

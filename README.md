@@ -1,49 +1,113 @@
 # UI Component Library
 
-A modern, accessible UI component library built with Go, Templ, and Vanilla CSS.
+A modern, accessible UI component library built with Go and Templ.
 
-## Project Structure
+## Quick Start
 
-- `go/`: Go and Templ component definitions.
-- `css/`: Framework-specific component and base styles.
-- `js/`: Framework-specific JavaScript logic.
-- `showcase/`: A standalone application to preview and document the components.
+### 1. Install the Package
 
-## Dependencies
+```bash
+go get github.com/themartian0x48/ui
+```
 
-We aim for minimal dependencies, relying on the Go ecosystem and native web technologies.
+### 2. Include Required Assets
 
-### Back-end / Build Tools
-- **Go 1.24.3**: The core programming language.
-- **Templ v0.3.977**: A type-safe HTML templating engine for Go.
-  - Install with: `go install github.com/a-h/templ/cmd/templ@latest`
+Add to your HTML `<head>`:
+- **CSS**: `/css/main.css` (required for all components)
+- **Alpine.js**: Required for interactive components
+- **Toast JS**: `/js/components/toast.js` (only if using toasts)
 
-### Front-end
-- **Alpine.js v3.x**: Used for lightweight client-side interactivity (e.g., dismissible alerts, interactive toggles).
-  - Included via CDN in the showcase.
-- **Vanilla CSS**: All styles are written in pure CSS using modern features like CSS variables and BEM naming convention.
+### 3. Basic Usage
 
-## Asset Handling (JavaScript & CSS)
+```go
+import ui "github.com/themartian0x48/ui/go"
 
-Components in this library rely on external `.css` and `.js` files instead of inline scripts (avoiding legacy Templ `<script>` features).
+@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+    Click me
+}
+```
 
-For example, the `ToastContainer()` component relies on an external JavaScript script:
-`<script src="/js/components/toast.js" defer></script>`
+## External Dependencies
 
-**Important:** If you use this library in another project, you must ensure that:
-1. You either replicate this exact asset routing structure (`/css/...` and `/js/...`) on your server to match the hardcoded paths in the components.
-2. **Or**, bypass the built-in helper components (like `ToastContainer()`) and manually include the `<script>` and `<link>` tags in your own project's `head`, pointing to wherever you decide to store those static assets. If the script cannot be loaded from the specified path, client-side functionality will fail.
+| Dependency | Version | Purpose | Required |
+|------------|---------|---------|----------|
+| Alpine.js | 3.x | Interactive components | Yes* |
+| toast.js | - | Toast notifications | Only for toasts |
+
+*Alpine.js is required for: Alert, Autocomplete, Badge (dismissible), Drawer, Dropdown, Dropzone, Slider
+
+## Asset Setup
+
+### Option A: Mirror the directory structure
+
+```
+/css/main.css           → All component styles
+/js/components/toast.js → Toast functionality
+```
+
+### Option B: Custom paths
+
+Manually include assets with your own paths:
+
+```html
+<link rel="stylesheet" href="/your/path/main.css"/>
+<script src="https://unpkg.com/alpinejs@3.x/dist/cdn.min.js" defer></script>
+```
+
+## Theming
+
+### Dark Mode
+
+Set `data-theme="dark"` on `<html>` or `<body>`:
+
+```html
+<html data-theme="dark">
+```
+
+### System Preference
+
+Dark mode auto-applies based on OS preference via `prefers-color-scheme`.
+Override with `data-theme="light"` to force light mode.
+
+### Customization
+
+Override CSS variables in `:root` to customize colors, spacing, etc.
+
+## Available Components
+
+35+ components including: Accordion, Alert, Autocomplete, Badge,
+Breadcrumb, Button, Card, Checkbox, Dialog, Divider, Drawer,
+Dropdown, Dropzone, FormField, Icon, Input, Label, Link, List,
+Pagination, Progress, Radio, Select, Skeleton, Slider, Stepper,
+Switch, Table, Tabs, Textarea, Timeline, Toast, Tooltip
+
+## Accessibility
+
+- ARIA attributes on all interactive components
+- Keyboard navigation support
+- Screen reader compatible
+- Respects `prefers-reduced-motion`
+- Focus visible states
 
 ## Development
 
 ### Regenerate Templ Files
+
 ```bash
 templ generate
 ```
 
 ### Run Showcase
+
 ```bash
-cd showcase
-go run .
+go run showcase/main.go
 ```
+
 The showcase will be available at `http://localhost:8080`.
+
+## Project Structure
+
+- `go/`: Go and Templ component definitions
+- `css/`: Component and base styles
+- `js/`: JavaScript logic for interactive components
+- `showcase/`: Application to preview and document components

@@ -1,10 +1,22 @@
-/* Drawer Component Styles */
+/* Drawer Component Styles
+ *
+ * A slide-over panel that opens from any edge of the screen.
+ * Uses Alpine.js for visibility toggling and transitions.
+ * Supports right (default), left, top, and bottom positions.
+ *
+ * Structure:
+ *   .drawer__backdrop     - Semi-transparent overlay
+ *   .drawer__panel        - Main panel container
+ *     .drawer__header     - Header with title and close button
+ *     .drawer__description - Optional description text
+ *     .drawer__body       - Scrollable content area
+ */
 
 .drawer__backdrop {
     position: fixed;
     inset: 0;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal-backdrop);
+    background-color: var(--color-bg-overlay);
     backdrop-filter: blur(2px);
 }
 
@@ -12,12 +24,11 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    z-index: 110;
+    z-index: var(--z-modal);
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 24rem;
-    /* 384px default width */
     background-color: var(--color-bg);
     box-shadow: var(--shadow-xl);
     font-family: var(--font-primary);
@@ -59,7 +70,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-4) var(--spacing-6);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
 }
 
 .drawer__title {
@@ -73,6 +84,14 @@
     margin-left: auto;
 }
 
+/* Description */
+.drawer__description {
+    margin: 0;
+    padding: var(--spacing-4) var(--spacing-6) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
 /* Body */
 .drawer__body {
     flex-grow: 1;
@@ -80,7 +99,7 @@
     padding: var(--spacing-6);
 }
 
-/* Alpine.js transition classes */
+/* Alpine.js transition utility classes */
 .opacity-0 {
     opacity: 0;
 }
@@ -126,9 +145,9 @@
 }
 
 .ease-out {
-    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    transition-timing-function: var(--ease-out);
 }
 
 .ease-in {
-    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    transition-timing-function: var(--ease-in);
 }

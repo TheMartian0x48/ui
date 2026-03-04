@@ -1,29 +1,69 @@
 package ui
 
+import (
+	"fmt"
+	"strings"
+	"sync/atomic"
+)
+
+// DialogSize defines the width variant of a dialog.
+type DialogSize int
+
+const (
+	DialogSizeMD DialogSize = iota // default ~32rem
+	DialogSizeSM                   // ~24rem
+	DialogSizeLG                   // ~42rem
+	DialogSizeXL                   // ~56rem
+)
+
 type DialogProp struct {
-	Id          string // ID required for triggering
-	Title       string // Dialog title
-	TriggerText string // Text for the button that opens the dialog (optional helper)
-	Class       string // Additional CSS classes
+	Id          string           // ID (auto-generated if empty)
+	Title       string           // Dialog title
+	Description string           // Optional description for aria-describedby
+	Size        DialogSize       // Size variant (SM, MD, LG, XL)
+	TriggerText string           // Text for the button that opens the dialog (optional helper)
+	Class       string           // Additional CSS classes
+	Attributes  templ.Attributes // Additional HTML attributes
+}
+
+// dialogIdCounter is an atomic counter for generating unique dialog IDs.
+var dialogIdCounter atomic.Uint64
+
+// dialogUniqueId generates a unique ID or returns the provided ID.
+func dialogUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("dlg%d", dialogIdCounter.Add(1))
 }
 
 // Dialog renders a modal dialog using the native HTML dialog element.
 // It includes a built-in close button and optional header/body structure.
 templ Dialog(prop DialogProp) {
+	{{ dialogId := dialogUniqueId(prop.Id) }}
+	{{ titleId := dialogId + "-title" }}
+	{{ descId := dialogId + "-desc" }}
 	<dialog
-		id={ prop.Id }
+		id={ dialogId }
 		class={ dialogClass(prop) }
+		role="dialog"
+		aria-labelledby={ titleId }
+		if prop.Description != "" {
+			aria-describedby={ descId }
+		}
+		aria-modal="true"
+		{ prop.Attributes... }
 	>
 		<div class="dialog__content">
 			<div class="dialog__header">
-				<h3 class="dialog__title">{ prop.Title }</h3>
+				<h3 id={ titleId } class="dialog__title">{ prop.Title }</h3>
 				<div class="dialog__close-wrapper">
 					@Button(ButtonProp{
 						Variant: ButtonGhost,
 						Size:    ButtonSizeSM,
 						Class:   "dialog__close",
 						Attributes: templ.Attributes{
-							"onclick":    "document.getElementById('" + prop.Id + "').close()",
+							"onclick":    "this.closest('dialog').close()",
 							"aria-label": "Close dialog",
 						},
 						Type: ButtonTypeButton,
@@ -32,6 +72,9 @@ templ Dialog(prop DialogProp) {
 					}
 				</div>
 			</div>
+			if prop.Description != "" {
+				<p id={ descId } class="dialog__description">{ prop.Description }</p>
+			}
 			<div class="dialog__body">
 				{ children... }
 			</div>
@@ -41,11 +84,45 @@ templ Dialog(prop DialogProp) {
 
 // dialogClass generates the CSS class for the dialog.
 func dialogClass(prop DialogProp) string {
-	base := "dialog"
-	if prop.Class != "" {
-		return base + " " + prop.Class
+	var b strings.Builder
+	b.WriteString("dialog")
+
+	// Add size modifier
+	switch prop.Size {
+	case DialogSizeSM:
+		b.WriteString(" dialog--sm")
+	case DialogSizeLG:
+		b.WriteString(" dialog--lg")
+	case DialogSizeXL:
+		b.WriteString(" dialog--xl")
+	// DialogSizeMD is default, no modifier needed
 	}
-	return base
+
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
+	return b.String()
+}
+
+// DialogFooterProp defines the properties for the DialogFooter component.
+type DialogFooterProp struct {
+	Class string // Additional CSS classes
+}
+
+// DialogFooter renders a footer section for dialog actions.
+templ DialogFooter(prop DialogFooterProp) {
+	<div class={ dialogFooterClass(prop) }>
+		{ children... }
+	</div>
+}
+
+// dialogFooterClass generates the CSS class for the dialog footer.
+func dialogFooterClass(prop DialogFooterProp) string {
+	if prop.Class != "" {
+		return "dialog__footer " + prop.Class
+	}
+	return "dialog__footer"
 }
 
 // DialogTrigger renders a button that opens the specified dialog.
@@ -54,7 +131,9 @@ templ DialogTrigger(dialogId string) {
 		Variant: ButtonPrimary,
 		Size:    ButtonSizeMD,
 		Attributes: templ.Attributes{
-			"onclick": "document.getElementById('" + dialogId + "').showModal()",
+			"onclick":       "document.getElementById('" + dialogId + "').showModal()",
+			"aria-haspopup": "dialog",
+			"aria-controls": dialogId,
 		},
 		Type: ButtonTypeButton,
 	}) {

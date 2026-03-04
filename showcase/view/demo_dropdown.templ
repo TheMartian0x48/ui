@@ -1,0 +1,92 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ DropdownDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Dropdown</h1>
+			<p class="doc-section__description">
+				Displays a menu to the user—such as a set of actions or functions—triggered by a button.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Dropdown -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Account Settings", Icon: ui.IconSettings()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Support", Icon: ui.IconInfo()})
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Logout", Icon: ui.IconLogOut(), Danger: true})
+						}
+					</div>
+				</div>
+				<!-- Menu Alignment -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Menu Alignment</h3>
+					<div class="doc-demo__list" style="justify-content: space-between; margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Align Left (Default)"}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "View Profile", Icon: ui.IconUser()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Edit Settings", Icon: ui.IconEdit()})
+						}
+						@ui.Dropdown(ui.DropdownProp{Label: "Align Right", Right: true}) {
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Share", Icon: ui.IconShare()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Copy Link", Icon: ui.IconCopy()})
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Delete Project", Icon: ui.IconTrash(), Danger: true})
+						}
+					</div>
+				</div>
+				<!-- With Links and Group Labels -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Links and Group Labels</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{Label: "Actions"}) {
+							@ui.DropdownLabel(ui.DropdownLabelProp{}) {
+								Navigation
+							}
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Go to Dashboard", Href: "#", Icon: ui.IconHome()})
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "External Documentation", Href: "https://example.com", Icon: ui.IconExternalLink()})
+							@ui.DropdownDivider(ui.DropdownDividerProp{})
+							@ui.DropdownLabel(ui.DropdownLabelProp{}) {
+								Actions
+							}
+							@ui.DropdownItem(ui.DropdownItemProp{Label: "Refresh Data", Attributes: templ.Attributes{"onclick": "alert('Refreshing...')"}, Icon: ui.IconRefresh()})
+						}
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list" style="margin-bottom: 8rem;">
+						@ui.Dropdown(ui.DropdownProp{
+							Label: "More Actions",
+							Attributes: templ.Attributes{
+								"data-testid": "actions-dropdown",
+							},
+						}) {
+							@ui.DropdownItem(ui.DropdownItemProp{
+								Label: "Download",
+								Icon:  ui.IconDownload(),
+								Attributes: templ.Attributes{
+									"data-action": "download",
+								},
+							})
+							@ui.DropdownItem(ui.DropdownItemProp{
+								Label: "Print",
+								Icon:  ui.IconFileText(),
+								Attributes: templ.Attributes{
+									"data-action": "print",
+									"onclick":     "window.print()",
+								},
+							})
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

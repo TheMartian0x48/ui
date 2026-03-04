@@ -1,14 +1,29 @@
 package ui
 
+// ImageObjectFit defines how the image should be resized to fit its container.
+type ImageObjectFit int
+
+const (
+	ImageObjectFitCover   ImageObjectFit = iota // Scale to cover container, may crop (default)
+	ImageObjectFitContain                       // Scale to fit within container, may letterbox
+	ImageObjectFitFill                          // Stretch to fill container exactly
+	ImageObjectFitNone                          // No resizing, display at natural size
+)
+
+// ImagePreviewProp configures the ImagePreview component.
 type ImagePreviewProp struct {
-	Src         string // Image source URL
-	Alt         string // Alt text
-	AspectRatio string // Aspect ratio (e.g., "16/9", "1/1", "4/3")
-	Class       string // Additional CSS classes
-	Id          string // Optional ID
+	Src         string           // Image source URL
+	Alt         string           // Alt text for accessibility
+	AspectRatio string           // Aspect ratio (e.g., "16/9", "1/1", "4/3")
+	ObjectFit   ImageObjectFit   // How image fills container (cover, contain, fill, none)
+	Class       string           // Additional CSS classes
+	Id          string           // Optional ID
+	Attributes  templ.Attributes // Additional HTML attributes
 }
 
 // ImagePreview renders an image with a specific aspect ratio and styling.
+// When no Src is provided, displays a placeholder with an icon.
+// Supports lazy loading by default for better performance.
 templ ImagePreview(prop ImagePreviewProp) {
 	<div
 		if prop.Id != "" {
@@ -18,16 +33,34 @@ templ ImagePreview(prop ImagePreviewProp) {
 		if prop.AspectRatio != "" {
 			style={ "aspect-ratio: " + prop.AspectRatio + ";" }
 		}
+		if prop.Src == "" {
+			role="img"
+			aria-label={ imagePreviewAriaLabel(prop.Alt) }
+		}
+		{ prop.Attributes... }
 	>
 		if prop.Src != "" {
-			<img src={ prop.Src } alt={ prop.Alt } loading="lazy"/>
+			<img
+				src={ prop.Src }
+				alt={ prop.Alt }
+				loading="lazy"
+				class={ imagePreviewImgClass(prop) }
+			/>
 		} else {
-			<div class="image-preview__placeholder">
+			<div class="image-preview__placeholder" aria-hidden="true">
 				@Icon(IconProp{Icon: IconCamera(), Size: IconSizeLG})
-				<span class="text-sm text-muted">No image selected</span>
+				<span>No image selected</span>
 			</div>
 		}
 	</div>
+}
+
+// imagePreviewAriaLabel returns an appropriate aria-label for the placeholder.
+func imagePreviewAriaLabel(alt string) string {
+	if alt != "" {
+		return alt
+	}
+	return "No image selected"
 }
 
 // imagePreviewClass generates the CSS class for the image preview container.
@@ -38,4 +71,18 @@ func imagePreviewClass(prop ImagePreviewProp) string {
 		return base + " " + prop.Class
 	}
 	return base
+}
+
+// imagePreviewImgClass generates the CSS class for the img element.
+func imagePreviewImgClass(prop ImagePreviewProp) string {
+	switch prop.ObjectFit {
+	case ImageObjectFitContain:
+		return "image-preview__img image-preview__img--contain"
+	case ImageObjectFitFill:
+		return "image-preview__img image-preview__img--fill"
+	case ImageObjectFitNone:
+		return "image-preview__img image-preview__img--none"
+	default:
+		return "image-preview__img"
+	}
 }

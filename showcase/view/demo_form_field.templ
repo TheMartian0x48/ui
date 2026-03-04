@@ -1,0 +1,174 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ FormFieldDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Form Field</h1>
+			<p class="doc-section__description">
+				A wrapper component used to provide labels, help text, and error messages for form inputs.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Usage -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Usage</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "Username",
+							LabelFor: "username",
+							Help:     "This is your unique identifier on the platform.",
+						}) {
+							@ui.Input(ui.InputProp{
+								Id:          "username",
+								Placeholder: "e.g. johndoe",
+							})
+						}
+					</div>
+				</div>
+				<!-- Required and Error -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States: Required and Error</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "Email Address",
+							LabelFor: "email",
+							Required: true,
+						}) {
+							@ui.Input(ui.InputProp{
+								Type:        ui.InputEmail,
+								Id:          "email",
+								Placeholder: "you@example.com",
+							})
+						}
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "Password",
+							LabelFor: "password",
+							Required: true,
+							Error:    "Password must be at least 8 characters long.",
+						}) {
+							@ui.Input(ui.InputProp{
+								Type:  ui.InputPassword,
+								Id:    "password",
+								Value: "short",
+							})
+						}
+					</div>
+				</div>
+				<!-- With Different Inputs -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Different Inputs</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<!-- Select -->
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "Role",
+							LabelFor: "role",
+						}) {
+							@ui.Select(ui.SelectProp{
+								Id: "role",
+								Options: []ui.SelectOption{
+									{Label: "Admin", Value: "admin"},
+									{Label: "Editor", Value: "editor"},
+									{Label: "Viewer", Value: "viewer"},
+								},
+							})
+						}
+						<!-- Textarea -->
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "Bio",
+							LabelFor: "bio",
+							Help:     "Tell us a bit about yourself.",
+						}) {
+							@ui.Textarea(ui.TextareaProp{
+								Id:          "bio",
+								Placeholder: "Developer at heart...",
+								Rows:        4,
+							})
+						}
+					</div>
+				</div>
+				<!-- With Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.FormField(ui.FormFieldProp{
+							Label:    "API Key",
+							LabelFor: "api-key",
+							Help:     "Your secret API key for authentication.",
+							Attributes: templ.Attributes{
+								"data-testid":   "api-key-field",
+								"data-validate": "required",
+							},
+						}) {
+							@ui.Input(ui.InputProp{
+								Id:          "api-key",
+								Type:        ui.InputPassword,
+								Placeholder: "sk-xxxxxxxxxxxx",
+							})
+						}
+					</div>
+				</div>
+				<!-- Complete Form Example -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Complete Form Example</h3>
+					<div style="max-width: 500px;">
+						@ui.Card(ui.CardProp{Header: "Create Account"}) {
+							<form class="form-field-demo__form" onsubmit="return false">
+								<div class="form-field-demo__grid">
+									@ui.FormField(ui.FormFieldProp{Label: "First Name", Required: true}) {
+										@ui.Input(ui.InputProp{Placeholder: "Jane"})
+									}
+									@ui.FormField(ui.FormFieldProp{Label: "Last Name", Required: true}) {
+										@ui.Input(ui.InputProp{Placeholder: "Doe"})
+									}
+								</div>
+								@ui.FormField(ui.FormFieldProp{Label: "Email", Required: true}) {
+									@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "jane@example.com"})
+								}
+								@ui.FormField(ui.FormFieldProp{Label: "Account Type"}) {
+									<div class="form-field-demo__switch-row">
+										@ui.Switch(ui.SwitchProp{Label: "Business Account"})
+									</div>
+								}
+								<div class="form-field-demo__actions">
+									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost}) {
+										Cancel
+									}
+									@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+										Register
+									}
+								</div>
+							</form>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.form-field-demo__form {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-6);
+		}
+		.form-field-demo__grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: var(--spacing-4);
+		}
+		.form-field-demo__switch-row {
+			display: flex;
+			gap: var(--spacing-4);
+			padding: var(--spacing-2) 0;
+		}
+		.form-field-demo__actions {
+			display: flex;
+			justify-content: flex-end;
+			gap: var(--spacing-4);
+			border-top: var(--border-width-thin) solid var(--color-border-light);
+			padding-top: var(--spacing-6);
+		}
+	</style>
+}

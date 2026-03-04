@@ -1,0 +1,342 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+// boolPtr returns a pointer to a bool value
+func boolPtr(b bool) *bool {
+	return &b
+}
+
+// ButtonDemo displays various examples of the Button component
+templ ButtonDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Button</h1>
+			<p class="doc-section__description">
+				A versatile button component that triggers actions. Supports multiple variants to establish visual hierarchy,
+				three sizes, loading and disabled states, and full ARIA support with toggle buttons and expandable content.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Variants</h3>
+					<p class="doc-demo__description">
+						<strong>Primary</strong> is best suited to main CTAs, <strong>Secondary</strong> works well with supporting actions,
+						<strong>Outline</strong> fits less prominent actions, <strong>Ghost</strong> provides minimal emphasis,
+						and <strong>Danger</strong> signals destructive actions.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							Primary
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
+							Secondary
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+							Outline
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost}) {
+							Ghost
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger}) {
+							Danger
+						}
+					</div>
+				</div>
+				<!-- Sizes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Sizes</h3>
+					<p class="doc-demo__description">
+						Three sizes available: <strong>Small</strong> suits compact UIs, <strong>Medium</strong> (default) handles standard use,
+						and <strong>Large</strong> emphasizes prominent actions.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeSM}) {
+							Small
+						}
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeMD}) {
+							Medium
+						}
+						@ui.Button(ui.ButtonProp{Size: ui.ButtonSizeLG}) {
+							Large
+						}
+					</div>
+				</div>
+				<!-- Button Types -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Button Types</h3>
+					<p class="doc-demo__description">
+						HTML button types: <strong>button</strong> (default), <strong>submit</strong> triggers form submission,
+						and <strong>reset</strong> clears form fields.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Type: ui.ButtonTypeButton}) {
+							Button
+						}
+						@ui.Button(ui.ButtonProp{Type: ui.ButtonTypeSubmit, Variant: ui.ButtonPrimary}) {
+							Submit
+						}
+						@ui.Button(ui.ButtonProp{Type: ui.ButtonTypeReset, Variant: ui.ButtonSecondary}) {
+							Reset
+						}
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<p class="doc-demo__description">
+						<strong>Disabled</strong> prevents interaction entirely. <strong>AriaDisabled</strong> keeps the button focusable
+						by screen readers. <strong>Loading</strong> shows a spinner and sets <code>aria-busy="true"</code>.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							Default
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Disabled: true}) {
+							Disabled
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, AriaDisabled: true}) {
+							Aria Disabled
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Loading: true}) {
+							Loading
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Loading: true}) {
+							Loading
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger, Loading: true}) {
+							Loading
+						}
+					</div>
+				</div>
+				<!-- Toggle Buttons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Toggle Buttons</h3>
+					<p class="doc-demo__description">
+						The <code>AriaPressed</code> prop enables toggle buttons like favorites or bookmarks.
+						Pass a pointer to indicate the toggle state (<code>true</code>/<code>false</code>).
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, AriaPressed: boolPtr(false), Attributes: templ.Attributes{"aria-label": "Like"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconHeart(), Size: ui.IconSizeSM})
+							Like
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, AriaPressed: boolPtr(true), Attributes: templ.Attributes{"aria-label": "Liked"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconHeart(), Size: ui.IconSizeSM})
+							Liked
+						}
+					</div>
+				</div>
+				<!-- Expandable Content Buttons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Expandable Content</h3>
+					<p class="doc-demo__description">
+						The <code>AriaExpanded</code> prop works with buttons that control collapsible sections, dropdowns, or accordions.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, AriaExpanded: boolPtr(false), Attributes: templ.Attributes{"aria-label": "Expand section"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconChevronDown(), Size: ui.IconSizeSM})
+							Collapsed
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, AriaExpanded: boolPtr(true), Attributes: templ.Attributes{"aria-label": "Collapse section"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconChevronUp(), Size: ui.IconSizeSM})
+							Expanded
+						}
+					</div>
+				</div>
+				<!-- With Icons -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">With Icons</h3>
+					<p class="doc-demo__description">
+						Icons can be placed before or after text. Use the Icon component inside Button children.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeSM})
+							Edit Profile
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconDownload(), Size: ui.IconSizeSM})
+							Download
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeSM})
+							Delete
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline}) {
+							Settings
+							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
+						}
+					</div>
+				</div>
+				<!-- Icon Only -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Icon Only</h3>
+					<p class="doc-demo__description">
+						Add <code>btn--icon</code> class to create square icon buttons. Always provide <code>aria-label</code> when there is no visible text.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--icon", Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"aria-label": "Open Menu"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconMenu(), Size: ui.IconSizeSM})
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Take Photo"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconCamera(), Size: ui.IconSizeMD})
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger, Class: "btn--icon", Size: ui.ButtonSizeLG, Attributes: templ.Attributes{"aria-label": "Delete Item"}}) {
+							@ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeLG})
+						}
+					</div>
+				</div>
+				<!-- Custom Classes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Classes</h3>
+					<p class="doc-demo__description">
+						Use the <code>Class</code> prop to add custom styles like <code>btn--block</code> to make full-width buttons,
+						or combine classes to create split buttons.
+					</p>
+					<div class="doc-demo__list doc-demo__list--column">
+						<!-- Split Button -->
+						<div class="doc-demo__item">
+							<div class="split-button">
+								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
+									Save
+								}
+								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "btn--icon split-button__toggle", Attributes: templ.Attributes{"aria-label": "More Options"}}) {
+									@ui.Icon(ui.IconProp{Icon: ui.IconChevronDown(), Size: ui.IconSizeSM})
+								}
+							</div>
+						</div>
+						<!-- Full-width Button -->
+						<div class="doc-demo__item">
+							@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "btn--block"}) {
+								Create Account
+							}
+						</div>
+					</div>
+				</div>
+				<!-- Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Attributes</h3>
+					<p class="doc-demo__description">
+						Use the <code>Attributes</code> prop to add any HTML attributes like <code>data-*</code>, <code>id</code>, or event handlers.
+					</p>
+					<div class="doc-demo__list doc-demo__list--center">
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Id: "submit-btn", Attributes: templ.Attributes{"data-action": "submit", "data-target": "form"}}) {
+							Submit Form
+						}
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary, Attributes: templ.Attributes{"hx-get": "/api/data", "hx-target": "#result"}}) {
+							Load Data (HTMX)
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- API Reference -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">API Reference</h2>
+			@ui.Table(ui.TableProp{Striped: true, Hover: true}) {
+				<thead>
+					@ui.TableHeader(ui.TableHeaderProp{}) {
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Default</th>
+						<th>Description</th>
+					}
+				</thead>
+				@ui.TableBody(ui.TableBodyProp{}) {
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Variant</code></td>
+						<td>ButtonVariant</td>
+						<td>ButtonPrimary</td>
+						<td>Visual style: Primary, Secondary, Outline, Ghost, Danger</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Size</code></td>
+						<td>ButtonSize</td>
+						<td>ButtonSizeMD</td>
+						<td>Button size: SM, MD, LG</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Type</code></td>
+						<td>ButtonType</td>
+						<td>ButtonTypeButton</td>
+						<td>HTML type: Button, Submit, Reset</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Disabled</code></td>
+						<td>bool</td>
+						<td>false</td>
+						<td>Disables button and prevents interaction</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>AriaDisabled</code></td>
+						<td>bool</td>
+						<td>false</td>
+						<td>Visually disabled but remains focusable</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Loading</code></td>
+						<td>bool</td>
+						<td>false</td>
+						<td>Shows loading spinner, sets aria-busy</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>AriaPressed</code></td>
+						<td>*bool</td>
+						<td>nil</td>
+						<td>Toggle button state (nil = not a toggle)</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>AriaExpanded</code></td>
+						<td>*bool</td>
+						<td>nil</td>
+						<td>Expandable content state</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Id</code></td>
+						<td>string</td>
+						<td>""</td>
+						<td>HTML id attribute</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Class</code></td>
+						<td>string</td>
+						<td>""</td>
+						<td>Additional CSS classes</td>
+					}
+					@ui.TableRow(ui.TableRowProp{}) {
+						<td><code>Attributes</code></td>
+						<td>templ.Attributes</td>
+						<td>nil</td>
+						<td>Additional HTML attributes</td>
+					}
+				}
+			}
+		</div>
+		<!-- Best Practices Section -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">Usage Guidelines</h2>
+			<ul class="doc-list">
+				<li><strong>Visual Hierarchy:</strong> Primary buttons suit main actions, secondary/outline/ghost buttons handle less important actions</li>
+				<li><strong>Labeling:</strong> Use clear, action-oriented text that describes what the button does (e.g., "Save Changes" instead of "Submit")</li>
+				<li><strong>Placement:</strong> Position primary actions on the right in forms, on the left in navigation or toolbars</li>
+				<li><strong>One Primary:</strong> Limit to one primary button per section to maintain clear visual hierarchy</li>
+				<li><strong>Danger Actions:</strong> Reserve danger variant exclusively to destructive actions that cannot be undone</li>
+			</ul>
+		</div>
+		<!-- Accessibility Section -->
+		<div class="doc-section__subsection">
+			<h2 class="doc-section__subtitle">Accessibility</h2>
+			<ul class="doc-list">
+				<li><strong>Icon Buttons:</strong> Always provide <code>aria-label</code> when there is no visible text</li>
+				<li><strong>Toggle State:</strong> Use <code>AriaPressed</code> to communicate toggle state to screen readers</li>
+				<li><strong>Expandable Content:</strong> Use <code>AriaExpanded</code> with buttons that control collapsible sections</li>
+				<li><strong>Loading State:</strong> The <code>Loading</code> prop automatically sets <code>aria-busy="true"</code></li>
+				<li><strong>Disabled vs AriaDisabled:</strong> Use <code>AriaDisabled</code> when disabled buttons need to remain focusable (e.g., to show tooltips explaining why)</li>
+				<li><strong>Focus Visible:</strong> All buttons have visible focus states that support keyboard navigation</li>
+			</ul>
+		</div>
+	</section>
+}

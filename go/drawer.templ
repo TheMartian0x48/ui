@@ -1,29 +1,54 @@
 package ui
 
+import (
+	"fmt"
+	"sync/atomic"
+)
+
+// drawerIdCounter is an atomic counter for generating unique drawer IDs.
+var drawerIdCounter atomic.Uint64
+
+// drawerUniqueId generates a unique ID or returns the provided ID.
+func drawerUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("drawer%d", drawerIdCounter.Add(1))
+}
+
+// DrawerPosition defines which edge of the screen the drawer slides from.
 type DrawerPosition int
 
 const (
-	DrawerRight DrawerPosition = iota
-	DrawerLeft
-	DrawerTop
-	DrawerBottom
+	DrawerRight  DrawerPosition = iota // Slides from right edge (default)
+	DrawerLeft                         // Slides from left edge
+	DrawerTop                          // Slides from top edge
+	DrawerBottom                       // Slides from bottom edge
 )
 
+// DrawerProp configures the Drawer component.
 type DrawerProp struct {
-	Id       string
-	Position DrawerPosition
-	Title    string
-	Class    string
+	Id          string           // Optional ID (auto-generated if empty)
+	Position    DrawerPosition   // Which edge to slide from
+	Title       string           // Header title text
+	Description string           // Optional description for aria-describedby
+	Class       string           // Additional CSS classes
+	Attributes  templ.Attributes // Additional HTML attributes
 }
 
-// Drawer renders a slide-over panel that opens from the left or right side of the screen.
-// It leverages Alpine.js for visibility toggling via the 'open-drawer' window event.
+// Drawer renders a slide-over panel that opens from an edge of the screen.
+// Uses Alpine.js for visibility toggling via the 'open-drawer' window event.
+// Supports all four edges: right (default), left, top, and bottom.
 templ Drawer(prop DrawerProp) {
+	{{ drawerId := drawerUniqueId(prop.Id) }}
+	{{ titleId := drawerId + "-title" }}
+	{{ descId := drawerId + "-desc" }}
 	<div
 		x-data="{ open: false }"
-		@open-drawer.window={ "if ($event.detail === '" + prop.Id + "') open = true" }
+		@open-drawer.window={ "if ($event.detail === '" + drawerId + "') open = true" }
 		@keydown.escape.window="open = false"
 		x-cloak
+		{ prop.Attributes... }
 	>
 		// Backdrop
 		<div
@@ -40,7 +65,7 @@ templ Drawer(prop DrawerProp) {
 		></div>
 		// Panel
 		<div
-			id={ prop.Id }
+			id={ drawerId }
 			x-show="open"
 			class={ drawerClass(prop) }
 			if prop.Position == DrawerRight {
@@ -51,8 +76,7 @@ templ Drawer(prop DrawerProp) {
 				x-transition:leave-start="translate-x-0"
 				x-transition:leave-end="translate-x-full"
 			}
-			else
-			if prop.Position == DrawerLeft {
+			else if prop.Position == DrawerLeft {
 				x-transition:enter="transition ease-out duration-300 transform"
 				x-transition:enter-start="-translate-x-full"
 				x-transition:enter-end="translate-x-0"
@@ -60,8 +84,7 @@ templ Drawer(prop DrawerProp) {
 				x-transition:leave-start="translate-x-0"
 				x-transition:leave-end="-translate-x-full"
 			}
-			else
-			if prop.Position == DrawerTop {
+			else if prop.Position == DrawerTop {
 				x-transition:enter="transition ease-out duration-300 transform"
 				x-transition:enter-start="-translate-y-full"
 				x-transition:enter-end="translate-y-0"
@@ -69,8 +92,7 @@ templ Drawer(prop DrawerProp) {
 				x-transition:leave-start="translate-y-0"
 				x-transition:leave-end="-translate-y-full"
 			}
-			else
-			if prop.Position == DrawerBottom {
+			else if prop.Position == DrawerBottom {
 				x-transition:enter="transition ease-out duration-300 transform"
 				x-transition:enter-start="translate-y-full"
 				x-transition:enter-end="translate-y-0"
@@ -81,12 +103,15 @@ templ Drawer(prop DrawerProp) {
 			role="dialog"
 			aria-modal="true"
 			if prop.Title != "" {
-				aria-labelledby={ prop.Id + "-title" }
+				aria-labelledby={ titleId }
+			}
+			if prop.Description != "" {
+				aria-describedby={ descId }
 			}
 		>
 			<div class="drawer__header">
 				if prop.Title != "" {
-					<h3 id={ prop.Id + "-title" } class="drawer__title">{ prop.Title }</h3>
+					<h3 id={ titleId } class="drawer__title">{ prop.Title }</h3>
 				}
 				<div class="drawer__close-wrapper">
 					@Button(ButtonProp{
@@ -103,6 +128,9 @@ templ Drawer(prop DrawerProp) {
 					}
 				</div>
 			</div>
+			if prop.Description != "" {
+				<p id={ descId } class="drawer__description">{ prop.Description }</p>
+			}
 			<div class="drawer__body">
 				{ children... }
 			</div>
@@ -132,7 +160,7 @@ func drawerClass(prop DrawerProp) string {
 }
 
 // DrawerTrigger renders a button configured to dispatch the event that opens the Drawer.
-// Optionally, developers can just manually do: Alpine.$dispatch('open-drawer', 'my-id')
+// Alternatively, you can manually dispatch: $dispatch('open-drawer', 'drawer-id')
 templ DrawerTrigger(drawerId string, variant ButtonVariant) {
 	@Button(ButtonProp{
 		Variant: variant,

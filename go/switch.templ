@@ -1,26 +1,35 @@
 package ui
 
+import "strings"
+
 type SwitchSize int
 
 const (
-	SwitchSizeSM SwitchSize = iota
-	SwitchSizeMD
+	SwitchSizeMD SwitchSize = iota // default
+	SwitchSizeSM
 	SwitchSizeLG
 )
 
+// SwitchProp configures a toggle switch component.
+// Use for binary on/off settings like preferences and feature toggles.
 type SwitchProp struct {
-	Name        string
-	Label       string
-	Description string
-	Checked     bool
-	Disabled    bool
-	Size        SwitchSize
-	Class       string
-	Id          string
-	Attributes  templ.Attributes
+	Name            string           // Form field name
+	Label           string           // Visible label text
+	Description     string           // Helper text below label
+	Checked         bool             // Whether switch is on
+	Disabled        bool             // Prevents interaction
+	Required        bool             // Form validation requirement
+	Error           bool             // Shows error styling
+	Size            SwitchSize       // Size variant (SM, MD, LG)
+	Class           string           // Additional CSS classes
+	Id              string           // HTML id attribute
+	Attributes      templ.Attributes // Additional HTML attributes
+	AriaLabel       string           // Screen reader label (when no visible label)
+	AriaDescribedBy string           // ID of element describing this switch
 }
 
 // Switch renders a toggleable switch component.
+// Supports checked, disabled, and error states with optional label and description.
 templ Switch(prop SwitchProp) {
 	{{
 		id := prop.Id
@@ -36,6 +45,7 @@ templ Switch(prop SwitchProp) {
 	>
 		<input
 			type="checkbox"
+			role="switch"
 			if id != "" {
 				id={ id }
 			}
@@ -48,6 +58,18 @@ templ Switch(prop SwitchProp) {
 			}
 			if prop.Disabled {
 				disabled
+			}
+			if prop.Required {
+				required
+			}
+			if prop.Error {
+				aria-invalid="true"
+			}
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			if prop.AriaDescribedBy != "" {
+				aria-describedby={ prop.AriaDescribedBy }
 			}
 			{ prop.Attributes... }
 		/>
@@ -68,23 +90,37 @@ templ Switch(prop SwitchProp) {
 }
 
 func switchContainerClass(prop SwitchProp) string {
-	classes := "switch-container"
+	var b strings.Builder
+	b.Grow(50)
+
+	b.WriteString("switch-container")
+
 	if prop.Disabled {
-		classes += " switch-container--disabled"
+		b.WriteString(" switch-container--disabled")
+	}
+	if prop.Error {
+		b.WriteString(" switch-container--error")
 	}
 	if prop.Class != "" {
-		classes += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return classes
+
+	return b.String()
 }
 
 func switchTrackClass(prop SwitchProp) string {
-	classes := "switch-track"
+	var b strings.Builder
+	b.Grow(25)
+
+	b.WriteString("switch-track")
+
 	switch prop.Size {
 	case SwitchSizeSM:
-		classes += " switch-track--sm"
+		b.WriteString(" switch-track--sm")
 	case SwitchSizeLG:
-		classes += " switch-track--lg"
+		b.WriteString(" switch-track--lg")
 	}
-	return classes
+
+	return b.String()
 }

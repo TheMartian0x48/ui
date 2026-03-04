@@ -1,41 +1,74 @@
 package ui
 
-type TooltipPosition string
+import "strings"
+
+type TooltipPosition int
 
 const (
-	TooltipTop    TooltipPosition = "top"
-	TooltipBottom TooltipPosition = "bottom"
-	TooltipLeft   TooltipPosition = "left"
-	TooltipRight  TooltipPosition = "right"
+	TooltipTop TooltipPosition = iota // default
+	TooltipBottom
+	TooltipLeft
+	TooltipRight
 )
 
+// TooltipProp configures a tooltip component.
+// Tooltips appear on hover/focus to provide additional context.
 type TooltipProp struct {
-	Content  string // The text or simple content for the tooltip
-	Position TooltipPosition
-	Class    string
+	Content    string           // The text content for the tooltip
+	Position   TooltipPosition  // Where tooltip appears (Top, Bottom, Left, Right)
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute (used for aria-describedby)
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
-// Tooltip wraps any child element and displays a tooltip on hover.
-// It uses CSS positioning relative to the wrapper.
+// Tooltip wraps any child element and displays a tooltip on hover/focus.
+// Uses CSS positioning relative to the wrapper.
 templ Tooltip(prop TooltipProp) {
-	<div class={ tooltipWrapperClass(prop) } data-tooltip={ prop.Content }>
+	{{
+		tooltipId := prop.Id
+		if tooltipId == "" && prop.Content != "" {
+			tooltipId = "tooltip-" + strings.ReplaceAll(prop.Content[:min(len(prop.Content), 10)], " ", "-")
+		}
+	}}
+	<div
+		class={ tooltipWrapperClass(prop) }
+		data-tooltip={ prop.Content }
+		{ prop.Attributes... }
+	>
 		{ children... }
-		<span class="tooltip__content" role="tooltip">{ prop.Content }</span>
+		<span
+			class="tooltip__content"
+			role="tooltip"
+			if tooltipId != "" {
+				id={ tooltipId }
+			}
+		>
+			{ prop.Content }
+		</span>
 	</div>
 }
 
 func tooltipWrapperClass(prop TooltipProp) string {
-	base := "tooltip-wrapper"
-	pos := "tooltip--" + string(prop.Position)
+	var b strings.Builder
+	b.Grow(35)
 
-	// Default to top if not specified
-	if prop.Position == "" {
-		pos = "tooltip--top"
+	b.WriteString("tooltip-wrapper")
+
+	switch prop.Position {
+	case TooltipBottom:
+		b.WriteString(" tooltip--bottom")
+	case TooltipLeft:
+		b.WriteString(" tooltip--left")
+	case TooltipRight:
+		b.WriteString(" tooltip--right")
+	default:
+		b.WriteString(" tooltip--top")
 	}
 
-	classes := base + " " + pos
 	if prop.Class != "" {
-		classes += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return classes
+
+	return b.String()
 }

@@ -1,22 +1,41 @@
 package ui
 
-import "fmt"
+import (
+	"fmt"
+	"sync/atomic"
+)
 
+// dropzoneIdCounter is an atomic counter for generating unique dropzone IDs.
+var dropzoneIdCounter atomic.Uint64
+
+// dropzoneUniqueId generates a unique ID or returns the provided ID.
+func dropzoneUniqueId(id string) string {
+	if id != "" {
+		return id
+	}
+	return fmt.Sprintf("dz%d", dropzoneIdCounter.Add(1))
+}
+
+// DropzoneProp configures the Dropzone component.
 type DropzoneProp struct {
-	Id       string
-	Name     string
-	Label    string // e.g. "Click to upload or drag and drop"
-	HelpText string // e.g. "SVG, PNG, JPG or GIF (max. 800x400px)"
-	Multiple bool
-	Accept   string // e.g. "image/*", ".pdf"
-	Disabled bool
-	Error    bool
-	Class    string
+	Id         string           // Optional ID (auto-generated if empty)
+	Name       string           // Form field name for file input
+	Label      string           // Custom label text (e.g., "Click to upload or drag and drop")
+	HelpText   string           // Helper text (e.g., "SVG, PNG, JPG or GIF (max. 800x400px)")
+	Multiple   bool             // Allow multiple file selection
+	Accept     string           // Accepted file types (e.g., "image/*", ".pdf")
+	Disabled   bool             // Disable the dropzone
+	Error      bool             // Show error state
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Dropzone renders a file upload area with drag-and-drop support.
-// It leverages Alpine.js to handle the drag-over visual state and file selection display.
+// Uses Alpine.js to handle drag-over visual state and file selection display.
+// Supports single or multiple file uploads with optional file type restrictions.
 templ Dropzone(prop DropzoneProp) {
+	{{ dzId := dropzoneUniqueId(prop.Id) }}
+	{{ helpTextId := dzId + "-help" }}
 	<div
 		class={ dropzoneClass(prop) }
 		x-data="{ isDragging: false, files: null }"
@@ -24,12 +43,11 @@ templ Dropzone(prop DropzoneProp) {
 		@dragleave.prevent="isDragging = false"
 		@drop.prevent={ fmt.Sprintf("if (!%v) { isDragging = false; files = $event.dataTransfer.files; $refs.fileInput.files = files }", prop.Disabled) }
 		:class="{ 'dropzone--dragging': isDragging }"
+		{ prop.Attributes... }
 	>
 		<input
 			type="file"
-			if prop.Id != "" {
-				id={ prop.Id }
-			}
+			id={ dzId }
 			x-ref="fileInput"
 			class="dropzone__input visually-hidden"
 			if prop.Name != "" {
@@ -43,10 +61,14 @@ templ Dropzone(prop DropzoneProp) {
 			}
 			if prop.Disabled {
 				disabled
+				aria-disabled="true"
+			}
+			if prop.HelpText != "" {
+				aria-describedby={ helpTextId }
 			}
 			@change="files = $event.target.files"
 		/>
-		<label class="dropzone__label" for={ prop.Id }>
+		<label class="dropzone__label" for={ dzId }>
 			<div class="dropzone__content" x-show="!files || files.length === 0">
 				<div class="dropzone__icon-wrapper">
 					@Icon(IconProp{Icon: IconUploadCloud(), Size: IconSizeLG})
@@ -59,7 +81,7 @@ templ Dropzone(prop DropzoneProp) {
 					}
 				</p>
 				if prop.HelpText != "" {
-					<p class="dropzone__help-text">{ prop.HelpText }</p>
+					<p id={ helpTextId } class="dropzone__help-text">{ prop.HelpText }</p>
 				}
 			</div>
 			<div class="dropzone__preview" x-show="files && files.length > 0" x-cloak>
@@ -79,6 +101,7 @@ templ Dropzone(prop DropzoneProp) {
 	</div>
 }
 
+// dropzoneClass generates the CSS class string for the dropzone container.
 func dropzoneClass(prop DropzoneProp) string {
 	base := "dropzone"
 

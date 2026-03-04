@@ -1,4 +1,21 @@
 /* Input Component Styles */
+/*
+ * Text-based form input component with multiple type support.
+ *
+ * Usage:
+ *   @ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "user@example.com"})
+ *
+ * Types: text, email, tel, number, password, url, search, date, datetime-local
+ *
+ * Classes:
+ *   - .input: Base input styles
+ *   - .input--error: Error state styling
+ *   - .input--disabled: Disabled state styling
+ *
+ * Accessibility:
+ *   - Error state sets aria-invalid="true"
+ *   - Use AriaDescribedBy to link to error messages
+ */
 
 .input {
     /* Base styles */
@@ -7,7 +24,7 @@
 
     padding: var(--spacing-2) var(--spacing-4);
 
-    font-family: var(--font-primary);
+    font-family: var(--font-family-base);
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
     color: var(--color-text-primary);
@@ -34,7 +51,14 @@
 .input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: var(--focus-ring-primary);
+}
+
+/* Focus visible for keyboard navigation */
+.input:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: var(--focus-ring-primary);
 }
 
 /* Hover state */
@@ -45,12 +69,12 @@
 /* Error state */
 .input--error {
     border-color: var(--color-danger);
-    background-color: rgba(239, 68, 68, 0.05);
+    background-color: var(--color-danger-subtle-bg);
 }
 
 .input--error:focus {
     border-color: var(--color-danger);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: var(--focus-ring-danger);
 }
 
 /* Disabled state */
@@ -60,7 +84,7 @@
     color: var(--color-text-disabled);
     border-color: var(--color-border-light);
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--opacity-muted);
 }
 
 .input:disabled::placeholder,

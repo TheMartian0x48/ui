@@ -11,6 +11,7 @@ const (
 type CardProp struct {
 	Variant    CardVariant
 	Image      string // URL for a top-aligned image
+	ImageAlt   string // Alt text for image (empty = decorative)
 	Header     string // Optional header text
 	Footer     string // Optional footer text
 	Class      string // Additional CSS classes
@@ -19,8 +20,9 @@ type CardProp struct {
 }
 
 // Card renders a container with optional header, image, and footer.
+// Uses <article> element for semantic meaning as cards represent self-contained content.
 templ Card(prop CardProp) {
-	<div
+	<article
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
@@ -29,7 +31,7 @@ templ Card(prop CardProp) {
 	>
 		if prop.Image != "" {
 			<div class="card__media">
-				<img src={ prop.Image } alt={ prop.Header } loading="lazy"/>
+				<img src={ prop.Image } alt={ imageAlt(prop) } loading="lazy"/>
 			</div>
 		}
 		if prop.Header != "" {
@@ -45,7 +47,20 @@ templ Card(prop CardProp) {
 				{ prop.Footer }
 			</div>
 		}
-	</div>
+	</article>
+}
+
+// imageAlt returns appropriate alt text for the card image.
+// Falls back to Header if ImageAlt is not provided.
+// Returns empty string for decorative images.
+func imageAlt(prop CardProp) string {
+	if prop.ImageAlt != "" {
+		return prop.ImageAlt
+	}
+	if prop.Header != "" {
+		return prop.Header
+	}
+	return ""
 }
 
 // cardClass generates the CSS class for the card.

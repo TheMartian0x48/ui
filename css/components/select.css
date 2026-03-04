@@ -1,4 +1,7 @@
-/* Select Component Styles */
+/* Select Component Styles
+ * A dropdown select component with custom styling.
+ * Supports placeholder, error, and disabled states.
+ */
 
 .select-container {
     position: relative;
@@ -6,13 +9,11 @@
 }
 
 .select {
-    /* Base styles matching .input */
     display: block;
     width: 100%;
 
     padding: var(--spacing-2) var(--spacing-4);
     padding-right: var(--spacing-8);
-    /* Make simplified space for the arrow */
 
     font-family: var(--font-primary);
     font-size: var(--font-size-base);
@@ -32,9 +33,9 @@
 
     /* Custom Arrow */
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.5rem center;
+    background-position: right var(--spacing-2) center;
     background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
+    background-size: var(--spacing-6) var(--spacing-6);
 }
 
 /* Placeholder styling (simulated with first option) */
@@ -46,7 +47,7 @@
 .select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: var(--focus-ring-primary);
 }
 
 /* Hover state */
@@ -57,12 +58,12 @@
 /* Error state */
 .select--error {
     border-color: var(--color-danger);
-    background-color: rgba(239, 68, 68, 0.05);
+    background-color: var(--color-danger-subtle-bg);
 }
 
 .select--error:focus {
     border-color: var(--color-danger);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: var(--focus-ring-danger);
 }
 
 /* Disabled state */
@@ -72,5 +73,5 @@
     color: var(--color-text-disabled);
     border-color: var(--color-border-light);
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--opacity-disabled);
 }

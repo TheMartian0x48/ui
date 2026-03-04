@@ -1,28 +1,42 @@
 package ui
 
+import "strings"
+
 type IconSize int
 
 const (
-	IconSizeSM IconSize = iota
-	IconSizeMD
+	IconSizeMD IconSize = iota // default
+	IconSizeSM
 	IconSizeLG
 )
 
+// IconProp configures an icon component wrapper.
+// Icons are decorative by default (aria-hidden="true").
+// Set AriaLabel for meaningful icons that convey information.
 type IconProp struct {
-	Icon  templ.Component
-	Size  IconSize
-	Class string
-	Id    string
+	Icon       templ.Component  // The SVG icon component to render
+	Size       IconSize         // Size variant (SM, MD, LG)
+	Class      string           // Additional CSS classes
+	Id         string           // HTML id attribute
+	Attributes templ.Attributes // Additional HTML attributes
+	AriaLabel  string           // Screen reader label (makes icon accessible)
 }
 
-// Icon renders an SVG icon component with standard sizing and wrappers.
+// Icon renders an SVG icon component with standard sizing.
+// Decorative by default; set AriaLabel for meaningful icons.
 templ Icon(prop IconProp) {
 	<span
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ iconClass(prop) }
-		aria-hidden="true"
+		if prop.AriaLabel != "" {
+			role="img"
+			aria-label={ prop.AriaLabel }
+		} else {
+			aria-hidden="true"
+		}
+		{ prop.Attributes... }
 	>
 		if prop.Icon != nil {
 			@prop.Icon
@@ -31,22 +45,26 @@ templ Icon(prop IconProp) {
 }
 
 func iconClass(prop IconProp) string {
-	base := "icon"
-	var sizeClass string
+	var b strings.Builder
+	b.Grow(25)
+
+	b.WriteString("icon")
+
 	switch prop.Size {
 	case IconSizeSM:
-		sizeClass = "icon--sm"
+		b.WriteString(" icon--sm")
 	case IconSizeLG:
-		sizeClass = "icon--lg"
+		b.WriteString(" icon--lg")
 	default:
-		sizeClass = "icon--md"
+		b.WriteString(" icon--md")
 	}
 
-	result := base + " " + sizeClass
 	if prop.Class != "" {
-		result += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return result
+
+	return b.String()
 }
 
 // ========== Individual Icon Components ==========
@@ -114,6 +132,12 @@ templ IconTrash() {
 templ IconChevronDown() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+	</svg>
+}
+
+templ IconChevronUp() {
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
 	</svg>
 }
 
@@ -249,5 +273,17 @@ templ IconUploadCloud() {
 		<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
 		<path d="M12 12v9"></path>
 		<path d="m16 16-4-4-4 4"></path>
+	</svg>
+}
+
+templ IconMoon() {
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+	</svg>
+}
+
+templ IconSun() {
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
 	</svg>
 }

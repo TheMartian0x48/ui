@@ -19,7 +19,7 @@
     padding: var(--spacing-2) var(--spacing-8) var(--spacing-2) var(--spacing-3);
     /* Extra right padding for icon */
     background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     font-family: inherit;
     font-size: var(--font-size-sm);
@@ -30,7 +30,7 @@
 .autocomplete__input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: var(--focus-ring-primary);
 }
 
 .autocomplete__input--error {
@@ -38,7 +38,7 @@
 }
 
 .autocomplete__input--error:focus {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: var(--focus-ring-danger);
 }
 
 .autocomplete__input:disabled,
@@ -68,10 +68,10 @@
     max-height: 250px;
     overflow-y: auto;
     background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    z-index: 50;
+    z-index: var(--z-dropdown);
     /* Above other content */
     margin: 0;
     padding: var(--spacing-1);

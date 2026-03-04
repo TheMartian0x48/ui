@@ -1,35 +1,56 @@
 package ui
 
+// DividerVariant defines the orientation of a divider.
 type DividerVariant int
 
 const (
-	DividerHorizontal DividerVariant = iota
-	DividerVertical
+	DividerHorizontal DividerVariant = iota // Horizontal separator (default)
+	DividerVertical                         // Vertical separator for inline content
 )
 
+// DividerProp configures the Divider component.
 type DividerProp struct {
-	Variant DividerVariant
-	Label   string // If provided, renders text in the middle of a horizontal divider
-	Class   string
+	Variant    DividerVariant   // Orientation: horizontal or vertical
+	Label      string           // Optional text label (horizontal only)
+	Class      string           // Additional CSS classes
+	Attributes templ.Attributes // Additional HTML attributes
 }
 
-// Divider renders a visual separator.
+// Divider renders a visual separator for content sections.
+// Use horizontal dividers between stacked content and vertical
+// dividers between inline elements like toolbar buttons.
 templ Divider(prop DividerProp) {
 	if prop.Variant == DividerHorizontal {
 		if prop.Label != "" {
-			<div class={ dividerClass(prop) } role="separator">
+			<div
+				class={ dividerClass(prop) }
+				role="separator"
+				aria-orientation="horizontal"
+				{ prop.Attributes... }
+			>
 				<div class="divider__line"></div>
 				<div class="divider__label">{ prop.Label }</div>
 				<div class="divider__line"></div>
 			</div>
 		} else {
-			<hr class={ dividerClass(prop) } role="separator"/>
+			<hr
+				class={ dividerClass(prop) }
+				role="separator"
+				aria-orientation="horizontal"
+				{ prop.Attributes... }
+			/>
 		}
 	} else if prop.Variant == DividerVertical {
-		<div class={ dividerClass(prop) } role="separator" aria-orientation="vertical"></div>
+		<div
+			class={ dividerClass(prop) }
+			role="separator"
+			aria-orientation="vertical"
+			{ prop.Attributes... }
+		></div>
 	}
 }
 
+// dividerClass generates the CSS class string for the divider.
 func dividerClass(prop DividerProp) string {
 	base := "divider"
 

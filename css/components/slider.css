@@ -1,6 +1,21 @@
-/* Slider Component Styles */
+/* Slider Component Styles
+ *
+ * A range input slider with customizable track and thumb.
+ * Uses Alpine.js for real-time value updates.
+ *
+ * Structure:
+ *   .slider-container
+ *     .slider-header
+ *       .slider-label
+ *       .slider-value
+ *     .slider (input[type="range"])
+ */
 
+/* Component-level variables */
 .slider-container {
+    --slider-track-height: 6px;
+    --slider-thumb-size: 18px;
+
     display: flex;
     flex-direction: column;
     gap: var(--spacing-2);
@@ -30,33 +45,48 @@
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 6px;
-    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) var(--slider-pct, 0%), var(--color-bg-secondary) var(--slider-pct, 0%), var(--color-bg-secondary) 100%);
+    height: var(--slider-track-height);
+    background: linear-gradient(
+        to right,
+        var(--color-primary) 0%,
+        var(--color-primary) var(--slider-pct, 0%),
+        var(--color-bg-tertiary) var(--slider-pct, 0%),
+        var(--color-bg-tertiary) 100%
+    );
     border-radius: var(--radius-full);
     outline: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background var(--transition-fast);
+}
+
+/* Focus styles for keyboard navigation */
+.slider:focus {
+    outline: none;
+}
+
+.slider:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-primary);
 }
 
 /* Webkit (Chrome, Safari, Edge, Opera) */
 .slider::-webkit-slider-runnable-track {
-    height: 6px;
+    height: var(--slider-track-height);
     border-radius: var(--radius-full);
 }
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 18px;
-    height: 18px;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
     background: var(--color-primary);
-    border: 2px solid var(--color-bg);
-    border-radius: 50%;
-    margin-top: -6px;
-    /* Center thumb on track */
+    border: var(--border-width-medium) solid var(--color-bg);
+    border-radius: var(--radius-full);
+    margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2);
     cursor: pointer;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
 
 .slider:hover::-webkit-slider-thumb {
@@ -71,14 +101,14 @@
 
 /* Firefox */
 .slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
     background: var(--color-primary);
-    border: 2px solid var(--color-bg);
-    border-radius: 50%;
+    border: var(--border-width-medium) solid var(--color-bg);
+    border-radius: var(--radius-full);
     cursor: pointer;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
 
 .slider:hover::-moz-range-thumb {
@@ -86,25 +116,34 @@
     box-shadow: var(--shadow-md);
 }
 
+.slider:active::-moz-range-thumb {
+    transform: scale(0.95);
+    background: var(--color-primary-dark);
+}
+
 .slider::-moz-range-progress {
     background-color: var(--color-primary);
-    height: 6px;
+    height: var(--slider-track-height);
     border-radius: var(--radius-full);
 }
 
 /* Firefox Track */
 .slider::-moz-range-track {
-    background-color: var(--color-bg-secondary);
-    height: 6px;
+    background-color: var(--color-bg-tertiary);
+    height: var(--slider-track-height);
     border-radius: var(--radius-full);
 }
 
 /* Disabled State */
 .slider:disabled {
-    opacity: 0.6;
+    opacity: var(--opacity-disabled);
     cursor: not-allowed;
 }
 
 .slider:disabled::-webkit-slider-thumb {
+    background: var(--color-text-muted);
+}
+
+.slider:disabled::-moz-range-thumb {
     background: var(--color-text-muted);
 }

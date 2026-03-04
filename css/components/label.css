@@ -1,7 +1,9 @@
-/* Label Component Styles */
+/* Label Component Styles
+ * A form label element that describes associated inputs.
+ * Supports required indicator and disabled state.
+ */
 
 .label {
-    /* Base styles */
     display: inline-block;
     margin-bottom: var(--spacing-1);
 
@@ -18,7 +20,7 @@
 
 /* Required indicator */
 .label__required {
-    margin-left: 0.25rem;
+    margin-left: var(--spacing-1);
     color: var(--color-danger);
     font-weight: var(--font-weight-bold);
 }
@@ -29,7 +31,7 @@
     cursor: not-allowed;
 }
 
-/* Focus/hover enhancement for accessibility */
-.label:hover {
+/* Hover enhancement for accessibility */
+.label:hover:not(.label--disabled) {
     color: var(--color-text);
 }

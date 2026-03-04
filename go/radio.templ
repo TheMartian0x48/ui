@@ -1,18 +1,26 @@
 package ui
 
+import "strings"
+
+// RadioProp configures a radio input component.
+// Radio buttons in the same group should share the same Name value.
 type RadioProp struct {
-	Id       string
-	Name     string
-	Value    string
-	Label    string
-	Checked  bool
-	Disabled bool
-	Required bool
-	Error    bool
-	Class    string
+	Id              string           // HTML id attribute
+	Name            string           // Form field name (groups radios together)
+	Value           string           // Value submitted when selected
+	Label           string           // Visible label text
+	Checked         bool             // Whether radio is selected
+	Disabled        bool             // Prevents interaction
+	Required        bool             // Form validation requirement
+	Error           bool             // Shows error styling
+	Class           string           // Additional CSS classes
+	Attributes      templ.Attributes // Additional HTML attributes
+	AriaLabel       string           // Screen reader label (when no visible label)
+	AriaDescribedBy string           // ID of element describing this radio (e.g., error message)
 }
 
-// Radio renders a custom-styled radio input.
+// Radio renders a custom-styled radio input with optional label.
+// Supports checked, disabled, and error states.
 templ Radio(prop RadioProp) {
 	<label
 		class={ radioClass(prop) }
@@ -44,6 +52,13 @@ templ Radio(prop RadioProp) {
 			if prop.Error {
 				aria-invalid="true"
 			}
+			if prop.AriaLabel != "" {
+				aria-label={ prop.AriaLabel }
+			}
+			if prop.AriaDescribedBy != "" {
+				aria-describedby={ prop.AriaDescribedBy }
+			}
+			{ prop.Attributes... }
 		/>
 		<div class="radio__control">
 			<span class="radio__circle"></span>
@@ -55,17 +70,21 @@ templ Radio(prop RadioProp) {
 }
 
 func radioClass(prop RadioProp) string {
-	base := "radio"
+	var b strings.Builder
+	b.Grow(30)
+
+	b.WriteString("radio")
 
 	if prop.Disabled {
-		base += " radio--disabled"
+		b.WriteString(" radio--disabled")
 	}
 	if prop.Error {
-		base += " radio--error"
+		b.WriteString(" radio--error")
+	}
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
 
-	if prop.Class != "" {
-		return base + " " + prop.Class
-	}
-	return base
+	return b.String()
 }

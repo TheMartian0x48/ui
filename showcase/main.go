@@ -5,12 +5,16 @@ import (
 	"log"
 	"net/http"
 
+	"os"
+
 	"github.com/a-h/templ"
+	"github.com/themartian0x48/ui/showcase/view"
 )
 
 func main() {
 	// Use absolute paths for static assets
-	baseDir := "/Users/thamartian0x48/Development/TheMartian0x48/projects/ui"
+	baseDir, _ := os.Getwd()
+	fmt.Println("baseDir : " + baseDir)
 
 	cssDir := baseDir + "/css"
 	jsDir := baseDir + "/js"
@@ -29,7 +33,7 @@ func main() {
 		if component == "" {
 			component = "getting-started" // Default
 		}
-		templ.Handler(Showcase(component)).ServeHTTP(w, r)
+		templ.Handler(view.Showcase(component)).ServeHTTP(w, r)
 	})
 
 	port := ":8080"

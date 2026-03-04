@@ -1,0 +1,363 @@
+package view
+
+import ui "github.com/themartian0x48/ui/go"
+
+templ InputDemo() {
+	<section class="doc-section">
+		<header class="doc-section__header">
+			<h1 class="doc-section__title">Input</h1>
+			<p class="doc-section__description">
+				Standard text-based input components for capturing user data.
+			</p>
+		</header>
+		<div class="doc-demo">
+			<div class="doc-demo__preview">
+				<!-- Basic Text Inputs -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Basic Text Inputs</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						@ui.Input(ui.InputProp{Placeholder: "Standard text input"})
+						@ui.Input(ui.InputProp{Value: "Pre-filled value"})
+						@ui.Input(ui.InputProp{Placeholder: "With ID and Name", Id: "basic-input", Name: "basic"})
+					</div>
+				</div>
+				<!-- All Input Types -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Input Types</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">Text (default)</span>
+							@ui.Input(ui.InputProp{Type: ui.InputText, Placeholder: "Plain text input"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Email</span>
+							@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "user@example.com"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Password</span>
+							@ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "••••••••"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Number</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Tel</span>
+							@ui.Input(ui.InputProp{Type: ui.InputTel, Placeholder: "+1 (555) 123-4567"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">URL</span>
+							@ui.Input(ui.InputProp{Type: ui.InputURL, Placeholder: "https://example.com"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Search</span>
+							@ui.Input(ui.InputProp{Type: ui.InputSearch, Placeholder: "Search..."})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Date</span>
+							@ui.Input(ui.InputProp{Type: ui.InputDate})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">DateTime Local</span>
+							@ui.Input(ui.InputProp{Type: ui.InputDateTimeLocal})
+						</div>
+					</div>
+				</div>
+				<!-- States -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">States</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">Normal</span>
+							@ui.Input(ui.InputProp{Placeholder: "Normal state"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Error</span>
+							@ui.Input(ui.InputProp{Value: "Invalid input", Error: true})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Disabled</span>
+							@ui.Input(ui.InputProp{Placeholder: "Cannot type here", Disabled: true})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Disabled with Value</span>
+							@ui.Input(ui.InputProp{Value: "Read-only value", Disabled: true})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Required</span>
+							@ui.Input(ui.InputProp{Placeholder: "This field is required", Required: true})
+						</div>
+					</div>
+				</div>
+				<!-- Number Input Variants -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Number Input with Min/Max/Step</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">Integer (step=1)</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0", Step: "1"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Decimal (step=0.01)</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0.00", Step: "0.01"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Range 0-100</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "50", Min: "0", Max: "100", Step: "5"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Age (18-120)</span>
+							@ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "Enter age", Min: "18", Max: "120"})
+						</div>
+					</div>
+				</div>
+				<!-- Validation Props -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Validation Properties</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">MaxLength (10 chars)</span>
+							@ui.Input(ui.InputProp{Placeholder: "Max 10 characters", MaxLength: 10})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Pattern (letters only)</span>
+							@ui.Input(ui.InputProp{Placeholder: "Letters only", Pattern: "[A-Za-z]+"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Pattern (ZIP code)</span>
+							@ui.Input(ui.InputProp{Placeholder: "12345", Pattern: "[0-9]{5}", MaxLength: 5})
+						</div>
+					</div>
+				</div>
+				<!-- Autocomplete -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Autocomplete Hints</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">Email (autocomplete)</span>
+							@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "you@example.com", Autocomplete: "email"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Current Password</span>
+							@ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "Password", Autocomplete: "current-password"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">New Password</span>
+							@ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "New password", Autocomplete: "new-password"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Full Name</span>
+							@ui.Input(ui.InputProp{Placeholder: "John Doe", Autocomplete: "name"})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Phone</span>
+							@ui.Input(ui.InputProp{Type: ui.InputTel, Placeholder: "+1 555 123 4567", Autocomplete: "tel"})
+						</div>
+					</div>
+				</div>
+				<!-- Accessibility -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Accessibility Props</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">With AriaLabel</span>
+							@ui.Input(ui.InputProp{
+								Placeholder: "Search products",
+								AriaLabel:   "Search for products in catalog",
+							})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">With AriaDescribedBy</span>
+							<div>
+								@ui.Input(ui.InputProp{
+									Id:              "password-field",
+									Type:            ui.InputPassword,
+									Placeholder:     "Enter password",
+									AriaDescribedBy: "password-hint",
+								})
+								<p id="password-hint" class="input-demo__hint">Must be at least 8 characters with one number.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Custom Attributes -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Custom Attributes</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
+						<div class="input-demo__row">
+							<span class="input-demo__label">Autofocus</span>
+							@ui.Input(ui.InputProp{
+								Placeholder: "This input has autofocus",
+								Attributes: templ.Attributes{
+									"autofocus": true,
+								},
+							})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Readonly</span>
+							@ui.Input(ui.InputProp{
+								Value: "This value cannot be changed",
+								Attributes: templ.Attributes{
+									"readonly": true,
+								},
+							})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Data Attributes</span>
+							@ui.Input(ui.InputProp{
+								Placeholder: "With data attributes",
+								Attributes: templ.Attributes{
+									"data-testid":  "search-input",
+									"data-feature": "global-search",
+								},
+							})
+						</div>
+						<div class="input-demo__row">
+							<span class="input-demo__label">Event Handlers</span>
+							@ui.Input(ui.InputProp{
+								Placeholder: "Type to see alert",
+								Attributes: templ.Attributes{
+									"x-data":    "",
+									"@input":    "console.log('Input changed:', $event.target.value)",
+									"@focus":    "console.log('Input focused')",
+									"@blur":     "console.log('Input blurred')",
+								},
+							})
+						</div>
+					</div>
+				</div>
+				<!-- Real-world Examples -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Real-world Examples</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="max-width: 500px;">
+						<!-- Login Form -->
+						<div class="input-demo__example">
+							<h4 class="input-demo__example-title">Login Form</h4>
+							<div class="input-demo__example-content">
+								@ui.FormField(ui.FormFieldProp{Label: "Email", LabelFor: "login-email", Required: true}) {
+									@ui.Input(ui.InputProp{
+										Id:           "login-email",
+										Type:         ui.InputEmail,
+										Placeholder:  "you@example.com",
+										Autocomplete: "email",
+										Required:     true,
+									})
+								}
+								@ui.FormField(ui.FormFieldProp{Label: "Password", LabelFor: "login-pass", Required: true}) {
+									@ui.Input(ui.InputProp{
+										Id:           "login-pass",
+										Type:         ui.InputPassword,
+										Placeholder:  "••••••••",
+										Autocomplete: "current-password",
+										Required:     true,
+									})
+								}
+								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "w-full"}) {
+									Sign In
+								}
+							</div>
+						</div>
+						<!-- Search Bar -->
+						<div class="input-demo__example">
+							<h4 class="input-demo__example-title">Search Bar</h4>
+							<div class="input-demo__search-bar">
+								@ui.Icon(ui.IconProp{Icon: ui.IconSearch(), Size: ui.IconSizeMD, Class: "input-demo__search-icon"})
+								@ui.Input(ui.InputProp{
+									Type:        ui.InputSearch,
+									Placeholder: "Search documentation...",
+									AriaLabel:   "Search documentation",
+									Class:       "input-demo__search-input",
+								})
+							</div>
+						</div>
+						<!-- Credit Card -->
+						<div class="input-demo__example">
+							<h4 class="input-demo__example-title">Payment Form</h4>
+							<div class="input-demo__example-content">
+								@ui.FormField(ui.FormFieldProp{Label: "Card Number", LabelFor: "card-num"}) {
+									@ui.Input(ui.InputProp{
+										Id:           "card-num",
+										Placeholder:  "1234 5678 9012 3456",
+										MaxLength:    19,
+										Autocomplete: "cc-number",
+									})
+								}
+								<div class="input-demo__card-row">
+									@ui.FormField(ui.FormFieldProp{Label: "Expiry", LabelFor: "card-exp"}) {
+										@ui.Input(ui.InputProp{
+											Id:           "card-exp",
+											Placeholder:  "MM/YY",
+											MaxLength:    5,
+											Autocomplete: "cc-exp",
+										})
+									}
+									@ui.FormField(ui.FormFieldProp{Label: "CVC", LabelFor: "card-cvc"}) {
+										@ui.Input(ui.InputProp{
+											Id:           "card-cvc",
+											Type:         ui.InputNumber,
+											Placeholder:  "123",
+											MaxLength:    4,
+											Autocomplete: "cc-csc",
+										})
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<style type="text/css">
+		.input-demo__row {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-1);
+		}
+		.input-demo__label {
+			font-size: var(--font-size-xs);
+			color: var(--color-text-muted);
+		}
+		.input-demo__hint {
+			margin: var(--spacing-1) 0 0;
+			font-size: var(--font-size-xs);
+			color: var(--color-text-muted);
+		}
+		.input-demo__example {
+			padding: var(--spacing-6);
+			background: var(--color-bg-secondary);
+			border-radius: var(--radius-md);
+			border: var(--border-width-thin) solid var(--color-border);
+		}
+		.input-demo__example-title {
+			margin: 0 0 var(--spacing-4);
+			font-size: var(--font-size-sm);
+			font-weight: var(--font-weight-semibold);
+			color: var(--color-text-secondary);
+		}
+		.input-demo__example-content {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-4);
+		}
+		.input-demo__card-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: var(--spacing-4);
+		}
+		.input-demo__search-bar {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
+		.input-demo__search-icon {
+			position: absolute;
+			left: var(--spacing-3);
+			color: var(--color-text-muted);
+			pointer-events: none;
+		}
+		.input-demo__search-input {
+			padding-left: var(--spacing-10);
+		}
+	</style>
+}
