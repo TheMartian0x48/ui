@@ -295,7 +295,7 @@ func DropdownDemo() templ.Component {
 			}
 			templ_7745c5c3_Err = ui.DropdownItem(ui.DropdownItemProp{
 				Label: "Print",
-				Icon:  ui.IconPrinter(),
+				Icon:  ui.IconFileText(),
 				Attributes: templ.Attributes{
 					"data-action": "print",
 					"onclick":     "window.print()",

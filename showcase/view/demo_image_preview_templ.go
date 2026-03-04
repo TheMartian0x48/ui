@@ -43,7 +43,7 @@ func ImagePreviewDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div><!-- Different Aspect Ratios --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Aspect Ratios</h3><div class=\"doc-demo__list\" style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 600px;\"><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: 0.5rem;\">Square (1/1)</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div><!-- Different Aspect Ratios --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Aspect Ratios</h3><div class=\"doc-demo__list\" style=\"display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); max-width: 600px;\"><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: var(--spacing-2);\">Square (1/1)</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -55,7 +55,7 @@ func ImagePreviewDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: 0.5rem;\">Portrait (3/4)</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: var(--spacing-2);\">Portrait (3/4)</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -67,17 +67,60 @@ func ImagePreviewDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div><!-- Fallback Placeholder --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Empty / Fallback State</h3><p class=\"text-sm text-secondary\" style=\"margin-bottom: 1rem;\">When no `Src` is provided, a styled placeholder is shown.</p><div class=\"doc-demo__list\" style=\"max-width: 400px;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div><!-- Object Fit Modes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Object Fit Modes</h3><div class=\"doc-demo__list\" style=\"display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); max-width: 600px;\"><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: var(--spacing-2);\">Cover (default)</span>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.ImagePreview(ui.ImagePreviewProp{
+			Src:         "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop",
+			Alt:         "Cover example - image fills container",
+			AspectRatio: "1/1",
+			ObjectFit:   ui.ImageObjectFitCover,
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><div><span class=\"text-xs text-muted\" style=\"display: block; margin-bottom: var(--spacing-2);\">Contain</span>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.ImagePreview(ui.ImagePreviewProp{
+			Src:         "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop",
+			Alt:         "Contain example - image fits within container",
+			AspectRatio: "1/1",
+			ObjectFit:   ui.ImageObjectFitContain,
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div></div><!-- Fallback Placeholder --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Empty / Fallback State</h3><p class=\"text-sm text-secondary\" style=\"margin-bottom: var(--spacing-4);\">When no `Src` is provided, a styled placeholder is shown.</p><div class=\"doc-demo__list\" style=\"max-width: 400px;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = ui.ImagePreview(ui.ImagePreviewProp{
 			AspectRatio: "16/9",
+			Alt:         "Profile photo placeholder",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div><!-- With Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">With Custom Attributes</h3><div class=\"doc-demo__list\" style=\"max-width: 400px;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.ImagePreview(ui.ImagePreviewProp{
+			Src:         "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop",
+			Alt:         "Interactive image preview",
+			AspectRatio: "16/9",
+			Attributes: templ.Attributes{
+				"data-testid":  "featured-image",
+				"data-gallery": "main",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div></div></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

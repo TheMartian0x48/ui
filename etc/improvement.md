@@ -17,7 +17,7 @@ for
 * [x] dialog
 * [x] divider
 * [ ] drawer
-* [ ] dropdown
+* [x] dropdown
 * [ ] dropzone
 * [ ] form_field
 * [x] icon
