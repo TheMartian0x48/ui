@@ -2,23 +2,27 @@ package ui
 
 import "strings"
 
+// TooltipPosition defines the compass direction where the tooltip appears relative to its child.
 type TooltipPosition int
 
 const (
-	TooltipTop TooltipPosition = iota // default
-	TooltipBottom
-	TooltipLeft
-	TooltipRight
+	TooltipTop    TooltipPosition = iota // Above the element (default)
+	TooltipBottom                        // Below the element
+	TooltipLeft                          // To the left of the element
+	TooltipRight                         // To the right of the element
 )
 
-// TooltipProp configures a tooltip component.
+// TooltipProp configures the Tooltip component.
 type TooltipProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Content    string           // The text content for the tooltip
-	Position   TooltipPosition  // Where tooltip appears (Top, Bottom, Left, Right)
+	Content    string           // The informative text content to display
+	Position   TooltipPosition  // Attachment edge variant
 }
 
-// Tooltip wraps any child element and displays a tooltip on hover/focus.
+// Tooltip wraps any child element to display contextual information on hover or focus.
+//
+// Automatically manages ARIA roles and positioning classes. Ensure the child
+// element is focusable (e.g. Button, Link) for keyboard accessibility.
 templ Tooltip(prop TooltipProp) {
 	{{
 		tooltipId := GetID(prop.Id, "tooltip")

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// DrawerPosition defines which edge of the screen the drawer slides from.
+// DrawerPosition defines which edge of the screen the panel slides from.
 type DrawerPosition int
 
 const (
@@ -14,17 +14,18 @@ const (
 	DrawerBottom                       // Slides from bottom edge
 )
 
-// DrawerProp configures the Drawer component.
+// DrawerProp configures the slide-over panel component.
 type DrawerProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Position    DrawerPosition   // Which edge to slide from
-	Title       string           // Header title text
-	Description string           // Optional description for aria-describedby
+	Position    DrawerPosition   // The screen edge where the drawer is anchored
+	Title       string           // Bold heading shown in the header
+	Description string           // Hidden description used for aria-describedby
 }
 
-// Drawer renders a slide-over panel that opens from an edge of the screen.
-// Uses Alpine.js for visibility toggling via the 'open-drawer' window event.
-// Supports all four edges: right (default), left, top, and bottom.
+// Drawer renders a slide-over panel for settings, navigation, or secondary tasks.
+//
+// Controlled via the 'open-drawer' window event or by directly toggling Alpine
+// state. Automatically handles backdrop overlays and scroll locking.
 templ Drawer(prop DrawerProp) {
 	{{ drawerId := GetID(prop.Id, "drawer") }}
 	{{ titleId := drawerId + "-title" }}
@@ -147,7 +148,7 @@ func drawerClass(prop DrawerProp) string {
 	return base
 }
 
-// DrawerTrigger renders a button configured to dispatch the event that opens the Drawer.
+// DrawerTrigger renders a button configured to dispatch the event that opens a Drawer.
 templ DrawerTrigger(drawerId string, variant ButtonVariant) {
 	@Button(ButtonProp{
 		BaseProp: BaseProp{

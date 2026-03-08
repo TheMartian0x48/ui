@@ -10,24 +10,30 @@ import (
 // autocompleteIdCounter is an atomic counter for generating unique autocomplete IDs.
 var autocompleteIdCounter atomic.Uint64
 
+// AutocompleteOption represents a selectable item in the autocomplete dropdown.
 type AutocompleteOption struct {
-	Value string `json:"value"`
-	Label string `json:"label"`
+	Value string `json:"value"` // The underlying machine value
+	Label string `json:"label"` // The human-readable text shown in the list
 }
 
+// AutocompleteProp configures a searchable dropdown input component.
 type AutocompleteProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Name        string
-	Placeholder string
-	Label       string // Accessible label for screen readers
-	Options     []AutocompleteOption
-	Value       string // Initial search query
-	Disabled    bool
-	Required    bool
-	Error       bool
+	Name        string               // Name attribute for form submission
+	Placeholder string               // Hint text shown in the input
+	Label       string               // Accessible label for screen readers
+	Options     []AutocompleteOption // Full list of selectable options
+	Value       string               // Initial search query/value
+	Disabled    bool                 // Prevents interaction
+	Required    bool                 // Marks input as mandatory
+	Error       bool                 // Applies error styling
 }
 
-// Autocomplete renders an input field with a searchable dropdown of options.
+// Autocomplete renders an input field with a dynamic, searchable dropdown.
+//
+// It uses Alpine.js for client-side filtering and keyboard navigation.
+// Supports WAI-ARIA combobox patterns including arrow-key navigation
+// and enter-to-select.
 templ Autocomplete(prop AutocompleteProp) {
 	{{ uid := autocompleteUniqueId(prop.Id) }}
 	{{ listboxId := "autocomplete-listbox-" + uid }}

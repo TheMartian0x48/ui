@@ -2,34 +2,36 @@ package ui
 
 import "strings"
 
-// TimelineVariant defines the visual style of the timeline.
+// TimelineVariant defines the visual orientation and density of the timeline.
 type TimelineVariant int
 
 const (
-	TimelineDefault   TimelineVariant = iota // Standard vertical timeline
-	TimelineAlternate                        // Alternating left/right items
-	TimelineCompact                          // Minimal spacing, no descriptions
+	TimelineDefault   TimelineVariant = iota // Standard left-aligned vertical line
+	TimelineAlternate                        // Items alternate between left and right sides
+	TimelineCompact                          // Minimal padding and spacing for high-density feeds
 )
 
-// TimelineProp configures a timeline container component.
+// TimelineProp configures the root timeline container.
 type TimelineProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant    TimelineVariant  // Visual style
-	AriaLabel  string           // Accessible label (default: "Timeline")
+	Variant    TimelineVariant  // Layout variant
+	AriaLabel  string           // Hidden label for screen readers (default: "Timeline")
 }
 
-// TimelineItemProp configures a single timeline entry.
+// TimelineItemProp configures a single chronological entry in the timeline.
 type TimelineItemProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Title      string           // Event title/heading
-	Time       string           // Timestamp or date string
-	Icon       templ.Component  // Custom icon for the marker
-	Variant    BadgeVariant     // Color variant for the marker (uses Badge colors)
-	Active     bool             // Highlight as current/active item
-	Completed  bool             // Mark as completed (adds checkmark)
+	Title      string           // Primary event heading
+	Time       string           // Date or timestamp string (e.g. "2 hours ago")
+	Icon       templ.Component  // Custom marker icon (overrides dot/completed icons)
+	Variant    BadgeVariant     // Semantic color for the marker (using Badge system colors)
+	Active     bool             // If true, highlights this event as current
+	Completed  bool             // If true, shows a checkmark marker to indicate completion
 }
 
-// Timeline renders a vertical timeline container.
+// Timeline renders a vertical list of chronological events.
+//
+// Best suited for activity logs, process steps, or historical records.
 templ Timeline(prop TimelineProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -49,7 +51,7 @@ templ Timeline(prop TimelineProp) {
 	</ol>
 }
 
-// TimelineItem renders a single event in the timeline.
+// TimelineItem renders a single event with a marker, line segment, and content.
 templ TimelineItem(prop TimelineItemProp) {
 	<li
 		if prop.Id != "" {

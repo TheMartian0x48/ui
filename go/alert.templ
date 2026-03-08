@@ -6,49 +6,52 @@ import (
 	"sync/atomic"
 )
 
-// AlertVariant defines the semantic meaning/severity of an alert.
+// AlertVariant defines the semantic meaning and visual severity of an alert.
 type AlertVariant int
 
 const (
-	AlertSuccess AlertVariant = iota // Success or positive outcome
-	AlertWarning                     // Warning or caution required
-	AlertDanger                      // Error or problem encountered
-	AlertInfo                        // Informational message (default)
+	AlertSuccess AlertVariant = iota // Successful or positive outcome (green)
+	AlertWarning                     // Warning or caution required (yellow)
+	AlertDanger                      // Error or critical problem (red)
+	AlertInfo                        // Informational message (blue, default)
 )
 
-// AlertShape defines the visual style of an alert.
+// AlertShape defines the visual containment style of an alert.
 type AlertShape int
 
 const (
-	AlertStandard AlertShape = iota // Standard style with subtle background (default)
-	AlertOutlined                   // Outlined style with borders
-	AlertFilled                     // Filled style with solid background
+	AlertStandard AlertShape = iota // Subtle background with colored accent (default)
+	AlertOutlined                   // Transparent background with colored border
+	AlertFilled                     // High-contrast solid colored background
 )
 
-// AlertAction represents a button or action that can be taken within an alert.
+// AlertAction represents an interactive button within an alert.
 type AlertAction struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Label       string           // Text to display on the button
-	EventName   string           // Alpine.js event name to dispatch (e.g., "alert-action")
-	EventData   string           // Optional data to pass with the event (e.g., "confirm")
-	ButtonStyle string           // Optional CSS class for the button (e.g., "btn-primary")
-	Icon        templ.Component  // Optional icon for the button
+	Label       string           // Text to display on the action button
+	EventName   string           // Alpine.js event name to dispatch on click
+	EventData   string           // Optional data payload for the event
+	ButtonStyle string           // CSS classes for button customization (e.g. "btn--sm")
+	Icon        templ.Component  // Optional leading icon for the action
 }
 
-// AlertProp contains all configuration options for an Alert component.
+// AlertProp configures the Alert component.
 type AlertProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant        AlertVariant     // Alert type/severity (default: AlertInfo)
-	Shape          AlertShape       // Visual style (default: AlertStandard)
-	Title          string           // Optional title for the alert
-	Icon           templ.Component  // Custom icon (overrides default for variant)
-	HideIcon       bool             // Whether to hide the icon
-	Dismissible    bool             // Whether alert can be dismissed
-	DismissTimeout int              // Auto-dismiss after X milliseconds (0 = no auto-dismiss)
-	Actions        []AlertAction    // Action buttons to display in the alert
+	Variant        AlertVariant     // Semantic severity level
+	Shape          AlertShape       // Visual style variant
+	Title          string           // Optional bold heading
+	Icon           templ.Component  // Custom icon (overrides variant default)
+	HideIcon       bool             // If true, no icon is displayed
+	Dismissible    bool             // If true, shows a close button
+	DismissTimeout int              // Auto-dismiss duration in ms (0 = persistent)
+	Actions        []AlertAction    // Optional row of action buttons
 }
 
-// Alert renders a feedback message with an appropriate icon and styling.
+// Alert renders an accessible feedback message.
+//
+// Automatically manages ARIA roles and live regions based on severity.
+// Use for form validation, system notifications, or inline status updates.
 templ Alert(prop AlertProp) {
 	{{ uid := alertUniqueId(prop.Id) }}
 	<div
@@ -171,7 +174,6 @@ func alertStatus(variant AlertVariant) string {
 }
 
 // alertClass generates the CSS class for the alert based on variant and shape.
-// This uses a strings.Builder for better performance with multiple concatenations.
 func alertClass(prop AlertProp) string {
 	var sb strings.Builder
 	sb.Grow(60)
@@ -228,7 +230,7 @@ func alertIcon(variant AlertVariant) templ.Component {
 
 // Helper functions for common alert patterns
 
-// InfoAlert creates a standard info alert with the given title and children.
+// InfoAlert renders a standard blue informational alert.
 templ InfoAlert(title string) {
 	@Alert(AlertProp{
 		Variant: AlertInfo,
@@ -238,7 +240,7 @@ templ InfoAlert(title string) {
 	}
 }
 
-// SuccessAlert creates a standard success alert with the given title and children.
+// SuccessAlert renders a standard green success alert.
 templ SuccessAlert(title string) {
 	@Alert(AlertProp{
 		Variant: AlertSuccess,
@@ -248,7 +250,7 @@ templ SuccessAlert(title string) {
 	}
 }
 
-// WarningAlert creates a standard warning alert with the given title and children.
+// WarningAlert renders a standard yellow warning alert.
 templ WarningAlert(title string) {
 	@Alert(AlertProp{
 		Variant: AlertWarning,
@@ -258,7 +260,7 @@ templ WarningAlert(title string) {
 	}
 }
 
-// DangerAlert creates a standard danger alert with the given title and children.
+// DangerAlert renders a standard red error alert.
 templ DangerAlert(title string) {
 	@Alert(AlertProp{
 		Variant: AlertDanger,
@@ -268,7 +270,7 @@ templ DangerAlert(title string) {
 	}
 }
 
-// ToastAlert creates a dismissible alert that automatically dismisses after the specified duration.
+// ToastAlert renders a dismissible alert configured for temporary display.
 templ ToastAlert(prop AlertProp, durationMs int) {
 	{{
 		toastProp := prop

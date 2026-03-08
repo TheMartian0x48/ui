@@ -2,43 +2,46 @@ package ui
 
 import "strings"
 
-// ListVariant defines the visual style of the list.
+// ListVariant defines the visual marker style of the list.
 type ListVariant int
 
 const (
-	ListPlain    ListVariant = iota // No markers (default)
-	ListBulleted                    // Bullet points
-	ListNumbered                    // Numbered list
-	ListIcon                        // Custom icons per item
+	ListPlain    ListVariant = iota // No markers or bullets (default)
+	ListBulleted                    // Standard unordered bullets
+	ListNumbered                    // Ordered numeric sequence
+	ListIcon                        // Custom SVG icons provided per item
 )
 
-// ListSize defines the spacing and text size of list items.
+// ListSize defines the vertical density and font scale of list items.
 type ListSize int
 
 const (
-	ListSizeSM ListSize = iota // Compact spacing
-	ListSizeMD                 // Default spacing
-	ListSizeLG                 // Relaxed spacing
+	ListSizeSM ListSize = iota // Compact density
+	ListSizeMD                 // Standard density (default)
+	ListSizeLG                 // Relaxed density
 )
 
-// ListProp configures a list container component.
+// ListProp configures a vertical list container.
 type ListProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant    ListVariant      // Visual style (plain, bulleted, numbered, icon)
-	Size       ListSize         // Spacing size (sm, md, lg)
-	Divided    bool             // Add dividers between items
-	AriaLabel  string           // Accessible label for the list
+	Variant    ListVariant      // Marker style (Plain, Bulleted, Numbered, Icon)
+	Size       ListSize         // Density variant
+	Divided    bool             // Whether to display horizontal rules between items
+	AriaLabel  string           // Hidden label for screen readers
 }
 
-// ListItemProp configures a single list item.
+// ListItemProp configures a single row within a List component.
 type ListItemProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Icon       templ.Component  // Optional icon (for ListIcon variant)
-	Active     bool             // Highlight this item as active/selected
-	Disabled   bool             // Visually disable the item
+	Icon       templ.Component  // Custom icon component (required for ListIcon variant)
+	Active     bool             // Applies highlighted styling to indicate current selection
+	Disabled   bool             // Mutes text and indicates item is non-interactive
 }
 
-// List renders a list container.
+// List renders a flexible list container using <ul> or <ol> based on variant.
+//
+// Lists are used to group related content vertically. Supports several
+// formatting options including icons and dividers.
 templ List(prop ListProp) {
 	{{
 		isOrdered := prop.Variant == ListNumbered
@@ -72,7 +75,7 @@ templ List(prop ListProp) {
 	}
 }
 
-// ListItem renders a single item within a List.
+// ListItem renders a single row within a List component.
 templ ListItem(prop ListItemProp) {
 	<li
 		if prop.Id != "" {

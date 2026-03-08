@@ -6,86 +6,89 @@ import (
 	"time"
 )
 
-// InputType defines the HTML input type variants.
+// InputType defines the semantic variant of the HTML input element.
 type InputType int
 
 const (
-	InputText InputType = iota
-	InputEmail
-	InputTel
-	InputNumber
-	InputPassword
-	InputURL
-	InputSearch
-	InputDate
-	InputDateTimeLocal
+	InputText          InputType = iota // Standard one-line text field
+	InputEmail                          // Optimized for email addresses (mobile keyboard support)
+	InputTel                            // Optimized for telephone numbers
+	InputNumber                         // Numeric input with up/down controls
+	InputPassword                       // Obscured text field for security
+	InputURL                            // Optimized for web addresses
+	InputSearch                         // Text field optimized for search queries
+	InputDate                           // Date picker (YYYY-MM-DD)
+	InputDateTimeLocal                  // Date and time picker without timezone
 )
 
-// AutocompleteType defines standard HTML autocomplete hint values.
+// AutocompleteType defines standard HTML autocomplete hint values to assist browsers.
 type AutocompleteType string
 
 const (
-	AutocompleteOff             AutocompleteType = "off"
-	AutocompleteOn              AutocompleteType = "on"
-	AutocompleteName            AutocompleteType = "name"
-	AutocompleteEmail           AutocompleteType = "email"
-	AutocompleteUsername        AutocompleteType = "username"
-	AutocompleteNewPassword     AutocompleteType = "new-password"
-	AutocompleteCurrentPassword AutocompleteType = "current-password"
-	AutocompleteTel             AutocompleteType = "tel"
-	AutocompleteAddressLevel1   AutocompleteType = "address-level1"
-	AutocompleteAddressLevel2   AutocompleteType = "address-level2"
-	AutocompletePostalCode      AutocompleteType = "postal-code"
-	AutocompleteCountry         AutocompleteType = "country"
+	AutocompleteOff             AutocompleteType = "off"             // Disable browser autocomplete
+	AutocompleteOn              AutocompleteType = "on"              // Enable generic autocomplete
+	AutocompleteName            AutocompleteType = "name"            // Full name
+	AutocompleteEmail           AutocompleteType = "email"           // Email address
+	AutocompleteUsername        AutocompleteType = "username"        // Username or login handle
+	AutocompleteNewPassword     AutocompleteType = "new-password"     // Suggestion for a new password
+	AutocompleteCurrentPassword AutocompleteType = "current-password" // User's existing password
+	AutocompleteTel             AutocompleteType = "tel"              // Full telephone number
+	AutocompleteAddressLevel1   AutocompleteType = "address-level1"   // Province or state
+	AutocompleteAddressLevel2   AutocompleteType = "address-level2"   // City or locality
+	AutocompletePostalCode      AutocompleteType = "postal-code"      // ZIP or postal code
+	AutocompleteCountry         AutocompleteType = "country"         // Country name or code
 )
 
 // InputBound is a type-safe wrapper for min, max, and step attributes.
+// Use the provided helper functions (NumberBound, DateBound, etc.) to create instances.
 type InputBound struct {
 	val string
 }
 
-// String returns the string representation of the bound.
+// String returns the HTML-compliant string representation of the bound.
 func (b InputBound) String() string {
 	return b.val
 }
 
-// NumberBound creates a numeric bound from a float64.
+// NumberBound creates a numeric bound from a float64 (e.g. "10.5").
 func NumberBound(n float64) *InputBound {
 	return &InputBound{val: fmt.Sprintf("%g", n)}
 }
 
-// DateBound creates a date bound (YYYY-MM-DD) from a time.Time.
+// DateBound creates a date bound from a time object (formatted as "YYYY-MM-DD").
 func DateBound(t time.Time) *InputBound {
 	return &InputBound{val: t.Format("2006-01-02")}
 }
 
-// DateTimeBound creates a datetime-local bound (YYYY-MM-DDTHH:MM) from a time.Time.
+// DateTimeBound creates a datetime-local bound from a time object (formatted as "YYYY-MM-DDTHH:MM").
 func DateTimeBound(t time.Time) *InputBound {
 	return &InputBound{val: t.Format("2006-01-02T15:04")}
 }
 
 // InputProp configures a text-based form input component.
-// Use Type to specify the input variant (text, email, password, etc.).
 type InputProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Type            InputType        // Input type (text, email, password, number, etc.)
-	Name            string           // Form field name
-	Value           string           // Current input value
-	Placeholder     string           // Hint text shown when empty
-	Required        bool             // Form validation requirement
-	Disabled        bool             // Prevents interaction
-	Error           bool             // Shows error styling
-	Step            *InputBound      // Step increment for number/date inputs
-	Min             *InputBound      // Minimum value for number/date inputs
-	Max             *InputBound      // Maximum value for number/date inputs
-	MaxLength       int              // Maximum character length
-	Pattern         string           // Regex pattern for validation
-	Autocomplete    AutocompleteType // Browser autocomplete hint
-	AriaLabel       string           // Screen reader label (when no visible label)
-	AriaDescribedBy string           // ID of element describing this input (e.g. error message)
+	Type            InputType        // Semantic input variant (text, email, password, etc.)
+	Name            string           // Name attribute for form submission
+	Value           string           // Current value of the input
+	Placeholder     string           // Temporary hint text shown when empty
+	Required        bool             // Marks the field as mandatory
+	Disabled        bool             // Prevents user interaction
+	Error           bool             // Applies error styling
+	Step            *InputBound      // Precision increment for numeric/date inputs
+	Min             *InputBound      // Minimum allowed value
+	Max             *InputBound      // Maximum allowed value
+	MaxLength       int              // Hard limit on character count
+	Pattern         string           // HTML5 Regex validation pattern
+	Autocomplete    AutocompleteType // Browser hint for form auto-filling
+	AriaLabel       string           // Hidden label for screen readers
+	AriaDescribedBy string           // ID of the helper/error text for accessibility
 }
 
-// Input renders a form input element with configurable type and states.
+// Input renders a versatile, themeable HTML input element.
+//
+// Supports all modern HTML5 input types with unified styling and full
+// accessibility coverage. Use with FormField for automatic label association.
 templ Input(prop InputProp) {
 	<input
 		if prop.Id != "" {

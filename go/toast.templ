@@ -1,14 +1,16 @@
 package ui
 
+// ToastType defines the semantic meaning and visual color of the notification.
 type ToastType string
 
 const (
-	ToastInfo    ToastType = "info"
-	ToastSuccess ToastType = "success"
-	ToastWarning ToastType = "warning"
-	ToastError   ToastType = "error"
+	ToastInfo    ToastType = "info"    // General info (blue)
+	ToastSuccess ToastType = "success" // Positive confirmation (green)
+	ToastWarning ToastType = "warning" // Non-critical caution (yellow)
+	ToastError   ToastType = "error"   // Critical failure (red)
 )
 
+// ToastPosition defines where on the screen the notifications appear.
 type ToastPosition string
 
 const (
@@ -20,15 +22,18 @@ const (
 	ToastBottomRight  ToastPosition = "bottom-right"
 )
 
-// ToastProp configures a toast notification.
+// ToastProp configures a static toast notification.
 type ToastProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Type       ToastType        // Semantic type: info, success, warning, error (default: info)
+	Type       ToastType        // Semantic flavor
 	Title      string           // Optional bold heading text
-	Message    string           // Main notification text (required)
+	Message    string           // Primary notification body text
 }
 
-// Toast renders a single toast notification.
+// Toast renders a single static notification component.
+//
+// Note: This component is primarily for SSR/static usage. For dynamic runtime
+// toasts, use the 'showToast' JavaScript function provided by ToastContainer.
 templ Toast(prop ToastProp) {
 	<div
 		if prop.Id != "" {
@@ -68,7 +73,10 @@ templ Toast(prop ToastProp) {
 	</div>
 }
 
-// ToastContainer renders the container element and loads the toast JS.
+// ToastContainer renders the root element required for dynamic toast notifications.
+//
+// Include this once at the end of your <body> to enable programmatic toasts
+// via 'window.showToast()'.
 templ ToastContainer() {
 	<div id="toast-container" aria-live="polite" aria-atomic="true">
 		<script src="/js/components/toast.js" defer></script>
@@ -93,6 +101,7 @@ func toastClass(prop ToastProp) string {
 }
 
 // ariaLiveValue returns appropriate politeness level.
+// Errors and warnings are assertive (interrupt), others are polite.
 func ariaLiveValue(t ToastType) string {
 	switch t {
 	case ToastError, ToastWarning:

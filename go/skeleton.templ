@@ -2,34 +2,91 @@ package ui
 
 import "strings"
 
-// SkeletonVariant defines the shape of the skeleton placeholder.
+// SkeletonVariant defines the geometric shape of the placeholder.
 type SkeletonVariant int
 
 const (
-	SkeletonText        SkeletonVariant = iota // Single line text placeholder (default)
-	SkeletonCircular                           // Round avatar/icon placeholder
-	SkeletonRectangular                        // Image/card placeholder
+	SkeletonText        SkeletonVariant = iota // Single-line text placeholder (default)
+	SkeletonCircular                           // Round avatar or icon placeholder
+	SkeletonRectangular                        // Generic block or image placeholder
 )
 
-// SkeletonSize defines preset sizes for the skeleton.
+// SkeletonSize defines the physical scale of the skeleton.
 type SkeletonSize int
 
 const (
-	SkeletonSizeSM SkeletonSize = iota // Small
-	SkeletonSizeMD                     // Medium (default)
-	SkeletonSizeLG                     // Large
+	SkeletonSizeSM SkeletonSize = iota // Compact small size
+	SkeletonSizeMD                     // Standard medium size (default)
+	SkeletonSizeLG                     // Prominent large size
 )
 
-// SkeletonProp configures a skeleton loading placeholder component.
+// SkeletonProp configures a single skeleton loading component.
 type SkeletonProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant    SkeletonVariant  // Shape variant (text, circular, rectangular)
-	Size       SkeletonSize     // Size preset (sm, md, lg)
-	Width      string           // Custom width (e.g., "200px", "100%")
-	Height     string           // Custom height (e.g., "20px")
-	Lines      int              // Number of text lines (for Text variant only, max 10)
-	Animated   *bool            // Enable shimmer animation (default: true)
-	AriaLabel  string           // Screen reader description (default: "Loading...")
+	Variant    SkeletonVariant  // Shape variant (Text, Circular, Rectangular)
+	Size       SkeletonSize     // Dimensions variant
+	Width      string           // Custom CSS width (e.g. "100%", "200px")
+	Height     string           // Custom CSS height (e.g. "20px")
+	Lines      int              // Number of text lines to render (Text variant only)
+	Animated   *bool            // Whether to show the shimmer animation (default: true)
+	AriaLabel  string           // Accessible description (default: "Loading...")
+}
+
+// Skeleton renders a placeholder component used to indicate content is loading.
+//
+// Best used in groups to mimic the layout of the final content (e.g. Card, List).
+templ Skeleton(prop SkeletonProp) {
+	{{
+		animated := skeletonIsAnimated(prop.Animated)
+		lines := prop.Lines
+		if lines < 1 {
+			lines = 1
+		}
+		if lines > 10 {
+			lines = 10
+		}
+		ariaLabel := prop.AriaLabel
+		if ariaLabel == "" {
+			ariaLabel = "Loading..."
+		}
+	}}
+	if prop.Variant == SkeletonText && lines > 1 {
+		<div
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			class={ skeletonGroupClass(prop.Class) }
+			role="status"
+			aria-busy="true"
+			aria-label={ ariaLabel }
+			{ prop.Attributes... }
+		>
+			for i := 0; i < lines; i++ {
+				<div
+					class={ skeletonClass(prop.Variant, prop.Size, animated, "") }
+					if i == lines-1 {
+						style="width:80%;"
+					}
+					aria-hidden="true"
+				></div>
+			}
+			<span class="visually-hidden">{ ariaLabel }</span>
+		</div>
+	} else {
+		<div
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
+			class={ skeletonClass(prop.Variant, prop.Size, animated, prop.Class) }
+			style={ skeletonStyle(prop.Width, prop.Height) }
+			role="status"
+			aria-busy="true"
+			aria-label={ ariaLabel }
+			{ prop.Attributes... }
+		>
+			<span class="visually-hidden">{ ariaLabel }</span>
+		</div>
+	}
 }
 
 // skeletonIsAnimated returns whether animation is enabled (defaults to true).
@@ -99,61 +156,6 @@ func skeletonStyle(width, height string) string {
 		b.WriteString(";")
 	}
 	return b.String()
-}
-
-// Skeleton renders a loading placeholder with optional shimmer animation.
-templ Skeleton(prop SkeletonProp) {
-	{{
-		animated := skeletonIsAnimated(prop.Animated)
-		lines := prop.Lines
-		if lines < 1 {
-			lines = 1
-		}
-		if lines > 10 {
-			lines = 10
-		}
-		ariaLabel := prop.AriaLabel
-		if ariaLabel == "" {
-			ariaLabel = "Loading..."
-		}
-	}}
-	if prop.Variant == SkeletonText && lines > 1 {
-		<div
-			if prop.Id != "" {
-				id={ prop.Id }
-			}
-			class={ skeletonGroupClass(prop.Class) }
-			role="status"
-			aria-busy="true"
-			aria-label={ ariaLabel }
-			{ prop.Attributes... }
-		>
-			for i := 0; i < lines; i++ {
-				<div
-					class={ skeletonClass(prop.Variant, prop.Size, animated, "") }
-					if i == lines-1 {
-						style="width:80%;"
-					}
-					aria-hidden="true"
-				></div>
-			}
-			<span class="visually-hidden">{ ariaLabel }</span>
-		</div>
-	} else {
-		<div
-			if prop.Id != "" {
-				id={ prop.Id }
-			}
-			class={ skeletonClass(prop.Variant, prop.Size, animated, prop.Class) }
-			style={ skeletonStyle(prop.Width, prop.Height) }
-			role="status"
-			aria-busy="true"
-			aria-label={ ariaLabel }
-			{ prop.Attributes... }
-		>
-			<span class="visually-hidden">{ ariaLabel }</span>
-		</div>
-	}
 }
 
 // skeletonGroupClass generates CSS class for skeleton group container.

@@ -4,19 +4,21 @@ import (
 	"strings"
 )
 
-// FormFieldProp configures the FormField component.
+// FormFieldProp configures the FormField layout wrapper.
 type FormFieldProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Label      string           // Label text
-	LabelFor   string           // ID of the input element (for label association)
-	Required   bool             // Whether the field is required (adds * to label)
-	Error      string           // Error message to display
-	Help       string           // Help text to display below the input
+	Label      string           // Label text displayed above the control
+	LabelFor   string           // ID of the target input (required for label association)
+	Required   bool             // Whether the field is mandatory (adds visual indicator)
+	Error      string           // Validation error message (sets invalid state)
+	Help       string           // Helper text displayed below the control
 }
 
-// FormField renders a standard form field layout with label, input (children),
-// and optional error/help text. It automatically links the input to help/error
-// text via aria-describedby for accessibility.
+// FormField renders a consistent layout for form controls.
+//
+// Automatically manages label association, error states, and ARIA descriptions.
+// It links the child input to help/error text via 'aria-describedby' when
+// appropriate.
 templ FormField(prop FormFieldProp) {
 	{{ fieldId := GetID(prop.Id, "ff") }}
 	{{ helpId := fieldId + "-help" }}

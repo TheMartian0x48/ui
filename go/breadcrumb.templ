@@ -2,21 +2,24 @@ package ui
 
 import "strings"
 
-// BreadcrumbProp configures the breadcrumb navigation container.
+// BreadcrumbProp configures the root breadcrumb navigation container.
 type BreadcrumbProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Separator  string           // Custom separator (default: "/")
-	AriaLabel  string           // Navigation label (default: "Breadcrumb")
+	Separator  string           // Character or string to display between items (default: "/")
+	AriaLabel  string           // Accessible label for the navigation region (default: "Breadcrumb")
 }
 
-// BreadcrumbItemProp configures a single breadcrumb item.
+// BreadcrumbItemProp configures a single link or text item within the breadcrumb trail.
 type BreadcrumbItemProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Href       string           // Link destination (empty for current page)
-	Current    bool             // Marks this as the current page (aria-current="page")
+	Href       string           // The URL the breadcrumb points to (leave empty for current page)
+	Current    bool             // Marks this item as the active/current page (sets aria-current="page")
 }
 
-// Breadcrumb renders a navigation breadcrumb trail.
+// Breadcrumb renders a responsive navigation trail using the semantic <nav> element.
+//
+// Breadcrumbs provide a secondary navigation scheme that reveals the user's
+// location in a website or web application.
 templ Breadcrumb(prop BreadcrumbProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -42,7 +45,10 @@ templ Breadcrumb(prop BreadcrumbProp) {
 	</nav>
 }
 
-// BreadcrumbItem renders a single item in the breadcrumb trail.
+// BreadcrumbItem renders a single item in the breadcrumb navigation trail.
+//
+// Automatically handles rendering as a link (if Href is provided) or
+// as plain text (if Current is true or Href is empty).
 templ BreadcrumbItem(prop BreadcrumbItemProp) {
 	<li
 		if prop.Id != "" {

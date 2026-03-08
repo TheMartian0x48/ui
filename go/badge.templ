@@ -2,51 +2,54 @@ package ui
 
 import "strings"
 
-// BadgeVariant defines the color variant of the badge.
+// BadgeVariant defines the semantic color scheme of the badge.
 type BadgeVariant int
 
 const (
-	BadgePrimary   BadgeVariant = iota // Primary brand color
-	BadgeSecondary                     // Neutral/gray
-	BadgeSuccess                       // Green/success
-	BadgeWarning                       // Yellow/warning
-	BadgeDanger                        // Red/error
-	BadgeInfo                          // Blue/info
+	BadgePrimary   BadgeVariant = iota // Brand color highlight
+	BadgeSecondary                     // Neutral gray for low-emphasis
+	BadgeSuccess                       // Green for completion or active status
+	BadgeWarning                       // Yellow for caution or pending status
+	BadgeDanger                        // Red for errors or critical counts
+	BadgeInfo                          // Blue for general information
 )
 
-// BadgeShape defines the visual style of the badge.
+// BadgeShape defines the visual containment and transparency of the badge.
 type BadgeShape int
 
 const (
-	BadgeFilled   BadgeShape = iota // Solid background (default)
-	BadgeOutlined                   // Border only
-	BadgeSubtle                     // Light background tint
+	BadgeFilled   BadgeShape = iota // Solid background color (default)
+	BadgeOutlined                   // Colored border with transparent background
+	BadgeSubtle                     // Pastel background with darker text
 )
 
-// BadgeSize defines the size of the badge.
+// BadgeSize defines the physical dimensions of the badge.
 type BadgeSize int
 
 const (
-	BadgeSizeMD BadgeSize = iota // Medium (default)
-	BadgeSizeSM                  // Small
-	BadgeSizeLG                  // Large
+	BadgeSizeMD BadgeSize = iota // Standard size (default)
+	BadgeSizeSM                  // Compact size for dense layouts
+	BadgeSizeLG                  // Prominent size for high-visibility labels
 )
 
-// BadgeProp configures a badge/label component.
+// BadgeProp configures the Badge component.
 type BadgeProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant     BadgeVariant     // Color variant
-	Shape       BadgeShape       // Visual style (filled, outlined, subtle)
-	Size        BadgeSize        // Size variant
-	Rounded     bool             // Use pill/capsule shape (more rounded)
-	Icon        templ.Component  // Optional leading icon
-	Dismissible bool             // Show dismiss/close button
-	OnDismiss   string           // JavaScript handler for dismiss (Alpine.js @click)
-	Disabled    bool             // Disable interactions
-	AriaLabel   string           // Screen reader text for context
+	Variant     BadgeVariant     // Semantic color variant
+	Shape       BadgeShape       // Visual style (Filled, Outlined, Subtle)
+	Size        BadgeSize        // Dimension variant
+	Rounded     bool             // If true, uses a capsule/pill shape
+	Icon        templ.Component  // Optional leading icon component
+	Dismissible bool             // If true, shows a removal button
+	OnDismiss   string           // JavaScript/Alpine.js expression for removal
+	Disabled    bool             // Mutes colors and prevents interaction
+	AriaLabel   string           // Hidden description for accessibility
 }
 
-// Badge renders a small label/badge component.
+// Badge renders a small label for status, counts, or categories.
+//
+// Badges are purely decorative/informative by default. If interactive (Dismissible),
+// ensure a meaningful AriaLabel is provided.
 templ Badge(prop BadgeProp) {
 	<span
 		if prop.Id != "" {
@@ -89,10 +92,10 @@ templ Badge(prop BadgeProp) {
 // BadgeGroupProp configures a container for multiple badges.
 type BadgeGroupProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	AriaLabel  string           // Accessible label for the badge group
+	AriaLabel  string           // Accessible label for the collection of badges
 }
 
-// BadgeGroup renders a flex container for badges with proper spacing.
+// BadgeGroup renders a flex container with consistent spacing between badges.
 templ BadgeGroup(prop BadgeGroupProp) {
 	<div
 		if prop.Id != "" {

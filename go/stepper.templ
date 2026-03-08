@@ -2,34 +2,35 @@ package ui
 
 import "fmt"
 
-// StepState represents the current state of a step in the stepper.
+// StepState defines the current progress level of a single step.
 type StepState int
 
 const (
-	StepInactive  StepState = iota // Step not yet reached
-	StepActive                     // Current step in progress
-	StepCompleted                  // Step successfully completed
+	StepInactive  StepState = iota // The user hasn't reached this step yet
+	StepActive                     // The current step in progress
+	StepCompleted                  // A step that has been successfully finished
 )
 
-// StepItemProp configures a single step within the stepper.
+// StepItemProp configures a single landmark within a Stepper sequence.
 type StepItemProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Title       string    // Step label text
-	Description string    // Optional helper text below title
-	State       StepState // Current state of this step
+	Title       string    // Brief heading for the step
+	Description string    // Optional detailed explanation shown below the title
+	State       StepState // Current status (Inactive, Active, Completed)
 }
 
-// StepperProp configures the stepper progress indicator.
+// StepperProp configures the overall stepper navigation component.
 type StepperProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Steps     []StepItemProp // List of steps to display
-	Vertical  bool           // Vertical layout (default: horizontal)
-	AriaLabel string         // Accessible label for the stepper (e.g., "Checkout progress")
+	Steps     []StepItemProp    // Ordered list of steps to display
+	Vertical  bool              // Whether to stack steps vertically (default: horizontal)
+	AriaLabel string            // Accessible name for the sequence (e.g. "Checkout progress")
 }
 
-// Stepper renders a progress indicator showing advancement through a sequence of steps.
-// Supports both horizontal and vertical layouts with three step states:
-// inactive, active, and completed.
+// Stepper renders a progress indicator for sequential multi-step tasks.
+//
+// Ideal for checkout flows, registration forms, or any complex process
+// that is split into logical stages.
 templ Stepper(prop StepperProp) {
 	<nav
 		if prop.Id != "" {

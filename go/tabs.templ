@@ -2,15 +2,35 @@ package ui
 
 import "strings"
 
-// TabsProp configures the root tabs container.
-// The Id is required for JavaScript initialization.
+// TabsProp configures the root container for a tabbed interface.
 type TabsProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	DefaultValue string           // Value of the tab that should be active by default
+	DefaultValue string         // The 'Value' of the tab that should be visible on initial load
 }
 
-// Tabs is the root component for a tab interface.
-// Contains TabsList and TabsContent children.
+// TabsListProp configures the container for tab triggers (buttons).
+type TabsListProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
+}
+
+// TabsTriggerProp configures a single tab button.
+type TabsTriggerProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
+	Value      string           // Unique identifier for this tab (must match a TabsContent Value)
+	Disabled   bool             // Prevents the user from selecting this tab
+	AriaLabel  string           // Hidden label for screen readers (useful for icon-only tabs)
+}
+
+// TabsContentProp configures a single tab content panel.
+type TabsContentProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
+	Value      string           // Unique identifier that connects this panel to a TabsTrigger
+}
+
+// Tabs is the root component for creating layered content views.
+//
+// Implements the WAI-ARIA Tabs pattern with full keyboard support (Arrow keys
+// to navigate, Home/End to jump to start/finish).
 templ Tabs(prop TabsProp) {
 	{{ id := GetID(prop.Id, "tabs") }}
 	<div
@@ -24,13 +44,7 @@ templ Tabs(prop TabsProp) {
 	@initTabs(id, prop.DefaultValue)
 }
 
-// TabsListProp configures the tab triggers container.
-type TabsListProp struct {
-	BaseProp // Standard Id, Class, and Attributes
-}
-
-// TabsList contains the triggers for the tabs.
-// Handles keyboard navigation with arrow keys.
+// TabsList contains the interactive triggers for the tab interface.
 templ TabsList(prop TabsListProp) {
 	<div
 		if prop.Id != "" {
@@ -63,16 +77,7 @@ templ TabsList(prop TabsListProp) {
 	</div>
 }
 
-// TabsTriggerProp configures a tab trigger button.
-type TabsTriggerProp struct {
-	BaseProp                    // Standard Id, Class, and Attributes
-	Value      string           // The value this trigger activates
-	Disabled   bool             // Prevents interaction
-	AriaLabel  string           // Screen reader label (for icon-only tabs)
-}
-
-// TabsTrigger is the button that activates a tab content.
-// Connects to TabsContent via matching Value prop.
+// TabsTrigger is the button that activates a specific tab panel.
 templ TabsTrigger(prop TabsTriggerProp) {
 	{{
 	// Generate IDs to connect tabs with their panels
@@ -102,14 +107,7 @@ templ TabsTrigger(prop TabsTriggerProp) {
 	</button>
 }
 
-// TabsContentProp configures a tab content panel.
-type TabsContentProp struct {
-	BaseProp                    // Standard Id, Class, and Attributes
-	Value      string           // The value that activates this content
-}
-
-// TabsContent contains the content for a specific tab.
-// Shown when TabsTrigger with matching Value is activated.
+// TabsContent contains the panel associated with a tab trigger.
 templ TabsContent(prop TabsContentProp) {
 	{{
 	// Generate IDs to connect panels with their tabs

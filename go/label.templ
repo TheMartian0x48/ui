@@ -2,17 +2,18 @@ package ui
 
 import "strings"
 
-// LabelProp configures a form label element.
-// Use with form inputs to improve accessibility and usability.
+// LabelProp configures a standard HTML label element.
 type LabelProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	For        string           // HTML for attribute - ID of the associated input
-	Required   bool             // Whether to show required indicator (*)
-	Disabled   bool             // Disabled styling (when associated input is disabled)
+	For        string           // HTML 'for' attribute - ID of the associated input
+	Required   bool             // Whether to display a required indicator (*)
+	Disabled   bool             // Muted styling when the associated input is disabled
 }
 
-// Label renders a form label element with optional required indicator.
-// Supports disabled state to match associated input styling.
+// Label renders a semantic form label.
+//
+// Essential for accessibility, it ensures that form controls have a clear,
+// programmatically-associated name for screen readers and touch targets.
 templ Label(prop LabelProp) {
 	<label
 		if prop.Id != "" {

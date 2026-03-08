@@ -2,21 +2,22 @@ package ui
 
 import "strings"
 
-// LinkProp configures an anchor element styled as a button.
-// Use Link for navigation actions, Button for in-page actions.
+// LinkProp configures an anchor element styled to match the library's button components.
 type LinkProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Variant    ButtonVariant    // Visual style (Primary, Secondary, etc.)
-	Size       ButtonSize       // Size (SM, MD, LG)
-	Href       string           // URL destination
-	Target     string           // _blank, _self, etc.
-	Rel        string           // Link relationship (auto-set for _blank)
-	Disabled   bool             // Visually disabled, prevents navigation
-	AriaLabel  string           // Screen reader label (for icon-only links)
+	Variant    ButtonVariant    // Visual style (Primary, Secondary, Outline, etc.)
+	Size       ButtonSize       // Vertical size (SM, MD, LG)
+	Href       string           // Destination URL
+	Target     string           // HTML target attribute (e.g. "_blank" for new tabs)
+	Rel        string           // Relationship attribute (auto-set to "noopener noreferrer" for new tabs)
+	Disabled   bool             // Visually disables the link and removes it from tab order
+	AriaLabel  string           // Hidden label for screen readers (required for icon-only links)
 }
 
-// Link renders an anchor element styled as a button.
-// Automatically adds rel="noopener noreferrer" for target="_blank" links.
+// Link renders a semantic anchor <a> element styled as a button.
+//
+// Use Link for navigation to different pages or external sites.
+// For actions that trigger logic on the current page, use the Button component instead.
 templ Link(props LinkProp) {
 	<a
 		href={ templ.SafeURL(props.Href) }

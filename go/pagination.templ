@@ -5,98 +5,23 @@ import (
 	"strings"
 )
 
-// PaginationProp configures a pagination navigation component.
+// PaginationProp configures a data-driven pagination navigation component.
 type PaginationProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	CurrentPage  int              // Current active page (1-indexed)
-	TotalPages   int              // Total number of pages
-	BaseURL      string           // URL prefix for page links (page number appended)
-	SiblingCount int              // Pages shown on each side of current (default: 1)
-	ShowPrevNext bool             // Show previous/next buttons (default: true when nil)
-	PrevLabel    string           // Label for previous button (default: "Previous")
-	NextLabel    string           // Label for next button (default: "Next")
-	AriaLabel    string           // Navigation label (default: "Pagination")
+	CurrentPage  int            // The currently active page (1-indexed)
+	TotalPages   int            // The total number of available pages
+	BaseURL      string         // The prefix for page links (page number is appended)
+	SiblingCount int            // Number of pages to show on each side of the current page (default: 1)
+	ShowPrevNext bool           // Whether to display previous/next navigation buttons
+	PrevLabel    string         // Text for the previous button (default: "Previous")
+	NextLabel    string         // Text for the next button (default: "Next")
+	AriaLabel    string         // Accessible label for the navigation region (default: "Pagination")
 }
 
-// PaginationSize defines the size variant for pagination.
-type PaginationSize int
-
-const (
-	PaginationSizeSM PaginationSize = iota
-	PaginationSizeMD
-	PaginationSizeLG
-)
-
-// paginationRange generates the page numbers to display.
-// Returns a slice where -1 represents an ellipsis.
-func paginationRange(current, total, siblings int) []int {
-	if total <= 0 {
-		return []int{}
-	}
-	if current < 1 {
-		current = 1
-	}
-	if current > total {
-		current = total
-	}
-	if siblings < 0 {
-		siblings = 1
-	}
-
-	// Calculate range boundaries
-	leftSibling := max(current-siblings, 1)
-	rightSibling := min(current+siblings, total)
-
-	// Determine if ellipsis needed
-	showLeftEllipsis := leftSibling > 2
-	showRightEllipsis := rightSibling < total-1
-
-	// Build the range
-	var pages []int
-
-	// Always show first page
-	pages = append(pages, 1)
-
-	// Left ellipsis or page 2
-	if showLeftEllipsis {
-		pages = append(pages, -1) // -1 = ellipsis
-	} else if leftSibling > 1 {
-		// Show pages between 1 and leftSibling
-		startPage := 2
-		endPage := leftSibling - 1
-		for i := startPage; i <= endPage; i++ {
-			pages = append(pages, i)
-		}
-	}
-
-	// Sibling pages and current
-	for i := leftSibling; i <= rightSibling; i++ {
-		if i != 1 && i != total {
-			pages = append(pages, i)
-		}
-	}
-
-	// Right ellipsis or remaining pages
-	if showRightEllipsis {
-		pages = append(pages, -1) // -1 = ellipsis
-	} else if rightSibling < total {
-		// Show pages between rightSibling and total
-		startPage := rightSibling + 1
-		endPage := total - 1
-		for i := startPage; i <= endPage; i++ {
-			pages = append(pages, i)
-		}
-	}
-
-	// Always show last page (if more than 1 page)
-	if total > 1 {
-		pages = append(pages, total)
-	}
-
-	return pages
-}
-
-// Pagination renders a page navigation component.
+// Pagination renders a comprehensive page navigation control.
+//
+// Automatically calculates page ranges and inserts ellipses (...) for large
+// page counts to maintain a compact UI. Fully accessible via ARIA attributes.
 templ Pagination(prop PaginationProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -196,6 +121,75 @@ templ Pagination(prop PaginationProp) {
 			</ul>
 		</nav>
 	}
+}
+
+// paginationRange generates the page numbers to display.
+// Returns a slice where -1 represents an ellipsis.
+func paginationRange(current, total, siblings int) []int {
+	if total <= 0 {
+		return []int{}
+	}
+	if current < 1 {
+		current = 1
+	}
+	if current > total {
+		current = total
+	}
+	if siblings < 0 {
+		siblings = 1
+	}
+
+	// Calculate range boundaries
+	leftSibling := max(current-siblings, 1)
+	rightSibling := min(current+siblings, total)
+
+	// Determine if ellipsis needed
+	showLeftEllipsis := leftSibling > 2
+	showRightEllipsis := rightSibling < total-1
+
+	// Build the range
+	var pages []int
+
+	// Always show first page
+	pages = append(pages, 1)
+
+	// Left ellipsis or page 2
+	if showLeftEllipsis {
+		pages = append(pages, -1) // -1 = ellipsis
+	} else if leftSibling > 1 {
+		// Show pages between 1 and leftSibling
+		startPage := 2
+		endPage := leftSibling - 1
+		for i := startPage; i <= endPage; i++ {
+			pages = append(pages, i)
+		}
+	}
+
+	// Sibling pages and current
+	for i := leftSibling; i <= rightSibling; i++ {
+		if i != 1 && i != total {
+			pages = append(pages, i)
+		}
+	}
+
+	// Right ellipsis or remaining pages
+	if showRightEllipsis {
+		pages = append(pages, -1) // -1 = ellipsis
+	} else if rightSibling < total {
+		// Show pages between rightSibling and total
+		startPage := rightSibling + 1
+		endPage := total - 1
+		for i := startPage; i <= endPage; i++ {
+			pages = append(pages, i)
+		}
+	}
+
+	// Always show last page (if more than 1 page)
+	if total > 1 {
+		pages = append(pages, total)
+	}
+
+	return pages
 }
 
 // paginationClass generates CSS class for pagination container.

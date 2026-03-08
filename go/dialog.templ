@@ -4,26 +4,29 @@ import (
 	"strings"
 )
 
-// DialogSize defines the width variant of a dialog.
+// DialogSize defines the maximum width of the dialog modal.
 type DialogSize int
 
 const (
-	DialogSizeMD DialogSize = iota // default ~32rem
-	DialogSizeSM                   // ~24rem
-	DialogSizeLG                   // ~42rem
-	DialogSizeXL                   // ~56rem
+	DialogSizeMD DialogSize = iota // Standard width (~32rem, default)
+	DialogSizeSM                   // Compact width (~24rem)
+	DialogSizeLG                   // Wide width (~42rem)
+	DialogSizeXL                   // Maximum width (~56rem)
 )
 
+// DialogProp configures the Dialog (Modal) component.
 type DialogProp struct {
-	BaseProp            // Standard Id, Class, and Attributes
-	Title       string           // Dialog title
-	Description string           // Optional description for aria-describedby
-	Size        DialogSize       // Size variant (SM, MD, LG, XL)
-	TriggerText string           // Text for the button that opens the dialog (optional helper)
+	BaseProp                    // Standard Id, Class, and Attributes
+	Title       string           // Bold heading shown at the top
+	Description string           // Optional detailed text for ARIA description
+	Size        DialogSize       // Width variant
+	TriggerText string           // Helper for auto-generating a trigger button
 }
 
-// Dialog renders a modal dialog using the native HTML dialog element.
-// It includes a built-in close button and optional header/body structure.
+// Dialog renders a modal window using the native HTML <dialog> element.
+//
+// Native dialogs handle focus trapping, backdrop blocking, and 'Escape'
+// to close automatically. Uses ARIA roles for full screen reader support.
 templ Dialog(prop DialogProp) {
 	{{ dialogId := GetID(prop.Id, "dlg") }}
 	{{ titleId := dialogId + "-title" }}
@@ -82,7 +85,6 @@ func dialogClass(prop DialogProp) string {
 		b.WriteString(" dialog--lg")
 	case DialogSizeXL:
 		b.WriteString(" dialog--xl")
-	// DialogSizeMD is default, no modifier needed
 	}
 
 	if prop.Class != "" {
@@ -92,12 +94,12 @@ func dialogClass(prop DialogProp) string {
 	return b.String()
 }
 
-// DialogFooterProp defines the properties for the DialogFooter component.
+// DialogFooterProp configures the layout of the dialog actions area.
 type DialogFooterProp struct {
 	BaseProp // Standard Id, Class, and Attributes
 }
 
-// DialogFooter renders a footer section for dialog actions.
+// DialogFooter renders a layout container for primary and secondary dialog actions.
 templ DialogFooter(prop DialogFooterProp) {
 	<div
 		if prop.Id != "" {
@@ -118,7 +120,7 @@ func dialogFooterClass(prop DialogFooterProp) string {
 	return "dialog__footer"
 }
 
-// DialogTrigger renders a button that opens the specified dialog.
+// DialogTrigger renders a button that opens a specific dialog via its ID.
 templ DialogTrigger(dialogId string) {
 	@Button(ButtonProp{
 		BaseProp: BaseProp{

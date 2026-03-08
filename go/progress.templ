@@ -4,29 +4,31 @@ import (
 	"fmt"
 )
 
-// ProgressSize defines the height of the linear progress bar.
+// ProgressSize defines the vertical thickness of the linear progress bar.
 type ProgressSize int
 
 const (
-	ProgressSizeSM ProgressSize = iota // Small height (4px)
-	ProgressSizeMD                     // Medium height (8px, default)
-	ProgressSizeLG                     // Large height (12px)
+	ProgressSizeSM ProgressSize = iota // Compact 4px height
+	ProgressSizeMD                     // Standard 8px height (default)
+	ProgressSizeLG                     // Prominent 12px height
 )
 
 // ProgressProp configures a linear progress bar component.
 type ProgressProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Value         float64          // Current progress value (0 to Max)
-	Max           float64          // Maximum value (default: 100)
-	Label         string           // Text label displayed above the bar
-	ShowValue     bool             // Display percentage value
-	Size          ProgressSize     // Bar height variant
-	Indeterminate bool             // Animated loading state (ignores Value)
-	AriaLabel     string           // Accessible label when no visible label
+	Value         float64          // Current completion value (from 0 to Max)
+	Max           float64          // Total value representing 100% (default: 100)
+	Label         string           // Visible text label shown above the bar
+	ShowValue     bool             // If true, displays the percentage text
+	Size          ProgressSize     // Bar thickness variant
+	Indeterminate bool             // Enables an infinite pulsing animation for unknown durations
+	AriaLabel     string           // Hidden label for screen readers (required if Label is empty)
 }
 
-// Progress renders a linear progress bar showing completion status.
-// Use Indeterminate mode for unknown duration operations.
+// Progress renders a horizontal progress indicator.
+//
+// Primarily used to show the status of a deterministic task. Use
+// Indeterminate mode for loading states where progress cannot be measured.
 templ Progress(prop ProgressProp) {
 	{{
 		progressId := GetID(prop.Id, "prog")
@@ -122,21 +124,21 @@ func progressClass(size ProgressSize, indeterminate bool, class string) string {
 	return classes
 }
 
-// CircularProgressProp configures a circular progress indicator.
+// CircularProgressProp configures a ring-shaped progress indicator.
 type CircularProgressProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Value         float64          // Current progress value (0 to Max)
-	Max           float64          // Maximum value (default: 100)
-	Size          int              // Diameter in pixels (default: 24)
-	Thickness     int              // Stroke width in pixels (default: 3)
-	ShowValue     bool             // Display percentage in center
-	Indeterminate bool             // Spinning animation (default when Value=0 and ShowValue=false)
-	AriaLabel     string           // Accessible label for screen readers
+	Value         float64          // Current completion value (from 0 to Max)
+	Max           float64          // Total value representing 100% (default: 100)
+	Size          int              // Diameter of the circle in pixels (default: 24)
+	Thickness     int              // Stroke width of the progress ring (default: 3)
+	ShowValue     bool             // If true, displays percentage text in the center
+	Indeterminate bool             // Enables a spinning animation (default if Value is 0)
+	AriaLabel     string           // Hidden label for screen readers
 }
 
-// CircularProgress renders a circular progress indicator.
-// Defaults to indeterminate (spinning) mode when no Value is provided.
-// Pass a Value and/or ShowValue=true for determinate mode.
+// CircularProgress renders a ring-shaped progress indicator or loading spinner.
+//
+// Best suited for small areas, buttons, or standalone loading states.
 templ CircularProgress(prop CircularProgressProp) {
 	{{
 		circularId := GetID(prop.Id, "cprog")

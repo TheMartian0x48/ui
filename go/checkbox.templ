@@ -2,24 +2,26 @@ package ui
 
 import "strings"
 
-// CheckboxProp configures a checkbox input component.
-// Use Checked for controlled state, Indeterminate for partial selection (e.g., "select all").
+// CheckboxProp configures a custom-styled checkbox input component.
 type CheckboxProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Name            string           // Form field name
-	Value           string           // Input value when checked
-	Label           string           // Visible label text
-	Checked         bool             // Whether checkbox is checked
-	Indeterminate   bool             // Partial selection state (visual only, requires JS)
-	Disabled        bool             // Prevents interaction
-	Required        bool             // Form validation requirement
-	Error           bool             // Shows error styling
-	AriaLabel       string           // Screen reader label (when no visible label)
-	AriaDescribedBy string           // ID of element describing this checkbox (e.g., error message)
+	Name            string      // Form field name for data submission
+	Value           string      // The value submitted when the checkbox is checked
+	Label           string      // Descriptive text displayed next to the checkbox
+	Checked         bool        // Sets the initial checked state (controlled)
+	Indeterminate   bool        // Visual-only state for partial selection (requires JS logic to set property)
+	Disabled        bool        // Disables interaction and applies muted styling
+	Required        bool        // Adds HTML validation and ARIA required attributes
+	Error           bool        // Applies error styling (red border/focus)
+	AriaLabel       string      // Accessible name when a visible label isn't used
+	AriaDescribedBy string      // ID of the element providing additional context (e.g. error message)
 }
 
-// Checkbox renders a custom-styled checkbox input with optional label.
-// Supports checked, indeterminate, disabled, and error states.
+// Checkbox renders a highly accessible, custom-styled checkbox input.
+//
+// It uses a hidden native input for form compatibility and a custom styled
+// control div for the visual representation. Supports indeterminate states
+// commonly used in "Select All" patterns.
 templ Checkbox(prop CheckboxProp) {
 	<div class={ checkboxClass(prop) }>
 		<input

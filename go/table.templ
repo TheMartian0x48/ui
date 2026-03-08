@@ -2,20 +2,21 @@ package ui
 
 import "strings"
 
-// TableProp configures a data table component.
-// Supports striped rows, hover effects, and compact density.
+// TableProp configures the core data table component.
 type TableProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Striped    bool             // Alternating row backgrounds
-	Hover      bool             // Highlight rows on hover
-	Compact    bool             // Reduced padding density
-	Header     templ.Component  // Optional thead content
-	Caption    string           // Accessible table description (visible)
-	AriaLabel  string           // Screen reader label (invisible)
+	Striped    bool             // If true, applies alternating row background colors
+	Hover      bool             // If true, highlights rows when hovered by the mouse
+	Compact    bool             // If true, reduces cell padding for dense data
+	Header     templ.Component  // Optional content for the <thead> section
+	Caption    string           // Visible summary text displayed at the top of the table
+	AriaLabel  string           // Hidden label for screen readers (required if Caption is empty)
 }
 
-// Table renders a responsive data table.
-// Wraps content in a scrollable container for mobile responsiveness.
+// Table renders a responsive, themeable data table.
+//
+// Automatically wraps the table in a scrollable container to ensure
+// usability on smaller screens.
 templ Table(prop TableProp) {
 	<div class="table-container">
 		<table
@@ -64,12 +65,12 @@ func tableClass(prop TableProp) string {
 	return b.String()
 }
 
-// TableHeaderProp configures a table header row.
+// TableHeaderProp configures a standard table header row.
 type TableHeaderProp struct {
 	BaseProp // Standard Id, Class, and Attributes
 }
 
-// TableHeader renders a table header row (<tr> inside <thead>).
+// TableHeader renders a <tr> element intended for use within a <thead>.
 templ TableHeader(prop TableHeaderProp) {
 	<tr
 		if prop.Id != "" {
@@ -84,12 +85,12 @@ templ TableHeader(prop TableHeaderProp) {
 	</tr>
 }
 
-// TableBodyProp configures a table body container.
+// TableBodyProp configures the main table body container.
 type TableBodyProp struct {
 	BaseProp // Standard Id, Class, and Attributes
 }
 
-// TableBody renders a table body container (<tbody>).
+// TableBody renders a semantic <tbody> element.
 templ TableBody(prop TableBodyProp) {
 	<tbody
 		if prop.Id != "" {
@@ -104,12 +105,12 @@ templ TableBody(prop TableBodyProp) {
 	</tbody>
 }
 
-// TableRowProp configures a table row.
+// TableRowProp configures an individual data row.
 type TableRowProp struct {
 	BaseProp // Standard Id, Class, and Attributes
 }
 
-// TableRow renders a table row (<tr>).
+// TableRow renders a semantic <tr> element for the table body.
 templ TableRow(prop TableRowProp) {
 	<tr
 		if prop.Id != "" {

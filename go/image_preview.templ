@@ -1,27 +1,28 @@
 package ui
 
-// ImageObjectFit defines how the image should be resized to fit its container.
+// ImageObjectFit defines how the image should be resized to fit its container dimensions.
 type ImageObjectFit int
 
 const (
-	ImageObjectFitCover   ImageObjectFit = iota // Scale to cover container, may crop (default)
-	ImageObjectFitContain                       // Scale to fit within container, may letterbox
-	ImageObjectFitFill                          // Stretch to fill container exactly
+	ImageObjectFitCover   ImageObjectFit = iota // Scale to cover container, maintaining aspect ratio (may crop)
+	ImageObjectFitContain                       // Scale to fit within container, maintaining aspect ratio (may letterbox)
+	ImageObjectFitFill                          // Stretch to fill container exactly (may distort)
 	ImageObjectFitNone                          // No resizing, display at natural size
 )
 
 // ImagePreviewProp configures the ImagePreview component.
 type ImagePreviewProp struct {
 	BaseProp                    // Standard Id, Class, and Attributes
-	Src         string           // Image source URL
-	Alt         string           // Alt text for accessibility
-	AspectRatio string           // Aspect ratio (e.g., "16/9", "1/1", "4/3")
-	ObjectFit   ImageObjectFit   // How image fills container (cover, contain, fill, none)
+	Src         string           // URL of the image to display
+	Alt         string           // Descriptive text for screen readers and fallbacks
+	AspectRatio string           // CSS aspect-ratio value (e.g. "16/9", "1/1")
+	ObjectFit   ImageObjectFit   // How the image behaves within the aspect-ratio box
 }
 
-// ImagePreview renders an image with a specific aspect ratio and styling.
-// When no Src is provided, displays a placeholder with an icon.
-// Supports lazy loading by default for better performance.
+// ImagePreview renders a styled image container with a specific aspect ratio.
+//
+// If 'Src' is empty, it automatically renders a consistent placeholder
+// with a camera icon. Optimized for gallery views and media cards.
 templ ImagePreview(prop ImagePreviewProp) {
 	<div
 		if prop.Id != "" {
