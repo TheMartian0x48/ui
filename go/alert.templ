@@ -52,6 +52,11 @@ type AlertProp struct {
 //
 // Automatically manages ARIA roles and live regions based on severity.
 // Use for form validation, system notifications, or inline status updates.
+//
+// Usage:
+//   @ui.Alert(ui.AlertProp{Variant: ui.AlertSuccess, Title: "Success!"}) {
+//     Your profile has been updated.
+//   }
 templ Alert(prop AlertProp) {
 	{{ uid := alertUniqueId(prop.Id) }}
 	<div

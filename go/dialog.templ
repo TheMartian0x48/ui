@@ -27,6 +27,11 @@ type DialogProp struct {
 //
 // Native dialogs handle focus trapping, backdrop blocking, and 'Escape'
 // to close automatically. Uses ARIA roles for full screen reader support.
+//
+// Usage:
+//   @ui.Dialog(ui.DialogProp{Title: "Confirm Action"}) {
+//     Are you sure you want to proceed?
+//   }
 templ Dialog(prop DialogProp) {
 	{{ dialogId := GetID(prop.Id, "dlg") }}
 	{{ titleId := dialogId + "-title" }}

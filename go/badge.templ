@@ -50,6 +50,9 @@ type BadgeProp struct {
 //
 // Badges are purely decorative/informative by default. If interactive (Dismissible),
 // ensure a meaningful AriaLabel is provided.
+//
+// Usage:
+//   @ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess, Rounded: true}) { Active }
 templ Badge(prop BadgeProp) {
 	<span
 		if prop.Id != "" {

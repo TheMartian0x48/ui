@@ -23,6 +23,11 @@ type CardProp struct {
 //
 // Uses the semantic <article> element. Designed to group related information
 // or act as a link to more detailed content.
+//
+// Usage:
+//   @ui.Card(ui.CardProp{Header: "Title", Footer: "Footer"}) {
+//     Main content here.
+//   }
 templ Card(prop CardProp) {
 	<article
 		if prop.Id != "" {

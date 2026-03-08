@@ -19,6 +19,9 @@ type DividerProp struct {
 //
 // Automatically applies appropriate ARIA roles and orientation attributes
 // for screen reader compatibility.
+//
+// Usage:
+//   @ui.Divider(ui.DividerProp{Label: "OR"})
 templ Divider(prop DividerProp) {
 	if prop.Variant == DividerHorizontal {
 		if prop.Label != "" {

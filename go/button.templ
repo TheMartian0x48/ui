@@ -45,7 +45,10 @@ type ButtonProp struct {
 // multiple variants, sizes, and accessible states.
 //
 // Usage:
-//   @ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) { Click Me }
+//   @ui.Button(ui.ButtonProp{
+//     Variant: ui.ButtonPrimary,
+//     Size: ui.ButtonSizeMD,
+//   }) { Click Me }
 templ Button(prop ButtonProp) {
 	<button
 		if prop.Id != "" {

@@ -26,6 +26,11 @@ type DrawerProp struct {
 //
 // Controlled via the 'open-drawer' window event or by directly toggling Alpine
 // state. Automatically handles backdrop overlays and scroll locking.
+//
+// Usage:
+//   @ui.Drawer(ui.DrawerProp{Title: "Menu", Position: ui.DrawerLeft}) {
+//     Navigation links...
+//   }
 templ Drawer(prop DrawerProp) {
 	{{ drawerId := GetID(prop.Id, "drawer") }}
 	{{ titleId := drawerId + "-title" }}

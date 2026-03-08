@@ -89,6 +89,9 @@ type InputProp struct {
 //
 // Supports all modern HTML5 input types with unified styling and full
 // accessibility coverage. Use with FormField for automatic label association.
+//
+// Usage:
+//   @ui.Input(ui.InputProp{Type: ui.InputText, Name: "username", Placeholder: "Enter username"})
 templ Input(prop InputProp) {
 	<input
 		if prop.Id != "" {

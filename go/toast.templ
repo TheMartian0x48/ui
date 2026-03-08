@@ -34,6 +34,9 @@ type ToastProp struct {
 //
 // Note: This component is primarily for SSR/static usage. For dynamic runtime
 // toasts, use the 'showToast' JavaScript function provided by ToastContainer.
+//
+// Usage:
+//   @ui.Toast(ui.ToastProp{Message: "Success!", Type: ui.ToastSuccess})
 templ Toast(prop ToastProp) {
 	<div
 		if prop.Id != "" {

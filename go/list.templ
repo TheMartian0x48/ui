@@ -42,6 +42,12 @@ type ListItemProp struct {
 //
 // Lists are used to group related content vertically. Supports several
 // formatting options including icons and dividers.
+//
+// Usage:
+//   @ui.List(ui.ListProp{Variant: ui.ListBulleted}) {
+//     @ui.ListItem(ui.ListItemProp{}) { First item }
+//     @ui.ListItem(ui.ListItemProp{}) { Second item }
+//   }
 templ List(prop ListProp) {
 	{{
 		isOrdered := prop.Variant == ListNumbered

@@ -19,6 +19,9 @@ type DropzoneProp struct {
 // Dropzone renders a file upload area with drag-and-drop support.
 // Uses Alpine.js to handle drag-over visual state and file selection display.
 // Supports single or multiple file uploads with optional file type restrictions.
+//
+// Usage:
+//   @ui.Dropzone(ui.DropzoneProp{Name: "files", Multiple: true, Accept: "image/*"})
 templ Dropzone(prop DropzoneProp) {
 	{{ dzId := GetID(prop.Id, "dz") }}
 	{{ helpTextId := dzId + "-help" }}

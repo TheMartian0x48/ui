@@ -29,6 +29,9 @@ type ProgressProp struct {
 //
 // Primarily used to show the status of a deterministic task. Use
 // Indeterminate mode for loading states where progress cannot be measured.
+//
+// Usage:
+//   @ui.Progress(ui.ProgressProp{Value: 50, Max: 100, Label: "Uploading..."})
 templ Progress(prop ProgressProp) {
 	{{
 		progressId := GetID(prop.Id, "prog")

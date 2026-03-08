@@ -31,6 +31,15 @@ type StepperProp struct {
 //
 // Ideal for checkout flows, registration forms, or any complex process
 // that is split into logical stages.
+//
+// Usage:
+//   @ui.Stepper(ui.StepperProp{
+//     Steps: []ui.StepItemProp{
+//       {Title: "Account", State: ui.StepCompleted},
+//       {Title: "Profile", State: ui.StepActive},
+//       {Title: "Review", State: ui.StepInactive},
+//     },
+//   })
 templ Stepper(prop StepperProp) {
 	<nav
 		if prop.Id != "" {

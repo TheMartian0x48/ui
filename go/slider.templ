@@ -19,6 +19,9 @@ type SliderProp struct {
 
 // Slider renders a customizable range input with optional real-time value display.
 // Requires Alpine.js for interactive value updates.
+//
+// Usage:
+//   @ui.Slider(ui.SliderProp{Name: "volume", Min: 0, Max: 100, Value: 50, ShowValue: true})
 templ Slider(prop SliderProp) {
 	{{
 		min := prop.Min

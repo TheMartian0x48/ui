@@ -22,6 +22,9 @@ type PaginationProp struct {
 //
 // Automatically calculates page ranges and inserts ellipses (...) for large
 // page counts to maintain a compact UI. Fully accessible via ARIA attributes.
+//
+// Usage:
+//   @ui.Pagination(ui.PaginationProp{CurrentPage: 1, TotalPages: 10, BaseURL: "/users?page="})
 templ Pagination(prop PaginationProp) {
 	{{
 		ariaLabel := prop.AriaLabel

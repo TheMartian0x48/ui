@@ -30,6 +30,9 @@ type SwitchProp struct {
 //
 // Visually distinct from Checkbox, it is optimized for settings and preferences
 // that take effect immediately or represent clear binary states.
+//
+// Usage:
+//   @ui.Switch(ui.SwitchProp{Name: "notifications", Label: "Enable Notifications"})
 templ Switch(prop SwitchProp) {
 	{{
 		id := GetID(prop.Id, "switch")

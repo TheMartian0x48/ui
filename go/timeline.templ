@@ -32,6 +32,12 @@ type TimelineItemProp struct {
 // Timeline renders a vertical list of chronological events.
 //
 // Best suited for activity logs, process steps, or historical records.
+//
+// Usage:
+//   @ui.Timeline(ui.TimelineProp{}) {
+//     @ui.TimelineItem(ui.TimelineItemProp{Title: "Created", Time: "Jan 1"}) { Initial version }
+//     @ui.TimelineItem(ui.TimelineItemProp{Title: "Updated", Time: "Jan 5", Completed: true}) { Bug fixes }
+//   }
 templ Timeline(prop TimelineProp) {
 	{{
 		ariaLabel := prop.AriaLabel

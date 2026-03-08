@@ -23,6 +23,9 @@ type IconProp struct {
 //
 // By default, icons are hidden from screen readers (aria-hidden). Set
 // AriaLabel if the icon conveys specific meaning or lacks adjacent text.
+//
+// Usage:
+//   @ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeMD})
 templ Icon(prop IconProp) {
 	<span
 		if prop.Id != "" {

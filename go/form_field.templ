@@ -19,6 +19,11 @@ type FormFieldProp struct {
 // Automatically manages label association, error states, and ARIA descriptions.
 // It links the child input to help/error text via 'aria-describedby' when
 // appropriate.
+//
+// Usage:
+//   @ui.FormField(ui.FormFieldProp{Label: "Email", Error: "Invalid email"}) {
+//     @ui.Input(ui.InputProp{Type: ui.InputEmail, Name: "email"})
+//   }
 templ FormField(prop FormFieldProp) {
 	{{ fieldId := GetID(prop.Id, "ff") }}
 	{{ helpId := fieldId + "-help" }}

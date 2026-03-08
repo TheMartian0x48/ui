@@ -21,6 +21,9 @@ type RadioProp struct {
 // Uses a hidden native radio for form compatibility and a custom styled
 // circle for the visual representation. Designed to be used in groups
 // where only one option can be selected at a time.
+//
+// Usage:
+//   @ui.Radio(ui.RadioProp{Name: "gender", Value: "male", Label: "Male"})
 templ Radio(prop RadioProp) {
 	<label
 		class={ radioClass(prop) }

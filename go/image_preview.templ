@@ -23,6 +23,9 @@ type ImagePreviewProp struct {
 //
 // If 'Src' is empty, it automatically renders a consistent placeholder
 // with a camera icon. Optimized for gallery views and media cards.
+//
+// Usage:
+//   @ui.ImagePreview(ui.ImagePreviewProp{Src: "image.jpg", Alt: "Preview", AspectRatio: "16/9"})
 templ ImagePreview(prop ImagePreviewProp) {
 	<div
 		if prop.Id != "" {

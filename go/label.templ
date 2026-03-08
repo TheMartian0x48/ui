@@ -14,6 +14,9 @@ type LabelProp struct {
 //
 // Essential for accessibility, it ensures that form controls have a clear,
 // programmatically-associated name for screen readers and touch targets.
+//
+// Usage:
+//   @ui.Label(ui.LabelProp{For: "username", Required: true}) { Username }
 templ Label(prop LabelProp) {
 	<label
 		if prop.Id != "" {

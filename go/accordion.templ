@@ -33,6 +33,14 @@ type AccordionItem struct {
 //
 // Uses the native HTML <details> and <summary> elements for high performance
 // and built-in keyboard accessibility.
+//
+// Usage:
+//   @ui.Accordion(ui.AccordionProp{
+//     Items: []ui.AccordionItem{
+//       {Title: "Item 1", Content: "Content 1"},
+//       {Title: "Item 2", RichContent: myComponent()},
+//     },
+//   })
 templ Accordion(prop AccordionProp) {
 	<div
 		if prop.Id != "" {

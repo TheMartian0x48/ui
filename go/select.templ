@@ -27,6 +27,15 @@ type SelectProp struct {
 //
 // Wraps the native <select> element to ensure mobile compatibility and
 // keyboard accessibility while providing a theme-consistent visual style.
+//
+// Usage:
+//   @ui.Select(ui.SelectProp{
+//     Name: "country",
+//     Options: []ui.SelectOption{
+//       {Label: "United States", Value: "us"},
+//       {Label: "United Kingdom", Value: "uk"},
+//     },
+//   })
 templ Select(prop SelectProp) {
 	<div class="select-container">
 		<select

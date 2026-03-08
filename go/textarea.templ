@@ -20,6 +20,9 @@ type TextareaProp struct {
 //
 // Optimized for longer text entries, it supports fixed heights via Rows
 // and provides consistent styling with the standard Input component.
+//
+// Usage:
+//   @ui.Textarea(ui.TextareaProp{Name: "bio", Placeholder: "Tell us about yourself", Rows: 4})
 templ Textarea(prop TextareaProp) {
 	<textarea
 		if prop.Id != "" {

@@ -23,6 +23,11 @@ type TooltipProp struct {
 //
 // Automatically manages ARIA roles and positioning classes. Ensure the child
 // element is focusable (e.g. Button, Link) for keyboard accessibility.
+//
+// Usage:
+//   @ui.Tooltip(ui.TooltipProp{Content: "Extra info"}) {
+//     <button>Hover me</button>
+//   }
 templ Tooltip(prop TooltipProp) {
 	{{
 		tooltipId := GetID(prop.Id, "tooltip")

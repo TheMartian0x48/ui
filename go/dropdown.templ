@@ -12,6 +12,12 @@ type DropdownProp struct {
 
 // Dropdown renders a collapsible menu using the native details/summary pattern.
 // It provides a trigger button that reveals a menu of items when clicked.
+//
+// Usage:
+//   @ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
+//     @ui.DropdownItem(ui.DropdownItemProp{Label: "Edit", Icon: ui.IconEdit()})
+//     @ui.DropdownItem(ui.DropdownItemProp{Label: "Delete", Icon: ui.IconTrash(), Danger: true})
+//   }
 templ Dropdown(prop DropdownProp) {
 	{{ dropdownId := GetID(prop.Id, "dd") }}
 	{{ menuId := dropdownId + "-menu" }}

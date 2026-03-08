@@ -31,6 +31,16 @@ type TabsContentProp struct {
 //
 // Implements the WAI-ARIA Tabs pattern with full keyboard support (Arrow keys
 // to navigate, Home/End to jump to start/finish).
+//
+// Usage:
+//   @ui.Tabs(ui.TabsProp{DefaultValue: "tab1"}) {
+//     @ui.TabsList(ui.TabsListProp{}) {
+//       @ui.TabsTrigger(ui.TabsTriggerProp{Value: "tab1"}) { Tab 1 }
+//       @ui.TabsTrigger(ui.TabsTriggerProp{Value: "tab2"}) { Tab 2 }
+//     }
+//     @ui.TabsContent(ui.TabsContentProp{Value: "tab1"}) { Content 1 }
+//     @ui.TabsContent(ui.TabsContentProp{Value: "tab2"}) { Content 2 }
+//   }
 templ Tabs(prop TabsProp) {
 	{{ id := GetID(prop.Id, "tabs") }}
 	<div

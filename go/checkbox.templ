@@ -22,6 +22,9 @@ type CheckboxProp struct {
 // It uses a hidden native input for form compatibility and a custom styled
 // control div for the visual representation. Supports indeterminate states
 // commonly used in "Select All" patterns.
+//
+// Usage:
+//   @ui.Checkbox(ui.CheckboxProp{Name: "terms", Label: "I agree to the terms"})
 templ Checkbox(prop CheckboxProp) {
 	<div class={ checkboxClass(prop) }>
 		<input

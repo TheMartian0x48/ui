@@ -18,6 +18,9 @@ type LinkProp struct {
 //
 // Use Link for navigation to different pages or external sites.
 // For actions that trigger logic on the current page, use the Button component instead.
+//
+// Usage:
+//   @ui.Link(ui.LinkProp{Href: "/profile", Variant: ui.ButtonOutline}) { View Profile }
 templ Link(props LinkProp) {
 	<a
 		href={ templ.SafeURL(props.Href) }

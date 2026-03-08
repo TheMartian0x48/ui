@@ -34,6 +34,15 @@ type AutocompleteProp struct {
 // It uses Alpine.js for client-side filtering and keyboard navigation.
 // Supports WAI-ARIA combobox patterns including arrow-key navigation
 // and enter-to-select.
+//
+// Usage:
+//   @ui.Autocomplete(ui.AutocompleteProp{
+//     Name: "country",
+//     Options: []ui.AutocompleteOption{
+//       {Label: "United States", Value: "us"},
+//       {Label: "United Kingdom", Value: "uk"},
+//     },
+//   })
 templ Autocomplete(prop AutocompleteProp) {
 	{{ uid := autocompleteUniqueId(prop.Id) }}
 	{{ listboxId := "autocomplete-listbox-" + uid }}

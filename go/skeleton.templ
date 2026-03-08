@@ -35,6 +35,9 @@ type SkeletonProp struct {
 // Skeleton renders a placeholder component used to indicate content is loading.
 //
 // Best used in groups to mimic the layout of the final content (e.g. Card, List).
+//
+// Usage:
+//   @ui.Skeleton(ui.SkeletonProp{Variant: ui.SkeletonText, Lines: 3})
 templ Skeleton(prop SkeletonProp) {
 	{{
 		animated := skeletonIsAnimated(prop.Animated)

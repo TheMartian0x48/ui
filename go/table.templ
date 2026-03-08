@@ -17,6 +17,16 @@ type TableProp struct {
 //
 // Automatically wraps the table in a scrollable container to ensure
 // usability on smaller screens.
+//
+// Usage:
+//   @ui.Table(ui.TableProp{Striped: true}) {
+//     @ui.TableBody(ui.TableBodyProp{}) {
+//       @ui.TableRow(ui.TableRowProp{}) {
+//         <td>Data 1</td>
+//         <td>Data 2</td>
+//       }
+//     }
+//   }
 templ Table(prop TableProp) {
 	<div class="table-container">
 		<table
