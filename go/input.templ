@@ -1,6 +1,10 @@
 package ui
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+	"time"
+)
 
 // InputType defines the HTML input type variants.
 type InputType int
@@ -17,6 +21,49 @@ const (
 	InputDateTimeLocal
 )
 
+// AutocompleteType defines standard HTML autocomplete hint values.
+type AutocompleteType string
+
+const (
+	AutocompleteOff             AutocompleteType = "off"
+	AutocompleteOn              AutocompleteType = "on"
+	AutocompleteName            AutocompleteType = "name"
+	AutocompleteEmail           AutocompleteType = "email"
+	AutocompleteUsername        AutocompleteType = "username"
+	AutocompleteNewPassword     AutocompleteType = "new-password"
+	AutocompleteCurrentPassword AutocompleteType = "current-password"
+	AutocompleteTel             AutocompleteType = "tel"
+	AutocompleteAddressLevel1   AutocompleteType = "address-level1"
+	AutocompleteAddressLevel2   AutocompleteType = "address-level2"
+	AutocompletePostalCode      AutocompleteType = "postal-code"
+	AutocompleteCountry         AutocompleteType = "country"
+)
+
+// InputBound is a type-safe wrapper for min, max, and step attributes.
+type InputBound struct {
+	val string
+}
+
+// String returns the string representation of the bound.
+func (b InputBound) String() string {
+	return b.val
+}
+
+// NumberBound creates a numeric bound from a float64.
+func NumberBound(n float64) *InputBound {
+	return &InputBound{val: fmt.Sprintf("%g", n)}
+}
+
+// DateBound creates a date bound (YYYY-MM-DD) from a time.Time.
+func DateBound(t time.Time) *InputBound {
+	return &InputBound{val: t.Format("2006-01-02")}
+}
+
+// DateTimeBound creates a datetime-local bound (YYYY-MM-DDTHH:MM) from a time.Time.
+func DateTimeBound(t time.Time) *InputBound {
+	return &InputBound{val: t.Format("2006-01-02T15:04")}
+}
+
 // InputProp configures a text-based form input component.
 // Use Type to specify the input variant (text, email, password, etc.).
 type InputProp struct {
@@ -29,28 +76,18 @@ type InputProp struct {
 	Disabled        bool             // Prevents interaction
 	Error           bool             // Shows error styling
 	Class           string           // Additional CSS classes
-	Step            string           // Step increment for number/date inputs
-	Min             string           // Minimum value for number/date inputs
-	Max             string           // Maximum value for number/date inputs
+	Step            *InputBound      // Step increment for number/date inputs
+	Min             *InputBound      // Minimum value for number/date inputs
+	Max             *InputBound      // Maximum value for number/date inputs
 	MaxLength       int              // Maximum character length
 	Pattern         string           // Regex pattern for validation
-	Autocomplete    string           // Browser autocomplete hint (e.g., "email", "current-password")
+	Autocomplete    AutocompleteType // Browser autocomplete hint
 	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, readonly)
 	AriaLabel       string           // Screen reader label (when no visible label)
 	AriaDescribedBy string           // ID of element describing this input (e.g., error message)
 }
 
 // Input renders a form input element with configurable type and states.
-//
-// Example:
-//
-//	@Input(InputProp{
-//	    Type:        InputEmail,
-//	    Id:          "email",
-//	    Name:        "email",
-//	    Placeholder: "user@example.com",
-//	    Required:    true,
-//	})
 templ Input(prop InputProp) {
 	<input
 		if prop.Id != "" {
@@ -66,14 +103,14 @@ templ Input(prop InputProp) {
 		if prop.Placeholder != "" {
 			placeholder={ prop.Placeholder }
 		}
-		if prop.Step != "" {
-			step={ prop.Step }
+		if prop.Step != nil {
+			step={ prop.Step.String() }
 		}
-		if prop.Min != "" {
-			min={ prop.Min }
+		if prop.Min != nil {
+			min={ prop.Min.String() }
 		}
-		if prop.Max != "" {
-			max={ prop.Max }
+		if prop.Max != nil {
+			max={ prop.Max.String() }
 		}
 		if prop.MaxLength > 0 {
 			maxlength={ strconv.Itoa(prop.MaxLength) }
@@ -82,7 +119,7 @@ templ Input(prop InputProp) {
 			pattern={ prop.Pattern }
 		}
 		if prop.Autocomplete != "" {
-			autocomplete={ prop.Autocomplete }
+			autocomplete={ string(prop.Autocomplete) }
 		}
 		class={ inputClass(prop.Error, prop.Disabled, prop.Class) }
 		if prop.Required {

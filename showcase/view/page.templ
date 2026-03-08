@@ -28,6 +28,11 @@ templ Showcase(activeComponent string) {
 			<link rel="stylesheet" href="/css/main.css"/>
 			<!-- Showcase specific CSS -->
 			<link rel="stylesheet" href="/showcase-static/css/doc.css"/>
+			<!-- Framework JS -->
+			<script src="/js/ui.js"></script>
+			<script src="/js/components/autocomplete.js"></script>
+			<script src="/js/components/dropzone.js"></script>
+			<script src="/js/components/toast.js"></script>
 			<script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js"></script>
 		</head>
 		<body x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }" x-init="$watch('darkMode', val => { localStorage.setItem('theme', val ? 'dark' : 'light'); document.documentElement.setAttribute('data-theme', val ? 'dark' : 'light') }); if (darkMode) document.documentElement.setAttribute('data-theme', 'dark')">

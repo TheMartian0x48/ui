@@ -38,10 +38,10 @@ templ Dropzone(prop DropzoneProp) {
 	{{ helpTextId := dzId + "-help" }}
 	<div
 		class={ dropzoneClass(prop) }
-		x-data="{ isDragging: false, files: null }"
-		@dragover.prevent={ fmt.Sprintf("if (!%v) isDragging = true", prop.Disabled) }
-		@dragleave.prevent="isDragging = false"
-		@drop.prevent={ fmt.Sprintf("if (!%v) { isDragging = false; files = $event.dataTransfer.files; $refs.fileInput.files = files }", prop.Disabled) }
+		x-data={ fmt.Sprintf("dropzone({ disabled: %v })", prop.Disabled) }
+		@dragover.prevent="handleDragOver($event)"
+		@dragleave.prevent="handleDragLeave()"
+		@drop.prevent="handleDrop($event)"
 		:class="{ 'dropzone--dragging': isDragging }"
 		{ prop.Attributes... }
 	>
@@ -66,7 +66,7 @@ templ Dropzone(prop DropzoneProp) {
 			if prop.HelpText != "" {
 				aria-describedby={ helpTextId }
 			}
-			@change="files = $event.target.files"
+			@change="handleFiles($event)"
 		/>
 		<label class="dropzone__label" for={ dzId }>
 			<div class="dropzone__content" x-show="!files || files.length === 0">
@@ -92,7 +92,7 @@ templ Dropzone(prop DropzoneProp) {
 					<template x-for="file in files">
 						<div class="dropzone__file-item">
 							<span class="dropzone__file-name" x-text="file.name"></span>
-							<span class="dropzone__file-size" x-text="(file.size / 1024).toFixed(1) + ' KB'"></span>
+							<span class="dropzone__file-size" x-text="formatSize(file.size)"></span>
 						</div>
 					</template>
 				</div>

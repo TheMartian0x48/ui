@@ -8,7 +8,10 @@ package view
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import ui "github.com/themartian0x48/ui/go"
+import (
+	ui "github.com/themartian0x48/ui/go"
+	"time"
+)
 
 func InputDemo() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -163,7 +166,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0", Step: "1"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0", Step: ui.NumberBound(1)}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -171,7 +174,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0.00", Step: "0.01"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "0.00", Step: ui.NumberBound(0.01)}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -179,7 +182,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "50", Min: "0", Max: "100", Step: "5"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "50", Min: ui.NumberBound(0), Max: ui.NumberBound(100), Step: ui.NumberBound(5)}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -187,7 +190,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "Enter age", Min: "18", Max: "120"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputNumber, Placeholder: "Enter age", Min: ui.NumberBound(18), Max: ui.NumberBound(120)}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -215,47 +218,63 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div></div></div><!-- Autocomplete --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Autocomplete Hints</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">Email (autocomplete)</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div></div></div><!-- Date and Time Constraints --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Date and Time Constraints</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">Date (Min: Today)</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "you@example.com", Autocomplete: "email"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputDate, Min: ui.DateBound(time.Now())}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Current Password</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">DateTime (Max: Now)</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "Password", Autocomplete: "current-password"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputDateTimeLocal, Max: ui.DateTimeBound(time.Now())}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">New Password</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "</div></div></div><!-- Autocomplete --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Autocomplete Hints</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">Email (autocomplete)</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "New password", Autocomplete: "new-password"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "you@example.com", Autocomplete: ui.AutocompleteEmail}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Full Name</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Current Password</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Placeholder: "John Doe", Autocomplete: "name"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "Password", Autocomplete: ui.AutocompleteCurrentPassword}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Phone</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">New Password</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputTel, Placeholder: "+1 555 123 4567", Autocomplete: "tel"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputPassword, Placeholder: "New password", Autocomplete: ui.AutocompleteNewPassword}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div></div></div><!-- Accessibility --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Accessibility Props</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">With AriaLabel</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Full Name</span>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Placeholder: "John Doe", Autocomplete: ui.AutocompleteName}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Phone</span>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ui.Input(ui.InputProp{Type: ui.InputTel, Placeholder: "+1 555 123 4567", Autocomplete: ui.AutocompleteTel}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</div></div></div><!-- Accessibility --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Accessibility Props</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">With AriaLabel</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -266,7 +285,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">With AriaDescribedBy</span><div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">With AriaDescribedBy</span><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -279,7 +298,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "<p id=\"password-hint\" class=\"input-demo__hint\">Must be at least 8 characters with one number.</p></div></div></div></div><!-- Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Custom Attributes</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">Autofocus</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<p id=\"password-hint\" class=\"input-demo__hint\">Must be at least 8 characters with one number.</p></div></div></div></div><!-- Custom Attributes --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Custom Attributes</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 400px;\"><div class=\"input-demo__row\"><span class=\"input-demo__label\">Autofocus</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -292,7 +311,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Readonly</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Readonly</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -305,7 +324,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Data Attributes</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Data Attributes</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -319,7 +338,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Event Handlers</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "</div><div class=\"input-demo__row\"><span class=\"input-demo__label\">Event Handlers</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -335,7 +354,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "</div></div></div><!-- Real-world Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Real-world Examples</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 500px;\"><!-- Login Form --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Login Form</h4><div class=\"input-demo__example-content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, "</div></div></div><!-- Real-world Examples --><div class=\"doc-demo__group\"><h3 class=\"doc-demo__group-title\">Real-world Examples</h3><div class=\"doc-demo__list doc-demo__list--column\" style=\"max-width: 500px;\"><!-- Login Form --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Login Form</h4><div class=\"input-demo__example-content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -355,7 +374,7 @@ func InputDemo() templ.Component {
 				Id:           "login-email",
 				Type:         ui.InputEmail,
 				Placeholder:  "you@example.com",
-				Autocomplete: "email",
+				Autocomplete: ui.AutocompleteEmail,
 				Required:     true,
 			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -383,7 +402,7 @@ func InputDemo() templ.Component {
 				Id:           "login-pass",
 				Type:         ui.InputPassword,
 				Placeholder:  "••••••••",
-				Autocomplete: "current-password",
+				Autocomplete: ui.AutocompleteCurrentPassword,
 				Required:     true,
 			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -407,7 +426,7 @@ func InputDemo() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "Sign In")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "Sign In")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -417,7 +436,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, "</div></div><!-- Search Bar --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Search Bar</h4><div class=\"input-demo__search-bar\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "</div></div><!-- Search Bar --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Search Bar</h4><div class=\"input-demo__search-bar\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -434,7 +453,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "</div></div><!-- Credit Card --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Payment Form</h4><div class=\"input-demo__example-content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "</div></div><!-- Credit Card --><div class=\"input-demo__example\"><h4 class=\"input-demo__example-title\">Payment Form</h4><div class=\"input-demo__example-content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -465,7 +484,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "<div class=\"input-demo__card-row\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "<div class=\"input-demo__card-row\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -524,7 +543,7 @@ func InputDemo() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "</div></div></div></div></div></div></div></section><style type=\"text/css\">\n\t\t.input-demo__row {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-1);\n\t\t}\n\t\t.input-demo__label {\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.input-demo__hint {\n\t\t\tmargin: var(--spacing-1) 0 0;\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.input-demo__example {\n\t\t\tpadding: var(--spacing-6);\n\t\t\tbackground: var(--color-bg-secondary);\n\t\t\tborder-radius: var(--radius-md);\n\t\t\tborder: var(--border-width-thin) solid var(--color-border);\n\t\t}\n\t\t.input-demo__example-title {\n\t\t\tmargin: 0 0 var(--spacing-4);\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tfont-weight: var(--font-weight-semibold);\n\t\t\tcolor: var(--color-text-secondary);\n\t\t}\n\t\t.input-demo__example-content {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-4);\n\t\t}\n\t\t.input-demo__card-row {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: 1fr 1fr;\n\t\t\tgap: var(--spacing-4);\n\t\t}\n\t\t.input-demo__search-bar {\n\t\t\tposition: relative;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t}\n\t\t.input-demo__search-icon {\n\t\t\tposition: absolute;\n\t\t\tleft: var(--spacing-3);\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tpointer-events: none;\n\t\t}\n\t\t.input-demo__search-input {\n\t\t\tpadding-left: var(--spacing-10);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</div></div></div></div></div></div></div></section><style type=\"text/css\">\n\t\t.input-demo__row {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-1);\n\t\t}\n\t\t.input-demo__label {\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.input-demo__hint {\n\t\t\tmargin: var(--spacing-1) 0 0;\n\t\t\tfont-size: var(--font-size-xs);\n\t\t\tcolor: var(--color-text-muted);\n\t\t}\n\t\t.input-demo__example {\n\t\t\tpadding: var(--spacing-6);\n\t\t\tbackground: var(--color-bg-secondary);\n\t\t\tborder-radius: var(--radius-md);\n\t\t\tborder: var(--border-width-thin) solid var(--color-border);\n\t\t}\n\t\t.input-demo__example-title {\n\t\t\tmargin: 0 0 var(--spacing-4);\n\t\t\tfont-size: var(--font-size-sm);\n\t\t\tfont-weight: var(--font-weight-semibold);\n\t\t\tcolor: var(--color-text-secondary);\n\t\t}\n\t\t.input-demo__example-content {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: var(--spacing-4);\n\t\t}\n\t\t.input-demo__card-row {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: 1fr 1fr;\n\t\t\tgap: var(--spacing-4);\n\t\t}\n\t\t.input-demo__search-bar {\n\t\t\tposition: relative;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t}\n\t\t.input-demo__search-icon {\n\t\t\tposition: absolute;\n\t\t\tleft: var(--spacing-3);\n\t\t\tcolor: var(--color-text-muted);\n\t\t\tpointer-events: none;\n\t\t}\n\t\t.input-demo__search-input {\n\t\t\tpadding-left: var(--spacing-10);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

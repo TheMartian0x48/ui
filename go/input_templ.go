@@ -8,7 +8,11 @@ package ui
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+	"time"
+)
 
 // InputType defines the HTML input type variants.
 type InputType int
@@ -25,6 +29,49 @@ const (
 	InputDateTimeLocal
 )
 
+// AutocompleteType defines standard HTML autocomplete hint values.
+type AutocompleteType string
+
+const (
+	AutocompleteOff             AutocompleteType = "off"
+	AutocompleteOn              AutocompleteType = "on"
+	AutocompleteName            AutocompleteType = "name"
+	AutocompleteEmail           AutocompleteType = "email"
+	AutocompleteUsername        AutocompleteType = "username"
+	AutocompleteNewPassword     AutocompleteType = "new-password"
+	AutocompleteCurrentPassword AutocompleteType = "current-password"
+	AutocompleteTel             AutocompleteType = "tel"
+	AutocompleteAddressLevel1   AutocompleteType = "address-level1"
+	AutocompleteAddressLevel2   AutocompleteType = "address-level2"
+	AutocompletePostalCode      AutocompleteType = "postal-code"
+	AutocompleteCountry         AutocompleteType = "country"
+)
+
+// InputBound is a type-safe wrapper for min, max, and step attributes.
+type InputBound struct {
+	val string
+}
+
+// String returns the string representation of the bound.
+func (b InputBound) String() string {
+	return b.val
+}
+
+// NumberBound creates a numeric bound from a float64.
+func NumberBound(n float64) *InputBound {
+	return &InputBound{val: fmt.Sprintf("%g", n)}
+}
+
+// DateBound creates a date bound (YYYY-MM-DD) from a time.Time.
+func DateBound(t time.Time) *InputBound {
+	return &InputBound{val: t.Format("2006-01-02")}
+}
+
+// DateTimeBound creates a datetime-local bound (YYYY-MM-DDTHH:MM) from a time.Time.
+func DateTimeBound(t time.Time) *InputBound {
+	return &InputBound{val: t.Format("2006-01-02T15:04")}
+}
+
 // InputProp configures a text-based form input component.
 // Use Type to specify the input variant (text, email, password, etc.).
 type InputProp struct {
@@ -37,28 +84,18 @@ type InputProp struct {
 	Disabled        bool             // Prevents interaction
 	Error           bool             // Shows error styling
 	Class           string           // Additional CSS classes
-	Step            string           // Step increment for number/date inputs
-	Min             string           // Minimum value for number/date inputs
-	Max             string           // Maximum value for number/date inputs
+	Step            *InputBound      // Step increment for number/date inputs
+	Min             *InputBound      // Minimum value for number/date inputs
+	Max             *InputBound      // Maximum value for number/date inputs
 	MaxLength       int              // Maximum character length
 	Pattern         string           // Regex pattern for validation
-	Autocomplete    string           // Browser autocomplete hint (e.g., "email", "current-password")
+	Autocomplete    AutocompleteType // Browser autocomplete hint
 	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, readonly)
 	AriaLabel       string           // Screen reader label (when no visible label)
 	AriaDescribedBy string           // ID of element describing this input (e.g., error message)
 }
 
 // Input renders a form input element with configurable type and states.
-//
-// Example:
-//
-//	@Input(InputProp{
-//	    Type:        InputEmail,
-//	    Id:          "email",
-//	    Name:        "email",
-//	    Placeholder: "user@example.com",
-//	    Required:    true,
-//	})
 func Input(prop InputProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -97,7 +134,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 57, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 94, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -116,7 +153,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 60, Col: 19}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 97, Col: 19}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -134,7 +171,7 @@ func Input(prop InputProp) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(inputTypeString(prop.Type))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 62, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 99, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -152,7 +189,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Value)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 64, Col: 21}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 101, Col: 21}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -171,7 +208,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Placeholder)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 67, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 104, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -182,15 +219,15 @@ func Input(prop InputProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if prop.Step != "" {
+		if prop.Step != nil {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, " step=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Step)
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Step.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 70, Col: 19}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 107, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -201,15 +238,15 @@ func Input(prop InputProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if prop.Min != "" {
+		if prop.Min != nil {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, " min=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Min)
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Min.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 73, Col: 17}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 110, Col: 26}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -220,15 +257,15 @@ func Input(prop InputProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if prop.Max != "" {
+		if prop.Max != nil {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, " max=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Max)
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Max.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 76, Col: 17}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 113, Col: 26}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -247,7 +284,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(prop.MaxLength))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 79, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 116, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -266,7 +303,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Pattern)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 82, Col: 25}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 119, Col: 25}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -283,9 +320,9 @@ func Input(prop InputProp) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
-			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Autocomplete)
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(string(prop.Autocomplete))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 85, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 122, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -339,7 +376,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(prop.AriaLabel)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 100, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 137, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -358,7 +395,7 @@ func Input(prop InputProp) templ.Component {
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(prop.AriaDescribedBy)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 103, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/input.templ`, Line: 140, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {

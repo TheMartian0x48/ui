@@ -36,21 +36,27 @@ const (
 	ButtonSizeLG
 )
 
+// ButtonProp defines the configuration options for the Button component.
 type ButtonProp struct {
-	Variant      ButtonVariant
-	Size         ButtonSize
-	Disabled     bool
-	Type         ButtonType
-	Class        string
-	Id           string
-	Attributes   templ.Attributes
-	AriaDisabled bool  // Visually disabled but still focusable
-	Loading      bool  // Shows loading state with aria-busy
-	AriaPressed  *bool // nil = not a toggle, true/false = toggle state
-	AriaExpanded *bool // For buttons controlling expandable content
+	Variant      ButtonVariant    // Visual style of the button (Primary, Outline, etc.)
+	Size         ButtonSize       // Vertical size of the button (SM, MD, LG)
+	Disabled     bool             // Standard HTML disabled attribute
+	Type         ButtonType       // HTML button type (button, submit, reset)
+	Class        string           // Additional CSS classes
+	Id           string           // Optional HTML ID
+	Attributes   templ.Attributes // Additional HTML attributes
+	AriaDisabled bool             // Visually disabled but remains focusable for accessibility
+	Loading      bool             // Shows loading state and sets aria-busy="true"
+	AriaPressed  *bool            // nil = not a toggle, true/false = toggle state (aria-pressed)
+	AriaExpanded *bool            // Indicates if the button controls an expandable element (aria-expanded)
 }
 
-// Button renders a button element with configurable variants and sizes.
+// Button renders a highly configurable button component with support for
+// multiple variants, sizes, and accessible states.
+//
+// Usage:
+//
+//	@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) { Click Me }
 func Button(prop ButtonProp) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -89,7 +95,7 @@ func Button(prop ButtonProp) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(prop.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 49, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 54, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -107,7 +113,7 @@ func Button(prop ButtonProp) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(buttonType(prop))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 51, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 56, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -156,7 +162,7 @@ func Button(prop ButtonProp) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(boolToString(*prop.AriaPressed))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 63, Col: 49}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 68, Col: 49}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -175,7 +181,7 @@ func Button(prop ButtonProp) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(boolToString(*prop.AriaExpanded))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 66, Col: 51}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `go/button.templ`, Line: 71, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {

@@ -353,56 +353,12 @@ func autocompleteUniqueId(id string) string {
 	return fmt.Sprintf("ac%d", autocompleteIdCounter.Add(1))
 }
 
-// inlineAutocompleteData generates the Alpine.js data object with cached filtering.
+// inlineAutocompleteData generates the Alpine.js data initialization string.
 func inlineAutocompleteData(prop AutocompleteProp, uid string) string {
 	optionsJSON := optionsToJSON(prop.Options)
 	searchInit := escapeJSString(prop.Value)
 
-	return `{
-		open: false,
-		search: '` + searchInit + `',
-		options: ` + optionsJSON + `,
-		highlightedIndex: 0,
-		_filtered: null,
-		getFiltered() {
-			if (this._filtered !== null) return this._filtered;
-			if (this.search === '') {
-				this._filtered = this.options;
-			} else {
-				const term = this.search.toLowerCase();
-				this._filtered = this.options.filter(opt => opt.label.toLowerCase().includes(term));
-			}
-			return this._filtered;
-		},
-		navigateDown() {
-			const filtered = this.getFiltered();
-			if (this.open) {
-				this.highlightedIndex = Math.min(this.highlightedIndex + 1, filtered.length - 1);
-			} else {
-				this.open = true;
-				this.highlightedIndex = 0;
-			}
-		},
-		navigateUp() {
-			if (this.open) {
-				this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
-			}
-		},
-		selectHighlighted() {
-			const filtered = this.getFiltered();
-			if (this.open && filtered.length > 0) {
-				this.selectOption(filtered[this.highlightedIndex]);
-			}
-		},
-		selectOption(option) {
-			if (!option) return;
-			this.search = option.label;
-			this.open = false;
-			this._filtered = null;
-			this.$refs.input.focus();
-			this.$dispatch('autocomplete-select', { value: option.value, label: option.label });
-		}
-	}`
+	return fmt.Sprintf("autocomplete({ initialValue: '%s', options: %s })", searchInit, optionsJSON)
 }
 
 // optionsToJSON converts options to JSON using encoding/json for safety.
