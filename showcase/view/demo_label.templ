@@ -19,7 +19,7 @@ templ LabelDemo() {
 						@ui.Label(ui.LabelProp{For: "input-1"}) {
 							Standard Label 
 						}
-						@ui.Input(ui.InputProp{Id: "input-1", Placeholder: "Click the label above..."})
+						@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "input-1"}, Placeholder: "Click the label above..."})
 					</div>
 				</div>
 				<!-- Required State -->
@@ -29,7 +29,7 @@ templ LabelDemo() {
 						@ui.Label(ui.LabelProp{For: "input-2", Required: true}) {
 							Mandatory Field
 						}
-						@ui.Input(ui.InputProp{Id: "input-2", Required: true})
+						@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "input-2"}, Required: true})
 					</div>
 				</div>
 				<!-- Disabled State -->
@@ -39,7 +39,7 @@ templ LabelDemo() {
 						@ui.Label(ui.LabelProp{For: "input-3", Disabled: true}) {
 							Disabled Field
 						}
-						@ui.Input(ui.InputProp{Id: "input-3", Disabled: true, Placeholder: "This input is disabled"})
+						@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "input-3"}, Disabled: true, Placeholder: "This input is disabled"})
 					</div>
 				</div>
 			</div>

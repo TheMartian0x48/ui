@@ -6,28 +6,8 @@ import (
 )
 
 // PaginationProp configures a pagination navigation component.
-//
-// The component renders page numbers with previous/next navigation.
-// It automatically handles ellipsis for large page ranges and
-// provides proper ARIA attributes for accessibility.
-//
-// Example usage:
-//
-//	// Basic pagination
-//	@ui.Pagination(ui.PaginationProp{
-//	    CurrentPage: 5,
-//	    TotalPages:  20,
-//	    BaseURL:     "/products?page=",
-//	})
-//
-//	// With custom sibling count
-//	@ui.Pagination(ui.PaginationProp{
-//	    CurrentPage:  5,
-//	    TotalPages:   100,
-//	    BaseURL:      "/items?page=",
-//	    SiblingCount: 2,
-//	})
 type PaginationProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	CurrentPage  int              // Current active page (1-indexed)
 	TotalPages   int              // Total number of pages
 	BaseURL      string           // URL prefix for page links (page number appended)
@@ -35,9 +15,7 @@ type PaginationProp struct {
 	ShowPrevNext bool             // Show previous/next buttons (default: true when nil)
 	PrevLabel    string           // Label for previous button (default: "Previous")
 	NextLabel    string           // Label for next button (default: "Next")
-	Class        string           // Additional CSS classes
 	AriaLabel    string           // Navigation label (default: "Pagination")
-	Attributes   templ.Attributes // Additional HTML attributes
 }
 
 // PaginationSize defines the size variant for pagination.
@@ -119,12 +97,6 @@ func paginationRange(current, total, siblings int) []int {
 }
 
 // Pagination renders a page navigation component.
-//
-// Accessibility:
-//   - Uses <nav> element with aria-label
-//   - Current page marked with aria-current="page"
-//   - Disabled states properly indicated
-//   - Keyboard navigable links
 templ Pagination(prop PaginationProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -149,6 +121,9 @@ templ Pagination(prop PaginationProp) {
 	}}
 	if prop.TotalPages > 1 {
 		<nav
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ paginationClass(prop.Class) }
 			aria-label={ ariaLabel }
 			{ prop.Attributes... }

@@ -17,7 +17,7 @@ templ StepperDemo() {
 					<h3 class="doc-demo__group-title">Horizontal</h3>
 					<div class="doc-demo__list">
 						@ui.Stepper(ui.StepperProp{
-							Id: "horizontal-stepper",
+							BaseProp: ui.BaseProp{Id: "horizontal-stepper"},
 							Steps: []ui.StepItemProp{
 								{Title: "Account", State: ui.StepCompleted},
 								{Title: "Profile", State: ui.StepActive},
@@ -31,8 +31,10 @@ templ StepperDemo() {
 					<h3 class="doc-demo__group-title">Horizontal with Descriptions</h3>
 					<div class="doc-demo__list">
 						@ui.Stepper(ui.StepperProp{
-							Id:    "horizontal-desc-stepper",
-							Class: "margin-top-4",
+							BaseProp: ui.BaseProp{
+								Id:    "horizontal-desc-stepper",
+								Class: "margin-top-4",
+							},
 							Steps: []ui.StepItemProp{
 								{Title: "Cart", Description: "Add your items", State: ui.StepCompleted},
 								{Title: "Shipping", Description: "Choose address", State: ui.StepCompleted},
@@ -47,7 +49,7 @@ templ StepperDemo() {
 					<h3 class="doc-demo__group-title">Vertical</h3>
 					<div class="doc-demo__list" style="max-width: 400px; padding: var(--spacing-4);">
 						@ui.Stepper(ui.StepperProp{
-							Id:       "vertical-stepper",
+							BaseProp: ui.BaseProp{Id: "vertical-stepper"},
 							Vertical: true,
 							Steps: []ui.StepItemProp{
 								{

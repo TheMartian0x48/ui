@@ -84,7 +84,7 @@ templ IconDemo() {
 							Settings
 						}
 						<div style="display: flex; gap: var(--spacing-4); align-items: center; padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-md);">
-							@ui.Icon(ui.IconProp{Icon: ui.IconCalendar(), Class: "text-primary"})
+							@ui.Icon(ui.IconProp{BaseProp: ui.BaseProp{Class: "text-primary"}, Icon: ui.IconCalendar()})
 							<span class="text-secondary">Project Due: Dec 24, 2026</span>
 						</div>
 					</div>

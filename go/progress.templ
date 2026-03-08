@@ -2,19 +2,7 @@ package ui
 
 import (
 	"fmt"
-	"sync/atomic"
 )
-
-// progressIdCounter is an atomic counter for generating unique progress IDs.
-var progressIdCounter atomic.Uint64
-
-// progressUniqueId generates a unique ID or returns the provided ID.
-func progressUniqueId(prefix, id string) string {
-	if id != "" {
-		return id
-	}
-	return fmt.Sprintf("%s%d", prefix, progressIdCounter.Add(1))
-}
 
 // ProgressSize defines the height of the linear progress bar.
 type ProgressSize int
@@ -27,23 +15,21 @@ const (
 
 // ProgressProp configures a linear progress bar component.
 type ProgressProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Value         float64          // Current progress value (0 to Max)
 	Max           float64          // Maximum value (default: 100)
 	Label         string           // Text label displayed above the bar
 	ShowValue     bool             // Display percentage value
 	Size          ProgressSize     // Bar height variant
 	Indeterminate bool             // Animated loading state (ignores Value)
-	Class         string           // Additional CSS classes
-	Id            string           // HTML id attribute (auto-generated if empty)
 	AriaLabel     string           // Accessible label when no visible label
-	Attributes    templ.Attributes // Additional HTML attributes
 }
 
 // Progress renders a linear progress bar showing completion status.
 // Use Indeterminate mode for unknown duration operations.
 templ Progress(prop ProgressProp) {
 	{{
-		progressId := progressUniqueId("prog", prop.Id)
+		progressId := GetID(prop.Id, "prog")
 
 		max := prop.Max
 		if max == 0 {
@@ -63,7 +49,10 @@ templ Progress(prop ProgressProp) {
 			valueId = progressId + "-value"
 		}
 	}}
-	<div class="progress-container" { prop.Attributes... }>
+	<div
+		class="progress-container"
+		{ prop.Attributes... }
+	>
 		if prop.Label != "" || prop.ShowValue {
 			<div class="progress-header">
 				if prop.Label != "" {
@@ -135,16 +124,14 @@ func progressClass(size ProgressSize, indeterminate bool, class string) string {
 
 // CircularProgressProp configures a circular progress indicator.
 type CircularProgressProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Value         float64          // Current progress value (0 to Max)
 	Max           float64          // Maximum value (default: 100)
 	Size          int              // Diameter in pixels (default: 24)
 	Thickness     int              // Stroke width in pixels (default: 3)
 	ShowValue     bool             // Display percentage in center
 	Indeterminate bool             // Spinning animation (default when Value=0 and ShowValue=false)
-	Class         string           // Additional CSS classes
-	Id            string           // HTML id attribute (auto-generated if empty)
 	AriaLabel     string           // Accessible label for screen readers
-	Attributes    templ.Attributes // Additional HTML attributes
 }
 
 // CircularProgress renders a circular progress indicator.
@@ -152,7 +139,7 @@ type CircularProgressProp struct {
 // Pass a Value and/or ShowValue=true for determinate mode.
 templ CircularProgress(prop CircularProgressProp) {
 	{{
-		circularId := progressUniqueId("cprog", prop.Id)
+		circularId := GetID(prop.Id, "cprog")
 
 		// Indeterminate by default if value is 0 and not explicitly set to determinate
 		isIndeterminate := prop.Indeterminate || (prop.Value == 0 && !prop.ShowValue)

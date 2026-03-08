@@ -21,7 +21,7 @@ templ InputDemo() {
 					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
 						@ui.Input(ui.InputProp{Placeholder: "Standard text input"})
 						@ui.Input(ui.InputProp{Value: "Pre-filled value"})
-						@ui.Input(ui.InputProp{Placeholder: "With ID and Name", Id: "basic-input", Name: "basic"})
+						@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "basic-input"}, Name: "basic", Placeholder: "With ID and Name"})
 					</div>
 				</div>
 				<!-- All Input Types -->
@@ -187,7 +187,7 @@ templ InputDemo() {
 							<span class="input-demo__label">With AriaDescribedBy</span>
 							<div>
 								@ui.Input(ui.InputProp{
-									Id:              "password-field",
+									BaseProp:        ui.BaseProp{Id: "password-field"},
 									Type:            ui.InputPassword,
 									Placeholder:     "Enter password",
 									AriaDescribedBy: "password-hint",
@@ -205,8 +205,10 @@ templ InputDemo() {
 							<span class="input-demo__label">Autofocus</span>
 							@ui.Input(ui.InputProp{
 								Placeholder: "This input has autofocus",
-								Attributes: templ.Attributes{
-									"autofocus": true,
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"autofocus": true,
+									},
 								},
 							})
 						</div>
@@ -214,8 +216,10 @@ templ InputDemo() {
 							<span class="input-demo__label">Readonly</span>
 							@ui.Input(ui.InputProp{
 								Value: "This value cannot be changed",
-								Attributes: templ.Attributes{
-									"readonly": true,
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"readonly": true,
+									},
 								},
 							})
 						</div>
@@ -223,9 +227,11 @@ templ InputDemo() {
 							<span class="input-demo__label">Data Attributes</span>
 							@ui.Input(ui.InputProp{
 								Placeholder: "With data attributes",
-								Attributes: templ.Attributes{
-									"data-testid":  "search-input",
-									"data-feature": "global-search",
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"data-testid":  "search-input",
+										"data-feature": "global-search",
+									},
 								},
 							})
 						</div>
@@ -233,11 +239,13 @@ templ InputDemo() {
 							<span class="input-demo__label">Event Handlers</span>
 							@ui.Input(ui.InputProp{
 								Placeholder: "Type to see alert",
-								Attributes: templ.Attributes{
-									"x-data": "",
-									"@input": "console.log('Input changed:', $event.target.value)",
-									"@focus": "console.log('Input focused')",
-									"@blur":  "console.log('Input blurred')",
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"x-data": "",
+										"@input": "console.log('Input changed:', $event.target.value)",
+										"@focus": "console.log('Input focused')",
+										"@blur":  "console.log('Input blurred')",
+									},
 								},
 							})
 						</div>
@@ -253,7 +261,7 @@ templ InputDemo() {
 							<div class="input-demo__example-content">
 								@ui.FormField(ui.FormFieldProp{Label: "Email", LabelFor: "login-email", Required: true}) {
 									@ui.Input(ui.InputProp{
-										Id:           "login-email",
+										BaseProp:     ui.BaseProp{Id: "login-email"},
 										Type:         ui.InputEmail,
 										Placeholder:  "you@example.com",
 										Autocomplete: ui.AutocompleteEmail,
@@ -262,14 +270,14 @@ templ InputDemo() {
 								}
 								@ui.FormField(ui.FormFieldProp{Label: "Password", LabelFor: "login-pass", Required: true}) {
 									@ui.Input(ui.InputProp{
-										Id:           "login-pass",
+										BaseProp:     ui.BaseProp{Id: "login-pass"},
 										Type:         ui.InputPassword,
 										Placeholder:  "••••••••",
 										Autocomplete: ui.AutocompleteCurrentPassword,
 										Required:     true,
 									})
 								}
-								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "w-full"}) {
+								@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full"}, Variant: ui.ButtonPrimary}) {
 									Sign In
 								}
 							</div>
@@ -278,12 +286,12 @@ templ InputDemo() {
 						<div class="input-demo__example">
 							<h4 class="input-demo__example-title">Search Bar</h4>
 							<div class="input-demo__search-bar">
-								@ui.Icon(ui.IconProp{Icon: ui.IconSearch(), Size: ui.IconSizeMD, Class: "input-demo__search-icon"})
+								@ui.Icon(ui.IconProp{BaseProp: ui.BaseProp{Class: "input-demo__search-icon"}, Icon: ui.IconSearch(), Size: ui.IconSizeMD})
 								@ui.Input(ui.InputProp{
+									BaseProp:    ui.BaseProp{Class: "input-demo__search-input"},
 									Type:        ui.InputSearch,
 									Placeholder: "Search documentation...",
 									AriaLabel:   "Search documentation",
-									Class:       "input-demo__search-input",
 								})
 							</div>
 						</div>
@@ -293,7 +301,7 @@ templ InputDemo() {
 							<div class="input-demo__example-content">
 								@ui.FormField(ui.FormFieldProp{Label: "Card Number", LabelFor: "card-num"}) {
 									@ui.Input(ui.InputProp{
-										Id:           "card-num",
+										BaseProp:     ui.BaseProp{Id: "card-num"},
 										Placeholder:  "1234 5678 9012 3456",
 										MaxLength:    19,
 										Autocomplete: "cc-number",
@@ -302,7 +310,7 @@ templ InputDemo() {
 								<div class="input-demo__card-row">
 									@ui.FormField(ui.FormFieldProp{Label: "Expiry", LabelFor: "card-exp"}) {
 										@ui.Input(ui.InputProp{
-											Id:           "card-exp",
+											BaseProp:     ui.BaseProp{Id: "card-exp"},
 											Placeholder:  "MM/YY",
 											MaxLength:    5,
 											Autocomplete: "cc-exp",
@@ -310,7 +318,7 @@ templ InputDemo() {
 									}
 									@ui.FormField(ui.FormFieldProp{Label: "CVC", LabelFor: "card-cvc"}) {
 										@ui.Input(ui.InputProp{
-											Id:           "card-cvc",
+											BaseProp:     ui.BaseProp{Id: "card-cvc"},
 											Type:         ui.InputNumber,
 											Placeholder:  "123",
 											MaxLength:    4,

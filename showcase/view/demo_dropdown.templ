@@ -54,7 +54,13 @@ templ DropdownDemo() {
 							@ui.DropdownLabel(ui.DropdownLabelProp{}) {
 								Actions
 							}
-							@ui.DropdownItem(ui.DropdownItemProp{Label: "Refresh Data", Attributes: templ.Attributes{"onclick": "alert('Refreshing...')"}, Icon: ui.IconRefresh()})
+							@ui.DropdownItem(ui.DropdownItemProp{
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{"onclick": "alert('Refreshing...')"},
+								},
+								Label: "Refresh Data",
+								Icon:  ui.IconRefresh(),
+							})
 						}
 					</div>
 				</div>
@@ -63,25 +69,31 @@ templ DropdownDemo() {
 					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
 					<div class="doc-demo__list" style="margin-bottom: 8rem;">
 						@ui.Dropdown(ui.DropdownProp{
-							Label: "More Actions",
-							Attributes: templ.Attributes{
-								"data-testid": "actions-dropdown",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"data-testid": "actions-dropdown",
+								},
 							},
+							Label: "More Actions",
 						}) {
 							@ui.DropdownItem(ui.DropdownItemProp{
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"data-action": "download",
+									},
+								},
 								Label: "Download",
 								Icon:  ui.IconDownload(),
-								Attributes: templ.Attributes{
-									"data-action": "download",
-								},
 							})
 							@ui.DropdownItem(ui.DropdownItemProp{
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"data-action": "print",
+										"onclick":     "window.print()",
+									},
+								},
 								Label: "Print",
 								Icon:  ui.IconFileText(),
-								Attributes: templ.Attributes{
-									"data-action": "print",
-									"onclick":     "window.print()",
-								},
 							})
 						}
 					</div>

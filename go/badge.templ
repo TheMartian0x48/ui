@@ -33,21 +33,8 @@ const (
 )
 
 // BadgeProp configures a badge/label component.
-//
-// Badges are compact elements for labeling, categorizing, or showing status.
-// They support icons, dismissible functionality, and multiple visual styles.
-//
-// Example usage:
-//
-//	// Simple badge
-//	@ui.Badge(ui.BadgeProp{Variant: ui.BadgeSuccess}) { Active }
-//
-//	// With icon
-//	@ui.Badge(ui.BadgeProp{Icon: ui.IconCheck()}) { Verified }
-//
-//	// Dismissible
-//	@ui.Badge(ui.BadgeProp{Dismissible: true, OnDismiss: "remove()"}) { Tag }
 type BadgeProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant     BadgeVariant     // Color variant
 	Shape       BadgeShape       // Visual style (filled, outlined, subtle)
 	Size        BadgeSize        // Size variant
@@ -56,18 +43,10 @@ type BadgeProp struct {
 	Dismissible bool             // Show dismiss/close button
 	OnDismiss   string           // JavaScript handler for dismiss (Alpine.js @click)
 	Disabled    bool             // Disable interactions
-	Class       string           // Additional CSS classes
-	Id          string           // HTML id attribute
-	Attributes  templ.Attributes // Additional HTML attributes
 	AriaLabel   string           // Screen reader text for context
 }
 
 // Badge renders a small label/badge component.
-//
-// Accessibility:
-//   - Dismiss button includes aria-label for screen readers
-//   - Disabled state indicated with aria-disabled
-//   - Icons are hidden from screen readers (decorative)
 templ Badge(prop BadgeProp) {
 	<span
 		if prop.Id != "" {
@@ -108,22 +87,17 @@ templ Badge(prop BadgeProp) {
 }
 
 // BadgeGroupProp configures a container for multiple badges.
-//
-// Example:
-//
-//	@ui.BadgeGroup(ui.BadgeGroupProp{}) {
-//	    @ui.Badge(ui.BadgeProp{}) { Tag 1 }
-//	    @ui.Badge(ui.BadgeProp{}) { Tag 2 }
-//	}
 type BadgeGroupProp struct {
-	Class      string           // Additional CSS classes
+	BaseProp                    // Standard Id, Class, and Attributes
 	AriaLabel  string           // Accessible label for the badge group
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // BadgeGroup renders a flex container for badges with proper spacing.
 templ BadgeGroup(prop BadgeGroupProp) {
 	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ badgeGroupClass(prop.Class) }
 		role="group"
 		if prop.AriaLabel != "" {

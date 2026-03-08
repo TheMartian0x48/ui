@@ -9,14 +9,12 @@ const (
 )
 
 type CardProp struct {
+	BaseProp            // Standard Id, Class, and Attributes
 	Variant    CardVariant
 	Image      string // URL for a top-aligned image
 	ImageAlt   string // Alt text for image (empty = decorative)
 	Header     string // Optional header text
 	Footer     string // Optional footer text
-	Class      string // Additional CSS classes
-	Id         string // Optional ID
-	Attributes templ.Attributes
 }
 
 // Card renders a container with optional header, image, and footer.

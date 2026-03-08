@@ -3,12 +3,6 @@ package ui
 import "strings"
 
 // ListVariant defines the visual style of the list.
-//
-// Available variants:
-//   - ListPlain: No bullets or numbers (default)
-//   - ListBulleted: Unordered list with bullet points
-//   - ListNumbered: Ordered list with numbers
-//   - ListIcon: Custom icon for each item
 type ListVariant int
 
 const (
@@ -28,53 +22,32 @@ const (
 )
 
 // ListProp configures a list container component.
-//
-// Lists display a collection of items in a vertical layout.
-// Supports plain, bulleted, numbered, and icon variants.
-//
-// Example usage:
-//
-//	@ui.List(ui.ListProp{Variant: ui.ListBulleted}) {
-//	    @ui.ListItem(ui.ListItemProp{}) { First item }
-//	    @ui.ListItem(ui.ListItemProp{}) { Second item }
-//	}
-//
-//	// With dividers
-//	@ui.List(ui.ListProp{Divided: true}) {
-//	    @ui.ListItem(ui.ListItemProp{}) { Item with divider }
-//	}
 type ListProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant    ListVariant      // Visual style (plain, bulleted, numbered, icon)
 	Size       ListSize         // Spacing size (sm, md, lg)
 	Divided    bool             // Add dividers between items
-	Class      string           // Additional CSS classes
 	AriaLabel  string           // Accessible label for the list
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // ListItemProp configures a single list item.
-//
-// For icon variant, pass an Icon component as children before the text.
 type ListItemProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Icon       templ.Component  // Optional icon (for ListIcon variant)
 	Active     bool             // Highlight this item as active/selected
 	Disabled   bool             // Visually disable the item
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // List renders a list container.
-//
-// Accessibility:
-//   - Uses semantic <ul> or <ol> elements based on variant
-//   - Supports aria-label for screen readers
-//   - Disabled items marked with aria-disabled
 templ List(prop ListProp) {
 	{{
 		isOrdered := prop.Variant == ListNumbered
 	}}
 	if isOrdered {
 		<ol
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ listClass(prop) }
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
@@ -85,6 +58,9 @@ templ List(prop ListProp) {
 		</ol>
 	} else {
 		<ul
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ listClass(prop) }
 			if prop.AriaLabel != "" {
 				aria-label={ prop.AriaLabel }
@@ -99,6 +75,9 @@ templ List(prop ListProp) {
 // ListItem renders a single item within a List.
 templ ListItem(prop ListItemProp) {
 	<li
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ listItemClass(prop) }
 		if prop.Disabled {
 			aria-disabled="true"

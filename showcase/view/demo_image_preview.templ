@@ -85,13 +85,15 @@ templ ImagePreviewDemo() {
 					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
 					<div class="doc-demo__list" style="max-width: 400px;">
 						@ui.ImagePreview(ui.ImagePreviewProp{
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"data-testid": "featured-image",
+									"data-gallery": "main",
+								},
+							},
 							Src:         "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop",
 							Alt:         "Interactive image preview",
 							AspectRatio: "16/9",
-							Attributes: templ.Attributes{
-								"data-testid": "featured-image",
-								"data-gallery": "main",
-							},
 						})
 					</div>
 				</div>

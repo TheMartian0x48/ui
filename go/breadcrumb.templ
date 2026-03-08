@@ -3,43 +3,20 @@ package ui
 import "strings"
 
 // BreadcrumbProp configures the breadcrumb navigation container.
-//
-// Breadcrumbs show the user's location within a site hierarchy and
-// allow navigation to parent pages. The component renders a semantic
-// <nav> element with proper ARIA attributes.
-//
-// Example usage:
-//
-//	@ui.Breadcrumb(ui.BreadcrumbProp{}) {
-//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) { Home }
-//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/products"}) { Products }
-//	    @ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) { Details }
-//	}
 type BreadcrumbProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Separator  string           // Custom separator (default: "/")
-	Class      string           // Additional CSS classes
 	AriaLabel  string           // Navigation label (default: "Breadcrumb")
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // BreadcrumbItemProp configures a single breadcrumb item.
-//
-// Items can be links (with Href) or the current page (with Current: true).
-// The last item is typically the current page and should not be a link.
 type BreadcrumbItemProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Href       string           // Link destination (empty for current page)
 	Current    bool             // Marks this as the current page (aria-current="page")
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Breadcrumb renders a navigation breadcrumb trail.
-//
-// Accessibility:
-//   - Uses <nav> element with aria-label for screen readers
-//   - Implements WAI-ARIA breadcrumb pattern
-//   - Current page marked with aria-current="page"
-//   - Separators are hidden from screen readers
 templ Breadcrumb(prop BreadcrumbProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -52,6 +29,9 @@ templ Breadcrumb(prop BreadcrumbProp) {
 		}
 	}}
 	<nav
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ breadcrumbClass(prop.Class) }
 		aria-label={ ariaLabel }
 		{ prop.Attributes... }
@@ -63,9 +43,14 @@ templ Breadcrumb(prop BreadcrumbProp) {
 }
 
 // BreadcrumbItem renders a single item in the breadcrumb trail.
-// Use Href for navigable links, or Current: true for the active page.
 templ BreadcrumbItem(prop BreadcrumbItemProp) {
-	<li class={ breadcrumbItemClass(prop.Current, prop.Class) } { prop.Attributes... }>
+	<li
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ breadcrumbItemClass(prop.Current, prop.Class) }
+		{ prop.Attributes... }
+	>
 		if prop.Href != "" && !prop.Current {
 			<a href={ templ.SafeURL(prop.Href) } class="breadcrumb__link">
 				{ children... }

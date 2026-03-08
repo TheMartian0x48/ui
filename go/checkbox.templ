@@ -5,7 +5,7 @@ import "strings"
 // CheckboxProp configures a checkbox input component.
 // Use Checked for controlled state, Indeterminate for partial selection (e.g., "select all").
 type CheckboxProp struct {
-	Id              string           // HTML id attribute
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name            string           // Form field name
 	Value           string           // Input value when checked
 	Label           string           // Visible label text
@@ -14,8 +14,6 @@ type CheckboxProp struct {
 	Disabled        bool             // Prevents interaction
 	Required        bool             // Form validation requirement
 	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes
 	AriaLabel       string           // Screen reader label (when no visible label)
 	AriaDescribedBy string           // ID of element describing this checkbox (e.g., error message)
 }
@@ -60,8 +58,8 @@ templ Checkbox(prop CheckboxProp) {
 			{ prop.Attributes... }
 		/>
 		<div class="checkbox__control">
-			@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM, Class: "checkbox__icon checkbox__icon--check"})
-			@Icon(IconProp{Icon: IconMinus(), Size: IconSizeSM, Class: "checkbox__icon checkbox__icon--indeterminate"})
+			@Icon(IconProp{BaseProp: BaseProp{Class: "checkbox__icon checkbox__icon--check"}, Icon: IconCheck(), Size: IconSizeSM})
+			@Icon(IconProp{BaseProp: BaseProp{Class: "checkbox__icon checkbox__icon--indeterminate"}, Icon: IconMinus(), Size: IconSizeSM})
 		</div>
 		if prop.Label != "" {
 			<label

@@ -25,14 +25,14 @@ templ DividerDemo() {
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Labelled</h3>
 					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px; padding: 2rem; background-color: var(--color-bg-secondary); border-radius: var(--radius-md);">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "w-full"}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full"}, Variant: ui.ButtonOutline}) {
 							<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" style="width: 16px; margin-right: 0.5rem;"/>
 							Continue with Google
 						}
 						@ui.Divider(ui.DividerProp{Variant: ui.DividerHorizontal, Label: "Or continue with"})
-						@ui.Input(ui.InputProp{Type: ui.InputEmail, Placeholder: "Email Address", Class: "w-full"})
+						@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Class: "w-full"}, Type: ui.InputEmail, Placeholder: "Email Address"})
 						<div class="mt-2">
-							@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "w-full"}) {
+							@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full"}, Variant: ui.ButtonPrimary}) {
 								Sign In
 							}
 						</div>
@@ -65,11 +65,13 @@ templ DividerDemo() {
 					<div class="doc-demo__list doc-demo__list--column">
 						<div style="font-size: var(--font-size-sm); color: var(--color-text-primary);">Section A</div>
 						@ui.Divider(ui.DividerProp{
-							Variant: ui.DividerHorizontal,
-							Attributes: templ.Attributes{
-								"data-testid": "section-divider",
-								"id":          "main-divider",
+							BaseProp: ui.BaseProp{
+								Id: "main-divider",
+								Attributes: templ.Attributes{
+									"data-testid": "section-divider",
+								},
 							},
+							Variant: ui.DividerHorizontal,
 						})
 						<div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Section B</div>
 					</div>

@@ -22,7 +22,7 @@ templ FormFieldDemo() {
 							Help:     "This is your unique identifier on the platform.",
 						}) {
 							@ui.Input(ui.InputProp{
-								Id:          "username",
+								BaseProp:    ui.BaseProp{Id: "username"},
 								Placeholder: "e.g. johndoe",
 							})
 						}
@@ -38,8 +38,8 @@ templ FormFieldDemo() {
 							Required: true,
 						}) {
 							@ui.Input(ui.InputProp{
+								BaseProp:    ui.BaseProp{Id: "email"},
 								Type:        ui.InputEmail,
-								Id:          "email",
 								Placeholder: "you@example.com",
 							})
 						}
@@ -50,8 +50,8 @@ templ FormFieldDemo() {
 							Error:    "Password must be at least 8 characters long.",
 						}) {
 							@ui.Input(ui.InputProp{
+								BaseProp: ui.BaseProp{Id: "password"},
 								Type:  ui.InputPassword,
-								Id:    "password",
 								Value: "short",
 							})
 						}
@@ -67,7 +67,7 @@ templ FormFieldDemo() {
 							LabelFor: "role",
 						}) {
 							@ui.Select(ui.SelectProp{
-								Id: "role",
+								BaseProp: ui.BaseProp{Id: "role"},
 								Options: []ui.SelectOption{
 									{Label: "Admin", Value: "admin"},
 									{Label: "Editor", Value: "editor"},
@@ -82,7 +82,7 @@ templ FormFieldDemo() {
 							Help:     "Tell us a bit about yourself.",
 						}) {
 							@ui.Textarea(ui.TextareaProp{
-								Id:          "bio",
+								BaseProp:    ui.BaseProp{Id: "bio"},
 								Placeholder: "Developer at heart...",
 								Rows:        4,
 							})
@@ -94,16 +94,18 @@ templ FormFieldDemo() {
 					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
 					<div class="doc-demo__list doc-demo__list--column" style="max-width: 400px;">
 						@ui.FormField(ui.FormFieldProp{
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"data-testid":   "api-key-field",
+									"data-validate": "required",
+								},
+							},
 							Label:    "API Key",
 							LabelFor: "api-key",
 							Help:     "Your secret API key for authentication.",
-							Attributes: templ.Attributes{
-								"data-testid":   "api-key-field",
-								"data-validate": "required",
-							},
 						}) {
 							@ui.Input(ui.InputProp{
-								Id:          "api-key",
+								BaseProp:    ui.BaseProp{Id: "api-key"},
 								Type:        ui.InputPassword,
 								Placeholder: "sk-xxxxxxxxxxxx",
 							})

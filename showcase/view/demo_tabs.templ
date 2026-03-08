@@ -15,7 +15,7 @@ templ TabsDemo() {
 				<!-- Basic Tabs -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Basic Usage</h3>
-					@ui.Tabs(ui.TabsProp{Id: "basic-tabs", DefaultValue: "account"}) {
+					@ui.Tabs(ui.TabsProp{BaseProp: ui.BaseProp{Id: "basic-tabs"}, DefaultValue: "account"}) {
 						@ui.TabsList(ui.TabsListProp{}) {
 							@ui.TabsTrigger(ui.TabsTriggerProp{Value: "account"}) {
 								Account 
@@ -49,8 +49,8 @@ templ TabsDemo() {
 					<h3 class="doc-demo__group-title">In-Platform Example</h3>
 					<div style="max-width: 500px;">
 						@ui.Card(ui.CardProp{Header: "User Profile"}) {
-							@ui.Tabs(ui.TabsProp{Id: "profile-tabs", DefaultValue: "general"}) {
-								@ui.TabsList(ui.TabsListProp{Class: "tabs__list--stretched"}) {
+							@ui.Tabs(ui.TabsProp{BaseProp: ui.BaseProp{Id: "profile-tabs"}, DefaultValue: "general"}) {
+								@ui.TabsList(ui.TabsListProp{BaseProp: ui.BaseProp{Class: "tabs__list--stretched"}}) {
 									@ui.TabsTrigger(ui.TabsTriggerProp{Value: "general"}) {
 										@ui.IconSettings()
 										General 

@@ -5,38 +5,37 @@ import "strings"
 // TabsProp configures the root tabs container.
 // The Id is required for JavaScript initialization.
 type TabsProp struct {
-	Id           string           // Unique ID for the tabs container (required for JS logic)
+	BaseProp                    // Standard Id, Class, and Attributes
 	DefaultValue string           // Value of the tab that should be active by default
-	Class        string           // Additional CSS classes
-	Attributes   templ.Attributes // Additional HTML attributes
 }
 
 // Tabs is the root component for a tab interface.
 // Contains TabsList and TabsContent children.
 templ Tabs(prop TabsProp) {
+	{{ id := GetID(prop.Id, "tabs") }}
 	<div
-		id={ prop.Id }
+		id={ id }
 		class={ tabsClass(prop) }
 		data-value={ prop.DefaultValue }
 		{ prop.Attributes... }
 	>
 		{ children... }
 	</div>
-	if prop.Id != "" {
-		@initTabs(prop.Id, prop.DefaultValue)
-	}
+	@initTabs(id, prop.DefaultValue)
 }
 
 // TabsListProp configures the tab triggers container.
 type TabsListProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // TabsList contains the triggers for the tabs.
 // Handles keyboard navigation with arrow keys.
 templ TabsList(prop TabsListProp) {
 	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ tabsListClass(prop) }
 		role="tablist"
 		@keydown="(e) => {
@@ -66,10 +65,9 @@ templ TabsList(prop TabsListProp) {
 
 // TabsTriggerProp configures a tab trigger button.
 type TabsTriggerProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Value      string           // The value this trigger activates
-	Class      string           // Additional CSS classes
 	Disabled   bool             // Prevents interaction
-	Attributes templ.Attributes // Additional HTML attributes
 	AriaLabel  string           // Screen reader label (for icon-only tabs)
 }
 
@@ -78,7 +76,7 @@ type TabsTriggerProp struct {
 templ TabsTrigger(prop TabsTriggerProp) {
 	{{
 	// Generate IDs to connect tabs with their panels
-	var tabId = "tab-" + prop.Value
+	var tabId = GetID(prop.Id, "tab-"+prop.Value)
 	var panelId = "panel-" + prop.Value
 	}}
 
@@ -106,9 +104,8 @@ templ TabsTrigger(prop TabsTriggerProp) {
 
 // TabsContentProp configures a tab content panel.
 type TabsContentProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Value      string           // The value that activates this content
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // TabsContent contains the content for a specific tab.
@@ -116,7 +113,7 @@ type TabsContentProp struct {
 templ TabsContent(prop TabsContentProp) {
 	{{
 	// Generate IDs to connect panels with their tabs
-	var panelId = "panel-" + prop.Value
+	var panelId = GetID(prop.Id, "panel-"+prop.Value)
 	var tabId = "tab-" + prop.Value
 	}}
 

@@ -16,7 +16,7 @@ type AutocompleteOption struct {
 }
 
 type AutocompleteProp struct {
-	Id          string
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name        string
 	Placeholder string
 	Label       string // Accessible label for screen readers
@@ -25,8 +25,6 @@ type AutocompleteProp struct {
 	Disabled    bool
 	Required    bool
 	Error       bool
-	Class       string
-	Attributes  templ.Attributes
 }
 
 // Autocomplete renders an input field with a searchable dropdown of options.

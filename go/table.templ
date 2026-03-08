@@ -5,13 +5,11 @@ import "strings"
 // TableProp configures a data table component.
 // Supports striped rows, hover effects, and compact density.
 type TableProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Striped    bool             // Alternating row backgrounds
 	Hover      bool             // Highlight rows on hover
 	Compact    bool             // Reduced padding density
 	Header     templ.Component  // Optional thead content
-	Class      string           // Additional CSS classes
-	Id         string           // HTML id attribute
-	Attributes templ.Attributes // Additional HTML attributes
 	Caption    string           // Accessible table description (visible)
 	AriaLabel  string           // Screen reader label (invisible)
 }
@@ -68,13 +66,15 @@ func tableClass(prop TableProp) string {
 
 // TableHeaderProp configures a table header row.
 type TableHeaderProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // TableHeader renders a table header row (<tr> inside <thead>).
 templ TableHeader(prop TableHeaderProp) {
 	<tr
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		if prop.Class != "" {
 			class={ prop.Class }
 		}
@@ -86,13 +86,15 @@ templ TableHeader(prop TableHeaderProp) {
 
 // TableBodyProp configures a table body container.
 type TableBodyProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // TableBody renders a table body container (<tbody>).
 templ TableBody(prop TableBodyProp) {
 	<tbody
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		if prop.Class != "" {
 			class={ prop.Class }
 		}
@@ -104,13 +106,15 @@ templ TableBody(prop TableBodyProp) {
 
 // TableRowProp configures a table row.
 type TableRowProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // TableRow renders a table row (<tr>).
 templ TableRow(prop TableRowProp) {
 	<tr
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		if prop.Class != "" {
 			class={ prop.Class }
 		}

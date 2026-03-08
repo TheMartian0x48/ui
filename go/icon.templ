@@ -14,11 +14,9 @@ const (
 // Icons are decorative by default (aria-hidden="true").
 // Set AriaLabel for meaningful icons that convey information.
 type IconProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Icon       templ.Component  // The SVG icon component to render
 	Size       IconSize         // Size variant (SM, MD, LG)
-	Class      string           // Additional CSS classes
-	Id         string           // HTML id attribute
-	Attributes templ.Attributes // Additional HTML attributes
 	AriaLabel  string           // Screen reader label (makes icon accessible)
 }
 

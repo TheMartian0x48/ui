@@ -70,7 +70,7 @@ templ SelectDemo() {
 						<div class="select-demo-row">
 							<span class="text-xs text-muted">Error State with AriaDescribedBy</span>
 							@ui.Select(ui.SelectProp{
-								Id:              "country-select",
+								BaseProp:        ui.BaseProp{Id: "country-select"},
 								Error:           true,
 								Placeholder:     "Select a country...",
 								AriaDescribedBy: "country-error",

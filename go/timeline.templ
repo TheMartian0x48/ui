@@ -12,47 +12,24 @@ const (
 )
 
 // TimelineProp configures a timeline container component.
-//
-// Timelines display a sequence of events in chronological order.
-// Useful for activity feeds, process steps, or historical records.
-//
-// Example usage:
-//
-//	@ui.Timeline(ui.TimelineProp{}) {
-//	    @ui.TimelineItem(ui.TimelineItemProp{Title: "Order Placed", Time: "2 hours ago"}) {
-//	        Your order has been confirmed.
-//	    }
-//	    @ui.TimelineItem(ui.TimelineItemProp{Title: "Processing", Time: "1 hour ago", Active: true}) {
-//	        Order is being prepared.
-//	    }
-//	}
 type TimelineProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant    TimelineVariant  // Visual style
-	Class      string           // Additional CSS classes
 	AriaLabel  string           // Accessible label (default: "Timeline")
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // TimelineItemProp configures a single timeline entry.
-//
-// Each item represents an event or step in the timeline.
 type TimelineItemProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Title      string           // Event title/heading
 	Time       string           // Timestamp or date string
 	Icon       templ.Component  // Custom icon for the marker
 	Variant    BadgeVariant     // Color variant for the marker (uses Badge colors)
 	Active     bool             // Highlight as current/active item
 	Completed  bool             // Mark as completed (adds checkmark)
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Timeline renders a vertical timeline container.
-//
-// Accessibility:
-//   - Uses semantic list structure
-//   - Time elements use <time> when possible
-//   - Active/completed states announced to screen readers
 templ Timeline(prop TimelineProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -61,6 +38,9 @@ templ Timeline(prop TimelineProp) {
 		}
 	}}
 	<ol
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ timelineClass(prop) }
 		aria-label={ ariaLabel }
 		{ prop.Attributes... }
@@ -71,7 +51,13 @@ templ Timeline(prop TimelineProp) {
 
 // TimelineItem renders a single event in the timeline.
 templ TimelineItem(prop TimelineItemProp) {
-	<li class={ timelineItemClass(prop) } { prop.Attributes... }>
+	<li
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ timelineItemClass(prop) }
+		{ prop.Attributes... }
+	>
 		<div class="timeline__marker">
 			if prop.Icon != nil {
 				@prop.Icon

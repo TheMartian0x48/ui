@@ -20,24 +20,24 @@ templ DrawerDemo() {
 							Open Drawer (Right)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:          "demo-drawer-right",
+							BaseProp:    ui.BaseProp{Id: "demo-drawer-right"},
 							Position:    ui.DrawerRight,
 							Title:       "Profile Settings",
 							Description: "Update your profile information and preferences.",
 						}) {
 							<div style="margin-top: var(--spacing-4);">
 								@ui.FormField(ui.FormFieldProp{LabelFor: "input1", Label: "Name"}) {
-									@ui.Input(ui.InputProp{Id: "input1", Value: "John Doe"})
+									@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "input1"}, Value: "John Doe"})
 								}
 								<br/>
 								@ui.FormField(ui.FormFieldProp{LabelFor: "input2", Label: "Email"}) {
-									@ui.Input(ui.InputProp{Id: "input2", Type: ui.InputEmail, Value: "john@example.com"})
+									@ui.Input(ui.InputProp{BaseProp: ui.BaseProp{Id: "input2"}, Type: ui.InputEmail, Value: "john@example.com"})
 								}
 							</div>
 							<div style="margin-top: var(--spacing-6); display: flex; gap: var(--spacing-4); flex-direction: column;">
 								@ui.Divider(ui.DividerProp{Variant: ui.DividerHorizontal})
 								<div style="display: flex; gap: var(--spacing-2); justify-content: flex-end;">
-									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Attributes: templ.Attributes{"@click": "open = false"}}) {
+									@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"@click": "open = false"}}, Variant: ui.ButtonGhost}) {
 										Cancel
 									}
 									@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
@@ -56,26 +56,26 @@ templ DrawerDemo() {
 							Open Drawer (Left)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:       "demo-drawer-left",
+							BaseProp: ui.BaseProp{Id: "demo-drawer-left"},
 							Position: ui.DrawerLeft,
 							Title:    "Navigation",
 						}) {
 							<p>Use the left drawer for mobile navigation menus or sidebar replacements.</p>
 							<ul style="list-style: none; padding: 0; margin-top: var(--spacing-4); display: flex; flex-direction: column; gap: var(--spacing-2);">
 								<li>
-									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}) {
+									@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}, Variant: ui.ButtonGhost}) {
 										@ui.Icon(ui.IconProp{Icon: ui.IconHome()})
 										Home
 									}
 								</li>
 								<li>
-									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}) {
+									@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}, Variant: ui.ButtonGhost}) {
 										@ui.Icon(ui.IconProp{Icon: ui.IconUser()})
 										Dashboard
 									}
 								</li>
 								<li>
-									@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}) {
+									@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "w-full", Attributes: templ.Attributes{"style": "justify-content: flex-start;"}}, Variant: ui.ButtonGhost}) {
 										@ui.Icon(ui.IconProp{Icon: ui.IconSettings()})
 										Settings
 									}
@@ -92,7 +92,7 @@ templ DrawerDemo() {
 							Open Drawer (Top)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:       "demo-drawer-top",
+							BaseProp: ui.BaseProp{Id: "demo-drawer-top"},
 							Position: ui.DrawerTop,
 							Title:    "Top Notice",
 						}) {
@@ -108,7 +108,7 @@ templ DrawerDemo() {
 							Open Drawer (Bottom)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:       "demo-drawer-bottom",
+							BaseProp: ui.BaseProp{Id: "demo-drawer-bottom"},
 							Position: ui.DrawerBottom,
 							Title:    "Share Output",
 						}) {
@@ -132,14 +132,16 @@ templ DrawerDemo() {
 							Open Drawer (With Attributes)
 						}
 						@ui.Drawer(ui.DrawerProp{
-							Id:          "demo-drawer-attrs",
+							BaseProp: ui.BaseProp{
+								Id: "demo-drawer-attrs",
+								Attributes: templ.Attributes{
+									"data-testid":  "custom-drawer",
+									"data-feature": "settings-panel",
+								},
+							},
 							Position:    ui.DrawerRight,
 							Title:       "Custom Drawer",
 							Description: "This drawer has custom data attributes for testing.",
-							Attributes: templ.Attributes{
-								"data-testid":  "custom-drawer",
-								"data-feature": "settings-panel",
-							},
 						}) {
 							<p>This drawer demonstrates the use of custom attributes for testing or tracking purposes.</p>
 							<div style="margin-top: var(--spacing-4);">

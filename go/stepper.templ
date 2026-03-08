@@ -13,6 +13,7 @@ const (
 
 // StepItemProp configures a single step within the stepper.
 type StepItemProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Title       string    // Step label text
 	Description string    // Optional helper text below title
 	State       StepState // Current state of this step
@@ -20,10 +21,9 @@ type StepItemProp struct {
 
 // StepperProp configures the stepper progress indicator.
 type StepperProp struct {
-	Id        string         // HTML id attribute
+	BaseProp                    // Standard Id, Class, and Attributes
 	Steps     []StepItemProp // List of steps to display
 	Vertical  bool           // Vertical layout (default: horizontal)
-	Class     string         // Additional CSS classes
 	AriaLabel string         // Accessible label for the stepper (e.g., "Checkout progress")
 }
 
@@ -41,14 +41,19 @@ templ Stepper(prop StepperProp) {
 		} else {
 			aria-label="Progress steps"
 		}
+		{ prop.Attributes... }
 	>
 		<ol class="stepper__list" role="list">
 			for i, step := range prop.Steps {
 				<li
-					class={ stepItemClass(step.State) }
+					if step.Id != "" {
+						id={ step.Id }
+					}
+					class={ stepItemClass(step.State) + " " + step.Class }
 					if step.State == StepActive {
 						aria-current="step"
 					}
+					{ step.Attributes... }
 				>
 					<div class="stepper__indicator" aria-hidden="true">
 						if step.State == StepCompleted {

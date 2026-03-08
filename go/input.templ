@@ -67,24 +67,22 @@ func DateTimeBound(t time.Time) *InputBound {
 // InputProp configures a text-based form input component.
 // Use Type to specify the input variant (text, email, password, etc.).
 type InputProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Type            InputType        // Input type (text, email, password, number, etc.)
-	Id              string           // HTML id attribute
 	Name            string           // Form field name
 	Value           string           // Current input value
 	Placeholder     string           // Hint text shown when empty
 	Required        bool             // Form validation requirement
 	Disabled        bool             // Prevents interaction
 	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
 	Step            *InputBound      // Step increment for number/date inputs
 	Min             *InputBound      // Minimum value for number/date inputs
 	Max             *InputBound      // Maximum value for number/date inputs
 	MaxLength       int              // Maximum character length
 	Pattern         string           // Regex pattern for validation
 	Autocomplete    AutocompleteType // Browser autocomplete hint
-	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, readonly)
 	AriaLabel       string           // Screen reader label (when no visible label)
-	AriaDescribedBy string           // ID of element describing this input (e.g., error message)
+	AriaDescribedBy string           // ID of element describing this input (e.g. error message)
 }
 
 // Input renders a form input element with configurable type and states.

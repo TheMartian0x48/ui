@@ -12,16 +12,14 @@ type SelectOption struct {
 // SelectProp configures a select dropdown component.
 // Supports placeholder, pre-selected values, disabled options, and error states.
 type SelectProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name            string           // Form field name
-	Id              string           // HTML id attribute
 	Value           string           // Currently selected value
 	Placeholder     string           // Placeholder text (first disabled option)
 	Options         []SelectOption   // List of selectable options
 	Required        bool             // Form validation requirement
 	Disabled        bool             // Prevents interaction
 	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes
 	AriaLabel       string           // Screen reader label
 	AriaDescribedBy string           // ID of element describing this select (e.g., error message)
 }

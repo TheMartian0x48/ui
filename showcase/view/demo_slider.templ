@@ -64,24 +64,28 @@ templ SliderDemo() {
 								</div>
 								<div style="display: flex; flex-direction: column; gap: 1rem;">
 									@ui.Slider(ui.SliderProp{
+										BaseProp: ui.BaseProp{
+											Attributes: templ.Attributes{
+												"@input": "brightness = $event.target.value",
+											},
+										},
 										Label:     "Brightness",
 										Min:       0,
 										Max:       200,
 										Value:     100,
 										ShowValue: true,
-										Attributes: templ.Attributes{
-											"@input": "brightness = $event.target.value",
-										},
 									})
 									@ui.Slider(ui.SliderProp{
+										BaseProp: ui.BaseProp{
+											Attributes: templ.Attributes{
+												"@input": "contrast = $event.target.value",
+											},
+										},
 										Label:     "Contrast",
 										Min:       0,
 										Max:       200,
 										Value:     100,
 										ShowValue: true,
-										Attributes: templ.Attributes{
-											"@input": "contrast = $event.target.value",
-										},
 									})
 								</div>
 							</div>

@@ -5,7 +5,7 @@ import "strings"
 // RadioProp configures a radio input component.
 // Radio buttons in the same group should share the same Name value.
 type RadioProp struct {
-	Id              string           // HTML id attribute
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name            string           // Form field name (groups radios together)
 	Value           string           // Value submitted when selected
 	Label           string           // Visible label text
@@ -13,8 +13,6 @@ type RadioProp struct {
 	Disabled        bool             // Prevents interaction
 	Required        bool             // Form validation requirement
 	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes
 	AriaLabel       string           // Screen reader label (when no visible label)
 	AriaDescribedBy string           // ID of element describing this radio (e.g., error message)
 }

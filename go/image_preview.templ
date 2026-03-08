@@ -12,13 +12,11 @@ const (
 
 // ImagePreviewProp configures the ImagePreview component.
 type ImagePreviewProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Src         string           // Image source URL
 	Alt         string           // Alt text for accessibility
 	AspectRatio string           // Aspect ratio (e.g., "16/9", "1/1", "4/3")
 	ObjectFit   ImageObjectFit   // How image fills container (cover, contain, fill, none)
-	Class       string           // Additional CSS classes
-	Id          string           // Optional ID
-	Attributes  templ.Attributes // Additional HTML attributes
 }
 
 // ImagePreview renders an image with a specific aspect ratio and styling.

@@ -13,22 +13,20 @@ const (
 
 // AccordionProp configures the accordion container.
 type AccordionProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Items      []AccordionItem  // List of collapsible items
 	Variant    AccordionVariant // Visual style variant
 	Icon       templ.Component  // Custom expand/collapse icon (default: chevron)
-	Class      string           // Additional CSS classes
-	Id         string           // HTML id attribute
-	Attributes templ.Attributes // Additional HTML attributes
 	IdPrefix   string           // Prefix for generating unique accessibility IDs
 }
 
 // AccordionItem configures a single collapsible item within the accordion.
 type AccordionItem struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Title       string           // Header text displayed in the summary
 	Content     string           // Plain text content (use RichContent for complex content)
 	RichContent templ.Component  // Rich HTML content (takes precedence over Content)
 	Open        bool             // Whether the item is expanded by default
-	Attributes  templ.Attributes // Additional HTML attributes for the summary element
 }
 
 // generateTitleId creates a unique ID for the accordion item title.
@@ -69,14 +67,17 @@ templ Accordion(prop AccordionProp) {
 				contentID := generateContentId(prop.IdPrefix, prop.Id, i)
 			}}
 			<details
-				class="accordion__item"
+				if item.Id != "" {
+					id={ item.Id }
+				}
+				class={ "accordion__item", item.Class }
 				if item.Open {
 					open
 				}
+				{ item.Attributes... }
 			>
 				<summary
 					class="accordion__summary"
-					{ item.Attributes... }
 					aria-controls={ contentID }
 				>
 					<span id={ titleID } class="accordion__title">{ item.Title }</span>

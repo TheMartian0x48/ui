@@ -13,6 +13,7 @@ const (
 // SwitchProp configures a toggle switch component.
 // Use for binary on/off settings like preferences and feature toggles.
 type SwitchProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name            string           // Form field name
 	Label           string           // Visible label text
 	Description     string           // Helper text below label
@@ -21,9 +22,6 @@ type SwitchProp struct {
 	Required        bool             // Form validation requirement
 	Error           bool             // Shows error styling
 	Size            SwitchSize       // Size variant (SM, MD, LG)
-	Class           string           // Additional CSS classes
-	Id              string           // HTML id attribute
-	Attributes      templ.Attributes // Additional HTML attributes
 	AriaLabel       string           // Screen reader label (when no visible label)
 	AriaDescribedBy string           // ID of element describing this switch
 }
@@ -32,23 +30,16 @@ type SwitchProp struct {
 // Supports checked, disabled, and error states with optional label and description.
 templ Switch(prop SwitchProp) {
 	{{
-		id := prop.Id
-		if id == "" && prop.Name != "" {
-			id = "switch-" + prop.Name
-		}
+		id := GetID(prop.Id, "switch")
 	}}
 	<label
 		class={ switchContainerClass(prop) }
-		if id != "" {
-			for={ id }
-		}
+		for={ id }
 	>
 		<input
 			type="checkbox"
 			role="switch"
-			if id != "" {
-				id={ id }
-			}
+			id={ id }
 			if prop.Name != "" {
 				name={ prop.Name }
 			}

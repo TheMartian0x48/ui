@@ -5,14 +5,12 @@ import "strings"
 // LinkProp configures an anchor element styled as a button.
 // Use Link for navigation actions, Button for in-page actions.
 type LinkProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant    ButtonVariant    // Visual style (Primary, Secondary, etc.)
 	Size       ButtonSize       // Size (SM, MD, LG)
 	Href       string           // URL destination
 	Target     string           // _blank, _self, etc.
 	Rel        string           // Link relationship (auto-set for _blank)
-	Id         string           // HTML id attribute
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 	Disabled   bool             // Visually disabled, prevents navigation
 	AriaLabel  string           // Screen reader label (for icon-only links)
 }

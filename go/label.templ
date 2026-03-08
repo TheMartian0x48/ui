@@ -5,12 +5,10 @@ import "strings"
 // LabelProp configures a form label element.
 // Use with form inputs to improve accessibility and usability.
 type LabelProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	For        string           // HTML for attribute - ID of the associated input
 	Required   bool             // Whether to show required indicator (*)
 	Disabled   bool             // Disabled styling (when associated input is disabled)
-	Class      string           // Additional CSS classes
-	Id         string           // Optional ID for the label itself
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Label renders a form label element with optional required indicator.

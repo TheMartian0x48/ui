@@ -30,17 +30,15 @@ const (
 
 // ButtonProp defines the configuration options for the Button component.
 type ButtonProp struct {
-	Variant      ButtonVariant     // Visual style of the button (Primary, Outline, etc.)
-	Size         ButtonSize        // Vertical size of the button (SM, MD, LG)
-	Disabled     bool              // Standard HTML disabled attribute
-	Type         ButtonType        // HTML button type (button, submit, reset)
-	Class        string            // Additional CSS classes
-	Id           string            // Optional HTML ID
-	Attributes   templ.Attributes  // Additional HTML attributes
-	AriaDisabled bool              // Visually disabled but remains focusable for accessibility
-	Loading      bool              // Shows loading state and sets aria-busy="true"
-	AriaPressed  *bool             // nil = not a toggle, true/false = toggle state (aria-pressed)
-	AriaExpanded *bool             // Indicates if the button controls an expandable element (aria-expanded)
+	BaseProp                    // Standard Id, Class, and Attributes
+	Variant      ButtonVariant  // Visual style of the button (Primary, Outline, etc.)
+	Size         ButtonSize     // Vertical size of the button (SM, MD, LG)
+	Disabled     bool           // Standard HTML disabled attribute
+	Type         ButtonType     // HTML button type (button, submit, reset)
+	AriaDisabled bool           // Visually disabled but remains focusable for accessibility
+	Loading      bool           // Shows loading state and sets aria-busy="true"
+	AriaPressed  *bool          // nil = not a toggle, true/false = toggle state (aria-pressed)
+	AriaExpanded *bool          // Indicates if the button controls an expandable element (aria-expanded)
 }
 
 // Button renders a highly configurable button component with support for 

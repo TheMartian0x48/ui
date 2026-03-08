@@ -94,22 +94,26 @@ templ ProgressDemo() {
 					<h3 class="doc-demo__group-title">With Custom Attributes</h3>
 					<div class="doc-demo__list doc-demo__list--column">
 						@ui.Progress(ui.ProgressProp{
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"data-testid":  "upload-progress",
+									"data-task-id": "task-123",
+								},
+							},
 							Value:     45,
 							Label:     "Upload Progress",
 							ShowValue: true,
-							Attributes: templ.Attributes{
-								"data-testid":  "upload-progress",
-								"data-task-id": "task-123",
-							},
 						})
 						<div class="doc-demo__list">
 							@ui.CircularProgress(ui.CircularProgressProp{
+								BaseProp: ui.BaseProp{
+									Attributes: templ.Attributes{
+										"data-testid": "sync-progress",
+									},
+								},
 								Value:     75,
 								Size:      48,
 								ShowValue: true,
-								Attributes: templ.Attributes{
-									"data-testid": "sync-progress",
-								},
 							})
 						</div>
 					</div>

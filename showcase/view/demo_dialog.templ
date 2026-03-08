@@ -20,16 +20,18 @@ templ DialogDemo() {
 							Open Basic Dialog
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "basic-dialog",
+							BaseProp: ui.BaseProp{Id: "basic-dialog"},
 							Title: "Welcome",
 						}) {
 							<p>This is a basic dialog using the native HTML <code>&lt;dialog&gt;</code> element. It handles focus trapping and backdrop automatically.</p>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonPrimary,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('basic-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('basic-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonPrimary,
 								}) {
 									Understand
 								}
@@ -42,33 +44,39 @@ templ DialogDemo() {
 					<h3 class="doc-demo__group-title">Confirmation</h3>
 					<div class="doc-demo__list">
 						@ui.Button(ui.ButtonProp{
-							Variant: ui.ButtonDanger,
-							Attributes: templ.Attributes{
-								"onclick": "document.getElementById('confirm-dialog').showModal()",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"onclick": "document.getElementById('confirm-dialog').showModal()",
+								},
 							},
+							Variant: ui.ButtonDanger,
 						}) {
 							Archive Project
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:          "confirm-dialog",
+							BaseProp:    ui.BaseProp{Id: "confirm-dialog"},
 							Title:       "Confirm Archive",
 							Description: "This action will move the project to archives.",
 						}) {
 							<p>Are you sure you want to archive this project? This will move it to your archives and it will no longer be visible in your active dashboard.</p>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonGhost,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('confirm-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('confirm-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonGhost,
 								}) {
 									Cancel
 								}
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonDanger,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('confirm-dialog').close(); alert('Archived!')",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('confirm-dialog').close(); alert('Archived!')",
+										},
 									},
+									Variant: ui.ButtonDanger,
 								}) {
 									Archive
 								}
@@ -81,75 +89,87 @@ templ DialogDemo() {
 					<h3 class="doc-demo__group-title">Size Variants</h3>
 					<div class="doc-demo__list">
 						@ui.Button(ui.ButtonProp{
-							Variant: ui.ButtonSecondary,
-							Attributes: templ.Attributes{
-								"onclick": "document.getElementById('sm-dialog').showModal()",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"onclick": "document.getElementById('sm-dialog').showModal()",
+								},
 							},
+							Variant: ui.ButtonSecondary,
 						}) {
 							Small Dialog
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "sm-dialog",
+							BaseProp: ui.BaseProp{Id: "sm-dialog"},
 							Title: "Small Dialog",
 							Size:  ui.DialogSizeSM,
 						}) {
 							<p>This is a small dialog (24rem max-width). Great for simple confirmations or short messages.</p>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonPrimary,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('sm-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('sm-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonPrimary,
 								}) {
 									Close
 								}
 							}
 						}
 						@ui.Button(ui.ButtonProp{
-							Variant: ui.ButtonSecondary,
-							Attributes: templ.Attributes{
-								"onclick": "document.getElementById('lg-dialog').showModal()",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"onclick": "document.getElementById('lg-dialog').showModal()",
+								},
 							},
+							Variant: ui.ButtonSecondary,
 						}) {
 							Large Dialog
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "lg-dialog",
+							BaseProp: ui.BaseProp{Id: "lg-dialog"},
 							Title: "Large Dialog",
 							Size:  ui.DialogSizeLG,
 						}) {
 							<p>This is a large dialog (42rem max-width). Suitable for forms or content that needs more horizontal space.</p>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonPrimary,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('lg-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('lg-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonPrimary,
 								}) {
 									Close
 								}
 							}
 						}
 						@ui.Button(ui.ButtonProp{
-							Variant: ui.ButtonSecondary,
-							Attributes: templ.Attributes{
-								"onclick": "document.getElementById('xl-dialog').showModal()",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"onclick": "document.getElementById('xl-dialog').showModal()",
+								},
 							},
+							Variant: ui.ButtonSecondary,
 						}) {
 							Extra Large Dialog
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:    "xl-dialog",
+							BaseProp: ui.BaseProp{Id: "xl-dialog"},
 							Title: "Extra Large Dialog",
 							Size:  ui.DialogSizeXL,
 						}) {
 							<p>This is an extra large dialog (56rem max-width). Best for complex forms, data tables, or rich content.</p>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonPrimary,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('xl-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('xl-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonPrimary,
 								}) {
 									Close
 								}
@@ -162,15 +182,17 @@ templ DialogDemo() {
 					<h3 class="doc-demo__group-title">Complex Content</h3>
 					<div class="doc-demo__list">
 						@ui.Button(ui.ButtonProp{
-							Variant: ui.ButtonSecondary,
-							Attributes: templ.Attributes{
-								"onclick": "document.getElementById('form-dialog').showModal()",
+							BaseProp: ui.BaseProp{
+								Attributes: templ.Attributes{
+									"onclick": "document.getElementById('form-dialog').showModal()",
+								},
 							},
+							Variant: ui.ButtonSecondary,
 						}) {
 							Create New Entry
 						}
 						@ui.Dialog(ui.DialogProp{
-							Id:          "form-dialog",
+							BaseProp:    ui.BaseProp{Id: "form-dialog"},
 							Title:       "Create Entry",
 							Description: "Fill out the details to add a new item to your collection.",
 							Size:        ui.DialogSizeLG,
@@ -191,18 +213,22 @@ templ DialogDemo() {
 							</div>
 							@ui.DialogFooter(ui.DialogFooterProp{}) {
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonGhost,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('form-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('form-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonGhost,
 								}) {
 									Cancel
 								}
 								@ui.Button(ui.ButtonProp{
-									Variant: ui.ButtonPrimary,
-									Attributes: templ.Attributes{
-										"onclick": "document.getElementById('form-dialog').close()",
+									BaseProp: ui.BaseProp{
+										Attributes: templ.Attributes{
+											"onclick": "document.getElementById('form-dialog').close()",
+										},
 									},
+									Variant: ui.ButtonPrimary,
 								}) {
 									Create
 								}

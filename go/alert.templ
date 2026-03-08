@@ -27,27 +27,25 @@ const (
 
 // AlertAction represents a button or action that can be taken within an alert.
 type AlertAction struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Label       string           // Text to display on the button
 	EventName   string           // Alpine.js event name to dispatch (e.g., "alert-action")
 	EventData   string           // Optional data to pass with the event (e.g., "confirm")
 	ButtonStyle string           // Optional CSS class for the button (e.g., "btn-primary")
 	Icon        templ.Component  // Optional icon for the button
-	Attributes  templ.Attributes // Additional HTML attributes for the button
 }
 
 // AlertProp contains all configuration options for an Alert component.
 type AlertProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant        AlertVariant     // Alert type/severity (default: AlertInfo)
 	Shape          AlertShape       // Visual style (default: AlertStandard)
 	Title          string           // Optional title for the alert
-	Class          string           // Additional CSS classes
-	Id             string           // HTML ID attribute
 	Icon           templ.Component  // Custom icon (overrides default for variant)
 	HideIcon       bool             // Whether to hide the icon
 	Dismissible    bool             // Whether alert can be dismissed
 	DismissTimeout int              // Auto-dismiss after X milliseconds (0 = no auto-dismiss)
 	Actions        []AlertAction    // Action buttons to display in the alert
-	Attributes     templ.Attributes // Additional HTML attributes
 }
 
 // Alert renders a feedback message with an appropriate icon and styling.
@@ -98,14 +96,17 @@ templ Alert(prop AlertProp) {
 				<div class="alert__actions">
 					for _, action := range prop.Actions {
 						<button
+							if action.Id != "" {
+								id={ action.Id }
+							}
 							type="button"
-							class={ "btn " + action.ButtonStyle }
+							class={ "btn " + action.ButtonStyle + " " + action.Class }
 							@click={ "this.$dispatch('" + action.EventName + "', '" + action.EventData + "')" }
 							aria-label={ action.Label }
 							{ action.Attributes... }
 						>
 							if action.Icon != nil {
-								@Icon(IconProp{Icon: action.Icon, Size: IconSizeSM, Class: "me-1"})
+								@Icon(IconProp{BaseProp: BaseProp{Class: "me-1"}, Icon: action.Icon, Size: IconSizeSM})
 							}
 							{ action.Label }
 						</button>
@@ -173,6 +174,8 @@ func alertStatus(variant AlertVariant) string {
 // This uses a strings.Builder for better performance with multiple concatenations.
 func alertClass(prop AlertProp) string {
 	var sb strings.Builder
+	sb.Grow(60)
+
 	sb.WriteString("alert")
 
 	// Severity class

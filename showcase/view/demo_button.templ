@@ -119,11 +119,11 @@ templ ButtonDemo() {
 						Pass a pointer to indicate the toggle state (<code>true</code>/<code>false</code>).
 					</p>
 					<div class="doc-demo__list doc-demo__list--center">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, AriaPressed: boolPtr(false), Attributes: templ.Attributes{"aria-label": "Like"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"aria-label": "Like"}}, Variant: ui.ButtonOutline, AriaPressed: boolPtr(false)}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconHeart(), Size: ui.IconSizeSM})
 							Like
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, AriaPressed: boolPtr(true), Attributes: templ.Attributes{"aria-label": "Liked"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"aria-label": "Liked"}}, Variant: ui.ButtonPrimary, AriaPressed: boolPtr(true)}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconHeart(), Size: ui.IconSizeSM})
 							Liked
 						}
@@ -136,11 +136,11 @@ templ ButtonDemo() {
 						The <code>AriaExpanded</code> prop works with buttons that control collapsible sections, dropdowns, or accordions.
 					</p>
 					<div class="doc-demo__list doc-demo__list--center">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, AriaExpanded: boolPtr(false), Attributes: templ.Attributes{"aria-label": "Expand section"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"aria-label": "Expand section"}}, Variant: ui.ButtonOutline, AriaExpanded: boolPtr(false)}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconChevronDown(), Size: ui.IconSizeSM})
 							Collapsed
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, AriaExpanded: boolPtr(true), Attributes: templ.Attributes{"aria-label": "Collapse section"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"aria-label": "Collapse section"}}, Variant: ui.ButtonPrimary, AriaExpanded: boolPtr(true)}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconChevronUp(), Size: ui.IconSizeSM})
 							Expanded
 						}
@@ -178,13 +178,13 @@ templ ButtonDemo() {
 						Add <code>btn--icon</code> class to create square icon buttons. Always provide <code>aria-label</code> when there is no visible text.
 					</p>
 					<div class="doc-demo__list doc-demo__list--center">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--icon", Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"aria-label": "Open Menu"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Open Menu"}}, Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconMenu(), Size: ui.IconSizeSM})
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Take Photo"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Take Photo"}}, Variant: ui.ButtonGhost}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconCamera(), Size: ui.IconSizeMD})
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonDanger, Class: "btn--icon", Size: ui.ButtonSizeLG, Attributes: templ.Attributes{"aria-label": "Delete Item"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Delete Item"}}, Variant: ui.ButtonDanger, Size: ui.ButtonSizeLG}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconTrash(), Size: ui.IconSizeLG})
 						}
 					</div>
@@ -203,14 +203,14 @@ templ ButtonDemo() {
 								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary}) {
 									Save
 								}
-								@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "btn--icon split-button__toggle", Attributes: templ.Attributes{"aria-label": "More Options"}}) {
+								@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--icon split-button__toggle", Attributes: templ.Attributes{"aria-label": "More Options"}}, Variant: ui.ButtonPrimary}) {
 									@ui.Icon(ui.IconProp{Icon: ui.IconChevronDown(), Size: ui.IconSizeSM})
 								}
 							</div>
 						</div>
 						<!-- Full-width Button -->
 						<div class="doc-demo__item">
-							@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Class: "btn--block"}) {
+							@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--block"}, Variant: ui.ButtonPrimary}) {
 								Create Account
 							}
 						</div>
@@ -223,10 +223,10 @@ templ ButtonDemo() {
 						Use the <code>Attributes</code> prop to add any HTML attributes like <code>data-*</code>, <code>id</code>, or event handlers.
 					</p>
 					<div class="doc-demo__list doc-demo__list--center">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Id: "submit-btn", Attributes: templ.Attributes{"data-action": "submit", "data-target": "form"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Id: "submit-btn", Attributes: templ.Attributes{"data-action": "submit", "data-target": "form"}}, Variant: ui.ButtonPrimary}) {
 							Submit Form
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonSecondary, Attributes: templ.Attributes{"hx-get": "/api/data", "hx-target": "#result"}}) {
+						@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Attributes: templ.Attributes{"hx-get": "/api/data", "hx-target": "#result"}}, Variant: ui.ButtonSecondary}) {
 							Load Data (HTMX)
 						}
 					</div>
@@ -295,19 +295,19 @@ templ ButtonDemo() {
 						<td>Expandable content state</td>
 					}
 					@ui.TableRow(ui.TableRowProp{}) {
-						<td><code>Id</code></td>
+						<td><code>BaseProp.Id</code></td>
 						<td>string</td>
 						<td>""</td>
 						<td>HTML id attribute</td>
 					}
 					@ui.TableRow(ui.TableRowProp{}) {
-						<td><code>Class</code></td>
+						<td><code>BaseProp.Class</code></td>
 						<td>string</td>
 						<td>""</td>
 						<td>Additional CSS classes</td>
 					}
 					@ui.TableRow(ui.TableRowProp{}) {
-						<td><code>Attributes</code></td>
+						<td><code>BaseProp.Attributes</code></td>
 						<td>templ.Attributes</td>
 						<td>nil</td>
 						<td>Additional HTML attributes</td>

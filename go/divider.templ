@@ -10,10 +10,9 @@ const (
 
 // DividerProp configures the Divider component.
 type DividerProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Variant    DividerVariant   // Orientation: horizontal or vertical
 	Label      string           // Optional text label (horizontal only)
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Divider renders a visual separator for content sections.
@@ -23,6 +22,9 @@ templ Divider(prop DividerProp) {
 	if prop.Variant == DividerHorizontal {
 		if prop.Label != "" {
 			<div
+				if prop.Id != "" {
+					id={ prop.Id }
+				}
 				class={ dividerClass(prop) }
 				role="separator"
 				aria-orientation="horizontal"
@@ -34,6 +36,9 @@ templ Divider(prop DividerProp) {
 			</div>
 		} else {
 			<hr
+				if prop.Id != "" {
+					id={ prop.Id }
+				}
 				class={ dividerClass(prop) }
 				role="separator"
 				aria-orientation="horizontal"
@@ -42,6 +47,9 @@ templ Divider(prop DividerProp) {
 		}
 	} else if prop.Variant == DividerVertical {
 		<div
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ dividerClass(prop) }
 			role="separator"
 			aria-orientation="vertical"

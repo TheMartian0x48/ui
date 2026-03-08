@@ -5,7 +5,7 @@ import "strconv"
 // TextareaProp configures a multi-line text input component.
 // Use Rows to control visible height, MaxLength to limit input length.
 type TextareaProp struct {
-	Id              string           // HTML id attribute
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name            string           // Form field name
 	Value           string           // Initial text content
 	Placeholder     string           // Hint text shown when empty
@@ -14,22 +14,10 @@ type TextareaProp struct {
 	Required        bool             // Form validation requirement
 	Disabled        bool             // Prevents interaction
 	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes (e.g., autofocus, spellcheck)
 	AriaDescribedBy string           // ID of element describing this textarea (e.g., error message)
 }
 
 // Textarea renders a multi-line text input.
-//
-// Example:
-//
-//	@Textarea(TextareaProp{
-//	    Id:          "message",
-//	    Name:        "message",
-//	    Placeholder: "Enter your message...",
-//	    Rows:        4,
-//	    Required:    true,
-//	})
 templ Textarea(prop TextareaProp) {
 	<textarea
 		if prop.Id != "" {
