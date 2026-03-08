@@ -3,9 +3,6 @@
  */
 (function() {
     // Shared media query for reduced motion
-    const motionQuery = window.matchMedia('(prefers-color-scheme: dark)'); // Wait, that's dark mode
-    
-    // Correct query for reduced motion
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     
     window.uiUtils = {
