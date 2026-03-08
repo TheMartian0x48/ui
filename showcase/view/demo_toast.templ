@@ -16,16 +16,16 @@ templ ToastDemo() {
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Notification Types</h3>
 					<div class="doc-demo__list">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, Attributes: templ.Attributes{"onclick": "showToast('Information message', 'info', 'Info')"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonPrimary, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Information message', 'info', 'Info')"}}}) {
 							Info 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--success", Attributes: templ.Attributes{"onclick": "showToast('Operation successful!', 'success', 'Success')"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, BaseProp: ui.BaseProp{Class: "btn--success", Attributes: templ.Attributes{"onclick": "showToast('Operation successful!', 'success', 'Success')"}}}) {
 							Success 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--warning", Attributes: templ.Attributes{"onclick": "showToast('There might be an issue.', 'warning', 'Warning')"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, BaseProp: ui.BaseProp{Class: "btn--warning", Attributes: templ.Attributes{"onclick": "showToast('There might be an issue.', 'warning', 'Warning')"}}}) {
 							Warning 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Class: "btn--danger", Attributes: templ.Attributes{"onclick": "showToast('An error occurred.', 'error', 'Error')"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, BaseProp: ui.BaseProp{Class: "btn--danger", Attributes: templ.Attributes{"onclick": "showToast('An error occurred.', 'error', 'Error')"}}}) {
 							Error 
 						}
 					</div>
@@ -34,24 +34,24 @@ templ ToastDemo() {
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Positions</h3>
 					<div class="doc-demo__list">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Left', 'info', '', window.ToastPosition.TopLeft)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Top Left', 'info', '', window.ToastPosition.TopLeft)"}}}) {
 							Top Left 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Center', 'info', '', window.ToastPosition.TopCenter)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Top Center', 'info', '', window.ToastPosition.TopCenter)"}}}) {
 							Top Center 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Top Right', 'info', '', window.ToastPosition.TopRight)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Top Right', 'info', '', window.ToastPosition.TopRight)"}}}) {
 							Top Right 
 						}
 					</div>
 					<div class="doc-demo__list" style="margin-top: 1rem;">
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Left', 'info', '', window.ToastPosition.BottomLeft)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Bottom Left', 'info', '', window.ToastPosition.BottomLeft)"}}}) {
 							Bottom Left 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Center', 'info', '', window.ToastPosition.BottomCenter)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Bottom Center', 'info', '', window.ToastPosition.BottomCenter)"}}}) {
 							Bottom Center 
 						}
-						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, Attributes: templ.Attributes{"onclick": "showToast('Bottom Right', 'info', '', window.ToastPosition.BottomRight)"}}) {
+						@ui.Button(ui.ButtonProp{Variant: ui.ButtonOutline, Size: ui.ButtonSizeSM, BaseProp: ui.BaseProp{Attributes: templ.Attributes{"onclick": "showToast('Bottom Right', 'info', '', window.ToastPosition.BottomRight)"}}}) {
 							Bottom Right 
 						}
 					</div>

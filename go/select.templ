@@ -2,31 +2,40 @@ package ui
 
 import "strings"
 
-// SelectOption represents a single option in a select dropdown.
+// SelectOption represents a single choice within a Select component.
 type SelectOption struct {
-	Label    string // Display text for the option
-	Value    string // Value submitted with form
-	Disabled bool   // Whether option is selectable
+	Label    string // Visible text displayed to the user
+	Value    string // The value submitted when this option is chosen
+	Disabled bool   // Whether this specific option is unselectable
 }
 
-// SelectProp configures a select dropdown component.
-// Supports placeholder, pre-selected values, disabled options, and error states.
+// SelectProp configures a themed dropdown selection component.
 type SelectProp struct {
-	Name            string           // Form field name
-	Id              string           // HTML id attribute
-	Value           string           // Currently selected value
-	Placeholder     string           // Placeholder text (first disabled option)
-	Options         []SelectOption   // List of selectable options
-	Required        bool             // Form validation requirement
-	Disabled        bool             // Prevents interaction
-	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes
-	AriaLabel       string           // Screen reader label
-	AriaDescribedBy string           // ID of element describing this select (e.g., error message)
+	BaseProp                    // Standard Id, Class, and Attributes
+	Name            string           // Name attribute for form submission
+	Value           string           // The currently selected value (matches option.Value)
+	Placeholder     string           // Initial unselected option text (e.g. "Choose one...")
+	Options         []SelectOption   // List of choices available to the user
+	Required        bool             // Marks selection as mandatory
+	Disabled        bool             // Disables the entire dropdown
+	Error           bool             // Applies error styling
+	AriaLabel       string           // Accessible name for screen readers
+	AriaDescribedBy string           // ID of the helper/error text for accessibility
 }
 
-// Select renders a dropdown select element with configurable options and states.
+// Select renders a custom-styled dropdown selection list.
+//
+// Wraps the native <select> element to ensure mobile compatibility and
+// keyboard accessibility while providing a theme-consistent visual style.
+//
+// Usage:
+//   @ui.Select(ui.SelectProp{
+//     Name: "country",
+//     Options: []ui.SelectOption{
+//       {Label: "United States", Value: "us"},
+//       {Label: "United Kingdom", Value: "uk"},
+//     },
+//   })
 templ Select(prop SelectProp) {
 	<div class="select-container">
 		<select

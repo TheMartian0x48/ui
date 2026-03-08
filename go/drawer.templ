@@ -2,21 +2,9 @@ package ui
 
 import (
 	"fmt"
-	"sync/atomic"
 )
 
-// drawerIdCounter is an atomic counter for generating unique drawer IDs.
-var drawerIdCounter atomic.Uint64
-
-// drawerUniqueId generates a unique ID or returns the provided ID.
-func drawerUniqueId(id string) string {
-	if id != "" {
-		return id
-	}
-	return fmt.Sprintf("drawer%d", drawerIdCounter.Add(1))
-}
-
-// DrawerPosition defines which edge of the screen the drawer slides from.
+// DrawerPosition defines which edge of the screen the panel slides from.
 type DrawerPosition int
 
 const (
@@ -26,21 +14,25 @@ const (
 	DrawerBottom                       // Slides from bottom edge
 )
 
-// DrawerProp configures the Drawer component.
+// DrawerProp configures the slide-over panel component.
 type DrawerProp struct {
-	Id          string           // Optional ID (auto-generated if empty)
-	Position    DrawerPosition   // Which edge to slide from
-	Title       string           // Header title text
-	Description string           // Optional description for aria-describedby
-	Class       string           // Additional CSS classes
-	Attributes  templ.Attributes // Additional HTML attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Position    DrawerPosition   // The screen edge where the drawer is anchored
+	Title       string           // Bold heading shown in the header
+	Description string           // Hidden description used for aria-describedby
 }
 
-// Drawer renders a slide-over panel that opens from an edge of the screen.
-// Uses Alpine.js for visibility toggling via the 'open-drawer' window event.
-// Supports all four edges: right (default), left, top, and bottom.
+// Drawer renders a slide-over panel for settings, navigation, or secondary tasks.
+//
+// Controlled via the 'open-drawer' window event or by directly toggling Alpine
+// state. Automatically handles backdrop overlays and scroll locking.
+//
+// Usage:
+//   @ui.Drawer(ui.DrawerProp{Title: "Menu", Position: ui.DrawerLeft}) {
+//     Navigation links...
+//   }
 templ Drawer(prop DrawerProp) {
-	{{ drawerId := drawerUniqueId(prop.Id) }}
+	{{ drawerId := GetID(prop.Id, "drawer") }}
 	{{ titleId := drawerId + "-title" }}
 	{{ descId := drawerId + "-desc" }}
 	<div
@@ -115,14 +107,16 @@ templ Drawer(prop DrawerProp) {
 				}
 				<div class="drawer__close-wrapper">
 					@Button(ButtonProp{
+						BaseProp: BaseProp{
+							Class: "drawer__close",
+							Attributes: templ.Attributes{
+								"@click":     "open = false",
+								"aria-label": "Close drawer",
+							},
+						},
 						Variant: ButtonGhost,
 						Size:    ButtonSizeSM,
-						Class:   "drawer__close",
-						Attributes: templ.Attributes{
-							"@click":     "open = false",
-							"aria-label": "Close drawer",
-						},
-						Type: ButtonTypeButton,
+						Type:    ButtonTypeButton,
 					}) {
 						@Icon(IconProp{Icon: IconX(), Size: IconSizeMD})
 					}
@@ -159,17 +153,18 @@ func drawerClass(prop DrawerProp) string {
 	return base
 }
 
-// DrawerTrigger renders a button configured to dispatch the event that opens the Drawer.
-// Alternatively, you can manually dispatch: $dispatch('open-drawer', 'drawer-id')
+// DrawerTrigger renders a button configured to dispatch the event that opens a Drawer.
 templ DrawerTrigger(drawerId string, variant ButtonVariant) {
 	@Button(ButtonProp{
+		BaseProp: BaseProp{
+			Attributes: templ.Attributes{
+				"x-data": "",
+				"@click": fmt.Sprintf("$dispatch('open-drawer', '%s')", drawerId),
+			},
+		},
 		Variant: variant,
 		Size:    ButtonSizeMD,
-		Attributes: templ.Attributes{
-			"x-data": "",
-			"@click": "$dispatch('open-drawer', '" + drawerId + "')",
-		},
-		Type: ButtonTypeButton,
+		Type:    ButtonTypeButton,
 	}) {
 		{ children... }
 	}

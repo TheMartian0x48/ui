@@ -5,6 +5,7 @@ import "fmt"
 // SliderProp configures a range input slider component.
 // Uses Alpine.js for real-time value updates when ShowValue is enabled.
 type SliderProp struct {
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name       string           // Form field name
 	Label      string           // Visible label text
 	Value      float64          // Current slider value
@@ -13,14 +14,14 @@ type SliderProp struct {
 	Step       float64          // Step increment (default: 1)
 	ShowValue  bool             // Display current value alongside label
 	Disabled   bool             // Prevents interaction
-	Class      string           // Additional CSS classes
-	Id         string           // HTML id attribute (auto-generated from Name if empty)
 	AriaLabel  string           // Accessible label when no visible label is used
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Slider renders a customizable range input with optional real-time value display.
 // Requires Alpine.js for interactive value updates.
+//
+// Usage:
+//   @ui.Slider(ui.SliderProp{Name: "volume", Min: 0, Max: 100, Value: 50, ShowValue: true})
 templ Slider(prop SliderProp) {
 	{{
 		min := prop.Min
@@ -33,13 +34,10 @@ templ Slider(prop SliderProp) {
 			step = 1
 		}
 
-		id := prop.Id
-		if id == "" && prop.Name != "" {
-			id = "slider-" + prop.Name
-		}
+		id := GetID(prop.Id, "slider")
 
 		valueId := ""
-		if prop.ShowValue && id != "" {
+		if prop.ShowValue {
 			valueId = id + "-value"
 		}
 	}}
@@ -66,9 +64,7 @@ templ Slider(prop SliderProp) {
 		}
 		<input
 			type="range"
-			if id != "" {
-				id={ id }
-			}
+			id={ id }
 			if prop.Name != "" {
 				name={ prop.Name }
 			}

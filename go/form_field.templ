@@ -1,38 +1,31 @@
 package ui
 
 import (
-	"fmt"
-	"sync/atomic"
+	"strings"
 )
 
-// formFieldIdCounter is an atomic counter for generating unique form field IDs.
-var formFieldIdCounter atomic.Uint64
-
-// formFieldUniqueId generates a unique ID or returns the provided ID.
-func formFieldUniqueId(id string) string {
-	if id != "" {
-		return id
-	}
-	return fmt.Sprintf("ff%d", formFieldIdCounter.Add(1))
-}
-
-// FormFieldProp configures the FormField component.
+// FormFieldProp configures the FormField layout wrapper.
 type FormFieldProp struct {
-	Id         string           // Optional ID for the field container (auto-generated if empty)
-	Label      string           // Label text
-	LabelFor   string           // ID of the input element (for label association)
-	Required   bool             // Whether the field is required (adds * to label)
-	Error      string           // Error message to display
-	Help       string           // Help text to display below the input
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Label      string           // Label text displayed above the control
+	LabelFor   string           // ID of the target input (required for label association)
+	Required   bool             // Whether the field is mandatory (adds visual indicator)
+	Error      string           // Validation error message (sets invalid state)
+	Help       string           // Helper text displayed below the control
 }
 
-// FormField renders a standard form field layout with label, input (children),
-// and optional error/help text. It automatically links the input to help/error
-// text via aria-describedby for accessibility.
+// FormField renders a consistent layout for form controls.
+//
+// Automatically manages label association, error states, and ARIA descriptions.
+// It links the child input to help/error text via 'aria-describedby' when
+// appropriate.
+//
+// Usage:
+//   @ui.FormField(ui.FormFieldProp{Label: "Email", Error: "Invalid email"}) {
+//     @ui.Input(ui.InputProp{Type: ui.InputEmail, Name: "email"})
+//   }
 templ FormField(prop FormFieldProp) {
-	{{ fieldId := formFieldUniqueId(prop.Id) }}
+	{{ fieldId := GetID(prop.Id, "ff") }}
 	{{ helpId := fieldId + "-help" }}
 	{{ errorId := fieldId + "-error" }}
 	{{
@@ -54,9 +47,9 @@ templ FormField(prop FormFieldProp) {
 	>
 		if prop.Label != "" {
 			@Label(LabelProp{
+				BaseProp: BaseProp{Class: "form-field__label"},
 				For:      prop.LabelFor,
 				Required: prop.Required,
-				Class:    "form-field__label",
 			}) {
 				{ prop.Label }
 			}
@@ -79,14 +72,16 @@ templ FormField(prop FormFieldProp) {
 
 // formFieldClass generates the CSS class for the form field wrapper.
 func formFieldClass(prop FormFieldProp) string {
-	base := "form-field"
+	var b strings.Builder
+	b.WriteString("form-field")
 
 	if prop.Error != "" {
-		base += " form-field--error"
+		b.WriteString(" form-field--error")
 	}
 
 	if prop.Class != "" {
-		base += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return base
+	return b.String()
 }

@@ -8,9 +8,11 @@ import (
 templ SidebarLink(name string, active bool) {
 	<li>
 		@ui.Link(ui.LinkProp{
+			BaseProp: ui.BaseProp{
+				Class: "doc-sidebar__link " + map[bool]string{true: "doc-sidebar__link--active", false: ""}[active],
+			},
 			Href:    fmt.Sprintf("/?component=%s", name),
 			Variant: ui.ButtonGhost,
-			Class:   "doc-sidebar__link " + map[bool]string{true: "doc-sidebar__link--active", false: ""}[active],
 		}) {
 			{ name }
 		}
@@ -28,6 +30,11 @@ templ Showcase(activeComponent string) {
 			<link rel="stylesheet" href="/css/main.css"/>
 			<!-- Showcase specific CSS -->
 			<link rel="stylesheet" href="/showcase-static/css/doc.css"/>
+			<!-- Framework JS -->
+			<script src="/js/ui.js"></script>
+			<script src="/js/components/autocomplete.js"></script>
+			<script src="/js/components/dropzone.js"></script>
+			<script src="/js/components/toast.js"></script>
 			<script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js"></script>
 		</head>
 		<body x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }" x-init="$watch('darkMode', val => { localStorage.setItem('theme', val ? 'dark' : 'light'); document.documentElement.setAttribute('data-theme', val ? 'dark' : 'light') }); if (darkMode) document.documentElement.setAttribute('data-theme', 'dark')">
@@ -36,9 +43,11 @@ templ Showcase(activeComponent string) {
 				<aside class="doc-sidebar">
 					<div class="doc-sidebar__header">
 						@ui.Link(ui.LinkProp{
+							BaseProp: ui.BaseProp{
+								Class: "doc-sidebar__logo",
+							},
 							Href:    "/",
 							Variant: ui.ButtonGhost,
-							Class:   "doc-sidebar__logo",
 						}) {
 							<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<rect width="32" height="32" rx="8" fill="var(--color-primary)"></rect>
@@ -47,16 +56,18 @@ templ Showcase(activeComponent string) {
 							ui
 						}
 						<div class="doc-theme-toggle">
-							@ui.Icon(ui.IconProp{Icon: ui.IconSun(), Size: ui.IconSizeSM, Class: "doc-theme-toggle__icon"})
+							@ui.Icon(ui.IconProp{BaseProp: ui.BaseProp{Class: "doc-theme-toggle__icon"}, Icon: ui.IconSun(), Size: ui.IconSizeSM})
 							@ui.Switch(ui.SwitchProp{
-								Id:        "theme-toggle",
+								BaseProp: ui.BaseProp{
+									Id: "theme-toggle",
+									Attributes: templ.Attributes{
+										"x-model": "darkMode",
+									},
+								},
 								Size:      ui.SwitchSizeSM,
 								AriaLabel: "Toggle dark mode",
-								Attributes: templ.Attributes{
-									"x-model": "darkMode",
-								},
 							})
-							@ui.Icon(ui.IconProp{Icon: ui.IconMoon(), Size: ui.IconSizeSM, Class: "doc-theme-toggle__icon"})
+							@ui.Icon(ui.IconProp{BaseProp: ui.BaseProp{Class: "doc-theme-toggle__icon"}, Icon: ui.IconMoon(), Size: ui.IconSizeSM})
 						</div>
 					</div>
 					<nav class="doc-sidebar__nav">

@@ -2,28 +2,30 @@ package ui
 
 import "strings"
 
+// IconSize defines the bounding box dimensions of the SVG icon.
 type IconSize int
 
 const (
-	IconSizeMD IconSize = iota // default
-	IconSizeSM
-	IconSizeLG
+	IconSizeMD IconSize = iota // Standard 24px (default)
+	IconSizeSM                 // Compact 16px
+	IconSizeLG                 // Prominent 32px
 )
 
-// IconProp configures an icon component wrapper.
-// Icons are decorative by default (aria-hidden="true").
-// Set AriaLabel for meaningful icons that convey information.
+// IconProp configures the SVG icon wrapper.
 type IconProp struct {
-	Icon       templ.Component  // The SVG icon component to render
-	Size       IconSize         // Size variant (SM, MD, LG)
-	Class      string           // Additional CSS classes
-	Id         string           // HTML id attribute
-	Attributes templ.Attributes // Additional HTML attributes
-	AriaLabel  string           // Screen reader label (makes icon accessible)
+	BaseProp                    // Standard Id, Class, and Attributes
+	Icon       templ.Component  // The raw SVG component to render
+	Size       IconSize         // Size variant
+	AriaLabel  string           // Hidden label for accessibility (required for meaningful icons)
 }
 
-// Icon renders an SVG icon component with standard sizing.
-// Decorative by default; set AriaLabel for meaningful icons.
+// Icon renders a themeable SVG icon with consistent sizing.
+//
+// By default, icons are hidden from screen readers (aria-hidden). Set
+// AriaLabel if the icon conveys specific meaning or lacks adjacent text.
+//
+// Usage:
+//   @ui.Icon(ui.IconProp{Icon: ui.IconCheck(), Size: ui.IconSizeMD})
 templ Icon(prop IconProp) {
 	<span
 		if prop.Id != "" {
@@ -68,6 +70,8 @@ func iconClass(prop IconProp) string {
 }
 
 // ========== Individual Icon Components ==========
+
+// IconCamera returns a modern camera icon SVG.
 templ IconCamera() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
@@ -75,72 +79,84 @@ templ IconCamera() {
 	</svg>
 }
 
+// IconUser returns a profile/account person icon SVG.
 templ IconUser() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
 	</svg>
 }
 
+// IconCheck returns a completion checkmark icon SVG.
 templ IconCheck() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
 	</svg>
 }
 
+// IconX returns a close or delete cross icon SVG.
 templ IconX() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
 	</svg>
 }
 
+// IconWarning returns an exclamation triangle warning icon SVG.
 templ IconWarning() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
 	</svg>
 }
 
+// IconInfo returns a lowercase 'i' information circle SVG.
 templ IconInfo() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 	</svg>
 }
 
+// IconArrowLeft returns a back/left chevron icon SVG.
 templ IconArrowLeft() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
 	</svg>
 }
 
+// IconArrowRight returns a forward/right chevron icon SVG.
 templ IconArrowRight() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
 	</svg>
 }
 
+// IconMenu returns a three-line hamburger menu icon SVG.
 templ IconMenu() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
 	</svg>
 }
 
+// IconTrash returns a waste bin/delete icon SVG.
 templ IconTrash() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
 	</svg>
 }
 
+// IconChevronDown returns a downward pointing chevron SVG.
 templ IconChevronDown() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 	</svg>
 }
 
+// IconChevronUp returns an upward pointing chevron SVG.
 templ IconChevronUp() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
 	</svg>
 }
 
+// IconSettings returns a gear/cog configuration icon SVG.
 templ IconSettings() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -148,24 +164,28 @@ templ IconSettings() {
 	</svg>
 }
 
+// IconLogOut returns an exit/door logout icon SVG.
 templ IconLogOut() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
 	</svg>
 }
 
+// IconFileText returns a document icon SVG.
 templ IconFileText() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
 	</svg>
 }
 
+// IconShare returns a network/nodes share icon SVG.
 templ IconShare() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
 	</svg>
 }
 
+// IconDownload returns an arrow-down tray icon SVG.
 templ IconDownload() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
@@ -173,6 +193,7 @@ templ IconDownload() {
 	</svg>
 }
 
+// IconCalendar returns a grid/calendar date icon SVG.
 templ IconCalendar() {
 	<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor">
 		<rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
@@ -182,6 +203,7 @@ templ IconCalendar() {
 	</svg>
 }
 
+// IconClock returns a circular clock time icon SVG.
 templ IconClock() {
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
 		<circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
@@ -189,36 +211,42 @@ templ IconClock() {
 	</svg>
 }
 
+// IconEdit returns a pencil and paper editing icon SVG.
 templ IconEdit() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
 	</svg>
 }
 
+// IconSearch returns a magnifying glass search icon SVG.
 templ IconSearch() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
 	</svg>
 }
 
+// IconPlus returns an addition symbol SVG.
 templ IconPlus() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
 	</svg>
 }
 
+// IconMinus returns a subtraction symbol SVG.
 templ IconMinus() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
 	</svg>
 }
 
+// IconExternalLink returns an arrow-from-square exit icon SVG.
 templ IconExternalLink() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
 	</svg>
 }
 
+// IconEye returns a visibility/eye icon SVG.
 templ IconEye() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -226,48 +254,56 @@ templ IconEye() {
 	</svg>
 }
 
+// IconCopy returns a layered pages copy icon SVG.
 templ IconCopy() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h6a2 2 0 002-2v-2"></path>
 	</svg>
 }
 
+// IconHeart returns a favorite/heart icon SVG.
 templ IconHeart() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
 	</svg>
 }
 
+// IconBell returns a notification/bell icon SVG.
 templ IconBell() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
 	</svg>
 }
 
+// IconLock returns a padlock/security icon SVG.
 templ IconLock() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 11-8 0v4h8z"></path>
 	</svg>
 }
 
+// IconRefresh returns a circular arrow reload icon SVG.
 templ IconRefresh() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
 	</svg>
 }
 
+// IconFilter returns a funnel/filter icon SVG.
 templ IconFilter() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
 	</svg>
 }
 
+// IconHome returns a house/navigation-start icon SVG.
 templ IconHome() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
 	</svg>
 }
 
+// IconUploadCloud returns a cloud with up-arrow upload icon SVG.
 templ IconUploadCloud() {
 	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-cloud">
 		<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
@@ -276,12 +312,14 @@ templ IconUploadCloud() {
 	</svg>
 }
 
+// IconMoon returns a crescent moon dark-mode icon SVG.
 templ IconMoon() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
 	</svg>
 }
 
+// IconSun returns a radiant sun light-mode icon SVG.
 templ IconSun() {
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>

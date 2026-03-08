@@ -10,26 +10,39 @@ import (
 // autocompleteIdCounter is an atomic counter for generating unique autocomplete IDs.
 var autocompleteIdCounter atomic.Uint64
 
+// AutocompleteOption represents a selectable item in the autocomplete dropdown.
 type AutocompleteOption struct {
-	Value string `json:"value"`
-	Label string `json:"label"`
+	Value string `json:"value"` // The underlying machine value
+	Label string `json:"label"` // The human-readable text shown in the list
 }
 
+// AutocompleteProp configures a searchable dropdown input component.
 type AutocompleteProp struct {
-	Id          string
-	Name        string
-	Placeholder string
-	Label       string // Accessible label for screen readers
-	Options     []AutocompleteOption
-	Value       string // Initial search query
-	Disabled    bool
-	Required    bool
-	Error       bool
-	Class       string
-	Attributes  templ.Attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Name        string               // Name attribute for form submission
+	Placeholder string               // Hint text shown in the input
+	Label       string               // Accessible label for screen readers
+	Options     []AutocompleteOption // Full list of selectable options
+	Value       string               // Initial search query/value
+	Disabled    bool                 // Prevents interaction
+	Required    bool                 // Marks input as mandatory
+	Error       bool                 // Applies error styling
 }
 
-// Autocomplete renders an input field with a searchable dropdown of options.
+// Autocomplete renders an input field with a dynamic, searchable dropdown.
+//
+// It uses Alpine.js for client-side filtering and keyboard navigation.
+// Supports WAI-ARIA combobox patterns including arrow-key navigation
+// and enter-to-select.
+//
+// Usage:
+//   @ui.Autocomplete(ui.AutocompleteProp{
+//     Name: "country",
+//     Options: []ui.AutocompleteOption{
+//       {Label: "United States", Value: "us"},
+//       {Label: "United Kingdom", Value: "uk"},
+//     },
+//   })
 templ Autocomplete(prop AutocompleteProp) {
 	{{ uid := autocompleteUniqueId(prop.Id) }}
 	{{ listboxId := "autocomplete-listbox-" + uid }}
@@ -139,56 +152,12 @@ func autocompleteUniqueId(id string) string {
 	return fmt.Sprintf("ac%d", autocompleteIdCounter.Add(1))
 }
 
-// inlineAutocompleteData generates the Alpine.js data object with cached filtering.
+// inlineAutocompleteData generates the Alpine.js data initialization string.
 func inlineAutocompleteData(prop AutocompleteProp, uid string) string {
 	optionsJSON := optionsToJSON(prop.Options)
 	searchInit := escapeJSString(prop.Value)
 
-	return `{
-		open: false,
-		search: '` + searchInit + `',
-		options: ` + optionsJSON + `,
-		highlightedIndex: 0,
-		_filtered: null,
-		getFiltered() {
-			if (this._filtered !== null) return this._filtered;
-			if (this.search === '') {
-				this._filtered = this.options;
-			} else {
-				const term = this.search.toLowerCase();
-				this._filtered = this.options.filter(opt => opt.label.toLowerCase().includes(term));
-			}
-			return this._filtered;
-		},
-		navigateDown() {
-			const filtered = this.getFiltered();
-			if (this.open) {
-				this.highlightedIndex = Math.min(this.highlightedIndex + 1, filtered.length - 1);
-			} else {
-				this.open = true;
-				this.highlightedIndex = 0;
-			}
-		},
-		navigateUp() {
-			if (this.open) {
-				this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
-			}
-		},
-		selectHighlighted() {
-			const filtered = this.getFiltered();
-			if (this.open && filtered.length > 0) {
-				this.selectOption(filtered[this.highlightedIndex]);
-			}
-		},
-		selectOption(option) {
-			if (!option) return;
-			this.search = option.label;
-			this.open = false;
-			this._filtered = null;
-			this.$refs.input.focus();
-			this.$dispatch('autocomplete-select', { value: option.value, label: option.label });
-		}
-	}`
+	return fmt.Sprintf("autocomplete({ initialValue: '%s', options: %s })", searchInit, optionsJSON)
 }
 
 // optionsToJSON converts options to JSON using encoding/json for safety.

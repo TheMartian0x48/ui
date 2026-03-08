@@ -24,14 +24,13 @@ templ shippingInformation() {
 				Shipping Method:
 			}
 			@ui.Select(ui.SelectProp{
-				Id: "shipping-option",
+				BaseProp: ui.BaseProp{Id: "shipping-option", Class: "form-control"},
 				Name: "shipping-option",
 				Options: []ui.SelectOption{
 					{Label: "Standard (Free)", Value: "standard"},
 					{Label: "Express ($15)", Value: "express"},
 					{Label: "Next Day ($25)", Value: "next-day"},
 				},
-				Class: "form-control",
 			})
 		</div>
 	</div>
@@ -55,13 +54,6 @@ templ AccordionDemo() {
 		<header class="doc-section__header">
 			<h1 class="doc-section__title">Accordion</h1>
 			<p class="doc-section__description">
-				@ui.Accordion(ui.AccordionProp{
-					Variant: ui.AccordionBordered,
-					Items: []ui.AccordionItem{
-						{Title: "Why use bordered?", Content: "Bordered accordions work great..."},
-						{Title: "Can one be open by default?", Content: "Yes, just set the Open property...", Open: true},
-					},
-				})
 				A vertically stacked list of items that can each be expanded or collapsed to reveal content.
 				Accordions are useful for organizing and presenting large amounts of information in a compact space.
 			</p>

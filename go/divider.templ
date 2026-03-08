@@ -1,28 +1,34 @@
 package ui
 
-// DividerVariant defines the orientation of a divider.
+// DividerVariant defines the compass orientation of the separator.
 type DividerVariant int
 
 const (
-	DividerHorizontal DividerVariant = iota // Horizontal separator (default)
-	DividerVertical                         // Vertical separator for inline content
+	DividerHorizontal DividerVariant = iota // Horizontal line for stacked content (default)
+	DividerVertical                         // Vertical line for inline elements
 )
 
 // DividerProp configures the Divider component.
 type DividerProp struct {
-	Variant    DividerVariant   // Orientation: horizontal or vertical
-	Label      string           // Optional text label (horizontal only)
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Variant    DividerVariant   // Orientation variant
+	Label      string           // Optional text shown in the center (horizontal only)
 }
 
-// Divider renders a visual separator for content sections.
-// Use horizontal dividers between stacked content and vertical
-// dividers between inline elements like toolbar buttons.
+// Divider renders a visual separator to organize content groups.
+//
+// Automatically applies appropriate ARIA roles and orientation attributes
+// for screen reader compatibility.
+//
+// Usage:
+//   @ui.Divider(ui.DividerProp{Label: "OR"})
 templ Divider(prop DividerProp) {
 	if prop.Variant == DividerHorizontal {
 		if prop.Label != "" {
 			<div
+				if prop.Id != "" {
+					id={ prop.Id }
+				}
 				class={ dividerClass(prop) }
 				role="separator"
 				aria-orientation="horizontal"
@@ -34,6 +40,9 @@ templ Divider(prop DividerProp) {
 			</div>
 		} else {
 			<hr
+				if prop.Id != "" {
+					id={ prop.Id }
+				}
 				class={ dividerClass(prop) }
 				role="separator"
 				aria-orientation="horizontal"
@@ -42,6 +51,9 @@ templ Divider(prop DividerProp) {
 		}
 	} else if prop.Variant == DividerVertical {
 		<div
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ dividerClass(prop) }
 			role="separator"
 			aria-orientation="vertical"

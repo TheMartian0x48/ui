@@ -2,23 +2,11 @@ package ui
 
 import (
 	"fmt"
-	"sync/atomic"
 )
-
-// dropzoneIdCounter is an atomic counter for generating unique dropzone IDs.
-var dropzoneIdCounter atomic.Uint64
-
-// dropzoneUniqueId generates a unique ID or returns the provided ID.
-func dropzoneUniqueId(id string) string {
-	if id != "" {
-		return id
-	}
-	return fmt.Sprintf("dz%d", dropzoneIdCounter.Add(1))
-}
 
 // DropzoneProp configures the Dropzone component.
 type DropzoneProp struct {
-	Id         string           // Optional ID (auto-generated if empty)
+	BaseProp                    // Standard Id, Class, and Attributes
 	Name       string           // Form field name for file input
 	Label      string           // Custom label text (e.g., "Click to upload or drag and drop")
 	HelpText   string           // Helper text (e.g., "SVG, PNG, JPG or GIF (max. 800x400px)")
@@ -26,22 +14,26 @@ type DropzoneProp struct {
 	Accept     string           // Accepted file types (e.g., "image/*", ".pdf")
 	Disabled   bool             // Disable the dropzone
 	Error      bool             // Show error state
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
 }
 
 // Dropzone renders a file upload area with drag-and-drop support.
 // Uses Alpine.js to handle drag-over visual state and file selection display.
 // Supports single or multiple file uploads with optional file type restrictions.
+//
+// Usage:
+//   @ui.Dropzone(ui.DropzoneProp{Name: "files", Multiple: true, Accept: "image/*"})
 templ Dropzone(prop DropzoneProp) {
-	{{ dzId := dropzoneUniqueId(prop.Id) }}
+	{{ dzId := GetID(prop.Id, "dz") }}
 	{{ helpTextId := dzId + "-help" }}
 	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ dropzoneClass(prop) }
-		x-data="{ isDragging: false, files: null }"
-		@dragover.prevent={ fmt.Sprintf("if (!%v) isDragging = true", prop.Disabled) }
-		@dragleave.prevent="isDragging = false"
-		@drop.prevent={ fmt.Sprintf("if (!%v) { isDragging = false; files = $event.dataTransfer.files; $refs.fileInput.files = files }", prop.Disabled) }
+		x-data={ fmt.Sprintf("dropzone({ disabled: %v })", prop.Disabled) }
+		@dragover.prevent="handleDragOver($event)"
+		@dragleave.prevent="handleDragLeave()"
+		@drop.prevent="handleDrop($event)"
 		:class="{ 'dropzone--dragging': isDragging }"
 		{ prop.Attributes... }
 	>
@@ -66,7 +58,7 @@ templ Dropzone(prop DropzoneProp) {
 			if prop.HelpText != "" {
 				aria-describedby={ helpTextId }
 			}
-			@change="files = $event.target.files"
+			@change="handleFiles($event)"
 		/>
 		<label class="dropzone__label" for={ dzId }>
 			<div class="dropzone__content" x-show="!files || files.length === 0">
@@ -92,7 +84,7 @@ templ Dropzone(prop DropzoneProp) {
 					<template x-for="file in files">
 						<div class="dropzone__file-item">
 							<span class="dropzone__file-name" x-text="file.name"></span>
-							<span class="dropzone__file-size" x-text="(file.size / 1024).toFixed(1) + ' KB'"></span>
+							<span class="dropzone__file-size" x-text="formatSize(file.size)"></span>
 						</div>
 					</template>
 				</div>

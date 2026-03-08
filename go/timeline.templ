@@ -2,57 +2,42 @@ package ui
 
 import "strings"
 
-// TimelineVariant defines the visual style of the timeline.
+// TimelineVariant defines the visual orientation and density of the timeline.
 type TimelineVariant int
 
 const (
-	TimelineDefault   TimelineVariant = iota // Standard vertical timeline
-	TimelineAlternate                        // Alternating left/right items
-	TimelineCompact                          // Minimal spacing, no descriptions
+	TimelineDefault   TimelineVariant = iota // Standard left-aligned vertical line
+	TimelineAlternate                        // Items alternate between left and right sides
+	TimelineCompact                          // Minimal padding and spacing for high-density feeds
 )
 
-// TimelineProp configures a timeline container component.
-//
-// Timelines display a sequence of events in chronological order.
-// Useful for activity feeds, process steps, or historical records.
-//
-// Example usage:
-//
-//	@ui.Timeline(ui.TimelineProp{}) {
-//	    @ui.TimelineItem(ui.TimelineItemProp{Title: "Order Placed", Time: "2 hours ago"}) {
-//	        Your order has been confirmed.
-//	    }
-//	    @ui.TimelineItem(ui.TimelineItemProp{Title: "Processing", Time: "1 hour ago", Active: true}) {
-//	        Order is being prepared.
-//	    }
-//	}
+// TimelineProp configures the root timeline container.
 type TimelineProp struct {
-	Variant    TimelineVariant  // Visual style
-	Class      string           // Additional CSS classes
-	AriaLabel  string           // Accessible label (default: "Timeline")
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Variant    TimelineVariant  // Layout variant
+	AriaLabel  string           // Hidden label for screen readers (default: "Timeline")
 }
 
-// TimelineItemProp configures a single timeline entry.
-//
-// Each item represents an event or step in the timeline.
+// TimelineItemProp configures a single chronological entry in the timeline.
 type TimelineItemProp struct {
-	Title      string           // Event title/heading
-	Time       string           // Timestamp or date string
-	Icon       templ.Component  // Custom icon for the marker
-	Variant    BadgeVariant     // Color variant for the marker (uses Badge colors)
-	Active     bool             // Highlight as current/active item
-	Completed  bool             // Mark as completed (adds checkmark)
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp                    // Standard Id, Class, and Attributes
+	Title      string           // Primary event heading
+	Time       string           // Date or timestamp string (e.g. "2 hours ago")
+	Icon       templ.Component  // Custom marker icon (overrides dot/completed icons)
+	Variant    BadgeVariant     // Semantic color for the marker (using Badge system colors)
+	Active     bool             // If true, highlights this event as current
+	Completed  bool             // If true, shows a checkmark marker to indicate completion
 }
 
-// Timeline renders a vertical timeline container.
+// Timeline renders a vertical list of chronological events.
 //
-// Accessibility:
-//   - Uses semantic list structure
-//   - Time elements use <time> when possible
-//   - Active/completed states announced to screen readers
+// Best suited for activity logs, process steps, or historical records.
+//
+// Usage:
+//   @ui.Timeline(ui.TimelineProp{}) {
+//     @ui.TimelineItem(ui.TimelineItemProp{Title: "Created", Time: "Jan 1"}) { Initial version }
+//     @ui.TimelineItem(ui.TimelineItemProp{Title: "Updated", Time: "Jan 5", Completed: true}) { Bug fixes }
+//   }
 templ Timeline(prop TimelineProp) {
 	{{
 		ariaLabel := prop.AriaLabel
@@ -61,6 +46,9 @@ templ Timeline(prop TimelineProp) {
 		}
 	}}
 	<ol
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ timelineClass(prop) }
 		aria-label={ ariaLabel }
 		{ prop.Attributes... }
@@ -69,9 +57,15 @@ templ Timeline(prop TimelineProp) {
 	</ol>
 }
 
-// TimelineItem renders a single event in the timeline.
+// TimelineItem renders a single event with a marker, line segment, and content.
 templ TimelineItem(prop TimelineItemProp) {
-	<li class={ timelineItemClass(prop) } { prop.Attributes... }>
+	<li
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ timelineItemClass(prop) }
+		{ prop.Attributes... }
+	>
 		<div class="timeline__marker">
 			if prop.Icon != nil {
 				@prop.Icon

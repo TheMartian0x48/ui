@@ -1,26 +1,33 @@
 package ui
 
+// CardVariant defines the visual surface and border style of the card.
 type CardVariant int
 
 const (
-	CardElevated CardVariant = iota
-	CardOutlined
-	CardFlat
+	CardElevated CardVariant = iota // Raised with shadow (default)
+	CardOutlined                    // Flat with border
+	CardFlat                        // Flat without border, subtle background
 )
 
+// CardProp configures the Card container.
 type CardProp struct {
+	BaseProp            // Standard Id, Class, and Attributes
 	Variant    CardVariant
-	Image      string // URL for a top-aligned image
-	ImageAlt   string // Alt text for image (empty = decorative)
-	Header     string // Optional header text
-	Footer     string // Optional footer text
-	Class      string // Additional CSS classes
-	Id         string // Optional ID
-	Attributes templ.Attributes
+	Image      string // URL for a top-aligned cover image
+	ImageAlt   string // Descriptive text for the image
+	Header     string // Bold heading text shown at the top
+	Footer     string // Secondary text or metadata shown at the bottom
 }
 
-// Card renders a container with optional header, image, and footer.
-// Uses <article> element for semantic meaning as cards represent self-contained content.
+// Card renders a flexible content container with optional media and headers.
+//
+// Uses the semantic <article> element. Designed to group related information
+// or act as a link to more detailed content.
+//
+// Usage:
+//   @ui.Card(ui.CardProp{Header: "Title", Footer: "Footer"}) {
+//     Main content here.
+//   }
 templ Card(prop CardProp) {
 	<article
 		if prop.Id != "" {
@@ -51,8 +58,6 @@ templ Card(prop CardProp) {
 }
 
 // imageAlt returns appropriate alt text for the card image.
-// Falls back to Header if ImageAlt is not provided.
-// Returns empty string for decorative images.
 func imageAlt(prop CardProp) string {
 	if prop.ImageAlt != "" {
 		return prop.ImageAlt

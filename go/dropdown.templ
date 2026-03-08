@@ -1,37 +1,25 @@
 package ui
 
-import (
-	"fmt"
-	"sync/atomic"
-)
-
-// dropdownIdCounter is an atomic counter for generating unique dropdown IDs.
-var dropdownIdCounter atomic.Uint64
-
-// dropdownUniqueId generates a unique ID or returns the provided ID.
-func dropdownUniqueId(id string) string {
-	if id != "" {
-		return id
-	}
-	return fmt.Sprintf("dd%d", dropdownIdCounter.Add(1))
-}
-
 // DropdownProp configures the Dropdown component.
 type DropdownProp struct {
-	Label      string           // Text for the trigger button
-	Icon       templ.Component  // Optional icon component for the trigger
-	Class      string           // Additional CSS classes
-	Right      bool             // Align menu to the right edge
-	Id         string           // Optional ID (auto-generated if empty)
-	Values     []string         // Optional values for selectable dropdowns
-	AriaLabel  string           // Accessible name for the dropdown
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp                  // Standard Id, Class, and Attributes
+	Label     string          // Text for the trigger button
+	Icon      templ.Component // Optional icon component for the trigger
+	Right     bool            // Align menu to the right edge
+	Values    []string        // Optional values for selectable dropdowns
+	AriaLabel string          // Accessible name for the dropdown
 }
 
 // Dropdown renders a collapsible menu using the native details/summary pattern.
 // It provides a trigger button that reveals a menu of items when clicked.
+//
+// Usage:
+//   @ui.Dropdown(ui.DropdownProp{Label: "Options"}) {
+//     @ui.DropdownItem(ui.DropdownItemProp{Label: "Edit", Icon: ui.IconEdit()})
+//     @ui.DropdownItem(ui.DropdownItemProp{Label: "Delete", Icon: ui.IconTrash(), Danger: true})
+//   }
 templ Dropdown(prop DropdownProp) {
-	{{ dropdownId := dropdownUniqueId(prop.Id) }}
+	{{ dropdownId := GetID(prop.Id, "dd") }}
 	{{ menuId := dropdownId + "-menu" }}
 	<details
 		id={ dropdownId }
@@ -57,7 +45,7 @@ templ Dropdown(prop DropdownProp) {
 			}
 		>
 			<span>{ prop.Label }</span>
-			@Icon(IconProp{Icon: IconChevronDown(), Size: IconSizeSM, Class: "dropdown__arrow"})
+			@Icon(IconProp{BaseProp: BaseProp{Class: "dropdown__arrow"}, Icon: IconChevronDown(), Size: IconSizeSM})
 		</summary>
 		<div id={ menuId } class="dropdown__menu" role="menu">
 			{ children... }
@@ -67,12 +55,12 @@ templ Dropdown(prop DropdownProp) {
 
 // DropdownItemProp configures a single item within a dropdown menu.
 type DropdownItemProp struct {
-	Href       string           // If provided, renders as <a>, otherwise <button>
-	Label      string           // Display text for the item
-	Icon       templ.Component  // Optional icon component
-	Attributes templ.Attributes // Additional HTML attributes (onclick, etc.)
-	Danger     bool             // Apply danger/destructive styling
-	AriaLabel  string           // Accessible name for the item
+	BaseProp                  // Standard Id, Class, and Attributes
+	Href      string          // If provided, renders as <a>, otherwise <button>
+	Label     string          // Display text for the item
+	Icon      templ.Component // Optional icon component
+	Danger    bool            // Apply danger/destructive styling
+	AriaLabel string          // Accessible name for the item
 }
 
 // DropdownItem renders a single actionable item within a dropdown menu.
@@ -80,6 +68,9 @@ type DropdownItemProp struct {
 templ DropdownItem(prop DropdownItemProp) {
 	if prop.Href != "" {
 		<a
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			href={ templ.SafeURL(prop.Href) }
 			class={ dropdownItemClass(prop) }
 			role="menuitem"
@@ -95,6 +86,9 @@ templ DropdownItem(prop DropdownItemProp) {
 		</a>
 	} else {
 		<button
+			if prop.Id != "" {
+				id={ prop.Id }
+			}
 			class={ dropdownItemClass(prop) }
 			type="button"
 			role="menuitem"
@@ -113,13 +107,15 @@ templ DropdownItem(prop DropdownItemProp) {
 
 // DropdownDividerProp configures the dropdown divider component.
 type DropdownDividerProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // DropdownDivider renders a horizontal separator within a dropdown menu.
 templ DropdownDivider(prop DropdownDividerProp) {
 	<hr
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
 		class={ dropdownDividerClass(prop) }
 		role="separator"
 		aria-orientation="horizontal"
@@ -138,13 +134,19 @@ func dropdownDividerClass(prop DropdownDividerProp) string {
 
 // DropdownLabelProp configures the dropdown group label component.
 type DropdownLabelProp struct {
-	Class      string           // Additional CSS classes
-	Attributes templ.Attributes // Additional HTML attributes
+	BaseProp // Standard Id, Class, and Attributes
 }
 
 // DropdownLabel renders a non-interactive group label within a dropdown menu.
 templ DropdownLabel(prop DropdownLabelProp) {
-	<div class={ dropdownLabelClass(prop) } role="presentation" { prop.Attributes... }>
+	<div
+		if prop.Id != "" {
+			id={ prop.Id }
+		}
+		class={ dropdownLabelClass(prop) }
+		role="presentation"
+		{ prop.Attributes... }
+	>
 		{ children... }
 	</div>
 }
@@ -175,6 +177,9 @@ func dropdownItemClass(prop DropdownItemProp) string {
 	classes := "dropdown__item"
 	if prop.Danger {
 		classes += " dropdown__item--danger"
+	}
+	if prop.Class != "" {
+		classes += " " + prop.Class
 	}
 	return classes
 }

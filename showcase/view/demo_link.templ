@@ -53,10 +53,10 @@ templ LinkDemo() {
 					<h3 class="doc-demo__group-title">Icon-only Links</h3>
 					<p class="text-sm text-secondary" style="margin-bottom: var(--spacing-4);">Use AriaLabel for accessibility when links have no visible text.</p>
 					<div class="doc-demo__list">
-						@ui.Link(ui.LinkProp{Variant: ui.ButtonOutline, Href: "#", Class: "btn--icon", AriaLabel: "View settings"}) {
+						@ui.Link(ui.LinkProp{BaseProp: ui.BaseProp{Class: "btn--icon"}, Variant: ui.ButtonOutline, Href: "#", AriaLabel: "View settings"}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeMD})
 						}
-						@ui.Link(ui.LinkProp{Variant: ui.ButtonGhost, Href: "#", Class: "btn--icon", AriaLabel: "Edit profile"}) {
+						@ui.Link(ui.LinkProp{BaseProp: ui.BaseProp{Class: "btn--icon"}, Variant: ui.ButtonGhost, Href: "#", AriaLabel: "Edit profile"}) {
 							@ui.Icon(ui.IconProp{Icon: ui.IconEdit(), Size: ui.IconSizeMD})
 						}
 					</div>

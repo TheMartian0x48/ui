@@ -44,7 +44,7 @@ templ TooltipDemo() {
 					<div class="doc-demo__list" style="gap: var(--spacing-6); align-items: center;">
 						<!-- Icon Button with Tooltip -->
 						@ui.Tooltip(ui.TooltipProp{Content: "Delete Item", Position: ui.TooltipTop}) {
-							@ui.Button(ui.ButtonProp{Variant: ui.ButtonGhost, Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Delete"}}) {
+							@ui.Button(ui.ButtonProp{BaseProp: ui.BaseProp{Class: "btn--icon", Attributes: templ.Attributes{"aria-label": "Delete"}}, Variant: ui.ButtonGhost}) {
 								@ui.IconTrash()
 							}
 						}

@@ -2,53 +2,49 @@ package ui
 
 import "strings"
 
+// SwitchSize defines the physical scale of the switch component.
 type SwitchSize int
 
 const (
-	SwitchSizeMD SwitchSize = iota // default
-	SwitchSizeSM
-	SwitchSizeLG
+	SwitchSizeMD SwitchSize = iota // Standard medium size (default)
+	SwitchSizeSM                   // Compact small size
+	SwitchSizeLG                   // Large prominent size
 )
 
-// SwitchProp configures a toggle switch component.
-// Use for binary on/off settings like preferences and feature toggles.
+// SwitchProp configures a toggle switch (binary checkbox) component.
 type SwitchProp struct {
-	Name            string           // Form field name
-	Label           string           // Visible label text
-	Description     string           // Helper text below label
-	Checked         bool             // Whether switch is on
-	Disabled        bool             // Prevents interaction
-	Required        bool             // Form validation requirement
-	Error           bool             // Shows error styling
-	Size            SwitchSize       // Size variant (SM, MD, LG)
-	Class           string           // Additional CSS classes
-	Id              string           // HTML id attribute
-	Attributes      templ.Attributes // Additional HTML attributes
-	AriaLabel       string           // Screen reader label (when no visible label)
-	AriaDescribedBy string           // ID of element describing this switch
+	BaseProp                    // Standard Id, Class, and Attributes
+	Name            string      // Form field name for data submission
+	Label           string      // Main descriptive text displayed next to the switch
+	Description     string      // Secondary helper text displayed below the label
+	Checked         bool        // Sets the initial "on" state (controlled)
+	Disabled        bool        // Prevents interaction and applies muted styling
+	Required        bool        // Marks the toggle as mandatory for form submission
+	Error           bool        // Applies error styling (red glow/border)
+	Size            SwitchSize  // Visual scale variant
+	AriaLabel       string      // Accessible name when no visible label is used
+	AriaDescribedBy string      // ID of the element providing additional context
 }
 
-// Switch renders a toggleable switch component.
-// Supports checked, disabled, and error states with optional label and description.
+// Switch renders a modern, accessible toggle component.
+//
+// Visually distinct from Checkbox, it is optimized for settings and preferences
+// that take effect immediately or represent clear binary states.
+//
+// Usage:
+//   @ui.Switch(ui.SwitchProp{Name: "notifications", Label: "Enable Notifications"})
 templ Switch(prop SwitchProp) {
 	{{
-		id := prop.Id
-		if id == "" && prop.Name != "" {
-			id = "switch-" + prop.Name
-		}
+		id := GetID(prop.Id, "switch")
 	}}
 	<label
 		class={ switchContainerClass(prop) }
-		if id != "" {
-			for={ id }
-		}
+		for={ id }
 	>
 		<input
 			type="checkbox"
 			role="switch"
-			if id != "" {
-				id={ id }
-			}
+			id={ id }
 			if prop.Name != "" {
 				name={ prop.Name }
 			}

@@ -2,25 +2,28 @@ package ui
 
 import "strings"
 
-// RadioProp configures a radio input component.
-// Radio buttons in the same group should share the same Name value.
+// RadioProp configures a custom-styled radio input component.
 type RadioProp struct {
-	Id              string           // HTML id attribute
-	Name            string           // Form field name (groups radios together)
-	Value           string           // Value submitted when selected
-	Label           string           // Visible label text
-	Checked         bool             // Whether radio is selected
-	Disabled        bool             // Prevents interaction
-	Required        bool             // Form validation requirement
-	Error           bool             // Shows error styling
-	Class           string           // Additional CSS classes
-	Attributes      templ.Attributes // Additional HTML attributes
-	AriaLabel       string           // Screen reader label (when no visible label)
-	AriaDescribedBy string           // ID of element describing this radio (e.g., error message)
+	BaseProp                    // Standard Id, Class, and Attributes
+	Name            string      // Name attribute (radios with same name form a group)
+	Value           string      // The value submitted when this radio is selected
+	Label           string      // Descriptive text displayed next to the radio
+	Checked         bool        // Sets the initial selected state (controlled)
+	Disabled        bool        // Prevents interaction and applies muted styling
+	Required        bool        // Marks the radio group as mandatory
+	Error           bool        // Applies error styling
+	AriaLabel       string      // Accessible name when no visible label is used
+	AriaDescribedBy string      // ID of the helper/error text for accessibility
 }
 
-// Radio renders a custom-styled radio input with optional label.
-// Supports checked, disabled, and error states.
+// Radio renders a themeable, accessible radio button input.
+//
+// Uses a hidden native radio for form compatibility and a custom styled
+// circle for the visual representation. Designed to be used in groups
+// where only one option can be selected at a time.
+//
+// Usage:
+//   @ui.Radio(ui.RadioProp{Name: "gender", Value: "male", Label: "Male"})
 templ Radio(prop RadioProp) {
 	<label
 		class={ radioClass(prop) }

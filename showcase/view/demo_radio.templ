@@ -17,14 +17,14 @@ templ RadioDemo() {
 					<h3 class="doc-demo__group-title">Basic Usage (Grouped)</h3>
 					<div class="doc-demo__list doc-demo__list--column">
 						@ui.Radio(ui.RadioProp{
-							Id:      "radio-1",
+							BaseProp: ui.BaseProp{Id: "radio-1"},
 							Name:    "radio-group-1",
 							Value:   "option1",
 							Label:   "Option 1",
 							Checked: true,
 						})
 						@ui.Radio(ui.RadioProp{
-							Id:    "radio-2",
+							BaseProp: ui.BaseProp{Id: "radio-2"},
 							Name:  "radio-group-1",
 							Value: "option2",
 							Label: "Option 2",
@@ -36,19 +36,19 @@ templ RadioDemo() {
 					<h3 class="doc-demo__group-title">States</h3>
 					<div class="doc-demo__list doc-demo__list--column">
 						@ui.Radio(ui.RadioProp{
-							Id:       "disabled-radio",
+							BaseProp: ui.BaseProp{Id: "disabled-radio"},
 							Label:    "Disabled unselected",
 							Disabled: true,
 						})
 						@ui.Radio(ui.RadioProp{
-							Id:       "disabled-checked-radio",
+							BaseProp: ui.BaseProp{Id: "disabled-checked-radio"},
 							Label:    "Disabled selected",
 							Disabled: true,
 							Checked:  true,
 						})
 						<div>
 							@ui.Radio(ui.RadioProp{
-								Id:              "error-radio",
+								BaseProp:        ui.BaseProp{Id: "error-radio"},
 								Name:            "error-group",
 								Label:           "Error state with description",
 								Error:           true,
@@ -65,20 +65,20 @@ templ RadioDemo() {
 						@ui.Card(ui.CardProp{Header: "Choose Plan"}) {
 							<div style="display: flex; flex-direction: column; gap: var(--spacing-3);">
 								@ui.Radio(ui.RadioProp{
-									Id:      "plan-basic",
+									BaseProp: ui.BaseProp{Id: "plan-basic"},
 									Name:    "plan",
 									Value:   "basic",
 									Label:   "Basic (Free)",
 									Checked: true,
 								})
 								@ui.Radio(ui.RadioProp{
-									Id:    "plan-pro",
+									BaseProp: ui.BaseProp{Id: "plan-pro"},
 									Name:  "plan",
 									Value: "pro",
 									Label: "Pro ($9/mo)",
 								})
 								@ui.Radio(ui.RadioProp{
-									Id:    "plan-enterprise",
+									BaseProp: ui.BaseProp{Id: "plan-enterprise"},
 									Name:  "plan",
 									Value: "enterprise",
 									Label: "Enterprise (Contact Us)",
