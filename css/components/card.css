@@ -9,6 +9,29 @@
     flex-direction: column;
     height: 100%;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
+    container-type: inline-size;
+}
+
+/* Container query for horizontal layout when space allows */
+@container (min-width: 500px) {
+    .card--horizontal {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .card--horizontal .card__media {
+        width: 30%;
+        max-width: 250px;
+        aspect-ratio: auto;
+    }
+
+    .card--horizontal .card__media img {
+        height: 100%;
+    }
+
+    .card--horizontal .card__content {
+        padding-top: var(--spacing-6);
+    }
 }
 
 /* Variants */

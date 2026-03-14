@@ -25,21 +25,21 @@
 
 ### Consistency (Go Templ)
 
-- [ ] `accordion.templ:54-56` — Replace custom `generateTitleId()`/`generateContentId()` with shared `GetID()` pattern
-- [ ] `card.templ:73-89` — Replace string concatenation (`+`) with `strings.Builder` to match other components
-- [ ] `button.templ:93-135` / `link.templ:60-102` — Extract shared class-building logic to reduce duplication
+- [x] `accordion.templ:54-56` — Replace custom `generateTitleId()`/`generateContentId()` with shared `GetID()` pattern
+- [x] `card.templ:73-89` — Replace string concatenation (`+`) with `strings.Builder` to match other components
+- [x] `button.templ:93-135` / `link.templ:60-102` — Extract shared class-building logic to reduce duplication
 
 ### CSS
 
-- [ ] `variables.css` — Remove redundant `--font-size-md` (duplicate of `--font-size-base`, both `1rem`)
-- [ ] `dialog.css` — Add mobile-responsive `max-width` (currently no adjustment for small screens)
-- [ ] `toast.css` — Prevent overflow on screens < 320px (fixed widths 300-400px)
+- [x] `variables.css` — Remove redundant `--font-size-md` (duplicate of `--font-size-base`, both `1rem`). make it alias to --font-size-base
+- [x] `dialog.css` — Add mobile-responsive `max-width` (currently no adjustment for small screens)
+- [x] `toast.css` — Prevent overflow on screens < 320px (fixed widths 300-400px)
 
 ### JS
 
-- [ ] `dropzone.js` — Add keyboard support for drag-and-drop interactions
-- [ ] `autocomplete.js:10` — Invalidate `_filtered` cache when `options` change externally
-- [ ] `autocomplete.js:19-21` — Add type validation for option objects (assumes `opt.label` is always a string)
+- [x] `dropzone.js` — Add keyboard support for drag-and-drop interactions
+- [x] `autocomplete.js:10` — Invalidate `_filtered` cache when `options` change externally
+- [x] `autocomplete.js:19-21` — Add type validation for option objects (assumes `opt.label` is always a string)
 
 ## Low Priority
 

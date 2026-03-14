@@ -158,8 +158,9 @@ templ DrawerTrigger(drawerId string, variant ButtonVariant) {
 	@Button(ButtonProp{
 		BaseProp: BaseProp{
 			Attributes: templ.Attributes{
-				"x-data": "",
-				"@click": fmt.Sprintf("$dispatch('open-drawer', '%s')", drawerId),
+				"x-data":  "",
+				"@click":  "$dispatch('open-drawer', drawerId)",
+				":x-init": fmt.Sprintf("drawerId = '%s'", drawerId),
 			},
 		},
 		Variant: variant,

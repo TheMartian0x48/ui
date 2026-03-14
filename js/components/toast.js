@@ -23,13 +23,25 @@
     // Transition duration (matches CSS --transition-base)
     const getTransitionDuration = () => (window.uiUtils?.prefersReducedMotion ? 0 : 250);
 
-    // SVG icons for each toast type
-    const TOAST_ICONS = {
-        success: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon icon--md"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`,
-        error: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon icon--md"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`,
-        warning: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon icon--md"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`,
-        info: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon icon--md"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+    // SVG icons for each toast type - defined once and cloned
+    const TOAST_ICON_TEMPLATES = {
+        success: createIconTemplate('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'),
+        error: createIconTemplate('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'),
+        warning: createIconTemplate('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>'),
+        info: createIconTemplate('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'),
+        close: createIconTemplate('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>', 'icon--sm')
     };
+
+    function createIconTemplate(path, sizeClass = 'icon--md') {
+        const template = document.createElement('template');
+        template.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon ${sizeClass}">${path}</svg>`;
+        return template;
+    }
+
+    function getIcon(type) {
+        const template = TOAST_ICON_TEMPLATES[type] || TOAST_ICON_TEMPLATES.info;
+        return template.content.cloneNode(true);
+    }
 
     /**
      * Get or create toast container for a position
@@ -113,21 +125,33 @@
         toast.setAttribute('aria-live', liveValue);
 
         // Build toast content
-        const iconHtml = `<div class="toast__icon">${TOAST_ICONS[type] || TOAST_ICONS.info}</div>`;
-        const titleHtml = title ? `<div class="toast__title">${escape(title)}</div>` : '';
-        const messageHtml = `<div class="toast__message">${escape(message)}</div>`;
-        const closeHtml = `
-            <button class="toast__close" aria-label="Close notification">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon icon--sm">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        `;
+        const iconContainer = document.createElement('div');
+        iconContainer.className = 'toast__icon';
+        iconContainer.appendChild(getIcon(type));
 
-        toast.innerHTML = `${iconHtml}<div class="toast__content">${titleHtml}${messageHtml}</div>${closeHtml}`;
+        const content = document.createElement('div');
+        content.className = 'toast__content';
+        if (title) {
+            const titleEl = document.createElement('div');
+            titleEl.className = 'toast__title';
+            titleEl.textContent = title;
+            content.appendChild(titleEl);
+        }
+        const messageEl = document.createElement('div');
+        messageEl.className = 'toast__message';
+        messageEl.textContent = message;
+        content.appendChild(messageEl);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast__close';
+        closeBtn.setAttribute('aria-label', 'Close notification');
+        closeBtn.appendChild(getIcon('close'));
+
+        toast.appendChild(iconContainer);
+        toast.appendChild(content);
+        toast.appendChild(closeBtn);
 
         // Add close button handler
-        const closeBtn = toast.querySelector('.toast__close');
         closeBtn.addEventListener('click', () => dismissToast(toast, position));
 
         // Add keyboard handler (Escape to dismiss)

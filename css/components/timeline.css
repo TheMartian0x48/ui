@@ -47,7 +47,7 @@
 .timeline--compact::before {
     content: "";
     position: absolute;
-    left: calc(var(--timeline-marker-size) / 2 - 1px);
+    inset-inline-start: calc(var(--timeline-marker-size) / 2 - 1px);
     top: var(--timeline-marker-size);
     bottom: var(--timeline-marker-size);
     width: 2px;
@@ -191,38 +191,38 @@
     }
 
     .timeline--alternate::before {
-        left: 50%;
+        inset-inline-start: 50%;
         transform: translateX(-50%);
     }
 
     .timeline--alternate .timeline__item {
         width: 50%;
-        padding-right: var(--spacing-8);
+        padding-inline-end: var(--spacing-8);
     }
 
     .timeline--alternate .timeline__item:nth-child(even) {
-        margin-left: 50%;
-        padding-left: var(--spacing-8);
-        padding-right: 0;
+        margin-inline-start: 50%;
+        padding-inline-start: var(--spacing-8);
+        padding-inline-end: 0;
         flex-direction: row-reverse;
     }
 
     .timeline--alternate .timeline__item:nth-child(odd) .timeline__marker {
         position: absolute;
-        right: calc(-1 * var(--timeline-marker-size) / 2);
+        inset-inline-end: calc(-1 * var(--timeline-marker-size) / 2);
     }
 
     .timeline--alternate .timeline__item:nth-child(even) .timeline__marker {
         position: absolute;
-        left: calc(-1 * var(--timeline-marker-size) / 2);
+        inset-inline-start: calc(-1 * var(--timeline-marker-size) / 2);
     }
 
     .timeline--alternate .timeline__item:nth-child(odd) .timeline__header {
         justify-content: flex-end;
-        text-align: right;
+        text-align: end;
     }
 
     .timeline--alternate .timeline__item:nth-child(odd) .timeline__body {
-        text-align: right;
+        text-align: end;
     }
 }

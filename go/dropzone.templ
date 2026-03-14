@@ -35,6 +35,7 @@ templ Dropzone(prop DropzoneProp) {
 		@dragover.prevent="handleDragOver($event)"
 		@dragleave.prevent="handleDragLeave()"
 		@drop.prevent="handleDrop($event)"
+		@paste="handlePaste($event)"
 		:class="{ 'dropzone--dragging': isDragging }"
 		{ prop.Attributes... }
 	>
@@ -82,10 +83,20 @@ templ Dropzone(prop DropzoneProp) {
 					@Icon(IconProp{Icon: IconFileText(), Size: IconSizeLG})
 				</div>
 				<div class="dropzone__file-list">
-					<template x-for="file in files">
+					<template x-for="(file, index) in files" :key="index">
 						<div class="dropzone__file-item">
-							<span class="dropzone__file-name" x-text="file.name"></span>
-							<span class="dropzone__file-size" x-text="formatSize(file.size)"></span>
+							<div class="dropzone__file-info">
+								<span class="dropzone__file-name" x-text="file.name"></span>
+								<span class="dropzone__file-size" x-text="formatSize(file.size)"></span>
+							</div>
+							<button
+								type="button"
+								class="dropzone__file-remove"
+								@click.stop.prevent="removeFile(index)"
+								aria-label="Remove file"
+							>
+								@Icon(IconProp{Icon: IconX(), Size: IconSizeSM})
+							</button>
 						</div>
 					</template>
 				</div>

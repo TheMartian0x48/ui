@@ -19,18 +19,42 @@ window.dropzone = function(options = {}) {
         handleDrop(e) {
             if (this.disabled) return;
             this.isDragging = false;
-            this.files = Array.from(e.dataTransfer.files);
+            this.updateFiles(Array.from(e.dataTransfer.files));
+        },
 
+        handleFiles(e) {
+            this.files = Array.from(e.target.files);
+        },
+
+        handlePaste(e) {
+            if (this.disabled) return;
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            const pastedFiles = [];
+            for (const item of items) {
+                if (item.kind === 'file') {
+                    pastedFiles.push(item.getAsFile());
+                }
+            }
+            if (pastedFiles.length > 0) {
+                this.updateFiles(pastedFiles);
+            }
+        },
+
+        removeFile(index) {
+            if (this.disabled) return;
+            const newFiles = [...this.files];
+            newFiles.splice(index, 1);
+            this.updateFiles(newFiles);
+        },
+
+        updateFiles(fileList) {
+            this.files = fileList;
             if (this.$refs.fileInput) {
                 const dt = new DataTransfer();
                 this.files.forEach(file => dt.items.add(file));
                 this.$refs.fileInput.files = dt.files;
                 this.$refs.fileInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
-        },
-
-        handleFiles(e) {
-            this.files = Array.from(e.target.files);
         },
 
         formatSize(size) {

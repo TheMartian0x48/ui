@@ -21,6 +21,13 @@
 
 .form-field__label {
     margin-bottom: var(--spacing-1);
+    transition: color var(--transition-fast);
+}
+
+.form-field:has(.input:focus) .form-field__label,
+.form-field:has(.textarea:focus) .form-field__label,
+.form-field:has(.select:focus) .form-field__label {
+    color: var(--color-primary);
 }
 
 .form-field__control {

@@ -36,7 +36,7 @@
 .dropdown__menu {
     position: absolute;
     top: calc(100% + var(--spacing-1));
-    left: 0;
+    inset-inline-start: 0;
     z-index: var(--z-dropdown);
 
     min-width: 12rem;
@@ -53,13 +53,13 @@
 
     /* Animation */
     animation: dropdown-fade-in var(--transition-fast) forwards;
-    transform-origin: top left;
+    transform-origin: top inline-start;
 }
 
 .dropdown--right .dropdown__menu {
-    left: auto;
-    right: 0;
-    transform-origin: top right;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    transform-origin: top inline-end;
 }
 
 .dropdown__item {
@@ -71,7 +71,7 @@
     font-size: var(--font-size-sm);
     color: var(--color-text);
     text-decoration: none;
-    text-align: left;
+    text-align: start;
 
     background: transparent;
     border: none;
