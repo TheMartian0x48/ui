@@ -24,6 +24,7 @@ type DropzoneProp struct {
 //   @ui.Dropzone(ui.DropzoneProp{Name: "files", Multiple: true, Accept: "image/*"})
 templ Dropzone(prop DropzoneProp) {
 	{{ dzId := GetID(prop.Id, "dz") }}
+	{{ inputId := dzId + "-input" }}
 	{{ helpTextId := dzId + "-help" }}
 	<div
 		if prop.Id != "" {
@@ -39,7 +40,7 @@ templ Dropzone(prop DropzoneProp) {
 	>
 		<input
 			type="file"
-			id={ dzId }
+			id={ inputId }
 			x-ref="fileInput"
 			class="dropzone__input visually-hidden"
 			if prop.Name != "" {
@@ -60,7 +61,7 @@ templ Dropzone(prop DropzoneProp) {
 			}
 			@change="handleFiles($event)"
 		/>
-		<label class="dropzone__label" for={ dzId }>
+		<label class="dropzone__label" for={ inputId }>
 			<div class="dropzone__content" x-show="!files || files.length === 0">
 				<div class="dropzone__icon-wrapper">
 					@Icon(IconProp{Icon: IconUploadCloud(), Size: IconSizeLG})

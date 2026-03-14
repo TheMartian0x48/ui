@@ -143,8 +143,8 @@
 }
 
 .toast__close:focus-visible {
-    outline: var(--border-width-medium) solid var(--color-primary);
-    outline-offset: var(--border-width-medium);
+    outline: var(--border-width-thin) solid var(--color-primary);
+    outline-offset: var(--border-width-thin);
 }
 
 .toast__close:hover {

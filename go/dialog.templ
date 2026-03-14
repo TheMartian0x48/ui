@@ -130,9 +130,10 @@ templ DialogTrigger(dialogId string) {
 	@Button(ButtonProp{
 		BaseProp: BaseProp{
 			Attributes: templ.Attributes{
-				"onclick":       "document.getElementById('" + dialogId + "').showModal()",
-				"aria-haspopup": "dialog",
-				"aria-controls": dialogId,
+				"@click":             "document.getElementById($el.dataset.dialogTarget).showModal()",
+				"data-dialog-target": dialogId,
+				"aria-haspopup":      "dialog",
+				"aria-controls":      dialogId,
 			},
 		},
 		Variant: ButtonPrimary,

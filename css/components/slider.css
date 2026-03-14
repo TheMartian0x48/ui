@@ -46,13 +46,11 @@
     appearance: none;
     width: 100%;
     height: var(--slider-track-height);
-    background: linear-gradient(
-        to right,
-        var(--color-primary) 0%,
-        var(--color-primary) var(--slider-pct, 0%),
-        var(--color-bg-tertiary) var(--slider-pct, 0%),
-        var(--color-bg-tertiary) 100%
-    );
+    background: linear-gradient(to right,
+            var(--color-primary) 0%,
+            var(--color-primary) var(--slider-pct, 0%),
+            var(--color-bg-tertiary) var(--slider-pct, 0%),
+            var(--color-bg-tertiary) 100%);
     border-radius: var(--radius-full);
     outline: none;
     cursor: pointer;
@@ -81,7 +79,7 @@
     width: var(--slider-thumb-size);
     height: var(--slider-thumb-size);
     background: var(--color-primary);
-    border: var(--border-width-medium) solid var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-bg);
     border-radius: var(--radius-full);
     margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2);
     cursor: pointer;
@@ -104,7 +102,7 @@
     width: var(--slider-thumb-size);
     height: var(--slider-thumb-size);
     background: var(--color-primary);
-    border: var(--border-width-medium) solid var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-bg);
     border-radius: var(--radius-full);
     cursor: pointer;
     box-shadow: var(--shadow-sm);

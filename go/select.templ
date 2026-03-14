@@ -48,6 +48,7 @@ templ Select(prop SelectProp) {
 			class={ selectClass(prop) }
 			if prop.Required {
 				required
+				aria-required="true"
 			}
 			if prop.Disabled {
 				disabled

@@ -29,7 +29,7 @@
     color: var(--color-text-muted);
     cursor: pointer;
 
-    border-bottom: var(--border-width-medium) solid transparent;
+    border-bottom: var(--border-width-thin) solid transparent;
     transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 

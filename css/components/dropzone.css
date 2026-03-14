@@ -12,7 +12,7 @@
     justify-content: center;
     width: 100%;
     min-height: 12rem;
-    border: var(--border-width-medium) dashed var(--color-border);
+    border: var(--border-width-thin) dashed var(--color-border);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg-secondary);
     transition: all var(--transition-base);
@@ -124,7 +124,7 @@
 }
 
 /* Focus state for keyboard accessibility */
-.dropzone__input:focus-visible + .dropzone__label {
-    outline: var(--border-width-medium) solid var(--color-primary);
+.dropzone__input:focus-visible+.dropzone__label {
+    outline: var(--border-width-thin) solid var(--color-primary);
     outline-offset: var(--spacing-1);
 }
