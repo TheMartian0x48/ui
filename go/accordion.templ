@@ -1,6 +1,8 @@
 package ui
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // AccordionVariant defines the visual style and containment of the accordion.
 type AccordionVariant int
@@ -49,10 +51,11 @@ templ Accordion(prop AccordionProp) {
 		class={ accordionClass(prop.Variant, prop.Class) }
 		{ prop.Attributes... }
 	>
+	{{ baseId := GetID(prop.IdPrefix, GetID(prop.Id, "accordion")) }}
 		for i, item := range prop.Items {
 			{{
-				titleID := generateTitleId(prop.IdPrefix, prop.Id, i)
-				contentID := generateContentId(prop.IdPrefix, prop.Id, i)
+				titleID := baseId + "-" + strconv.Itoa(i) + "-title"
+				contentID := baseId + "-" + strconv.Itoa(i) + "-content"
 			}}
 			<details
 				if item.Id != "" {
@@ -94,28 +97,6 @@ templ Accordion(prop AccordionProp) {
 			</details>
 		}
 	</div>
-}
-
-// generateTitleId creates a unique ID for the accordion item title.
-func generateTitleId(prefix, id string, index int) string {
-	if prefix != "" {
-		return prefix + "-title-" + strconv.Itoa(index)
-	}
-	if id != "" {
-		return id + "-title-" + strconv.Itoa(index)
-	}
-	return "accordion-title-" + strconv.Itoa(index)
-}
-
-// generateContentId creates a unique ID for the accordion item content.
-func generateContentId(prefix, id string, index int) string {
-	if prefix != "" {
-		return prefix + "-content-" + strconv.Itoa(index)
-	}
-	if id != "" {
-		return id + "-content-" + strconv.Itoa(index)
-	}
-	return "accordion-content-" + strconv.Itoa(index)
 }
 
 // accordionClass generates the CSS class string based on variant and custom classes.

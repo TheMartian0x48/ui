@@ -12,7 +12,7 @@
     justify-content: center;
     width: 100%;
     min-height: 12rem;
-    border: var(--border-width-medium) dashed var(--color-border);
+    border: var(--border-width-thin) dashed var(--color-border);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg-secondary);
     transition: all var(--transition-base);
@@ -108,6 +108,15 @@
     border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
+    gap: var(--spacing-3);
+}
+
+.dropzone__file-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    flex: 1;
 }
 
 .dropzone__file-name {
@@ -115,7 +124,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 75%;
+    width: 100%;
+    text-align: start;
 }
 
 .dropzone__file-size {
@@ -123,8 +133,31 @@
     font-size: var(--font-size-xs);
 }
 
+.dropzone__file-remove {
+    background: none;
+    border: none;
+    padding: var(--spacing-1);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.dropzone__file-remove:hover {
+    color: var(--color-danger);
+    background-color: var(--color-danger-subtle-bg);
+}
+
+.dropzone__file-remove:focus-visible {
+    outline: var(--border-width-thin) solid var(--color-danger);
+    outline-offset: 1px;
+}
+
 /* Focus state for keyboard accessibility */
-.dropzone__input:focus-visible + .dropzone__label {
-    outline: var(--border-width-medium) solid var(--color-primary);
+.dropzone__input:focus-visible+.dropzone__label {
+    outline: var(--border-width-thin) solid var(--color-primary);
     outline-offset: var(--spacing-1);
 }

@@ -1,5 +1,7 @@
 package ui
 
+import "strings"
+
 // CardVariant defines the visual surface and border style of the card.
 type CardVariant int
 
@@ -70,21 +72,23 @@ func imageAlt(prop CardProp) string {
 
 // cardClass generates the CSS class for the card.
 func cardClass(prop CardProp) string {
-	base := "card"
+	var b strings.Builder
+	b.Grow(30)
 
-	var variantClass string
+	b.WriteString("card")
+
 	switch prop.Variant {
 	case CardOutlined:
-		variantClass = "card--outlined"
+		b.WriteString(" card--outlined")
 	case CardFlat:
-		variantClass = "card--flat"
+		b.WriteString(" card--flat")
 	default:
-		variantClass = "card--elevated"
+		b.WriteString(" card--elevated")
 	}
 
-	result := base + " " + variantClass
 	if prop.Class != "" {
-		result += " " + prop.Class
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
 	}
-	return result
+	return b.String()
 }

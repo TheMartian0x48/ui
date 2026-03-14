@@ -89,15 +89,9 @@ func buttonType(prop ButtonProp) string {
 	}
 }
 
-// buttonClass generates the CSS class for the button based on variant and size.
-func buttonClass(prop ButtonProp) string {
-	var b strings.Builder
-	b.Grow(40)
-
-	b.WriteString("btn")
-
-	// Determine variant class
-	switch prop.Variant {
+// writeBtnVariantClass writes the variant modifier class to b.
+func writeBtnVariantClass(b *strings.Builder, variant ButtonVariant) {
+	switch variant {
 	case ButtonSecondary:
 		b.WriteString(" btn--secondary")
 	case ButtonOutline:
@@ -109,9 +103,11 @@ func buttonClass(prop ButtonProp) string {
 	default:
 		b.WriteString(" btn--primary")
 	}
+}
 
-	// Determine size class
-	switch prop.Size {
+// writeBtnSizeClass writes the size modifier class to b.
+func writeBtnSizeClass(b *strings.Builder, size ButtonSize) {
+	switch size {
 	case ButtonSizeSM:
 		b.WriteString(" btn--sm")
 	case ButtonSizeLG:
@@ -119,13 +115,20 @@ func buttonClass(prop ButtonProp) string {
 	default:
 		b.WriteString(" btn--md")
 	}
+}
 
-	// Add loading class if loading
+// buttonClass generates the CSS class for the button based on variant and size.
+func buttonClass(prop ButtonProp) string {
+	var b strings.Builder
+	b.Grow(40)
+
+	b.WriteString("btn")
+	writeBtnVariantClass(&b, prop.Variant)
+	writeBtnSizeClass(&b, prop.Size)
+
 	if prop.Loading {
 		b.WriteString(" btn--loading")
 	}
-
-	// Add custom class if provided
 	if prop.Class != "" {
 		b.WriteString(" ")
 		b.WriteString(prop.Class)

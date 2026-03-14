@@ -109,7 +109,9 @@ templ Alert(prop AlertProp) {
 							}
 							type="button"
 							class={ "btn " + action.ButtonStyle + " " + action.Class }
-							@click={ "this.$dispatch('" + action.EventName + "', '" + action.EventData + "')" }
+							@click="$dispatch($el.dataset.eventName, $el.dataset.eventData)"
+							data-event-name={ action.EventName }
+							data-event-data={ action.EventData }
 							aria-label={ action.Label }
 							{ action.Attributes... }
 						>

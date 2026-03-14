@@ -16,9 +16,10 @@ window.autocomplete = function(options = {}) {
                 this._filtered = this.options;
             } else {
                 const term = this.search.toLowerCase();
-                this._filtered = this.options.filter(opt => 
-                    opt.label.toLowerCase().includes(term)
-                );
+                this._filtered = this.options.filter(opt => {
+                    const label = String(opt?.label || '');
+                    return label.toLowerCase().includes(term);
+                });
             }
             return this._filtered;
         },
@@ -51,7 +52,7 @@ window.autocomplete = function(options = {}) {
             this.search = option.label;
             this.open = false;
             this._filtered = null;
-            this.$refs.input.focus();
+            this.$refs?.input?.focus();
             this.$dispatch('autocomplete-select', { 
                 value: option.value, 
                 label: option.label 
@@ -59,10 +60,33 @@ window.autocomplete = function(options = {}) {
         },
 
         init() {
+            // Visually hidden live region so screen readers announce result counts
+            this._announcer = document.createElement('div');
+            this._announcer.setAttribute('aria-live', 'polite');
+            this._announcer.setAttribute('aria-atomic', 'true');
+            this._announcer.className = 'visually-hidden';
+            this.$el.appendChild(this._announcer);
+
             this.$watch('search', () => {
                 this._filtered = null;
                 if (this.open) {
                     this.highlightedIndex = 0;
+                }
+            });
+
+            this.$watch('options', () => {
+                this._filtered = null;
+                if (this.open) {
+                    this.highlightedIndex = 0;
+                }
+            });
+
+            this.$watch('open', (isOpen) => {
+                if (isOpen) {
+                    const count = this.getFiltered().length;
+                    this._announcer.textContent = count === 0
+                        ? 'No results found.'
+                        : `${count} result${count === 1 ? '' : 's'} available.`;
                 }
             });
         }

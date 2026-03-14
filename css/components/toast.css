@@ -29,34 +29,34 @@
 /* Positions */
 .toast-container--bottom-right {
     bottom: var(--spacing-6);
-    right: var(--spacing-6);
+    inset-inline-end: var(--spacing-6);
 }
 
 .toast-container--bottom-left {
     bottom: var(--spacing-6);
-    left: var(--spacing-6);
+    inset-inline-start: var(--spacing-6);
 }
 
 .toast-container--bottom-center {
     bottom: var(--spacing-6);
-    left: 50%;
+    inset-inline-start: 50%;
     transform: translateX(-50%);
     align-items: center;
 }
 
 .toast-container--top-right {
     top: var(--spacing-6);
-    right: var(--spacing-6);
+    inset-inline-end: var(--spacing-6);
 }
 
 .toast-container--top-left {
     top: var(--spacing-6);
-    left: var(--spacing-6);
+    inset-inline-start: var(--spacing-6);
 }
 
 .toast-container--top-center {
     top: var(--spacing-6);
-    left: 50%;
+    inset-inline-start: 50%;
     transform: translateX(-50%);
     align-items: center;
 }
@@ -66,8 +66,8 @@
     align-items: flex-start;
     gap: var(--spacing-4);
     padding: var(--spacing-4);
-    min-width: 300px;
-    max-width: 400px;
+    min-width: min(300px, calc(100vw - var(--spacing-12)));
+    max-width: min(400px, calc(100vw - var(--spacing-12)));
 
     background-color: var(--color-bg-secondary);
     border: var(--border-width-thin) solid var(--color-border);
@@ -143,8 +143,8 @@
 }
 
 .toast__close:focus-visible {
-    outline: var(--border-width-medium) solid var(--color-primary);
-    outline-offset: var(--border-width-medium);
+    outline: var(--border-width-thin) solid var(--color-primary);
+    outline-offset: var(--border-width-thin);
 }
 
 .toast__close:hover {
@@ -172,17 +172,17 @@
 
 /* Border accent for visual distinction */
 .toast--success {
-    border-left: var(--border-width-thick) solid var(--color-success);
+    border-inline-start: var(--border-width-thick) solid var(--color-success);
 }
 
 .toast--warning {
-    border-left: var(--border-width-thick) solid var(--color-warning);
+    border-inline-start: var(--border-width-thick) solid var(--color-warning);
 }
 
 .toast--error {
-    border-left: var(--border-width-thick) solid var(--color-danger);
+    border-inline-start: var(--border-width-thick) solid var(--color-danger);
 }
 
 .toast--info {
-    border-left: var(--border-width-thick) solid var(--color-primary);
+    border-inline-start: var(--border-width-thick) solid var(--color-primary);
 }

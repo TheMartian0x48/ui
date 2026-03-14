@@ -65,16 +65,12 @@ templ Pagination(prop PaginationProp) {
 							class="pagination__link pagination__link--prev"
 							aria-label={ fmt.Sprintf("Go to previous page, page %d", prop.CurrentPage-1) }
 						>
-							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-								<path d="M15 18l-6-6 6-6"></path>
-							</svg>
+							@Icon(IconProp{BaseProp: BaseProp{Class: "pagination__icon"}, Icon: IconArrowLeft(), Size: IconSizeSM})
 							<span class="pagination__prev-text">{ prevLabel }</span>
 						</a>
 					} else {
 						<span class="pagination__link pagination__link--prev pagination__link--disabled" aria-disabled="true">
-							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-								<path d="M15 18l-6-6 6-6"></path>
-							</svg>
+							@Icon(IconProp{BaseProp: BaseProp{Class: "pagination__icon"}, Icon: IconArrowLeft(), Size: IconSizeSM})
 							<span class="pagination__prev-text">{ prevLabel }</span>
 						</span>
 					}
@@ -108,16 +104,12 @@ templ Pagination(prop PaginationProp) {
 							aria-label={ fmt.Sprintf("Go to next page, page %d", prop.CurrentPage+1) }
 						>
 							<span class="pagination__next-text">{ nextLabel }</span>
-							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-								<path d="M9 18l6-6-6-6"></path>
-							</svg>
+							@Icon(IconProp{BaseProp: BaseProp{Class: "pagination__icon"}, Icon: IconArrowRight(), Size: IconSizeSM})
 						</a>
 					} else {
 						<span class="pagination__link pagination__link--next pagination__link--disabled" aria-disabled="true">
 							<span class="pagination__next-text">{ nextLabel }</span>
-							<svg class="pagination__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-								<path d="M9 18l6-6-6-6"></path>
-							</svg>
+							@Icon(IconProp{BaseProp: BaseProp{Class: "pagination__icon"}, Icon: IconArrowRight(), Size: IconSizeSM})
 						</span>
 					}
 				</li>

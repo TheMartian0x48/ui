@@ -27,13 +27,14 @@ type ImagePreviewProp struct {
 // Usage:
 //   @ui.ImagePreview(ui.ImagePreviewProp{Src: "image.jpg", Alt: "Preview", AspectRatio: "16/9"})
 templ ImagePreview(prop ImagePreviewProp) {
+	{{ safeRatio := sanitizeAspectRatio(prop.AspectRatio) }}
 	<div
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
 		class={ imagePreviewClass(prop) }
-		if prop.AspectRatio != "" {
-			style={ "aspect-ratio: " + prop.AspectRatio + ";" }
+		if safeRatio != "" {
+			style={ "aspect-ratio: " + safeRatio + ";" }
 		}
 		if prop.Src == "" {
 			role="img"
@@ -55,6 +56,17 @@ templ ImagePreview(prop ImagePreviewProp) {
 			</div>
 		}
 	</div>
+}
+
+// sanitizeAspectRatio returns ratio only if it contains safe characters (digits, '/', '.', ' ').
+// Rejects anything that could inject CSS (e.g. "16/9; background:url(evil)").
+func sanitizeAspectRatio(ratio string) string {
+	for _, c := range ratio {
+		if (c < '0' || c > '9') && c != '/' && c != '.' && c != ' ' {
+			return ""
+		}
+	}
+	return ratio
 }
 
 // imagePreviewAriaLabel returns an appropriate aria-label for the placeholder.

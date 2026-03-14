@@ -17,7 +17,7 @@
 /* Component-level variables */
 .stepper {
     --stepper-indicator-size: 2rem;
-    --stepper-connector-thickness: var(--border-width-medium);
+    --stepper-connector-thickness: var(--border-width-thin);
 
     width: 100%;
     font-family: var(--font-primary);
@@ -47,10 +47,10 @@
     font-weight: var(--font-weight-bold);
     color: var(--color-text-muted);
     background-color: var(--color-bg-secondary);
-    border: var(--border-width-medium) solid var(--color-border);
+    border: var(--border-width-thin) solid var(--color-border);
     transition: background-color var(--transition-base),
-                border-color var(--transition-base),
-                color var(--transition-base);
+        border-color var(--transition-base),
+        color var(--transition-base);
     z-index: 2;
     flex-shrink: 0;
 }

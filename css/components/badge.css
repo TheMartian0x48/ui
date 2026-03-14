@@ -59,6 +59,22 @@
     gap: var(--spacing-2);
 }
 
+/* Responsive sizes */
+@media (max-width: 640px) {
+    .badge--lg {
+        padding: var(--spacing-px) var(--spacing-3);
+        font-size: var(--font-size-xs);
+        height: var(--spacing-6);
+        gap: var(--spacing-1);
+    }
+
+    .badge--md {
+        padding: 0 var(--spacing-2);
+        font-size: var(--font-size-xs);
+        height: var(--spacing-5);
+    }
+}
+
 /* Rounded/pill shape */
 .badge--rounded {
     border-radius: var(--radius-full);
@@ -188,6 +204,18 @@
     height: 1rem;
 }
 
+@media (max-width: 640px) {
+    .badge--lg .badge__icon {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+
+    .badge--md .badge__icon {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+}
+
 /* ========== Text ========== */
 
 .badge__text {
@@ -202,7 +230,7 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0;
-    margin-left: var(--spacing-1);
+    margin-inline-start: var(--spacing-1);
     background: none;
     border: none;
     color: currentColor;
@@ -234,6 +262,18 @@
 .badge--lg .badge__dismiss {
     width: 1rem;
     height: 1rem;
+}
+
+@media (max-width: 640px) {
+    .badge--lg .badge__dismiss {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+
+    .badge--md .badge__dismiss {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
 }
 
 .badge__dismiss svg {

@@ -62,37 +62,12 @@ func linkClass(prop LinkProp) string {
 	b.Grow(40)
 
 	b.WriteString("btn")
+	writeBtnVariantClass(&b, prop.Variant)
+	writeBtnSizeClass(&b, prop.Size)
 
-	// Variant class
-	switch prop.Variant {
-	case ButtonSecondary:
-		b.WriteString(" btn--secondary")
-	case ButtonOutline:
-		b.WriteString(" btn--outline")
-	case ButtonGhost:
-		b.WriteString(" btn--ghost")
-	case ButtonDanger:
-		b.WriteString(" btn--danger")
-	default:
-		b.WriteString(" btn--primary")
-	}
-
-	// Size class
-	switch prop.Size {
-	case ButtonSizeSM:
-		b.WriteString(" btn--sm")
-	case ButtonSizeLG:
-		b.WriteString(" btn--lg")
-	default:
-		b.WriteString(" btn--md")
-	}
-
-	// Disabled class
 	if prop.Disabled {
 		b.WriteString(" btn--disabled")
 	}
-
-	// Custom class
 	if prop.Class != "" {
 		b.WriteString(" ")
 		b.WriteString(prop.Class)

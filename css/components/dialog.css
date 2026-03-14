@@ -67,6 +67,18 @@ dialog.dialog--xl {
     max-width: 56rem;
 }
 
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+    dialog.dialog,
+    dialog.dialog--sm,
+    dialog.dialog--lg,
+    dialog.dialog--xl {
+        width: calc(100% - var(--spacing-8));
+        max-width: none;
+        margin: auto var(--spacing-4);
+    }
+}
+
 .dialog__content {
     display: flex;
     flex-direction: column;

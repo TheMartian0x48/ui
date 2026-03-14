@@ -26,7 +26,7 @@ type CheckboxProp struct {
 // Usage:
 //   @ui.Checkbox(ui.CheckboxProp{Name: "terms", Label: "I agree to the terms"})
 templ Checkbox(prop CheckboxProp) {
-	<div class={ checkboxClass(prop) }>
+	<label class={ checkboxClass(prop) }>
 		<input
 			type="checkbox"
 			class="checkbox__input"
@@ -47,6 +47,7 @@ templ Checkbox(prop CheckboxProp) {
 			}
 			if prop.Required {
 				required
+				aria-required="true"
 			}
 			if prop.Error {
 				aria-invalid="true"
@@ -67,16 +68,9 @@ templ Checkbox(prop CheckboxProp) {
 			@Icon(IconProp{BaseProp: BaseProp{Class: "checkbox__icon checkbox__icon--indeterminate"}, Icon: IconMinus(), Size: IconSizeSM})
 		</div>
 		if prop.Label != "" {
-			<label
-				class="checkbox__label"
-				if prop.Id != "" {
-					for={ prop.Id }
-				}
-			>
-				{ prop.Label }
-			</label>
+			<span class="checkbox__label">{ prop.Label }</span>
 		}
-	</div>
+	</label>
 }
 
 func checkboxClass(prop CheckboxProp) string {

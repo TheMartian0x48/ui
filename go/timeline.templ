@@ -70,9 +70,7 @@ templ TimelineItem(prop TimelineItemProp) {
 			if prop.Icon != nil {
 				@prop.Icon
 			} else if prop.Completed {
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
-					<path d="M20 6L9 17l-5-5"></path>
-				</svg>
+				@Icon(IconProp{Icon: IconCheck(), Size: IconSizeSM})
 			}
 		</div>
 		<div class="timeline__content">

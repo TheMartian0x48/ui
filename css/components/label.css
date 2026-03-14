@@ -20,7 +20,7 @@
 
 /* Required indicator */
 .label__required {
-    margin-left: var(--spacing-1);
+    margin-inline-start: var(--spacing-1);
     color: var(--color-danger);
     font-weight: var(--font-weight-bold);
 }
