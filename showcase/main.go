@@ -36,7 +36,7 @@ func main() {
 		templ.Handler(view.Showcase(component)).ServeHTTP(w, r)
 	})
 
-	port := ":3000"
+	port := ":9000"
 	fmt.Printf("Displaying showcase on http://localhost%s\n", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatalf("Server failed: %v", err)

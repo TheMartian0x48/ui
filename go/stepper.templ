@@ -13,7 +13,7 @@ const (
 
 // StepItemProp configures a single landmark within a Stepper sequence.
 type StepItemProp struct {
-	BaseProp                    // Standard Id, Class, and Attributes
+	BaseProp              // Standard Id, Class, and Attributes
 	Title       string    // Brief heading for the step
 	Description string    // Optional detailed explanation shown below the title
 	State       StepState // Current status (Inactive, Active, Completed)
@@ -21,10 +21,10 @@ type StepItemProp struct {
 
 // StepperProp configures the overall stepper navigation component.
 type StepperProp struct {
-	BaseProp                    // Standard Id, Class, and Attributes
-	Steps     []StepItemProp    // Ordered list of steps to display
-	Vertical  bool              // Whether to stack steps vertically (default: horizontal)
-	AriaLabel string            // Accessible name for the sequence (e.g. "Checkout progress")
+	BaseProp                 // Standard Id, Class, and Attributes
+	Steps     []StepItemProp // Ordered list of steps to display
+	Vertical  bool           // Whether to stack steps vertically (default: horizontal)
+	AriaLabel string         // Accessible name for the sequence (e.g. "Checkout progress")
 }
 
 // Stepper renders a progress indicator for sequential multi-step tasks.

@@ -69,6 +69,7 @@ dialog.dialog--xl {
 
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
+
     dialog.dialog,
     dialog.dialog--sm,
     dialog.dialog--lg,
@@ -116,10 +117,10 @@ dialog.dialog--xl {
 }
 
 .dialog__footer {
-    padding: var(--spacing-6);
+    padding: var(--spacing-6) var(--spacing-3);
     border-top: var(--border-width-thin) solid var(--color-border);
     display: flex;
     justify-content: flex-end;
     gap: var(--spacing-4);
-    background-color: var(--color-bg-tertiary);
+    background-color: var(--color-bg-secondary);
 }

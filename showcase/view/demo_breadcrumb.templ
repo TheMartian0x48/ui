@@ -12,6 +12,54 @@ templ BreadcrumbDemo() {
 		</header>
 		<div class="doc-demo">
 			<div class="doc-demo__preview">
+				<!-- Bordered -->
+				<div class="doc-demo__group">
+					<h3 class="doc-demo__group-title">Bordered</h3>
+					<div class="doc-demo__list doc-demo__list--column" style="gap: var(--spacing-4);">
+						@ui.Breadcrumb(ui.BreadcrumbProp{Variant: ui.BreadcrumbBordered}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Home
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/products"}) {
+								Products
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Electronics
+							}
+						}
+						@ui.Breadcrumb(ui.BreadcrumbProp{Variant: ui.BreadcrumbBordered, Separator: "›"}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								Dashboard
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/reports"}) {
+								Reports
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								Q4 Summary
+							}
+						}
+						@ui.Breadcrumb(ui.BreadcrumbProp{Variant: ui.BreadcrumbBordered}) {
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-1);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconHome(), Size: ui.IconSizeSM})
+									Home
+								</span>
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/settings"}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-1);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
+									Settings
+								</span>
+							}
+							@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
+								<span style="display: flex; align-items: center; gap: var(--spacing-1);">
+									@ui.Icon(ui.IconProp{Icon: ui.IconUser(), Size: ui.IconSizeSM})
+									Profile
+								</span>
+							}
+						}
+					</div>
+				</div>
 				<!-- Basic Breadcrumb -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Basic Breadcrumb</h3>
@@ -29,7 +77,7 @@ templ BreadcrumbDemo() {
 						}
 					</div>
 				</div>
-				<!-- With Different Separators -->
+				<!-- Custom Separators -->
 				<div class="doc-demo__group">
 					<h3 class="doc-demo__group-title">Custom Separators</h3>
 					<div class="doc-demo__list doc-demo__list--column" style="gap: var(--spacing-6);">
@@ -117,47 +165,7 @@ templ BreadcrumbDemo() {
 						}
 					</div>
 				</div>
-				<!-- In Card Context -->
-				<div class="doc-demo__group">
-					<h3 class="doc-demo__group-title">In Page Header</h3>
-					<div style="max-width: 600px;">
-						@ui.Card(ui.CardProp{}) {
-							<div class="breadcrumb-demo__header">
-								@ui.Breadcrumb(ui.BreadcrumbProp{}) {
-									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/"}) {
-										Dashboard
-									}
-									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Href: "/orders"}) {
-										Orders
-									}
-									@ui.BreadcrumbItem(ui.BreadcrumbItemProp{Current: true}) {
-										Order #12345
-									}
-								}
-								<h2 class="breadcrumb-demo__title">Order Details</h2>
-								<p class="breadcrumb-demo__subtitle">View and manage order information</p>
-							</div>
-						}
-					</div>
-				</div>
 			</div>
 		</div>
 	</section>
-	<style type="text/css">
-		.breadcrumb-demo__header {
-			display: flex;
-			flex-direction: column;
-			gap: var(--spacing-2);
-		}
-		.breadcrumb-demo__title {
-			margin: var(--spacing-4) 0 0;
-			font-size: var(--font-size-xl);
-			font-weight: var(--font-weight-semibold);
-		}
-		.breadcrumb-demo__subtitle {
-			margin: 0;
-			font-size: var(--font-size-sm);
-			color: var(--color-text-muted);
-		}
-	</style>
 }

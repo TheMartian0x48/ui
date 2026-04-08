@@ -50,6 +50,15 @@
     background-color: transparent;
 }
 
+.card--outlined-hover {
+    background-color: transparent;
+}
+
+.card--outlined-hover:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
 .card--flat {
     background-color: var(--color-bg-secondary);
     border: none;
@@ -92,8 +101,6 @@
 .card__content {
     padding: var(--spacing-4);
     flex: 1;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
     line-height: var(--line-height-relaxed);
 }
 
