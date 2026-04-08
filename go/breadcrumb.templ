@@ -2,11 +2,20 @@ package ui
 
 import "strings"
 
+// BreadcrumbVariant defines the visual style of the breadcrumb navigation.
+type BreadcrumbVariant int
+
+const (
+	BreadcrumbDefault  BreadcrumbVariant = iota // Plain links, no background (default)
+	BreadcrumbBordered                          // Enclosed in a bordered container
+)
+
 // BreadcrumbProp configures the root breadcrumb navigation container.
 type BreadcrumbProp struct {
-	BaseProp                    // Standard Id, Class, and Attributes
-	Separator  string           // Character or string to display between items (default: "/")
-	AriaLabel  string           // Accessible label for the navigation region (default: "Breadcrumb")
+	BaseProp                         // Standard Id, Class, and Attributes
+	Variant   BreadcrumbVariant      // Visual style (default: BreadcrumbDefault)
+	Separator string                 // Character or string to display between items (default: "/")
+	AriaLabel string                 // Accessible label for the navigation region (default: "Breadcrumb")
 }
 
 // BreadcrumbItemProp configures a single link or text item within the breadcrumb trail.
@@ -39,7 +48,7 @@ templ Breadcrumb(prop BreadcrumbProp) {
 		if prop.Id != "" {
 			id={ prop.Id }
 		}
-		class={ breadcrumbClass(prop.Class) }
+		class={ breadcrumbClass(prop) }
 		aria-label={ ariaLabel }
 		{ prop.Attributes... }
 	>
@@ -79,14 +88,17 @@ templ BreadcrumbItem(prop BreadcrumbItemProp) {
 }
 
 // breadcrumbClass generates CSS class for breadcrumb container.
-func breadcrumbClass(class string) string {
-	if class == "" {
-		return "breadcrumb"
-	}
+func breadcrumbClass(prop BreadcrumbProp) string {
 	var b strings.Builder
-	b.Grow(20)
-	b.WriteString("breadcrumb ")
-	b.WriteString(class)
+	b.Grow(40)
+	b.WriteString("breadcrumb")
+	if prop.Variant == BreadcrumbBordered {
+		b.WriteString(" breadcrumb--bordered")
+	}
+	if prop.Class != "" {
+		b.WriteString(" ")
+		b.WriteString(prop.Class)
+	}
 	return b.String()
 }
 

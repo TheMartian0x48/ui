@@ -6,9 +6,10 @@ import "strings"
 type CardVariant int
 
 const (
-	CardElevated CardVariant = iota // Raised with shadow (default)
-	CardOutlined                    // Flat with border
-	CardFlat                        // Flat without border, subtle background
+	CardElevated      CardVariant = iota // Raised with shadow (default)
+	CardOutlined                         // Flat with border
+	CardOutlinedHover                    // Flat with border, elevates on hover
+	CardFlat                             // Flat without border, subtle background
 )
 
 // CardProp configures the Card container.
@@ -80,6 +81,8 @@ func cardClass(prop CardProp) string {
 	switch prop.Variant {
 	case CardOutlined:
 		b.WriteString(" card--outlined")
+	case CardOutlinedHover:
+		b.WriteString(" card--outlined-hover")
 	case CardFlat:
 		b.WriteString(" card--flat")
 	default:

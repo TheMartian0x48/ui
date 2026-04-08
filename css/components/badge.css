@@ -40,39 +40,28 @@
 
 /* Sizes */
 .badge--sm {
-    padding: 0 var(--spacing-2);
-    font-size: var(--font-size-xs);
-    height: var(--spacing-5);
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
     gap: var(--spacing-1);
 }
 
 .badge--md {
-    padding: var(--spacing-px) var(--spacing-3);
-    font-size: var(--font-size-xs);
-    height: var(--spacing-6);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
 }
 
 .badge--lg {
-    padding: var(--spacing-1) var(--spacing-4);
-    font-size: var(--font-size-sm);
-    height: var(--spacing-8);
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
     gap: var(--spacing-2);
 }
 
-/* Responsive sizes */
+/* Responsive sizes - matching button behavior by removing forced shrink */
 @media (max-width: 640px) {
-    .badge--lg {
-        padding: var(--spacing-px) var(--spacing-3);
-        font-size: var(--font-size-xs);
-        height: var(--spacing-6);
-        gap: var(--spacing-1);
-    }
-
-    .badge--md {
-        padding: 0 var(--spacing-2);
-        font-size: var(--font-size-xs);
-        height: var(--spacing-5);
-    }
+    /* Kept for potential overrides, but synced to maintain consistency */
 }
 
 /* Rounded/pill shape */
@@ -190,36 +179,28 @@
 }
 
 .badge--sm .badge__icon {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: var(--spacing-4);
+    height: var(--spacing-4);
 }
 
 .badge--md .badge__icon {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: var(--spacing-5);
+    height: var(--spacing-5);
 }
 
 .badge--lg .badge__icon {
-    width: 1rem;
-    height: 1rem;
+    width: var(--spacing-6);
+    height: var(--spacing-6);
 }
 
 @media (max-width: 640px) {
-    .badge--lg .badge__icon {
-        width: 0.875rem;
-        height: 0.875rem;
-    }
-
-    .badge--md .badge__icon {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
+    /* Kept for potential overrides, but synced to maintain consistency */
 }
 
 /* ========== Text ========== */
 
 .badge__text {
-    line-height: 1.25;
+    line-height: inherit;
 }
 
 /* ========== Dismiss Button ========== */
@@ -250,30 +231,22 @@
 }
 
 .badge--sm .badge__dismiss {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: var(--spacing-4);
+    height: var(--spacing-4);
 }
 
 .badge--md .badge__dismiss {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: var(--spacing-5);
+    height: var(--spacing-5);
 }
 
 .badge--lg .badge__dismiss {
-    width: 1rem;
-    height: 1rem;
+    width: var(--spacing-6);
+    height: var(--spacing-6);
 }
 
 @media (max-width: 640px) {
-    .badge--lg .badge__dismiss {
-        width: 0.875rem;
-        height: 0.875rem;
-    }
-
-    .badge--md .badge__dismiss {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
+    /* Kept for potential overrides, but synced to maintain consistency */
 }
 
 .badge__dismiss svg {
