@@ -73,7 +73,7 @@
 
 /* Rectangular variant - images, cards */
 .skeleton--rectangular {
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-default);
     width: 100%;
 }
 

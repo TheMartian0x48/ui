@@ -70,8 +70,8 @@
     max-width: min(400px, calc(100vw - var(--spacing-12)));
 
     background-color: var(--color-bg-secondary);
-    border: var(--border-width-thin) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-default);
     box-shadow: var(--shadow-lg);
 
     pointer-events: auto;
@@ -143,8 +143,8 @@
 }
 
 .toast__close:focus-visible {
-    outline: var(--border-width-thin) solid var(--color-primary);
-    outline-offset: var(--border-width-thin);
+    outline: var(--border-width-default) solid var(--color-primary);
+    outline-offset: var(--border-width-default);
 }
 
 .toast__close:hover {

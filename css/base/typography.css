@@ -3,7 +3,7 @@
 /* Apply base font family to body */
 body {
     font-family: var(--font-family-base);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
     font-weight: var(--font-weight-normal);
     line-height: var(--line-height-normal);
     color: var(--color-text);
@@ -43,7 +43,7 @@ h5 {
 }
 
 h6 {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
     font-weight: var(--font-weight-semibold);
 }
 
@@ -89,7 +89,7 @@ code {
 pre {
     padding: var(--spacing-4);
     background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-default);
     overflow-x: auto;
     margin-bottom: var(--spacing-4);
 }
@@ -142,7 +142,7 @@ li {
 }
 
 .text-base {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
 }
 
 .text-lg {

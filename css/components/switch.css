@@ -45,7 +45,7 @@
     background-color: var(--color-bg-tertiary);
     border-radius: var(--radius-full);
     transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
-    border: var(--border-width-thin) solid var(--color-border);
+    border: var(--border-width-default) solid var(--color-border);
 }
 
 .switch-input:focus-visible+.switch-track {

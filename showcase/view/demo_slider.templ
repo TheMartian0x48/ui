@@ -56,7 +56,7 @@ templ SliderDemo() {
 						@ui.Card(ui.CardProp{Header: "Photo Editor"}) {
 							<div style="display: flex; flex-direction: column; gap: 1.5rem;">
 								<div
-									style="width: 100%; height: 120px; background: var(--color-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; overflow: hidden;"
+									style="width: 100%; height: 120px; background: var(--color-primary); border-radius: var(--radius-default); display: flex; align-items: center; justify-content: center; overflow: hidden;"
 									x-data="{ brightness: 100, contrast: 100 }"
 									x-init="$watch('brightness', val => $el.style.filter = `brightness(${val}%) contrast(${contrast}%)`); $watch('contrast', val => $el.style.filter = `brightness(${brightness}%) contrast(${val}%)`)"
 								>

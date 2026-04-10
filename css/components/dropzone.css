@@ -12,7 +12,7 @@
     justify-content: center;
     width: 100%;
     min-height: 12rem;
-    border: var(--border-width-thin) dashed var(--color-border);
+    border: var(--border-width-default) dashed var(--color-border);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg-secondary);
     transition: all var(--transition-base);
@@ -105,8 +105,8 @@
     align-items: center;
     padding: var(--spacing-2) var(--spacing-3);
     background-color: var(--color-bg);
-    border: var(--border-width-thin) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-default);
     font-size: var(--font-size-sm);
     gap: var(--spacing-3);
 }
@@ -152,12 +152,12 @@
 }
 
 .dropzone__file-remove:focus-visible {
-    outline: var(--border-width-thin) solid var(--color-danger);
+    outline: var(--border-width-default) solid var(--color-danger);
     outline-offset: 1px;
 }
 
 /* Focus state for keyboard accessibility */
 .dropzone__input:focus-visible+.dropzone__label {
-    outline: var(--border-width-thin) solid var(--color-primary);
+    outline: var(--border-width-default) solid var(--color-primary);
     outline-offset: var(--spacing-1);
 }

@@ -102,7 +102,7 @@
 
 .timeline__title {
     margin: 0;
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text);
 }

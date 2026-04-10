@@ -87,7 +87,7 @@
     justify-content: flex-start;
     width: 100%;
     padding: var(--spacing-2) var(--spacing-3);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-default);
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
     text-decoration: none;
@@ -133,7 +133,7 @@
 /* Component Demo Container */
 .doc-demo {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-default);
     overflow: hidden;
     background-color: var(--color-bg);
 }
