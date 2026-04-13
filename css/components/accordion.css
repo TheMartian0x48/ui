@@ -21,7 +21,7 @@
 }
 
 .accordion__item {
-    border-bottom: var(--border-width-thin) solid var(--color-border);
+    border-bottom: var(--border-width-default) solid var(--color-border);
 }
 
 .accordion__item:last-child {
@@ -58,7 +58,7 @@
 
 .accordion__title {
     font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
     color: var(--color-text-primary);
 }
 
@@ -87,13 +87,13 @@
 
 /* Basic (Default) - Simple top border */
 .accordion--basic {
-    border-top: var(--border-width-thin) solid var(--color-border);
+    border-top: var(--border-width-default) solid var(--color-border);
 }
 
 /* Bordered - Card-like with full border and rounded corners */
 .accordion--bordered {
-    border: var(--border-width-thin) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-default);
     background-color: var(--color-bg);
     overflow: hidden;
 }

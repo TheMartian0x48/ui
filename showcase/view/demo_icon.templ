@@ -188,7 +188,7 @@ templ IconDemo() {
 							@ui.Icon(ui.IconProp{Icon: ui.IconSettings(), Size: ui.IconSizeSM})
 							Settings
 						}
-						<div style="display: flex; gap: var(--spacing-4); align-items: center; padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-md);">
+						<div style="display: flex; gap: var(--spacing-4); align-items: center; padding: var(--spacing-4); background: var(--color-bg-secondary); border-radius: var(--radius-default);">
 							@ui.Icon(ui.IconProp{BaseProp: ui.BaseProp{Class: "text-primary"}, Icon: ui.IconCalendar()})
 							<span class="text-secondary">Project Due: Dec 24, 2026</span>
 						</div>
@@ -211,8 +211,8 @@ templ IconDemo() {
 			gap: var(--spacing-2);
 			padding: var(--spacing-4);
 			background: var(--color-bg);
-			border: var(--border-width-thin) solid var(--color-border);
-			border-radius: var(--radius-md);
+			border: var(--border-width-default) solid var(--color-border);
+			border-radius: var(--radius-default);
 			transition: all var(--transition-base);
 		}
 		.icon-box:hover {

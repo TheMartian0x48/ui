@@ -4,8 +4,8 @@
     display: flex;
     gap: var(--spacing-4);
     padding: var(--spacing-4);
-    border-radius: var(--radius-md);
-    border: var(--border-width-thin) solid transparent;
+    border-radius: var(--radius-default);
+    border: var(--border-width-default) solid transparent;
     margin-bottom: var(--spacing-4);
     font-family: var(--font-primary);
 }
@@ -46,7 +46,7 @@
     font-size: var(--font-size-sm);
     border-radius: var(--radius-sm);
     background-color: rgba(255, 255, 255, 0.15);
-    border: var(--border-width-thin) solid currentColor;
+    border: var(--border-width-default) solid currentColor;
     color: inherit;
     opacity: 0.8;
     transition: var(--transition-fast);
@@ -60,7 +60,7 @@
 .alert__actions .btn.btn-primary {
     background-color: currentColor;
     color: var(--color-bg);
-    border: var(--border-width-thin) solid transparent;
+    border: var(--border-width-default) solid transparent;
 }
 
 .alert__actions .btn.btn-primary:hover {
@@ -78,7 +78,7 @@
     padding: 0;
     background: transparent;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-default);
     color: currentColor;
     opacity: 0.6;
     cursor: pointer;

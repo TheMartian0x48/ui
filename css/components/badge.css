@@ -31,7 +31,7 @@
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
 
-    border: var(--border-width-thin) solid transparent;
+    border: var(--border-width-default) solid transparent;
     border-radius: var(--radius-sm);
 
     user-select: none;
@@ -48,7 +48,7 @@
 
 .badge--md {
     padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-default);
     line-height: var(--line-height-normal);
 }
 

@@ -19,8 +19,8 @@
     padding: var(--spacing-2) var(--spacing-8) var(--spacing-2) var(--spacing-3);
     /* Extra right padding for icon */
     background-color: var(--color-bg);
-    border: var(--border-width-thin) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-default);
     font-family: inherit;
     font-size: var(--font-size-sm);
     color: var(--color-text-primary);
@@ -68,8 +68,8 @@
     max-height: 250px;
     overflow-y: auto;
     background-color: var(--color-bg);
-    border: var(--border-width-thin) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-default);
     box-shadow: var(--shadow-md);
     z-index: var(--z-dropdown);
     /* Above other content */

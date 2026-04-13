@@ -12,7 +12,7 @@
 .tabs__list {
     display: flex;
     align-items: center;
-    border-bottom: var(--border-width-thin) solid var(--color-border);
+    border-bottom: var(--border-width-default) solid var(--color-border);
     gap: var(--spacing-6);
     margin-bottom: var(--spacing-6);
 }
@@ -21,7 +21,7 @@
     background: transparent;
     border: none;
     padding: var(--spacing-2) 0;
-    margin-bottom: calc(-1 * var(--border-width-thin));
+    margin-bottom: calc(-1 * var(--border-width-default));
 
     font-family: var(--font-primary);
     font-size: var(--font-size-sm);
@@ -29,7 +29,7 @@
     color: var(--color-text-muted);
     cursor: pointer;
 
-    border-bottom: var(--border-width-thin) solid transparent;
+    border-bottom: var(--border-width-default) solid transparent;
     transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 

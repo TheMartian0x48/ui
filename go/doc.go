@@ -27,7 +27,7 @@
 // The library uses a standardized set of CSS variables defined in
 // css/base/variables.css. Always prefer these variables over hardcoded values:
 // - Spacing: var(--spacing-4), var(--spacing-2), etc.
-// - Borders: var(--border-width-thin), var(--border-radius-md)
+// - Borders: var(--border-width-default), var(--border-radius-md)
 // - Colors: var(--color-primary), var(--color-success), etc.
 //
 // 5. Documentation for AI Agents
